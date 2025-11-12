@@ -4,12 +4,122 @@ import { getAuth as getAdminAuth } from 'firebase-admin/auth';
 import { getStorage as getAdminStorage } from 'firebase-admin/storage';
 import * as admin from 'firebase-admin';
 
-// Get Firebase configuration from environment variables
-// Important: Logging variable presence for debugging
-console.log('Loading Firebase Admin SDK with these environment values:');
-console.log(`FIREBASE_ADMIN_PROJECT_ID: ${process.env.FIREBASE_ADMIN_PROJECT_ID ? 'present' : 'missing'}`);
-console.log(`NEXT_PUBLIC_FIREBASE_PROJECT_ID: ${process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID ? 'present' : 'missing'}`);
-console.log(`FIREBASE_PROJECT_ID: ${process.env.FIREBASE_PROJECT_ID ? 'present' : 'missing'}`);
+type ServiceAccount = {
+  projectId?: string;
+  clientEmail?: string;
+  privateKey?: string;
+};
+
+const stripWrappingQuotes = (value?: string | null) => {
+  if (!value) {
+    return undefined;
+  }
+
+  const trimmed = value.trim();
+  return trimmed.replace(/^['"]|['"]$/g, '');
+};
+
+const normalizePrivateKey = (key?: string) => {
+  if (!key) {
+    return undefined;
+  }
+
+  return stripWrappingQuotes(key)?.replace(/\\n/g, '\n');
+};
+
+const parseServiceAccountJson = (): ServiceAccount | undefined => {
+  const raw =
+    process.env.FIREBASE_ADMIN_SERVICE_ACCOUNT ||
+    process.env.FIREBASE_SERVICE_ACCOUNT ||
+    process.env.FIREBASE_ADMIN_CREDENTIALS;
+
+  if (!raw) {
+    return undefined;
+  }
+
+  try {
+    const parsed = JSON.parse(raw);
+
+    return {
+      projectId: parsed.project_id,
+      clientEmail: parsed.client_email,
+      privateKey: parsed.private_key,
+    };
+  } catch (error) {
+    console.error('Failed to parse Firebase Admin service account JSON', error);
+    return undefined;
+  }
+};
+
+const decodeBase64PrivateKey = () => {
+  const base64Value =
+    stripWrappingQuotes(process.env.FIREBASE_ADMIN_PRIVATE_KEY_BASE64) ||
+    stripWrappingQuotes(process.env.FIREBASE_PRIVATE_KEY_BASE64);
+
+  if (!base64Value) {
+    return undefined;
+  }
+
+  try {
+    return Buffer.from(base64Value, 'base64').toString('utf8');
+  } catch (error) {
+    console.error('Failed to decode Firebase Admin private key from base64', error);
+    return undefined;
+  }
+};
+
+const resolveFirebaseAdminConfig = () => {
+  const serviceAccount = parseServiceAccountJson();
+
+  const projectId =
+    stripWrappingQuotes(process.env.FIREBASE_ADMIN_PROJECT_ID) ||
+    stripWrappingQuotes(process.env.FIREBASE_PROJECT_ID) ||
+    stripWrappingQuotes(process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID) ||
+    stripWrappingQuotes(process.env.GOOGLE_CLOUD_PROJECT) ||
+    stripWrappingQuotes(process.env.GCLOUD_PROJECT) ||
+    serviceAccount?.projectId;
+
+  const clientEmail =
+    stripWrappingQuotes(process.env.FIREBASE_ADMIN_CLIENT_EMAIL) ||
+    stripWrappingQuotes(process.env.FIREBASE_CLIENT_EMAIL) ||
+    serviceAccount?.clientEmail;
+
+  let privateKey =
+    normalizePrivateKey(process.env.FIREBASE_ADMIN_PRIVATE_KEY) ||
+    normalizePrivateKey(process.env.FIREBASE_PRIVATE_KEY) ||
+    serviceAccount?.privateKey;
+
+  if (!privateKey) {
+    privateKey = decodeBase64PrivateKey() || serviceAccount?.privateKey;
+  }
+
+  if (privateKey) {
+    privateKey = normalizePrivateKey(privateKey);
+  }
+
+  const storageBucket =
+    stripWrappingQuotes(process.env.FIREBASE_ADMIN_STORAGE_BUCKET) ||
+    stripWrappingQuotes(process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET) ||
+    stripWrappingQuotes(process.env.FIREBASE_STORAGE_BUCKET);
+
+  return {
+    projectId,
+    clientEmail,
+    privateKey,
+    storageBucket,
+  };
+};
+
+const logFirebaseConfigState = () => {
+  const { projectId, clientEmail, privateKey } = resolveFirebaseAdminConfig();
+
+  console.log('Loading Firebase Admin SDK with these environment values:');
+  console.log(`Project ID present: ${projectId ? 'yes' : 'no'}`);
+  console.log(`Client email present: ${clientEmail ? 'yes' : 'no'}`);
+  console.log(`Private key present: ${privateKey ? 'yes' : 'no'}`);
+};
+
+logFirebaseConfigState();
 
 // Initialize Firebase Admin if not already initialized
 const initializeFirebaseAdmin = () => {
@@ -18,32 +128,15 @@ const initializeFirebaseAdmin = () => {
     if (getApps().length > 0) {
       return;
     }
-    
-    // Use project ID from either admin or public variable
-    const projectId = process.env.FIREBASE_ADMIN_PROJECT_ID || 
-                      process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID ||
-                      process.env.FIREBASE_PROJECT_ID;
-    
-    const clientEmail = process.env.FIREBASE_ADMIN_CLIENT_EMAIL || 
-                        process.env.FIREBASE_CLIENT_EMAIL;
-    
-    // Safely replace newlines in private key if it exists
-    let privateKey: string | undefined;
-    const rawPrivateKey = process.env.FIREBASE_ADMIN_PRIVATE_KEY || process.env.FIREBASE_PRIVATE_KEY;
-    if (rawPrivateKey) {
-      privateKey = rawPrivateKey.replace(/\\n/g, '\n');
-    }
-      
-    const storageBucket = process.env.FIREBASE_ADMIN_STORAGE_BUCKET || 
-                          process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET ||
-                          process.env.FIREBASE_STORAGE_BUCKET;
-    
+
+    const { projectId, clientEmail, privateKey, storageBucket } = resolveFirebaseAdminConfig();
+
     // Log configuration for debugging (without exposing sensitive data)
     console.log('Firebase Admin configuration:', {
       projectId: projectId || 'not set',
       clientEmail: clientEmail ? 'set' : 'not set',
       privateKey: privateKey ? `set (length: ${privateKey.length})` : 'not set',
-      storageBucket: storageBucket || 'not set'
+      storageBucket: storageBucket || 'not set',
     });
 
     // Check if all required environment variables are present
