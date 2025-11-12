@@ -1,3 +1,5 @@
+const path = require('path');
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
@@ -47,6 +49,11 @@ const nextConfig = {
     ]
   },
   webpack: (config, { isServer }) => {
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      '@': path.resolve(__dirname, 'src'),
+    };
+
     // Handle specific issues with NodeMailer and Node.js modules on the client side
     if (!isServer) {
       config.resolve.fallback = {

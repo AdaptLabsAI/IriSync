@@ -18,7 +18,7 @@ import {
   Timestamp
 } from 'firebase/firestore';
 import { logger } from '@/lib/core/logging/logger';
-import { JobListing, JobApplication, JobType, JobLocationType } from '@/lib/features/careers/models';
+import { JobListing, JobApplication, JobType, JobLocationType } from '@/lib/careers/models';
 import { z } from 'zod';
 
 /**

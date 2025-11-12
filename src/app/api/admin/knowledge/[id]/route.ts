@@ -8,8 +8,8 @@ import {
   KnowledgeContentType, 
   KnowledgeStatus, 
   KnowledgeAccessLevel 
-} from '@/lib/features/knowledge/models';
-import { KnowledgeRepository } from '@/lib/features/knowledge/repository';
+} from '@/lib/knowledge/models';
+import { KnowledgeRepository } from '@/lib/knowledge/repository';
 import { generateSlug } from '@/lib/core/utils/slug';
 
 // Collection name constants

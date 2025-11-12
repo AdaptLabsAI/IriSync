@@ -33,7 +33,7 @@ import WorkIcon from '@mui/icons-material/Work';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import { useRouter } from 'next/navigation';
 import AdminGuard from '@/components/admin/AdminGuard';
-import { JobListing, JobType, JobLocationType, JobApplication } from '@/lib/features/careers/models';
+import { JobListing, JobType, JobLocationType, JobApplication } from '@/lib/careers/models';
 import useApi from '@/hooks/useApi';
 
 interface TabPanelProps {

@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 // Import AI provider clients
 import { GoogleGenerativeAI } from '@google/generative-ai';
-import Anthropic from '@anthropic-ai/sdk';
+import Anthropic from '@/lib/integrations/anthropic/client';
 import { OpenAI } from 'openai';
 import { SocialPlatform } from '@/lib/core/models/SocialAccount';
 import { MediaType } from '@/lib/core/models/Media';

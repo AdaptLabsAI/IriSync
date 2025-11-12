@@ -10,7 +10,7 @@ import {
   serverTimestamp
 } from 'firebase/firestore';
 import { logger } from '@/lib/core/logging/logger';
-import { BlogPost, BlogPostStatus } from '@/lib/features/blog/models';
+import { BlogPost, BlogPostStatus } from '@/lib/blog/models';
 import { z } from 'zod';
 
 // Validation schema for updating blog posts

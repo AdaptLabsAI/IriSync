@@ -25,7 +25,7 @@ import { AITaskType } from '@/lib/features/ai/models/AITask';
 
 // Import AI provider clients for fallback
 import { GoogleGenerativeAI } from '@google/generative-ai';
-import Anthropic from '@anthropic-ai/sdk';
+import Anthropic from '@/lib/integrations/anthropic/client';
 import { OpenAI } from 'openai';
 
 // Initialize AI providers with API keys (fallback only)

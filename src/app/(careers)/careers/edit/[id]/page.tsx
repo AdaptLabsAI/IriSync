@@ -33,7 +33,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useRouter } from 'next/navigation';
 import AdminGuard from '@/components/admin/AdminGuard';
-import { JobType, JobLocationType, JobListing, ApplicationQuestion, QuestionType } from '@/lib/features/careers/models';
+import { JobType, JobLocationType, JobListing, ApplicationQuestion, QuestionType } from '@/lib/careers/models';
 
 interface JobFormData {
   title: string;

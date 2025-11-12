@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 import { withAdmin } from '@/lib/features/auth/route-handlers';
-import { KnowledgeRepository } from '@/lib/features/knowledge/repository';
+import { KnowledgeRepository } from '@/lib/knowledge/repository';
 import { logger } from '@/lib/core/logging/logger';
 
 const categoryCreateSchema = z.object({

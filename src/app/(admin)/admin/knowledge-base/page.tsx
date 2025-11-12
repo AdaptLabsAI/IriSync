@@ -45,7 +45,7 @@ import {
   KnowledgeContentType, 
   KnowledgeStatus, 
   KnowledgeAccessLevel 
-} from '@/lib/features/knowledge/models';
+} from '@/lib/knowledge/models';
 
 // Define the knowledge item type based on the API model
 interface KnowledgeItem {
