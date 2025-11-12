@@ -10,7 +10,7 @@ const ReactQuill = dynamic(
     const { default: RQ } = await import('react-quill');
     // Import styles for the editor when in client side
     if (typeof window !== 'undefined') {
-      await import('react-quill/dist/quill.snow.css');
+      await import('quilljs/dist/quill.snow.css');
     }
     return RQ;
   },
