@@ -47,8 +47,8 @@ export function analyzeContent(content: string, hashtags?: string[]): ContentAna
  * Ensures no duplication and maintains content quality
  */
 export function addIriSyncBranding(
-  content: string, 
-  hashtags?: string[], 
+  content: string,
+  hashtags?: string[],
   options?: {
     forceAdd?: boolean;
     maxHashtags?: number;
@@ -56,44 +56,77 @@ export function addIriSyncBranding(
   }
 ): BrandedContent {
   const analysis = analyzeContent(content, hashtags);
-  
-  // If IriSync is already present and we're not forcing, return as-is
-  if (analysis.hasIriSyncHashtag && !options?.forceAdd) {
-    return {
-      content,
-      hashtags: hashtags || [],
-      brandingAdded: false
-    };
-  }
-  
+
   // Clean hashtags array and ensure proper format
   const cleanHashtags = (hashtags || [])
     .map(tag => tag.replace(/^#+/, '')) // Remove # prefix
     .filter(tag => tag.trim().length > 0);
-  
-  // Add IriSync if not present
-  let updatedHashtags = [...cleanHashtags];
-  
-  if (!analysis.hasIriSyncHashtag) {
-    // Check if we're at the hashtag limit
-    const maxHashtags = options?.maxHashtags || 30;
-    
-    if (updatedHashtags.length < maxHashtags) {
-      // Add IriSync at the end
-      updatedHashtags.push('IriSync');
-    } else {
-      // Replace the last hashtag with IriSync to stay within limits
-      updatedHashtags[updatedHashtags.length - 1] = 'IriSync';
+
+  const dedupedHashtags: string[] = [];
+  const seenHashtags = new Set<string>();
+
+  for (const tag of cleanHashtags) {
+    const normalized = tag.toLowerCase();
+    if (seenHashtags.has(normalized)) {
+      continue;
+    }
+    seenHashtags.add(normalized);
+    dedupedHashtags.push(tag);
+  }
+
+  const maxHashtags = options?.maxHashtags ?? 30;
+  let updatedHashtags = dedupedHashtags.slice(0, maxHashtags);
+
+  const hasIriSyncInHashtags = updatedHashtags.some(
+    tag => tag.toLowerCase() === 'irisync'
+  );
+
+  let brandingAdded = false;
+
+  if (!hasIriSyncInHashtags || options?.forceAdd) {
+    const needsAddition = options?.forceAdd || !hasIriSyncInHashtags;
+
+    if (needsAddition) {
+      brandingAdded = !hasIriSyncInHashtags;
+
+      if (updatedHashtags.length < maxHashtags) {
+        updatedHashtags.push('IriSync');
+      } else {
+        updatedHashtags[updatedHashtags.length - 1] = 'IriSync';
+      }
     }
   }
-  
+
+  // Ensure a single IriSync hashtag when forceAdd is not specified but
+  // IriSync already exists.
+  if (!options?.forceAdd && hasIriSyncInHashtags) {
+    updatedHashtags = updatedHashtags.filter((tag, index, arr) => {
+      if (tag.toLowerCase() !== 'irisync') {
+        return true;
+      }
+
+      return (
+        arr.findIndex(existing => existing.toLowerCase() === 'irisync') === index
+      );
+    });
+  }
+
+  const finalHasIriSync = updatedHashtags.some(
+    tag => tag.toLowerCase() === 'irisync'
+  );
+
+  brandingAdded = brandingAdded || (!analysis.hasIriSyncHashtag && finalHasIriSync);
+
   // Remove #IriSync from content if it exists (we'll manage it via hashtags)
-  const cleanedContent = content.replace(/#IriSync\b/gi, '').trim();
-  
+  const cleanedContent = content
+    .replace(/\s*#IriSync\b\s*/gi, ' ')
+    .replace(/\s{2,}/g, ' ')
+    .trim();
+
   return {
     content: cleanedContent,
     hashtags: updatedHashtags,
-    brandingAdded: !analysis.hasIriSyncHashtag
+    brandingAdded
   };
 }
 
@@ -198,8 +231,19 @@ export function processAIGeneratedContent(
     maxLength?: number;
   }
 ): BrandedContent {
+  const contentHashtags = Array.from(
+    new Set(
+      (content.match(/#(\w+)/g) || []).map(tag => tag.replace(/^#+/, ''))
+    )
+  );
+
+  const combinedHashtags = [
+    ...(hashtags || []),
+    ...contentHashtags
+  ];
+
   // Add IriSync branding
-  const brandedContent = addIriSyncBranding(content, hashtags, {
+  const brandedContent = addIriSyncBranding(content, combinedHashtags, {
     maxHashtags: options?.maxHashtags,
     platform: options?.platform
   });
