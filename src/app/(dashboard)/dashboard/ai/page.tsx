@@ -28,8 +28,9 @@ import {
   FaReddit,
   FaTiktok,
   FaLinkedin,
+  FaHandshake,
 } from "react-icons/fa"
-import { SiZoho, SiPipedrive, SiNotion, SiAirtable, SiCanva, SiAdobecreativecloud } from "react-icons/si"
+import { SiZoho, SiNotion, SiAirtable, SiCanva, SiAdobecreativecloud } from "react-icons/si"
 
 export default function DashboardPage() {
   const [activeTab, setActiveTab] = useState("AI content creation")
@@ -158,7 +159,7 @@ export default function DashboardPage() {
       icon: <FaSalesforce className="text-blue-500" />,
     },
     { name: "Zoho", username: "—", connected: true, icon: <SiZoho className="text-red-600" /> },
-    { name: "Pipedrive", username: "—", connected: true, icon: <SiPipedrive className="text-green-500" /> },
+    { name: "Pipedrive", username: "—", connected: true, icon: <FaHandshake className="text-green-500" /> },
     { name: "Microsoft Dynamics", username: "—", connected: true, icon: <FaMicrosoft className="text-blue-600" /> },
     {
       name: "Sugar CRM",
