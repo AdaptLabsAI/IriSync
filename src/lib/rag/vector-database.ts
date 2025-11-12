@@ -2,6 +2,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { Pinecone } from '@pinecone-database/pinecone';
 import config from '../config';
 import { logger } from '../logging/logger';
+import { getOptionalEnv } from '@/lib/server/env';
 
 /**
  * Search result from vector database
@@ -89,7 +90,7 @@ export class VectorDatabase {
         provider: 'google',
         endpoint: 'https://generativelanguage.googleapis.com/v1/models/embedding-gecko:embedText',
         model: 'embedding-gecko',
-        apiKeyVariable: 'GOOGLE_API_KEY'
+        apiKeyVariable: 'GEN_LANG_API_KEY'
       }],
       [EmbeddingModelType.COHERE_EMBED_ENGLISH, {
         dimensions: 1024,
@@ -115,10 +116,10 @@ export class VectorDatabase {
     // Load API keys
     // NOTE: Only config.ai.apiKey is available in the current config structure.
     this.apiKeys = {
-      'OPENAI_API_KEY': config.ai.apiKey || '',
-      'GOOGLE_API_KEY': config.ai.apiKey || '',
-      'COHERE_API_KEY': config.ai.apiKey || ''
-    };
+      OPENAI_API_KEY: config.ai.apiKey || process.env.OPENAI_API_KEY || '',
+      GEN_LANG_API_KEY: getOptionalEnv('GEN_LANG_API_KEY') || config.ai.apiKey || '',
+      COHERE_API_KEY: process.env.COHERE_API_KEY || config.ai.apiKey || ''
+    } as Record<string, string>;
     
     this.isInitialized = true;
     logger.info('Pinecone client initialized', {

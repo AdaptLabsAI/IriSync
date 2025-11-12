@@ -48,12 +48,13 @@ npm install
 ```
 
 3. Set up environment variables:
-Create a `.env.local` file from the template:
+   Create a `.env.local` file from the template and populate it with your own credentials:
+
 ```bash
-cp env.fixed.txt .env.local
+cp .env.example .env.local
 ```
 
-   The `env.fixed.txt` template contains placeholder values. You must replace each placeholder value with your own credentials from your Firebase, NextAuth, and other platform integrations before running the application.
+   The template enumerates all required variables, including sensitive values like `GEN_LANG_API_KEY`, `STRIPE_SECRET_KEY`, and client-safe keys prefixed with `NEXT_PUBLIC_`. Update the placeholders with project-specific secrets before running the application.
 
    To audit every runtime secret required by the codebase, you can generate a Vercel environment checklist:
 
@@ -63,51 +64,33 @@ npm run env:report
 
    This command writes a human-readable report to `docs/deployment/vercel-environment-checklist.md` that groups missing variables by integration and flags anything not already defined in `.env.local`.
 
-   **Important:** The `.env.local` file should contain all the necessary environment variables. The following is an example of the required variables:
-
-   ```env
-   # Firebase
-   NEXT_PUBLIC_FIREBASE_API_KEY=
-   FIREBASE_SERVICE_ACCOUNT_KEY=
-
-   # Stripe
-   STRIPE_SECRET_KEY= # Your Stripe secret key
-   STRIPE_PUBLISHABLE_KEY= # Your Stripe publishable key
-   STRIPE_WEBHOOK_SECRET=
-
-   # Google Cloud
-   GOOGLE_CLOUD_PROJECT_ID=
-   GOOGLE_CLOUD_STORAGE_BUCKET=
-   GOOGLE_CLOUD_CREDENTIALS=
-
-   # Redis
-   REDIS_HOST=
-   REDIS_PORT=6379
-   REDIS_PASSWORD=
-
-   # AI
-   OPENAI_API_KEY=
-   REPLICATE_API_TOKEN=
-   GOOGLE_MODEL_NAME=gemini-pro
-
-   # OAuth Clients
-   FACEBOOK_CLIENT_ID=
-   FACEBOOK_CLIENT_SECRET=
-   TWITTER_API_KEY=
-   LINKEDIN_CLIENT_ID=
-
-   # App Settings
-   NEXTAUTH_SECRET=
-   NEXTAUTH_URL=http://localhost:3000
-   NEXT_PUBLIC_APP_URL=http://localhost:3000
-   ```
-
 4. Run the development server:
 ```bash
 npm run dev
 ```
 
 The application will be available at `http://localhost:3000`.
+
+## 🌍 Environment & Deployment
+
+1. **Local development**
+   - Copy `.env.example` to `.env.local` and fill in the required values (`GEN_LANG_API_KEY`, `NEXT_PUBLIC_FIREBASE_API_KEY`, `GOOGLE_OAUTH_CLIENT_ID`, `STRIPE_SECRET_KEY`, `NEXTAUTH_SECRET`, etc.).
+   - Keep `.env.local` out of version control—`.gitignore` already prevents accidental commits.
+   - Run `npm run check-secrets` before committing to ensure no hard-coded credentials exist in tracked files.
+
+2. **Vercel deployment**
+   - In the Vercel dashboard, open **Project → Settings → Environment Variables**.
+   - Add the server-only values (`GEN_LANG_API_KEY`, `STRIPE_SECRET_KEY`, `NEXTAUTH_SECRET`, `FIREBASE_ADMIN_PRIVATE_KEY`, `FIREBASE_SERVICE_ACCOUNT_KEY`).
+   - Add client-exposed variables with the `NEXT_PUBLIC_` prefix (`NEXT_PUBLIC_FIREBASE_API_KEY`, `NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN`, `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY`, `NEXT_PUBLIC_APP_URL`).
+   - Provide OAuth credentials like `GOOGLE_OAUTH_CLIENT_ID` and any provider-specific client secrets used in the integrations directory.
+
+3. **Secret rotation**
+   - Rotate any keys that were previously committed to the repository before redeploying.
+   - Revoke and regenerate Firebase, Google Cloud, and OAuth credentials if they were ever exposed.
+
+4. **Pre-deploy checklist**
+   - Confirm `npm run check-secrets` and `npm run lint` pass locally.
+   - Trigger a Preview deployment in Vercel to verify runtime environment variables are wired correctly.
 
 ## ▶️ Development Scripts
 
@@ -116,6 +99,7 @@ The application will be available at `http://localhost:3000`.
 - `npm run start` - Start production server
 - `npm run test` - Run tests
 - `npm run lint` - Run linter
+- `npm run check-secrets` - Scan the tracked files for hard-coded secrets
 
 ## Project Structure
 

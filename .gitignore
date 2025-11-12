@@ -7,6 +7,13 @@
 .env.test
 .env.production
 .env
+*.env
+*.local
+serviceAccount.json
+serviceAccount*.json
+firebase-service-account.json
+!.env.example
+!.env.fixed.txt
 environment.md
 
 # Node modules

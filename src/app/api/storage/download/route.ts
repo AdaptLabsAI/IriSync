@@ -11,6 +11,7 @@ import { AdobeExpressAdapter } from '@/lib/features/integrations/AdobeExpressAda
 import { NotionAdapter } from '@/lib/features/integrations/NotionAdapter';
 import { AirtableAdapter } from '@/lib/features/integrations/AirtableAdapter';
 import { TokenRefreshService, TokenData, PlatformConfig, RefreshResult } from '@/lib/features/integrations/TokenRefreshService';
+import { getGoogleOAuthClientId } from '@/lib/server/env';
 
 // Interface for file data returned from adapters
 interface FileData {
@@ -30,7 +31,7 @@ interface StorageAdapterDownload {
 const PLATFORM_CONFIGS: Record<string, PlatformConfig> = {
   'google-drive': {
     platform: 'google-drive',
-    clientId: process.env.GOOGLE_CLIENT_ID,
+    clientId: getGoogleOAuthClientId(),
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     redirectUri: process.env.GOOGLE_REDIRECT_URI,
     tokenUrl: 'https://oauth2.googleapis.com/token'

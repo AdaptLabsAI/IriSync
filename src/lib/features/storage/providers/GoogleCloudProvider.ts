@@ -414,8 +414,8 @@ export class GoogleCloudProvider implements StorageProvider {
 
   private pemToArrayBuffer(pem: string): ArrayBuffer {
     const pemContents = pem
-      .replace(/-----BEGIN PRIVATE KEY-----/, '')
-      .replace(/-----END PRIVATE KEY-----/, '')
+      .replace(/-+BEGIN PRIVATE KEY-+/, '')
+      .replace(/-+END PRIVATE KEY-+/, '')
       .replace(/\s/g, '');
     
     const binaryString = atob(pemContents);

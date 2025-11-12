@@ -251,7 +251,7 @@ export class AIToolkit {
       config.providerType || ProviderType.GENKIT,
       config.providerConfig || {
         modelId: process.env.DEFAULT_MODEL_ID,
-        apiKey: process.env.GOOGLE_API_KEY
+        apiKey: process.env.GEN_LANG_API_KEY
       }
     );
     

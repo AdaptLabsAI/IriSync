@@ -1,9 +1,10 @@
 // Google Drive Integration Adapter
-// Expects env vars: GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, GOOGLE_REDIRECT_URI
+// Expects env vars: GOOGLE_OAUTH_CLIENT_ID, GOOGLE_CLIENT_SECRET, GOOGLE_REDIRECT_URI
 import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
+import { getGoogleOAuthClientId } from '@/lib/server/env';
 
-const clientId = process.env.GOOGLE_CLIENT_ID;
+const clientId = getGoogleOAuthClientId();
 const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
 const redirectUri = process.env.GOOGLE_REDIRECT_URI;
 

@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "npm run check-secrets && next lint",
     "test": "jest",
     "check-chakra": "node scripts/check-chakra-refs.js",
     "firebase:setup": "node scripts/initialize-firestore.js",
@@ -16,7 +16,8 @@
     "seed:ai-models": "node scripts/seed-ai-models.js",
     "deploy:seed": "node scripts/deploy-seed.js",
     "deploy:seed:force": "node scripts/deploy-seed.js --force",
-    "env:report": "node scripts/report-env.js"
+    "env:report": "node scripts/report-env.js",
+    "check-secrets": "bash scripts/check-secrets.sh"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.16.0",

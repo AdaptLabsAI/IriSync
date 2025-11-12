@@ -6,20 +6,12 @@
  */
 
 import { FirebaseOptions } from 'firebase/app';
+import { firebaseConfig as clientFirebaseConfig, isFirebaseConfigComplete } from '@/lib/client/firebaseConfig';
 
 /**
  * Firebase client configuration - enforcing environment variable usage
  */
-export const firebaseConfig: FirebaseOptions = {
-  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
-  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
-  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
-  databaseURL: process.env.NEXT_PUBLIC_FIREBASE_DATABASE_URL,
-  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
-  measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
-};
+export const firebaseConfig: FirebaseOptions = clientFirebaseConfig;
 
 /**
  * Firebase admin configuration
@@ -53,11 +45,10 @@ export function getFirebaseConfigDebugInfo(): Record<string, string> {
  */
 export function isFirebaseConfigValid(): boolean {
   return !!(
-    firebaseConfig.apiKey && 
-    (firebaseConfig.apiKey as string).startsWith('AIza') &&
-    firebaseConfig.authDomain &&
-    firebaseConfig.projectId &&
-    firebaseConfig.appId
+    isFirebaseConfigComplete() &&
+    firebaseConfig.apiKey &&
+    typeof firebaseConfig.apiKey === 'string' &&
+    (firebaseConfig.apiKey as string).startsWith('AIza')
   );
 }
 
