@@ -22,8 +22,7 @@ import VpnKeyIcon from '@mui/icons-material/VpnKey';
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
 import MainLayout from '@/components/layouts/MainLayout';
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { materialLight } from 'react-syntax-highlighter/dist/cjs/styles/prism';
+import { SyntaxHighlighter, materialLight } from '@/lib/support/syntax-highlighter';
 
 // Code examples
 const codeExamples = {
