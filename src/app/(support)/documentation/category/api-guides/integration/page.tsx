@@ -30,8 +30,7 @@ import Link from 'next/link';
 import { useSession } from 'next-auth/react';
 import MainLayout from '@/components/layouts/MainLayout';
 // Import with proper type handling for optional dependencies
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { materialLight } from 'react-syntax-highlighter/dist/cjs/styles/prism';
+import { SyntaxHighlighter, materialLight } from '@/lib/support/syntax-highlighter';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';

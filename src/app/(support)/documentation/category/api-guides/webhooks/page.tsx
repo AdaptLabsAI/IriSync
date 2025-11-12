@@ -26,8 +26,7 @@ import Link from 'next/link';
 import { useSession } from 'next-auth/react';
 import MainLayout from '@/components/layouts/MainLayout';
 // Import with proper type handling for optional dependencies
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { materialLight } from 'react-syntax-highlighter/dist/cjs/styles/prism';
+import { SyntaxHighlighter, materialLight } from '@/lib/support/syntax-highlighter';
 import SecurityIcon from '@mui/icons-material/Security';
 import EventIcon from '@mui/icons-material/Event';
 import VerifiedIcon from '@mui/icons-material/Verified';

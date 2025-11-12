@@ -38,8 +38,7 @@ import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import CodeIcon from '@mui/icons-material/Code';
 import GetAppIcon from '@mui/icons-material/GetApp';
 // Import with proper type handling for optional dependencies
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { materialLight } from 'react-syntax-highlighter/dist/cjs/styles/prism';
+import { SyntaxHighlighter, materialLight } from '@/lib/support/syntax-highlighter';
 
 // Interface for API endpoints
 interface ApiEndpoint {
