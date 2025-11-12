@@ -7,6 +7,7 @@ import { compare } from 'bcryptjs';
 import { generateOrganizationId, validateUserOrganizationConnections } from './utils';
 import { UserRole } from './models/User';
 import { SubscriptionTier as BaseSubscriptionTier } from './subscription/models/subscription';
+import { getGoogleOAuthClientId } from '@/lib/server/env';
 
 // Define authentication options
 export const authOptions: NextAuthOptions = {
@@ -20,7 +21,7 @@ export const authOptions: NextAuthOptions = {
   providers: [
     // Google OAuth provider
     GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID || '',
+      clientId: getGoogleOAuthClientId(),
       clientSecret: process.env.GOOGLE_CLIENT_SECRET || '',
       profile(profile) {
         return {

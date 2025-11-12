@@ -118,7 +118,7 @@ Make sure the following variables are set in your `.env.local` file:
 ```
 FIREBASE_ADMIN_PROJECT_ID=irisai-c83a1
 FIREBASE_ADMIN_CLIENT_EMAIL=firebase-adminsdk-fbsvc@irisai-c83a1.iam.gserviceaccount.com
-FIREBASE_ADMIN_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\n...[full private key]...-----END PRIVATE KEY-----\n"
+FIREBASE_ADMIN_PRIVATE_KEY=<paste-your-private-key-with-escaped-newlines>
 ```
 
 ### Running the Script

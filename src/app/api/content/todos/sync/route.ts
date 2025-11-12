@@ -16,6 +16,7 @@ import { firestore } from '@/lib/core/firebase';
 import { logger } from '@/lib/core/logging/logger';
 import { handleApiError } from '@/lib/features/auth/utils';
 import axios from 'axios';
+import { getGoogleOAuthClientId } from '@/lib/server/env';
 
 interface ExternalTask {
   id: string;
@@ -311,7 +312,7 @@ export async function POST(request: NextRequest) {
 async function refreshGoogleToken(refreshToken: string) {
   try {
     const response = await axios.post('https://oauth2.googleapis.com/token', {
-      client_id: process.env.GOOGLE_CLIENT_ID,
+      client_id: getGoogleOAuthClientId(),
       client_secret: process.env.GOOGLE_CLIENT_SECRET,
       refresh_token: refreshToken,
       grant_type: 'refresh_token'

@@ -1,5 +1,6 @@
 import { AIProvider, AIProviderConfig, AIRequestOptions } from './AIProvider';
 import { GoogleGenerativeAI, HarmBlockThreshold, HarmCategory } from '@google/generative-ai';
+import { getGenLangApiKey } from '@/lib/server/env';
 
 interface GeminiMessage {
   role: string;
@@ -13,7 +14,7 @@ export class GeminiProvider implements AIProvider {
   constructor(config: AIProviderConfig) {
     this.config = config;
     this.client = new GoogleGenerativeAI(
-      config.apiKey || process.env.GOOGLE_API_KEY || ''
+      config.apiKey || getGenLangApiKey()
     );
   }
   

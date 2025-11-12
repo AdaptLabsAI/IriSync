@@ -21,8 +21,7 @@ export const firebaseConfig = {
  */
 export const firebaseAdminConfig = {
   clientEmail: process.env.FIREBASE_ADMIN_CLIENT_EMAIL || 'firebase-adminsdk@irisync-app.iam.gserviceaccount.com',
-  privateKey: process.env.FIREBASE_ADMIN_PRIVATE_KEY?.replace(/\\n/g, '\n') || 
-    '-----BEGIN PRIVATE KEY-----\nDummy-Key-Content\n-----END PRIVATE KEY-----\n',
+  privateKey: process.env.FIREBASE_ADMIN_PRIVATE_KEY?.replace(/\\n/g, '\n') || '',
   projectId: process.env.FIREBASE_ADMIN_PROJECT_ID || process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID || 'irisync-app'
 };
 
@@ -32,7 +31,7 @@ export const firebaseAdminConfig = {
 export const aiProviderKeys = {
   openai: process.env.OPENAI_API_KEY,
   anthropic: process.env.ANTHROPIC_API_KEY,
-  google: process.env.GOOGLE_API_KEY
+  google: process.env.GEN_LANG_API_KEY
 };
 
 /**

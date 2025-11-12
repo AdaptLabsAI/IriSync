@@ -1,12 +1,17 @@
 @echo off
-echo Setting Firebase Admin environment variables...
+echo Preparing Firebase Admin environment variables...
 
-set FIREBASE_ADMIN_PROJECT_ID=irisai-c83a1
-set FIREBASE_ADMIN_CLIENT_EMAIL=firebase-adminsdk-fbsvc@irisai-c83a1.iam.gserviceaccount.com
-set FIREBASE_ADMIN_PRIVATE_KEY=-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDl08paa0GXSymZ\nkGlO1WAerZhS7mhxtM2O8PTX6QmYhhfqDfGq3q3F3JMx4UFGFEDW+eWtZeTxJ6mT\ndkfSbw0iWfo2QNVn95B24QRtnQ0R4WtCLy30Lk1ubW3zWy67DVY9ISFAaC9FuAGU\ntuMTVYG4dJ7/NwC3f72MNZJp8+/bH0owYLLEMtp22/BftTXcEqDSvSpUehTRDVPW\nGTSLti8AYivvf5F4hEiioJ/+fiDoe1lOGeJxF7IapUQkyW0XDNWclCmZTk3sfEsa\njujO+yIGOQDXScvb+cZmJdoOE90xsxFYpOXbWa8fUI+NDvti5OEKIBkYNaI/0prq\nSvfIf2kLAgMBAAECggEAXWanE/wG2f+X1mrUAU/CEnWmM/3jwGIkL/VI6/4vAids\nzJgCINkCcijkQR80MdDFURiZ+NAyLLdbuSwWoDS1d8JtZ2MN14TK1yU3cXyj9SJR\nPsKBwHyYx0n9pyrlYOtYots18kDlBUZ0jgWNXywe3eG3RC0MQ4bMd5DGAf06+yeF\nBztzSdsZ96L4PF6dVumYcGS54D1d8BxdF+kEdyOri0/J7yluWDV09gc7RpQxn8el\nxcGjEdwAOvyseU1SsHGYPNGZqtIFuF/mYj/qvljehVuc2A1C9r2MscsgeZBca1Hm\n/k8I6kvlYoh5O62l92Nyxm5Ey+82a16C1K8j+SlzUQKBgQD2YyHpxwWAPyFLYShd\nIukkhI6dpklUoeuN6l2FAaSKghuH1icR1SOeghBmP4WMNe98e1OZlPhXA6xy2mSn\n2/om6t4kfxWQ6ffsrTZZEbSUrQs/Oct9Hw6Ian8jSdqrhwD8vKY7sYcECeOM9/o4\nRagVylNAm7eJx+s6c918bn7sdwKBgQDuy0K4jzvjGfsyyyhPaf2Q5NhFi0S90xsc\nNnQ6aKNK9bL0J+xaBWtrIvbnvXoHwCnibFGW+FAp3jI0e/4KNQPL/KVeH2VQAiy4\nriVIYQaHhXzb+VLBqASaeUxNkY+zPI+SO7QpZCiZwlfPCuTNhf4CHUisBTDtyVhV\nG/ZARlKRDQKBgDip08LP4pP78MxFK+M/hB7B3YqkE3lDQ8j/fUJ5fj3cbjhvJ80S\nF378qojZUv1L6ifWtQM9H1/jmGVRlJSGIqGQokYCdBM/u6TSsQ0K5VzL7yo7QHEm\nE1GMLHERKxkHk1KMkC5qRYLIQ2zIGuOWIXHhdgQFy9AECjUHMIjNYKNBAoGBAL7I\nFl5t0WL39wH13hbUj4mbzE6DnkAq0ZYQy3t+7jeNZZQ78VFa0x+dp7YuY7idhtkn\nwWfkq+dHZsUX6zcsdAQdreEtJDxwAFrsh0z0d8r+k2sMH1opasQf9R5kFXMWB37F\nxILtSqLN6mm4QmURkIcP7mfBHf5cxv34gR2JEZ5hAoGABCrc6+XGjCcWoKj42V0z\nzxiqEsd0gccyrJ7zhLYv09sBgxOLK94s+HEtspIqcaxGsOMUweQFQ+vF4x8TUcBD\nAsfE3lzvc0hzVCprPeokchBBz8WU8QI7iPLmHBxHbaAswk9Qi2ZHe6D1bdNAHj9n\nJA5Cx9VQrUonOeF5ByRy8NA=\n-----END PRIVATE KEY-----
+echo Using default project configuration unless environment variables are already set.
+if not defined FIREBASE_ADMIN_PROJECT_ID set FIREBASE_ADMIN_PROJECT_ID=irisai-c83a1
+if not defined FIREBASE_ADMIN_CLIENT_EMAIL set FIREBASE_ADMIN_CLIENT_EMAIL=firebase-adminsdk-fbsvc@irisai-c83a1.iam.gserviceaccount.com
+
+if not defined FIREBASE_ADMIN_PRIVATE_KEY (
+  echo FIREBASE_ADMIN_PRIVATE_KEY is not defined. Please set it in your environment before running this script.
+  exit /b 1
+)
 
 echo Running migration script...
 node scripts/compiled/migrate-organization-roles.js %1
 
 echo Migration complete.
-pause 
+pause

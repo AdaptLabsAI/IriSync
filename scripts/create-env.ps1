@@ -17,7 +17,7 @@ NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID=G-XXXXXXXXXX
 # Firebase Admin SDK
 FIREBASE_ADMIN_PROJECT_ID=your-project
 FIREBASE_ADMIN_CLIENT_EMAIL=firebase-adminsdk@example.iam.gserviceaccount.com
-FIREBASE_ADMIN_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----`n<replace-with-private-key>`n-----END PRIVATE KEY-----"
+FIREBASE_ADMIN_PRIVATE_KEY=<paste-your-private-key-with-escaped-newlines>
 
 # Next Auth
 NEXTAUTH_URL=http://localhost:3000
