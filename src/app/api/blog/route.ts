@@ -19,7 +19,7 @@ import {
   Timestamp
 } from 'firebase/firestore';
 import { logger } from '@/lib/core/logging/logger';
-import { BlogPost, BlogPostStatus, BlogPostMetadata } from '@/lib/features/blog/models';
+import { BlogPost, BlogPostStatus, BlogPostMetadata } from '@/lib/blog/models';
 import { z } from 'zod';
 
 // Validation schemas

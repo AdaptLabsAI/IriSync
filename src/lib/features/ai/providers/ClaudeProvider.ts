@@ -1,5 +1,5 @@
 import { AIProvider, AIProviderConfig, AIRequestOptions } from './AIProvider';
-import Anthropic from '@anthropic-ai/sdk';
+import Anthropic from '@/lib/integrations/anthropic/client';
 
 export class ClaudeProvider implements AIProvider {
   private client: Anthropic;

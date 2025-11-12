@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { collection, getDocs, addDoc, query, where, orderBy, Timestamp, doc, getDoc } from 'firebase/firestore';
 import { firestore as db } from '@/lib/core/firebase';
-import { JobApplicationStatus } from '@/lib/features/careers/models';
+import { JobApplicationStatus } from '@/lib/careers/models';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/features/auth';
 import { handleApiError } from '@/lib/features/auth/utils';

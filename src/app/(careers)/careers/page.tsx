@@ -23,7 +23,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import WorkIcon from '@mui/icons-material/Work';
 import { useRouter } from 'next/navigation';
-import { JobListing, JobType, JobLocationType } from '@/lib/features/careers/models';
+import { JobListing, JobType, JobLocationType } from '@/lib/careers/models';
 import { collection, getDocs, query, where, orderBy, Timestamp } from 'firebase/firestore';
 import { firestore } from '@/lib/core/firebase/client';
 

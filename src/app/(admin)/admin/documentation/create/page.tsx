@@ -33,7 +33,7 @@ import {
   KnowledgeContentType,
   KnowledgeStatus,
   KnowledgeAccessLevel
-} from '@/lib/features/knowledge/models';
+} from '@/lib/knowledge/models';
 import dynamic from 'next/dynamic';
 import AdminLayout from '@/components/layouts/AdminLayout';
 import Grid from '@/components/ui/grid';

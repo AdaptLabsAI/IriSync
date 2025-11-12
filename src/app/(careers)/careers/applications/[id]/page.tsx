@@ -40,7 +40,7 @@ import LinkIcon from '@mui/icons-material/Link';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import { useRouter } from 'next/navigation';
 import AdminGuard from '@/components/admin/AdminGuard';
-import { JobApplication, JobListing } from '@/lib/features/careers/models';
+import { JobApplication, JobListing } from '@/lib/careers/models';
 
 interface PageProps {
   params: {

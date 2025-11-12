@@ -1,5 +1,5 @@
 import OpenAI from 'openai';
-import { Anthropic } from '@anthropic-ai/sdk';
+import { Anthropic } from '@/lib/integrations/anthropic/client';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
 /**

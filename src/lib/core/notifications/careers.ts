@@ -1,4 +1,4 @@
-import { JobApplication, JobListing } from '@/lib/features/careers/models';
+import { JobApplication, JobListing } from '@/lib/careers/models';
 import { sendEmail } from '@/lib/core/notifications/email';
 
 interface EmailContext {

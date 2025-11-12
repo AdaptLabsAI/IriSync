@@ -6,8 +6,8 @@ import {
   KnowledgeStatus, 
   KnowledgeAccessLevel,
   KnowledgeContentFilter
-} from '@/lib/features/knowledge/models';
-import { KnowledgeRepository } from '@/lib/features/knowledge/repository';
+} from '@/lib/knowledge/models';
+import { KnowledgeRepository } from '@/lib/knowledge/repository';
 import { z } from 'zod';
 import { logger } from '@/lib/core/logging/logger';
 

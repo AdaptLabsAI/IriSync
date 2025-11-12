@@ -47,7 +47,7 @@ import { useRouter } from 'next/navigation';
 import { formatDistanceToNow } from 'date-fns';
 import AdminGuard from '@/components/admin/AdminGuard';
 import useApi from '@/hooks/useApi';
-import { BlogPost, BlogPostStatus } from '@/lib/features/blog/models';
+import { BlogPost, BlogPostStatus } from '@/lib/blog/models';
 
 interface TabPanelProps {
   children?: React.ReactNode;
