@@ -15,6 +15,7 @@ export const firebaseConfig: FirebaseOptions = {
   authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
   projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
   storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+  databaseURL: process.env.NEXT_PUBLIC_FIREBASE_DATABASE_URL,
   messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
   measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
@@ -40,6 +41,7 @@ export function getFirebaseConfigDebugInfo(): Record<string, string> {
     authDomain: firebaseConfig.authDomain as string || 'Not set',
     projectId: firebaseConfig.projectId as string || 'Not set',
     storageBucket: firebaseConfig.storageBucket as string || 'Not set',
+    databaseURL: (firebaseConfig.databaseURL as string) || 'Not set',
     messagingSenderId: firebaseConfig.messagingSenderId as string || 'Not set',
     appId: firebaseConfig.appId as string || 'Not set',
     measurementId: (firebaseConfig.measurementId as string) || 'Not set'

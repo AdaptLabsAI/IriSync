@@ -110,13 +110,14 @@ export default function FirebaseTestPage() {
                   Add the following environment variables with actual values from your Firebase project:
                 </Typography>
                 <pre className="mt-2 p-4 bg-gray-100 rounded-lg text-sm overflow-x-auto">
-{`NEXT_PUBLIC_FIREBASE_API_KEY=AIzaSyDlBDjRu1H4jJrMs4SrX8_jf4Ct7c4NyXs
-NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=irisai-c83a1.firebaseapp.com
-NEXT_PUBLIC_FIREBASE_PROJECT_ID=irisai-c83a1
-NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=irisai-c83a1.firebasestorage.app
-NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=232183317678
-NEXT_PUBLIC_FIREBASE_APP_ID=1:232183317678:web:d74ca5697898ee1b7c193f
-NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID=G-0VTK29PTKM`}
+{`NEXT_PUBLIC_FIREBASE_API_KEY=your-public-firebase-api-key
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your-project.firebaseapp.com
+NEXT_PUBLIC_FIREBASE_DATABASE_URL=https://your-project-default-rtdb.firebaseio.com
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=your-project
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=your-project.firebasestorage.app
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=000000000000
+NEXT_PUBLIC_FIREBASE_APP_ID=1:000000000000:web:0000000000000000000000
+NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID=G-XXXXXXXXXX`}
                 </pre>
               </li>
               <li>
