@@ -36,6 +36,14 @@ npm install
 cp env.fixed.txt .env.local
 ```
 
+   The `env.fixed.txt` template now contains placeholder values only. Replace each value with credentials from your Firebase, NextAuth, and other platform integrations before running the application. To audit every runtime secret required by the codebase, generate the Vercel environment checklist:
+
+```bash
+npm run env:report
+```
+
+   The command writes a human-readable report to `docs/deployment/vercel-environment-checklist.md` that groups missing variables by integration and flags anything not already defined in `.env.local`.
+
 4. Run the development server:
 ```bash
 npm run dev

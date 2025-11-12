@@ -15,7 +15,8 @@
     "firebase:deploy-all": "firebase deploy",
     "seed:ai-models": "node scripts/seed-ai-models.js",
     "deploy:seed": "node scripts/deploy-seed.js",
-    "deploy:seed:force": "node scripts/deploy-seed.js --force"
+    "deploy:seed:force": "node scripts/deploy-seed.js --force",
+    "env:report": "node scripts/report-env.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.16.0",
