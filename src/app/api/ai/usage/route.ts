@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
-import { authOptions } from '@/lib/auth';
-import { firestore } from '@/lib/firebase';
+import { authOptions } from '@/lib/features/auth';
+import { firestore } from '@/lib/core/firebase';
 import { collection, doc, getDoc, getDocs, query, where, setDoc } from 'firebase/firestore';
 
 // Define the structure of the usage stats

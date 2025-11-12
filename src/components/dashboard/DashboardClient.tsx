@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { DashboardData } from '@/lib/dashboard/types';
+import { DashboardData } from '@/lib/features/dashboard/types';
 
 interface DashboardClientProps {
   data: DashboardData;

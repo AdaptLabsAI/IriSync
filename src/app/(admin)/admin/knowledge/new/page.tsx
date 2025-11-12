@@ -24,7 +24,7 @@ import { useRouter } from 'next/navigation';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import AdminGuard from '@/components/admin/AdminGuard';
 import useApi from '@/hooks/useApi';
-import { KnowledgeContentType, KnowledgeStatus, KnowledgeAccessLevel } from '@/lib/knowledge/models';
+import { KnowledgeContentType, KnowledgeStatus, KnowledgeAccessLevel } from '@/lib/features/knowledge/models';
 
 // Categories for dropdown
 const CATEGORIES = [

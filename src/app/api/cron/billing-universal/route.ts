@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { universalBillingService } from '@/lib/subscription/UniversalBillingService';
-import { logger } from '@/lib/logging/logger';
+import { universalBillingService } from '@/lib/features/subscription/UniversalBillingService';
+import { logger } from '@/lib/core/logging/logger';
 
 /**
  * Universal billing cron endpoint for all subscription tiers

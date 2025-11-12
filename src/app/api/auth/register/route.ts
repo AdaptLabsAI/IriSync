@@ -1,12 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { SubscriptionTier as BaseSubscriptionTier } from '@/lib/subscription/models/subscription';
-import { UserService } from '@/lib/auth/user-service';
-import { UserRole } from '@/lib/models/User';
-import { auth as clientAuth } from '@/lib/firebase';
-import { auth as adminAuth } from '@/lib/firebase/admin';
-import logger from '@/lib/logging/logger';
-import { handleApiError } from '@/lib/auth/utils';
+import { SubscriptionTier as BaseSubscriptionTier } from '@/lib/features/subscription/models/subscription';
+import { UserService } from '@/lib/features/auth/user-service';
+import { UserRole } from '@/lib/core/models/User';
+import { auth as clientAuth } from '@/lib/core/firebase';
+import { auth as adminAuth } from '@/lib/core/firebase/admin';
+import logger from '@/lib/core/logging/logger';
+import { handleApiError } from '@/lib/features/auth/utils';
 
 // Service instances
 const userService = new UserService();

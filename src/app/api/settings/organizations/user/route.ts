@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
-import { authOptions } from '@/lib/auth';
-import { getOrganizationsByUser } from '@/lib/team/users/organization';
-import { logger } from '@/lib/logging/logger';
+import { authOptions } from '@/lib/features/auth';
+import { getOrganizationsByUser } from '@/lib/features/team/users/organization';
+import { logger } from '@/lib/core/logging/logger';
 
 interface SessionUser {
   id?: string;

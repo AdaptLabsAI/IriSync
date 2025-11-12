@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth';
-import { PexelsAdapter } from '@/lib/integrations/PexelsAdapter';
-import { logger } from '@/lib/logging/logger';
+import { authOptions } from '@/lib/features/auth';
+import { PexelsAdapter } from '@/lib/features/integrations/PexelsAdapter';
+import { logger } from '@/lib/core/logging/logger';
 
 export async function POST(request: NextRequest) {
   try {

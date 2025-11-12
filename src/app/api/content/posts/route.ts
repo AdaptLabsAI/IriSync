@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { verifyAuthentication, handleApiError } from '@/lib/auth/utils';
-import { PlatformType, AttachmentType } from '@/lib/platforms/client';
-import { getFirestore, serverTimestamp } from '@/lib/firebase/admin';
-import { logger } from '@/lib/logging/logger';
+import { verifyAuthentication, handleApiError } from '@/lib/features/auth/utils';
+import { PlatformType, AttachmentType } from '@/lib/features/platforms/client';
+import { getFirestore, serverTimestamp } from '@/lib/core/firebase/admin';
+import { logger } from '@/lib/core/logging/logger';
 
 /**
  * GET handler for retrieving content posts

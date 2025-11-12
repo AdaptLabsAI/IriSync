@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { collection, getDocs, addDoc, query, where, orderBy, Timestamp } from 'firebase/firestore';
-import { firestore as db } from '@/lib/firebase';
-import { JobListing, JobStatus } from '@/lib/careers/models';
+import { firestore as db } from '@/lib/core/firebase';
+import { JobListing, JobStatus } from '@/lib/features/careers/models';
 import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth';
-import { handleApiError } from '@/lib/auth/utils';
+import { authOptions } from '@/lib/features/auth';
+import { handleApiError } from '@/lib/features/auth/utils';
 
 // GET handler for retrieving job listings with optional filtering
 export async function GET(request: NextRequest) {

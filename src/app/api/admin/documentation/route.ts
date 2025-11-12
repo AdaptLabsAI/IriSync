@@ -1,15 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { withAdmin } from '@/lib/auth/route-handlers';
+import { withAdmin } from '@/lib/features/auth/route-handlers';
 import { 
   KnowledgeContent, 
   KnowledgeContentType, 
   KnowledgeStatus, 
   KnowledgeAccessLevel,
   KnowledgeContentFilter
-} from '@/lib/knowledge/models';
-import { KnowledgeRepository } from '@/lib/knowledge/repository';
+} from '@/lib/features/knowledge/models';
+import { KnowledgeRepository } from '@/lib/features/knowledge/repository';
 import { z } from 'zod';
-import { logger } from '@/lib/logging/logger';
+import { logger } from '@/lib/core/logging/logger';
 
 /**
  * Documentation filter schema

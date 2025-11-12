@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
-import { firestore } from '@/lib/firebase/client';
+import { firestore } from '@/lib/core/firebase/client';
 import { collection, query, where, getDocs } from 'firebase/firestore';
-import { logger } from '@/lib/logging/logger';
+import { logger } from '@/lib/core/logging/logger';
 
 export async function GET(request: NextRequest) {
   try {

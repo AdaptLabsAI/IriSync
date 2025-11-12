@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { RetrievalEngine } from '@/lib/rag/retrieval-engine';
+import { RetrievalEngine } from '@/lib/features/rag/retrieval-engine';
 
 const retrievalEngine = new RetrievalEngine();
 

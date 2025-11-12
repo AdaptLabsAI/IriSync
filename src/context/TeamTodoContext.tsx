@@ -15,8 +15,8 @@ import {
   TodoStatus,
   TodoType
 } from '@/types/todo';
-import { OrganizationRole, TeamRole } from '@/lib/user/types';
-import { logger } from '@/lib/logging/logger';
+import { OrganizationRole, TeamRole } from '@/lib/features/user/types';
+import { logger } from '@/lib/core/logging/logger';
 
 interface TeamTodoContextType {
   // Data

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getFirestore, getAuth } from '@/lib/firebase/admin';
-import { getStripeClient } from '@/lib/billing/stripe';
-import { handleApiError } from '@/lib/auth/utils';
+import { getFirestore, getAuth } from '@/lib/core/firebase/admin';
+import { getStripeClient } from '@/lib/features/billing/stripe';
+import { handleApiError } from '@/lib/features/auth/utils';
 
 /**
  * Price IDs for different subscription tiers and additional seats

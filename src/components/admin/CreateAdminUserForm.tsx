@@ -14,7 +14,7 @@ import {
   FormHelperText,
   SelectChangeEvent
 } from '@mui/material';
-import { UserRole } from '@/lib/models/User';
+import { UserRole } from '@/lib/core/models/User';
 
 interface CreateAdminUserFormProps {
   onSuccess?: (userData: any) => void;

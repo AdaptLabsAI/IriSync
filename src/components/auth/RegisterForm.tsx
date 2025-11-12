@@ -25,8 +25,8 @@ import {
 } from '@mui/material';
 import { Visibility, VisibilityOff, Check as CheckIcon, Info as InfoIcon } from '@mui/icons-material';
 import { SubscriptionTier } from '../../lib/subscription/models/subscription';
-import { SUBSCRIPTION_PLANS } from '@/lib/subscription/utils';
-import { ReferralService } from '@/lib/referrals/ReferralService';
+import { SUBSCRIPTION_PLANS } from '@/lib/features/subscription/utils';
+import { ReferralService } from '@/lib/features/referrals/ReferralService';
 
 // Mock imports for missing modules
 import PlanSelection from './PlanSelection';

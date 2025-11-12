@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
-import { authOptions } from '@/lib/auth';
+import { authOptions } from '@/lib/features/auth';
 import { TokenService } from '../../../../lib/tokens/token-service';
 import { AIOrchestrationFactory } from '../../../../lib/ai/orchestration/AIOrchestrationFactory';
 import { AITaskConfig } from '../../../../lib/ai/orchestration/AIOrchestrator';

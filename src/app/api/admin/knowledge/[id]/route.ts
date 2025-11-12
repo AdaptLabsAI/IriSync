@@ -1,16 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { withAdmin } from '@/lib/auth/route-handlers';
-import { firebaseAdmin, serverTimestamp } from '@/lib/firebase/admin';
+import { withAdmin } from '@/lib/features/auth/route-handlers';
+import { firebaseAdmin, serverTimestamp } from '@/lib/core/firebase/admin';
 import { Timestamp } from 'firebase/firestore';
 import { z } from 'zod';
-import { logger } from '@/lib/logging/logger';
+import { logger } from '@/lib/core/logging/logger';
 import { 
   KnowledgeContentType, 
   KnowledgeStatus, 
   KnowledgeAccessLevel 
-} from '@/lib/knowledge/models';
-import { KnowledgeRepository } from '@/lib/knowledge/repository';
-import { generateSlug } from '@/lib/utils/slug';
+} from '@/lib/features/knowledge/models';
+import { KnowledgeRepository } from '@/lib/features/knowledge/repository';
+import { generateSlug } from '@/lib/core/utils/slug';
 
 // Collection name constants
 const AUDIT_LOGS_COLLECTION = 'auditLogs';

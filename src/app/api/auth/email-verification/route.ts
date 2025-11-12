@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { firebaseAdmin } from '@/lib/firebase/admin';
-import { sendEmailVerificationLink } from '@/lib/notifications/email';
-import { logger } from '@/lib/logging/logger';
+import { firebaseAdmin } from '@/lib/core/firebase/admin';
+import { sendEmailVerificationLink } from '@/lib/core/notifications/email';
+import { logger } from '@/lib/core/logging/logger';
 
 export async function POST(request: NextRequest) {
   try {

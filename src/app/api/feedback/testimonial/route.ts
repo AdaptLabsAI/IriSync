@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
-import { authOptions } from '@/lib/auth';
-import { getFirestore } from '@/lib/firebase/admin';
+import { authOptions } from '@/lib/features/auth';
+import { getFirestore } from '@/lib/core/firebase/admin';
 
 export async function POST(request: NextRequest) {
   try {

@@ -1,11 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { collection, getDocs, addDoc, query, where, orderBy, Timestamp, doc, getDoc } from 'firebase/firestore';
-import { firestore as db } from '@/lib/firebase';
-import { JobApplicationStatus } from '@/lib/careers/models';
+import { firestore as db } from '@/lib/core/firebase';
+import { JobApplicationStatus } from '@/lib/features/careers/models';
 import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth';
-import { handleApiError } from '@/lib/auth/utils';
-import { sendApplicationConfirmation, sendNewApplicationNotification } from '@/lib/notifications/careers';
+import { authOptions } from '@/lib/features/auth';
+import { handleApiError } from '@/lib/features/auth/utils';
+import { sendApplicationConfirmation, sendNewApplicationNotification } from '@/lib/core/notifications/careers';
 
 // GET handler for retrieving job applications (admin only)
 export async function GET(request: NextRequest) {

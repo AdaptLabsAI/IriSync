@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth';
-import { firestore } from '@/lib/firebase';
+import { authOptions } from '@/lib/features/auth';
+import { firestore } from '@/lib/core/firebase';
 import { 
   doc, 
   getDoc, 
@@ -9,8 +9,8 @@ import {
   deleteDoc,
   serverTimestamp
 } from 'firebase/firestore';
-import { logger } from '@/lib/logging/logger';
-import { BlogPost, BlogPostStatus } from '@/lib/blog/models';
+import { logger } from '@/lib/core/logging/logger';
+import { BlogPost, BlogPostStatus } from '@/lib/features/blog/models';
 import { z } from 'zod';
 
 // Validation schema for updating blog posts

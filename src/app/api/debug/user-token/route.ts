@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
-import { authOptions } from '@/lib/auth';
+import { authOptions } from '@/lib/features/auth';
 import { getToken } from 'next-auth/jwt';
-import { hasPermission, systemRoles } from '@/lib/team/role';
+import { hasPermission, systemRoles } from '@/lib/features/team/role';
 
 export async function GET(request: NextRequest) {
   try {

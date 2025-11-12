@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getAuth, getFirestore } from '@/lib/firebase/admin';
+import { getAuth, getFirestore } from '@/lib/core/firebase/admin';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { getApp } from 'firebase/app';
 import { doc, getDoc } from 'firebase/firestore';
-import { handleApiError } from '@/lib/auth/utils';
+import { handleApiError } from '@/lib/features/auth/utils';
 
 /**
  * Login route handler

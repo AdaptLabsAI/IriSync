@@ -26,7 +26,7 @@ import Link from 'next/link';
 import { useSession } from 'next-auth/react';
 import MainLayout from '@/components/layouts/MainLayout';
 // Import with proper type handling for optional dependencies
-import { SyntaxHighlighter, materialLight } from '@/lib/support/syntax-highlighter';
+import { SyntaxHighlighter, materialLight } from '@/lib/features/support/syntax-highlighter';
 import SecurityIcon from '@mui/icons-material/Security';
 import EventIcon from '@mui/icons-material/Event';
 import VerifiedIcon from '@mui/icons-material/Verified';

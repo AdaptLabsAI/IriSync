@@ -1,16 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
-import { firestore } from '@/lib/firebase/client';
+import { firestore } from '@/lib/core/firebase/client';
 import { collection, query, where, getDocs } from 'firebase/firestore';
-import { logger } from '@/lib/logging/logger';
-import { HubspotAdapter } from '@/lib/integrations/HubspotAdapter';
-import { SalesforceAdapter } from '@/lib/integrations/SalesforceAdapter';
-import { ZohoCRMAdapter } from '@/lib/integrations/ZohoCRMAdapter';
-import { PipedriveAdapter } from '@/lib/integrations/PipedriveAdapter';
-import { DynamicsCRMAdapter } from '@/lib/integrations/DynamicsCRMAdapter';
-import { SugarCRMAdapter } from '@/lib/integrations/SugarCRMAdapter';
-import { handleApiError } from '@/lib/auth/utils';
-import { TokenRefreshService } from '@/lib/integrations/TokenRefreshService';
+import { logger } from '@/lib/core/logging/logger';
+import { HubspotAdapter } from '@/lib/features/integrations/HubspotAdapter';
+import { SalesforceAdapter } from '@/lib/features/integrations/SalesforceAdapter';
+import { ZohoCRMAdapter } from '@/lib/features/integrations/ZohoCRMAdapter';
+import { PipedriveAdapter } from '@/lib/features/integrations/PipedriveAdapter';
+import { DynamicsCRMAdapter } from '@/lib/features/integrations/DynamicsCRMAdapter';
+import { SugarCRMAdapter } from '@/lib/features/integrations/SugarCRMAdapter';
+import { handleApiError } from '@/lib/features/auth/utils';
+import { TokenRefreshService } from '@/lib/features/integrations/TokenRefreshService';
 
 // Type definitions for CRM deals
 interface HubspotDeal {

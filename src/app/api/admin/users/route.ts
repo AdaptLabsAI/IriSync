@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { withSuperAdmin, withAdmin } from '@/lib/auth/route-handlers';
-import { firestore } from '@/lib/firebase';
-import { firebaseAdmin, getFirestore, getAuth, serverTimestamp } from '@/lib/firebase/admin';
+import { withSuperAdmin, withAdmin } from '@/lib/features/auth/route-handlers';
+import { firestore } from '@/lib/core/firebase';
+import { firebaseAdmin, getFirestore, getAuth, serverTimestamp } from '@/lib/core/firebase/admin';
 import { 
   collection, 
   doc, 
@@ -18,9 +18,9 @@ import {
   Timestamp 
 } from 'firebase/firestore';
 import { z } from 'zod';
-import { UserRole, SubscriptionTier, SubscriptionTierValues, getDefaultFeaturesForTier } from '@/lib/models/User';
+import { UserRole, SubscriptionTier, SubscriptionTierValues, getDefaultFeaturesForTier } from '@/lib/core/models/User';
 import { hash } from 'bcryptjs';
-import { logger } from '@/lib/logging/logger';
+import { logger } from '@/lib/core/logging/logger';
 
 // Collection name constants
 const USERS_COLLECTION = 'users';

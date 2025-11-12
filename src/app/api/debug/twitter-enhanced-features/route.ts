@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { PlatformProviderFactory } from '@/lib/platforms/factory';
-import { PlatformType } from '@/lib/platforms/PlatformProvider';
-import { TwitterProvider } from '@/lib/platforms/providers/TwitterProvider';
-import { logger } from '@/lib/logging/logger';
+import { PlatformProviderFactory } from '@/lib/features/platforms/factory';
+import { PlatformType } from '@/lib/features/platforms/PlatformProvider';
+import { TwitterProvider } from '@/lib/features/platforms/providers/TwitterProvider';
+import { logger } from '@/lib/core/logging/logger';
 
 /**
  * Debug endpoint to test enhanced Twitter API functionality

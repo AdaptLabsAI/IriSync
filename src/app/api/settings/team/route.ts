@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
-import { authOptions } from '@/lib/auth';
-import { firestore } from '@/lib/firebase';
+import { authOptions } from '@/lib/features/auth';
+import { firestore } from '@/lib/core/firebase';
 import { doc, getDoc, setDoc, updateDoc, arrayUnion, arrayRemove, DocumentData, runTransaction } from 'firebase/firestore';
 import { v4 as uuidv4 } from 'uuid';
 import { 
@@ -12,8 +12,8 @@ import {
   firestoreToOrganization,
   organizationToFirestore,
   OrganizationRoleType
-} from '@/lib/models/Organization';
-import { OrganizationRole, TeamRole } from '@/lib/user/types';
+} from '@/lib/core/models/Organization';
+import { OrganizationRole, TeamRole } from '@/lib/features/user/types';
 
 // Type definitions
 interface SessionUser {

@@ -1,14 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
-import { authOptions } from '@/lib/auth';
-import { AIProvider } from '@/lib/ai/providers';
-import { ChatbotService, UserTier } from '@/lib/support/chatbot-service';
-import { TokenService } from '@/lib/tokens/token-service';
-import { firestore } from '@/lib/firebase/admin';
-import { logger } from '@/lib/logging/logger';
+import { authOptions } from '@/lib/features/auth';
+import { AIProvider } from '@/lib/features/ai/providers';
+import { ChatbotService, UserTier } from '@/lib/features/support/chatbot-service';
+import { TokenService } from '@/lib/features/tokens/token-service';
+import { firestore } from '@/lib/core/firebase/admin';
+import { logger } from '@/lib/core/logging/logger';
 import { config } from '@/lib/config';
-import { isMemberOfOrganization } from '@/lib/team/users/organization';
-import { getUserSubscriptionTier } from '@/lib/subscription';
+import { isMemberOfOrganization } from '@/lib/features/team/users/organization';
+import { getUserSubscriptionTier } from '@/lib/features/subscription';
 
 interface SessionUser {
   id?: string;

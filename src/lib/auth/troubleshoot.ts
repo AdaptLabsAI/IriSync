@@ -2,8 +2,8 @@
 
 import { getAuth, signInWithPopup, GoogleAuthProvider, Auth } from 'firebase/auth';
 import { FirebaseApp } from 'firebase/app';
-import app from '@/lib/firebase/client';
-import { firebaseConfig, isFirebaseConfigValid, getFirebaseConfigDebugInfo } from '@/lib/firebase/config';
+import app from '@/lib/core/firebase/client';
+import { firebaseConfig, isFirebaseConfigValid, getFirebaseConfigDebugInfo } from '@/lib/core/firebase/config';
 
 /**
  * Debug Google Authentication configuration

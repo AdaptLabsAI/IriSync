@@ -1,15 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { verifyAuthentication } from '@/lib/auth/utils';
-import { getFirestore, serverTimestamp } from '@/lib/firebase/admin';
-import { logger } from '@/lib/logging/logger';
+import { verifyAuthentication } from '@/lib/features/auth/utils';
+import { getFirestore, serverTimestamp } from '@/lib/core/firebase/admin';
+import { logger } from '@/lib/core/logging/logger';
 import { 
   TIER_TOKEN_LIMITS, 
   ENTERPRISE_TOKENS_PER_ADDITIONAL_SEAT, 
   SubscriptionTier,
   TokenPurchaseTransaction
-} from '@/lib/ai/models/tokens';
+} from '@/lib/features/ai/models/tokens';
 import { v4 as uuidv4 } from 'uuid';
-import { isMemberOfOrganization, hasOrganizationRole, OrganizationRole } from '@/lib/team/users/organization';
+import { isMemberOfOrganization, hasOrganizationRole, OrganizationRole } from '@/lib/features/team/users/organization';
 
 /**
  * Get subscription information for the current user's organization

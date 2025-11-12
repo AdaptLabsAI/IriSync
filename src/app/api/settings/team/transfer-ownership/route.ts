@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
-import { authOptions } from '@/lib/auth';
-import { firestore } from '@/lib/firebase';
+import { authOptions } from '@/lib/features/auth';
+import { firestore } from '@/lib/core/firebase';
 import { doc, getDoc, runTransaction, Timestamp } from 'firebase/firestore';
 import { 
   Organization, 
@@ -9,7 +9,7 @@ import {
   FirestoreOrganizationMember, 
   OrganizationRoleType,
   firestoreToOrganization
-} from '@/lib/models/Organization';
+} from '@/lib/core/models/Organization';
 
 interface SessionUser {
   name?: string | null;

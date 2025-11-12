@@ -21,7 +21,7 @@ import {
 } from "@mui/icons-material";
 import { Archive, ListTodo, User, Lock, Pencil } from "lucide-react";
 import { Edit, Trash2 } from "lucide-react";
-import { firestore } from "@/lib/firebase/client";
+import { firestore } from "@/lib/core/firebase/client";
 import { collection, addDoc, serverTimestamp, query, orderBy, onSnapshot } from "firebase/firestore";
 import { useEffect } from "react";
 

@@ -2,9 +2,9 @@
 
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { CircularProgress, Alert, Box, List, ListItem, ListItemText, Avatar, TextField, MenuItem, Select, InputLabel, FormControl, Button, Chip, Toolbar, Typography, Divider, Skeleton, IconButton, Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
-import { getMediaContent, deleteMedia, getMediaDetails, updateMedia, assignMedia, addMediaNotes, uploadMedia, listMediaFolders, createMediaFolder, updateMediaFolder, deleteMediaFolder } from '@/lib/api/content';
+import { getMediaContent, deleteMedia, getMediaDetails, updateMedia, assignMedia, addMediaNotes, uploadMedia, listMediaFolders, createMediaFolder, updateMediaFolder, deleteMediaFolder } from '@/lib/core/api/content';
 import MediaGrid from '@/components/content/media/MediaGrid';
-import type { MediaContent, MediaFolder } from '@/lib/content/models/media';
+import type { MediaContent, MediaFolder } from '@/lib/features/content/models/media';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import InfoIcon from '@mui/icons-material/Info';

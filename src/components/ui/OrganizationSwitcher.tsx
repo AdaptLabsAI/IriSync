@@ -12,7 +12,7 @@ import {
 import { useSession } from 'next-auth/react';
 import { Button } from './button';
 import { Building, ChevronDown, Loader2 } from 'lucide-react';
-import { getUserProfile } from '@/lib/auth/userProfile';
+import { getUserProfile } from '@/lib/features/auth/userProfile';
 
 interface Organization {
   id: string;

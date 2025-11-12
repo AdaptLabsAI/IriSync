@@ -39,7 +39,7 @@ import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
 import { useRouter, useSearchParams } from 'next/navigation';
 import DashboardLayout from '../../../../components/layouts/DashboardLayout';
 import { collection, getDocs, query, where, orderBy, Timestamp } from 'firebase/firestore';
-import { firestore } from '@/lib/firebase/client';
+import { firestore } from '@/lib/core/firebase/client';
 
 // Define properly typed interfaces
 interface ContentPost {

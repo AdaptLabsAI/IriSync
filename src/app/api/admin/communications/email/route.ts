@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { withAdmin } from '@/lib/auth/route-handlers';
-import { firestore } from '@/lib/firebase';
+import { withAdmin } from '@/lib/features/auth/route-handlers';
+import { firestore } from '@/lib/core/firebase';
 import { 
   collection, 
   doc, 
@@ -13,9 +13,9 @@ import {
   orderBy,
   limit
 } from 'firebase/firestore';
-import { logger } from '@/lib/logging/logger';
+import { logger } from '@/lib/core/logging/logger';
 import { z } from 'zod';
-import unifiedEmailService from '@/lib/notifications/unified-email-service';
+import unifiedEmailService from '@/lib/core/notifications/unified-email-service';
 
 // Email validation schema
 const emailRequestSchema = z.object({

@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { systemRoles, createRole, Role, Permission } from '@/lib/team/role';
-import { RoleService } from '@/lib/team/role-service';
+import { systemRoles, createRole, Role, Permission } from '@/lib/features/team/role';
+import { RoleService } from '@/lib/features/team/role-service';
 import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth';
-import auditLogger from '@/lib/team/activity/audit-logger';
-import { withAdmin } from '@/lib/auth/route-handlers';
+import { authOptions } from '@/lib/features/auth';
+import auditLogger from '@/lib/features/team/activity/audit-logger';
+import { withAdmin } from '@/lib/features/auth/route-handlers';
 
 // Handler for GET /api/admin/roles - Get all roles
 export const GET = withAdmin(async (req: NextRequest, adminUser: any) => {

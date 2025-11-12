@@ -38,7 +38,7 @@ import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import CodeIcon from '@mui/icons-material/Code';
 import GetAppIcon from '@mui/icons-material/GetApp';
 // Import with proper type handling for optional dependencies
-import { SyntaxHighlighter, materialLight } from '@/lib/support/syntax-highlighter';
+import { SyntaxHighlighter, materialLight } from '@/lib/features/support/syntax-highlighter';
 
 // Interface for API endpoints
 interface ApiEndpoint {

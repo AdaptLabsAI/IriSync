@@ -1,12 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
-import { firestore } from '@/lib/firebase';
-import { RAGSystem } from '@/lib/rag/RAGSystem';
-import { logger } from '@/lib/logging/logger';
-import { NotificationService } from '@/lib/notifications/NotificationService';
-import { TokenRepository } from '@/lib/tokens/token-repository';
-import { TokenService } from '@/lib/tokens/token-service';
-import { trackDirectTokenUsage } from '@/lib/tokens/token-tracker';
+import { firestore } from '@/lib/core/firebase';
+import { RAGSystem } from '@/lib/features/rag/RAGSystem';
+import { logger } from '@/lib/core/logging/logger';
+import { NotificationService } from '@/lib/core/notifications/NotificationService';
+import { TokenRepository } from '@/lib/features/tokens/token-repository';
+import { TokenService } from '@/lib/features/tokens/token-service';
+import { trackDirectTokenUsage } from '@/lib/features/tokens/token-tracker';
 
 // Create necessary services
 const tokenRepository = new TokenRepository(firestore as any);

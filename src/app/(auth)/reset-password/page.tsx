@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { Layout, Container, Typography, Button, Card } from '@/components/ui/new';
-import { sendPasswordResetRequest, getFirebaseErrorMessage } from '@/lib/auth/customAuth';
+import { sendPasswordResetRequest, getFirebaseErrorMessage } from '@/lib/features/auth/customAuth';
 
 export default function ResetPasswordPage() {
   const [email, setEmail] = useState('');

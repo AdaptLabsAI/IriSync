@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getFirestore, serverTimestamp } from '@/lib/firebase/admin';
-import { getStripeClient } from '@/lib/billing/stripe';
-import { logger } from '@/lib/logging/logger';
+import { getFirestore, serverTimestamp } from '@/lib/core/firebase/admin';
+import { getStripeClient } from '@/lib/features/billing/stripe';
+import { logger } from '@/lib/core/logging/logger';
 import Stripe from 'stripe';
-import { ReferralService } from '@/lib/referrals/ReferralService';
+import { ReferralService } from '@/lib/features/referrals/ReferralService';
 
 // The webhook secret should be set in environment variables
 const STRIPE_WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET;
@@ -608,7 +608,7 @@ export async function POST(req: NextRequest) {
               }
               
               // Restore account if it was suspended/closed
-              const { universalBillingService } = await import('@/lib/subscription/UniversalBillingService');
+              const { universalBillingService } = await import('@/lib/features/subscription/UniversalBillingService');
               try {
                 await universalBillingService.restoreAccount(orgId);
                 logger.info('Account restored after successful payment', {
@@ -677,7 +677,7 @@ export async function POST(req: NextRequest) {
               });
               
               // Trigger universal billing service to check status
-              const { universalBillingService } = await import('@/lib/subscription/UniversalBillingService');
+              const { universalBillingService } = await import('@/lib/features/subscription/UniversalBillingService');
               try {
                 await universalBillingService.checkBillingStatus(orgId);
                 logger.info('Triggered billing status check after payment failure', {

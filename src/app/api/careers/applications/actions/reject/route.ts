@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { doc, getDoc, updateDoc, Timestamp } from 'firebase/firestore';
-import { firestore as db } from '@/lib/firebase';
+import { firestore as db } from '@/lib/core/firebase';
 import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth';
-import { sendRejectionEmail } from '@/lib/notifications/careers';
-import { handleApiError } from '@/lib/auth/utils';
+import { authOptions } from '@/lib/features/auth';
+import { sendRejectionEmail } from '@/lib/core/notifications/careers';
+import { handleApiError } from '@/lib/features/auth/utils';
 
 export async function POST(request: NextRequest) {
   try {

@@ -8,7 +8,7 @@ import {
   processAIGeneratedContent,
   formatHashtagsForPlatform,
   combineContentAndHashtags
-} from '@/lib/ai/utils/content-branding';
+} from '@/lib/features/ai/utils/content-branding';
 
 describe('IriSync Content Branding', () => {
   describe('analyzeContent', () => {

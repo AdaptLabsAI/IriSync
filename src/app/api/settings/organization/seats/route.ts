@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { verifyAuthentication } from '@/lib/auth/utils';
-import { getFirestore, serverTimestamp } from '@/lib/firebase/admin';
-import { logger } from '@/lib/logging/logger';
-import { getStripeClient } from '@/lib/billing/stripe';
-import { hasOrganizationRole, OrganizationRole, isMemberOfOrganization } from '@/lib/team/users/organization';
-import { SubscriptionTier, SubscriptionTierValues } from '@/lib/models/User';
+import { verifyAuthentication } from '@/lib/features/auth/utils';
+import { getFirestore, serverTimestamp } from '@/lib/core/firebase/admin';
+import { logger } from '@/lib/core/logging/logger';
+import { getStripeClient } from '@/lib/features/billing/stripe';
+import { hasOrganizationRole, OrganizationRole, isMemberOfOrganization } from '@/lib/features/team/users/organization';
+import { SubscriptionTier, SubscriptionTierValues } from '@/lib/core/models/User';
 
 /**
  * API endpoint to add seats to an organization's subscription

@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Layout, Container, Typography, Button, Card } from '@/components/ui/new';
-import { get } from '@/lib/utils/api-client';
+import { get } from '@/lib/core/utils/api-client';
 import {  CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { LinearProgress } from "@mui/material";

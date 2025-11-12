@@ -1,12 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { AIProviderFactory } from '@/lib/ai/providers/AIProviderFactory';
-import { ProviderType } from '@/lib/ai/providers/ProviderType';
-import { logger } from '@/lib/logging/logger';
-import { firestore } from '@/lib/firebase';
+import { AIProviderFactory } from '@/lib/features/ai/providers/AIProviderFactory';
+import { ProviderType } from '@/lib/features/ai/providers/ProviderType';
+import { logger } from '@/lib/core/logging/logger';
+import { firestore } from '@/lib/core/firebase';
 import { collection, getDocs, query as firestoreQuery, limit as firestoreLimit, orderBy, where } from 'firebase/firestore';
-import { RAGService, RAGQueryParams } from '@/lib/rag/rag-service';
+import { RAGService, RAGQueryParams } from '@/lib/features/rag/rag-service';
 import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth';
+import { authOptions } from '@/lib/features/auth';
 
 // Collection names
 const KB_COLLECTION = 'knowledgeContent';

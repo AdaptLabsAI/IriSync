@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { withAdmin } from '@/lib/auth/route-handlers';
-import { firestore } from '@/lib/firebase';
-import { firebaseAdmin, getFirestore, serverTimestamp } from '@/lib/firebase/admin';
+import { withAdmin } from '@/lib/features/auth/route-handlers';
+import { firestore } from '@/lib/core/firebase';
+import { firebaseAdmin, getFirestore, serverTimestamp } from '@/lib/core/firebase/admin';
 import { 
   collection, 
   doc, 
@@ -15,16 +15,16 @@ import {
   Timestamp 
 } from 'firebase/firestore';
 import { z } from 'zod';
-import { logger } from '@/lib/logging/logger';
+import { logger } from '@/lib/core/logging/logger';
 import { 
   KnowledgeContent, 
   KnowledgeContentFilter,
   KnowledgeContentType, 
   KnowledgeStatus, 
   KnowledgeAccessLevel 
-} from '@/lib/knowledge/models';
-import { KnowledgeRepository } from '@/lib/knowledge/repository';
-import { generateSlug } from '@/lib/utils/slug';
+} from '@/lib/features/knowledge/models';
+import { KnowledgeRepository } from '@/lib/features/knowledge/repository';
+import { generateSlug } from '@/lib/core/utils/slug';
 
 // Collection name constants
 const KNOWLEDGE_COLLECTION = 'knowledgeContent';

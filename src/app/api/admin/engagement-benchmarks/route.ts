@@ -1,15 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { withAdmin } from '@/lib/auth/route-handlers';
-import { firebaseAdmin, serverTimestamp } from '@/lib/firebase/admin';
+import { withAdmin } from '@/lib/features/auth/route-handlers';
+import { firebaseAdmin, serverTimestamp } from '@/lib/core/firebase/admin';
 import { Timestamp } from 'firebase/firestore';
 import { z } from 'zod';
-import { logger } from '@/lib/logging/logger';
+import { logger } from '@/lib/core/logging/logger';
 import { 
   DEFAULT_ENGAGEMENT_BENCHMARKS, 
   EngagementBenchmarkLevels, 
   PlatformEngagementBenchmarks 
-} from '@/lib/analytics/models/engagement-benchmarks';
-import { EngagementBenchmarkService } from '@/lib/analytics/engagement-benchmark-service';
+} from '@/lib/features/analytics/models/engagement-benchmarks';
+import { EngagementBenchmarkService } from '@/lib/features/analytics/engagement-benchmark-service';
 
 // Collection name constants
 const AUDIT_LOGS_COLLECTION = 'auditLogs';

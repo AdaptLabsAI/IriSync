@@ -5,8 +5,8 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { Layout, Container, Typography, Button, Card } from '@/components/ui/new';
 // Import our custom auth functions instead of direct Firebase functions
-import { loginWithEmail, loginWithGoogle, getFirebaseErrorMessage } from '@/lib/auth/customAuth';
-import { getFirebaseAuthDiagnostics } from '@/lib/auth/troubleshoot';
+import { loginWithEmail, loginWithGoogle, getFirebaseErrorMessage } from '@/lib/features/auth/customAuth';
+import { getFirebaseAuthDiagnostics } from '@/lib/features/auth/troubleshoot';
 
 // Add a client-side check function to verify dashboard redirection is safe
 const safeDashboardRedirect = (router: any, url: string) => {

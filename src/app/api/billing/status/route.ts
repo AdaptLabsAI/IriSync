@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getFirestore } from '@/lib/firebase/admin';
-import { getStripeClient } from '@/lib/billing/stripe';
-import { logger } from '@/lib/logging/logger';
+import { getFirestore } from '@/lib/core/firebase/admin';
+import { getStripeClient } from '@/lib/features/billing/stripe';
+import { logger } from '@/lib/core/logging/logger';
 
 /**
  * Simple endpoint to check if user has access to the platform

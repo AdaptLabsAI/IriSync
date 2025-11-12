@@ -1,16 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth';
-import { getStripeClient } from '@/lib/billing/stripe';
+import { authOptions } from '@/lib/features/auth';
+import { getStripeClient } from '@/lib/features/billing/stripe';
 import { getDoc, doc, updateDoc, Timestamp } from 'firebase/firestore';
-import { firestore } from '@/lib/firebase';
-import { logger } from '@/lib/logging/logger';
-import { universalBillingService, BillingStatus } from '@/lib/subscription/UniversalBillingService';
-import { TrialService } from '@/lib/subscription/TrialService';
-import { VerificationService } from '@/lib/subscription/VerificationService';
-import { SubscriptionTier } from '@/lib/subscription/models/subscription';
-import { getFirestore } from '@/lib/firebase/admin';
-import { handleApiError } from '@/lib/auth/utils';
+import { firestore } from '@/lib/core/firebase';
+import { logger } from '@/lib/core/logging/logger';
+import { universalBillingService, BillingStatus } from '@/lib/features/subscription/UniversalBillingService';
+import { TrialService } from '@/lib/features/subscription/TrialService';
+import { VerificationService } from '@/lib/features/subscription/VerificationService';
+import { SubscriptionTier } from '@/lib/features/subscription/models/subscription';
+import { getFirestore } from '@/lib/core/firebase/admin';
+import { handleApiError } from '@/lib/features/auth/utils';
 
 /**
  * Universal Billing Subscription API with Trial Fraud Protection

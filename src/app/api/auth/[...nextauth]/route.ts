@@ -1,10 +1,10 @@
 import NextAuth from "next-auth";
-import { authOptions } from "@/lib/auth";
+import { authOptions } from "@/lib/features/auth";
 import { cookies } from "next/headers";
-import { logger } from "@/lib/logging/logger";
-import { handleApiError } from "@/lib/auth/utils";
+import { logger } from "@/lib/core/logging/logger";
+import { handleApiError } from "@/lib/features/auth/utils";
 import { NextResponse } from "next/server";
-import { ensureUserDocument } from "@/lib/auth/sync";
+import { ensureUserDocument } from "@/lib/features/auth/sync";
 
 // Extend the handler to synchronize cookies and ensure Firestore documents
 const handler = async (req: Request, context: any) => {

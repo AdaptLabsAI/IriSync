@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
-import { authOptions } from '@/lib/auth/nextauth';
-import { TwitterProvider } from '@/lib/platforms/providers/TwitterProvider';
-import { TwitterSocialInboxAdapter } from '@/lib/content/TwitterSocialInboxAdapter';
-import { logger } from '@/lib/logging/logger';
-import { firestore } from '@/lib/firebase';
+import { authOptions } from '@/lib/features/auth/nextauth';
+import { TwitterProvider } from '@/lib/features/platforms/providers/TwitterProvider';
+import { TwitterSocialInboxAdapter } from '@/lib/features/content/TwitterSocialInboxAdapter';
+import { logger } from '@/lib/core/logging/logger';
+import { firestore } from '@/lib/core/firebase';
 import { collection, doc, getDoc, getDocs, query, where, orderBy, limit } from 'firebase/firestore';
 
 /**

@@ -2,9 +2,9 @@
 
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { onAuthStateChanged, User } from 'firebase/auth';
-import { auth } from '@/lib/firebase/client';
+import { auth } from '@/lib/core/firebase/client';
 import { useRouter, usePathname } from 'next/navigation';
-import { ensureUserProfile } from '@/lib/auth/userProfile';
+import { ensureUserProfile } from '@/lib/features/auth/userProfile';
 
 // Define the Auth context type
 interface AuthContextType {

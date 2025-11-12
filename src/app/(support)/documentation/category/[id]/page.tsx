@@ -26,7 +26,7 @@ import AddIcon from '@mui/icons-material/Add';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Link from 'next/link';
 import { collection, getDocs, query, where, orderBy, limit } from 'firebase/firestore';
-import { firestore } from '@/lib/firebase';
+import { firestore } from '@/lib/core/firebase';
 import { useSession } from 'next-auth/react';
 import MainLayout from '@/components/layouts/MainLayout';
 

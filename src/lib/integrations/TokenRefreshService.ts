@@ -1,4 +1,4 @@
-import { firestore } from '@/lib/firebase/client';
+import { firestore } from '@/lib/core/firebase/client';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { HubspotAdapter } from './HubspotAdapter';
 import { SalesforceAdapter } from './SalesforceAdapter';
@@ -6,7 +6,7 @@ import { ZohoCRMAdapter } from './ZohoCRMAdapter';
 import { PipedriveAdapter } from './PipedriveAdapter';
 import { DynamicsCRMAdapter } from './DynamicsCRMAdapter';
 import { SugarCRMAdapter } from './SugarCRMAdapter';
-import { logger } from '@/lib/logging/logger';
+import { logger } from '@/lib/core/logging/logger';
 import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
 

@@ -11,8 +11,8 @@ import {
   deleteDoc,
   serverTimestamp
 } from 'firebase/firestore';
-import { firestore } from '@/lib/firebase';
-import { handleApiError } from '@/lib/auth/utils';
+import { firestore } from '@/lib/core/firebase';
+import { handleApiError } from '@/lib/features/auth/utils';
 
 export async function GET(request: NextRequest) {
   try {

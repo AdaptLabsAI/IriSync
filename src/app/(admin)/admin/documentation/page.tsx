@@ -41,7 +41,7 @@ import {
   KnowledgeContentType,
   KnowledgeStatus,
   KnowledgeAccessLevel
-} from '@/lib/knowledge/models';
+} from '@/lib/features/knowledge/models';
 import AdminLayout from '@/components/layouts/AdminLayout';
 import Grid from '@/components/ui/grid';
 

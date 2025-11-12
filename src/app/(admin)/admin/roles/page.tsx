@@ -47,7 +47,7 @@ import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import InfoIcon from '@mui/icons-material/Info';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import AdminGuard from '@/components/admin/AdminGuard';
-import { Role, Permission } from '@/lib/team/role';
+import { Role, Permission } from '@/lib/features/team/role';
 
 // Available resources and actions for permissions
 const availableResources = [

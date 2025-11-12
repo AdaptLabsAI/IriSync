@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { auth, firestore } from '@/lib/firebase/admin';
+import { auth, firestore } from '@/lib/core/firebase/admin';
 
 export async function GET(request: NextRequest) {
   try {

@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth';
-import { logger } from '@/lib/logging/logger';
+import { authOptions } from '@/lib/features/auth';
+import { logger } from '@/lib/core/logging/logger';
 
 /**
  * Handles user logout by clearing all session cookies

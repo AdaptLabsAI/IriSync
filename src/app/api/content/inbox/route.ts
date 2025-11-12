@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
-import { authOptions } from '@/lib/auth/nextauth';
-import { SocialInboxController } from '@/lib/content/SocialInboxController';
-import { MessageStatus, MessagePriority, MessageType } from '@/lib/content/SocialInboxService';
-import { PlatformType } from '@/lib/platforms/PlatformProvider';
-import { logger } from '@/lib/logging/logger';
+import { authOptions } from '@/lib/features/auth/nextauth';
+import { SocialInboxController } from '@/lib/features/content/SocialInboxController';
+import { MessageStatus, MessagePriority, MessageType } from '@/lib/features/content/SocialInboxService';
+import { PlatformType } from '@/lib/features/platforms/PlatformProvider';
+import { logger } from '@/lib/core/logging/logger';
 
 /**
  * GET /api/content/inbox

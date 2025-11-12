@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { verifyAuthentication, handleApiError } from '@/lib/auth/utils';
-import { logger } from '@/lib/logging/logger';
-import { PlatformType } from '@/lib/platforms/models';
-import { PlatformAdapterFactory } from '@/lib/platforms/adapters/PlatformAdapterFactory';
+import { verifyAuthentication, handleApiError } from '@/lib/features/auth/utils';
+import { logger } from '@/lib/core/logging/logger';
+import { PlatformType } from '@/lib/features/platforms/models';
+import { PlatformAdapterFactory } from '@/lib/features/platforms/adapters/PlatformAdapterFactory';
 
 /**
  * OAuth callback handler for all platform integrations

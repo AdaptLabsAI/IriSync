@@ -10,7 +10,7 @@ import {
   UserCredential,
   updateProfile
 } from 'firebase/auth';
-import { auth, firestore } from '@/lib/firebase/client';
+import { auth, firestore } from '@/lib/core/firebase/client';
 import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
 
 /**

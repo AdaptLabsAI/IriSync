@@ -1,6 +1,6 @@
 import React from 'react';
 // import { Header } from './Header';
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/core/utils';
 
 interface LayoutProps {
   children: React.ReactNode;

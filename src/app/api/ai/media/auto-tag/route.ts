@@ -3,7 +3,7 @@ import formidable from 'formidable';
 import OpenAI from 'openai';
 import { Readable } from 'stream';
 import { getServerSession } from 'next-auth/next';
-import { firestore } from '@/lib/firebase';
+import { firestore } from '@/lib/core/firebase';
 import { collection, doc, getDoc, getDocs, query, where, setDoc } from 'firebase/firestore';
 
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });

@@ -1,5 +1,5 @@
 import { getFirestore } from 'firebase-admin/firestore';
-import { OrganizationRole, TeamRole } from '@/lib/user/types';
+import { OrganizationRole, TeamRole } from '@/lib/features/user/types';
 
 /**
  * Workflow approval status

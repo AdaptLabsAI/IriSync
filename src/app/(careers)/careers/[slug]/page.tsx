@@ -47,8 +47,8 @@ import {
   ApplicationQuestion,
   QuestionType,
   ApplicationAnswer
-} from '@/lib/careers/models';
-import { firestore } from '@/lib/firebase/client';
+} from '@/lib/features/careers/models';
+import { firestore } from '@/lib/core/firebase/client';
 import { collection, getDocs, query, where, Timestamp, addDoc } from 'firebase/firestore';
 
 interface PageProps {

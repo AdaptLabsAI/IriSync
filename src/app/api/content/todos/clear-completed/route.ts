@@ -7,9 +7,9 @@ import {
   where,
   writeBatch
 } from 'firebase/firestore';
-import { firestore } from '@/lib/firebase';
-import { logger } from '@/lib/logging/logger';
-import { handleApiError } from '@/lib/auth/utils';
+import { firestore } from '@/lib/core/firebase';
+import { logger } from '@/lib/core/logging/logger';
+import { handleApiError } from '@/lib/features/auth/utils';
 
 export async function POST(request: NextRequest) {
   try {

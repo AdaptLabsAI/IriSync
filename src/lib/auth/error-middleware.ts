@@ -9,7 +9,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { verifyAuthentication } from './utils';
 import { ensureUserDocument } from './sync';
-import { logger } from '@/lib/logging/logger';
+import { logger } from '@/lib/core/logging/logger';
 
 /**
  * Middleware that handles Firestore permission denied errors

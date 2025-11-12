@@ -1,4 +1,4 @@
-import { firebaseAdmin } from '@/lib/firebase/admin';
+import { firebaseAdmin } from '@/lib/core/firebase/admin';
 import { 
   Referral, 
   ReferralStatus, 
@@ -7,11 +7,11 @@ import {
   ReferralCodeValidation,
   REFERRAL_CONFIG,
   DEFAULT_REFERRAL_REWARD_TOKENS
-} from '@/lib/models/Referral';
-import { TokenService } from '@/lib/tokens/token-service';
-import { TokenRepository } from '@/lib/tokens/token-repository';
-import { NotificationService, NotificationPriority, NotificationCategory } from '@/lib/notifications/NotificationService';
-import { logger } from '@/lib/logging/logger';
+} from '@/lib/core/models/Referral';
+import { TokenService } from '@/lib/features/tokens/token-service';
+import { TokenRepository } from '@/lib/features/tokens/token-repository';
+import { NotificationService, NotificationPriority, NotificationCategory } from '@/lib/core/notifications/NotificationService';
+import { logger } from '@/lib/core/logging/logger';
 import crypto from 'crypto';
 
 export class ReferralService {

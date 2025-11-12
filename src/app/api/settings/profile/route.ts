@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
-import { authOptions } from '@/lib/auth';
-import { getFirestore, serverTimestamp } from '@/lib/firebase/admin';
-import { logger } from '@/lib/logging/logger';
+import { authOptions } from '@/lib/features/auth';
+import { getFirestore, serverTimestamp } from '@/lib/core/firebase/admin';
+import { logger } from '@/lib/core/logging/logger';
 
 const firestore = getFirestore();
 

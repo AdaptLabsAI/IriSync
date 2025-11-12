@@ -2,7 +2,7 @@ import React from 'react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { AlertCircle, RefreshCcw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { ensureUserDocument } from '@/lib/auth/client';
+import { ensureUserDocument } from '@/lib/features/auth/client';
 
 interface ErrorAlertProps {
   title?: string;

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth';
-import { firestore } from '@/lib/firebase';
+import { authOptions } from '@/lib/features/auth';
+import { firestore } from '@/lib/core/firebase';
 import { 
   collection, 
   doc, 
@@ -17,8 +17,8 @@ import {
   limit,
   Timestamp
 } from 'firebase/firestore';
-import { logger } from '@/lib/logging/logger';
-import { JobListing, JobApplication, JobType, JobLocationType } from '@/lib/careers/models';
+import { logger } from '@/lib/core/logging/logger';
+import { JobListing, JobApplication, JobType, JobLocationType } from '@/lib/features/careers/models';
 import { z } from 'zod';
 
 /**

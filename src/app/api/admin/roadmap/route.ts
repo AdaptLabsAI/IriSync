@@ -1,9 +1,9 @@
 import { NextResponse } from 'next/server';
-import { firestore } from '@/lib/firebase';
+import { firestore } from '@/lib/core/firebase';
 import { collection, getDocs, addDoc, serverTimestamp, query, orderBy, where, doc, getDoc } from 'firebase/firestore';
 import { getServerSession } from 'next-auth/next';
-import { authOptions } from '@/lib/auth';
-import { withAdmin } from '@/lib/auth/route-handlers';
+import { authOptions } from '@/lib/features/auth';
+import { withAdmin } from '@/lib/features/auth/route-handlers';
 
 // Helper function to check if user is admin
 async function isUserAdmin(email: string | null | undefined) {

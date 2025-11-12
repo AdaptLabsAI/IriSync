@@ -3,8 +3,8 @@
 import React, { useState, useEffect } from 'react';
 import { Layout, Container, Typography, Button, Card, Loading } from '@/components/ui/new';
 import { getAuth, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
-import { firebaseConfig, getFirebaseConfigDebugInfo, isFirebaseConfigValid } from '@/lib/firebase/config';
-import { debugGoogleAuth } from '@/lib/auth/troubleshoot';
+import { firebaseConfig, getFirebaseConfigDebugInfo, isFirebaseConfigValid } from '@/lib/core/firebase/config';
+import { debugGoogleAuth } from '@/lib/features/auth/troubleshoot';
 
 export default function FirebaseTestPage() {
   const [testResult, setTestResult] = useState<{

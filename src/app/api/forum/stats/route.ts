@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getForumStats } from '@/lib/forum/stats';
+import { getForumStats } from '@/lib/features/forum/stats';
 
 export async function GET() {
   try {

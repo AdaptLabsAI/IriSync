@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { verifyAuthentication } from '@/lib/auth/utils';
-import { ensureUserDocument } from '@/lib/auth/sync';
-import { logger } from '@/lib/logging/logger';
-import { handleApiError } from '@/lib/auth/utils';
+import { verifyAuthentication } from '@/lib/features/auth/utils';
+import { ensureUserDocument } from '@/lib/features/auth/sync';
+import { logger } from '@/lib/core/logging/logger';
+import { handleApiError } from '@/lib/features/auth/utils';
 
 /**
  * Ensure user document API route

@@ -1,11 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
-import { authOptions } from '@/lib/auth';
-import { getOrganization, isMemberOfOrganization } from '@/lib/team/users/organization';
-import { firestore } from '@/lib/firebase/admin';
-import { logger } from '@/lib/logging/logger';
-import { TeamAuditLogger } from '@/lib/team/activity/audit-logger';
-import { AuditLogCategory, AuditLogSeverity } from '@/lib/team/activity/audit-logger';
+import { authOptions } from '@/lib/features/auth';
+import { getOrganization, isMemberOfOrganization } from '@/lib/features/team/users/organization';
+import { firestore } from '@/lib/core/firebase/admin';
+import { logger } from '@/lib/core/logging/logger';
+import { TeamAuditLogger } from '@/lib/features/team/activity/audit-logger';
+import { AuditLogCategory, AuditLogSeverity } from '@/lib/features/team/activity/audit-logger';
 
 interface SessionUser {
   id?: string;

@@ -28,7 +28,7 @@ import { useRouter, usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { getAuth, signOut } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
-import { firestore } from '@/lib/firebase';
+import { firestore } from '@/lib/core/firebase';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import TeamSwitcher from '@/components/ui/TeamSwitcher';

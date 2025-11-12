@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { firestore } from '@/lib/firebase';
+import { firestore } from '@/lib/core/firebase';
 import { doc, updateDoc, deleteDoc, getDoc, serverTimestamp } from 'firebase/firestore';
-import { withAdmin } from '@/lib/auth/route-handlers';
+import { withAdmin } from '@/lib/features/auth/route-handlers';
 
 // GET a specific roadmap item
 export const GET = withAdmin(async (request: NextRequest, adminUser: any) => {

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { withSuperAdmin } from '@/lib/auth/route-handlers';
-import { firestore } from '@/lib/firebase';
-import { getFirestore as getAdminFirestore, serverTimestamp } from '@/lib/firebase/admin';
+import { withSuperAdmin } from '@/lib/features/auth/route-handlers';
+import { firestore } from '@/lib/core/firebase';
+import { getFirestore as getAdminFirestore, serverTimestamp } from '@/lib/core/firebase/admin';
 import * as admin from 'firebase-admin';
 import { 
   collection, 
@@ -19,8 +19,8 @@ import {
   deleteDoc
 } from 'firebase/firestore';
 import { z } from 'zod';
-import { logger } from '@/lib/logging/logger';
-import { RedisService } from '@/lib/cache/redis-service';
+import { logger } from '@/lib/core/logging/logger';
+import { RedisService } from '@/lib/core/cache/redis-service';
 
 // Collection name constants
 const SYSTEM_SETTINGS_COLLECTION = 'systemSettings';

@@ -15,8 +15,8 @@ import {
 import ContentCreationForm from '../../../../../components/content/ContentCreationForm';
 import { useRouter } from 'next/navigation';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
-import { auth, firestore } from '@/lib/firebase/client';
-import { logger } from '@/lib/logging/logger';
+import { auth, firestore } from '@/lib/core/firebase/client';
+import { logger } from '@/lib/core/logging/logger';
 
 export default function ContentCreationPage() {
   const [tabValue, setTabValue] = useState(0);

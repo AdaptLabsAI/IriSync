@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
-import { authOptions } from '@/lib/auth';
-import { firestore } from '@/lib/firebase';
+import { authOptions } from '@/lib/features/auth';
+import { firestore } from '@/lib/core/firebase';
 import { doc, getDoc, setDoc, updateDoc, arrayUnion, arrayRemove, deleteDoc } from 'firebase/firestore';
-import { generateOAuthUrl } from '@/lib/platforms/auth/oauth';
+import { generateOAuthUrl } from '@/lib/features/platforms/auth/oauth';
 
 // Type definitions
 interface SessionUser {

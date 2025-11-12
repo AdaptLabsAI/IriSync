@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { withAdmin } from '@/lib/auth/route-handlers';
-import { firestore } from '@/lib/firebase/admin';
-import { AITaskType } from '@/lib/ai/models/AITask';
-import { logger } from '@/lib/logging/logger';
-import { TOKEN_COST_PER_OPERATION } from '@/lib/tokens/models/token-limits';
-import { MONTHLY_TOKEN_LIMITS } from '@/lib/tokens/models/token-limits';
+import { withAdmin } from '@/lib/features/auth/route-handlers';
+import { firestore } from '@/lib/core/firebase/admin';
+import { AITaskType } from '@/lib/features/ai/models/AITask';
+import { logger } from '@/lib/core/logging/logger';
+import { TOKEN_COST_PER_OPERATION } from '@/lib/features/tokens/models/token-limits';
+import { MONTHLY_TOKEN_LIMITS } from '@/lib/features/tokens/models/token-limits';
 
 // Settings document ID in Firestore
 const SETTINGS_DOC_ID = 'token_settings';

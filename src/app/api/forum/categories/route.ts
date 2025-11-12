@@ -1,13 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
-import ForumService from '@/lib/content/ForumService';
-import { logger } from '@/lib/logging/logger';
+import ForumService from '@/lib/features/content/ForumService';
+import { logger } from '@/lib/core/logging/logger';
 import { z } from 'zod';
-import { getCurrentUser, isAdmin } from '@/lib/auth/token';
-import { UserRole } from '@/lib/models/User';
+import { getCurrentUser, isAdmin } from '@/lib/features/auth/token';
+import { UserRole } from '@/lib/core/models/User';
 import { doc, getDoc } from 'firebase/firestore';
-import { firestore } from '@/lib/firebase';
-import { getCategories } from '@/lib/forum/categories';
+import { firestore } from '@/lib/core/firebase';
+import { getCategories } from '@/lib/features/forum/categories';
 
 // Schema for category creation
 const createCategorySchema = z.object({

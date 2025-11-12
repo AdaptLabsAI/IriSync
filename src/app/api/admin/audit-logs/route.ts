@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { withAdmin } from '@/lib/auth/route-handlers';
-import { TeamAuditLogger, AuditLogCategory, AuditLogSeverity, AuditLogEntry } from '@/lib/team/activity/audit-logger';
-import { getFirestore } from '@/lib/firebase/admin';
-import { logger as appLogger } from '@/lib/logging/logger';
+import { withAdmin } from '@/lib/features/auth/route-handlers';
+import { TeamAuditLogger, AuditLogCategory, AuditLogSeverity, AuditLogEntry } from '@/lib/features/team/activity/audit-logger';
+import { getFirestore } from '@/lib/core/firebase/admin';
+import { logger as appLogger } from '@/lib/core/logging/logger';
 import { parse } from 'json2csv';
 
 const auditLogger = new TeamAuditLogger();

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getAuth } from 'firebase-admin/auth';
-import { getAuth as getAdminAuth } from '@/lib/firebase/admin';
+import { getAuth as getAdminAuth } from '@/lib/core/firebase/admin';
 import { getFirestore } from 'firebase-admin/firestore';
 
 export async function GET(request: NextRequest) {

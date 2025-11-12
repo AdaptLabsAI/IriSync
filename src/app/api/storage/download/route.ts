@@ -1,16 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
-import { firestore } from '@/lib/firebase/client';
+import { firestore } from '@/lib/core/firebase/client';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
-import { logger } from '@/lib/logging/logger';
-import { GoogleDriveAdapter } from '@/lib/integrations/GoogleDriveAdapter';
-import { DropboxAdapter } from '@/lib/integrations/DropboxAdapter';
-import { OneDriveAdapter } from '@/lib/integrations/OneDriveAdapter';
-import { CanvaAdapter } from '@/lib/integrations/CanvaAdapter';
-import { AdobeExpressAdapter } from '@/lib/integrations/AdobeExpressAdapter';
-import { NotionAdapter } from '@/lib/integrations/NotionAdapter';
-import { AirtableAdapter } from '@/lib/integrations/AirtableAdapter';
-import { TokenRefreshService, TokenData, PlatformConfig, RefreshResult } from '@/lib/integrations/TokenRefreshService';
+import { logger } from '@/lib/core/logging/logger';
+import { GoogleDriveAdapter } from '@/lib/features/integrations/GoogleDriveAdapter';
+import { DropboxAdapter } from '@/lib/features/integrations/DropboxAdapter';
+import { OneDriveAdapter } from '@/lib/features/integrations/OneDriveAdapter';
+import { CanvaAdapter } from '@/lib/features/integrations/CanvaAdapter';
+import { AdobeExpressAdapter } from '@/lib/features/integrations/AdobeExpressAdapter';
+import { NotionAdapter } from '@/lib/features/integrations/NotionAdapter';
+import { AirtableAdapter } from '@/lib/features/integrations/AirtableAdapter';
+import { TokenRefreshService, TokenData, PlatformConfig, RefreshResult } from '@/lib/features/integrations/TokenRefreshService';
 
 // Interface for file data returned from adapters
 interface FileData {

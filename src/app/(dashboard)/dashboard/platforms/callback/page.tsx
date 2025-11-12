@@ -5,8 +5,8 @@ import { useSearchParams, useRouter } from 'next/navigation';
 import { Box, Container, Typography, CircularProgress, Alert, Button, Paper } from '@mui/material';
 import { useToast } from '@/components/ui/use-toast';
 import { doc, setDoc, updateDoc, collection, getDoc, serverTimestamp } from 'firebase/firestore';
-import { firestore, auth } from '@/lib/firebase/client';
-import { logger } from '@/lib/logging/logger';
+import { firestore, auth } from '@/lib/core/firebase/client';
+import { logger } from '@/lib/core/logging/logger';
 
 /**
  * Enhanced OAuth callback page for platform authorizations

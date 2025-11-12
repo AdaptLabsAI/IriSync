@@ -6,7 +6,7 @@ import {
   useTheme,
   useMediaQuery
 } from '@mui/material';
-import { InboxMessage, MessageStatus as InboxMessageStatus, MessagePriority as InboxMessagePriority } from '@/lib/content/SocialInboxService';
+import { InboxMessage, MessageStatus as InboxMessageStatus, MessagePriority as InboxMessagePriority } from '@/lib/features/content/SocialInboxService';
 import MessageCard, { MessagePriority as MessageCardPriority } from './MessageCard';
 
 export interface MessageListProps {

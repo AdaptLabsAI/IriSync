@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { doc, getDoc, updateDoc, deleteDoc, Timestamp } from 'firebase/firestore';
-import { firestore as db } from '@/lib/firebase';
+import { firestore as db } from '@/lib/core/firebase';
 import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth';
-import { handleApiError } from '@/lib/auth/utils';
+import { authOptions } from '@/lib/features/auth';
+import { handleApiError } from '@/lib/features/auth/utils';
 
 export async function GET(
   request: NextRequest,

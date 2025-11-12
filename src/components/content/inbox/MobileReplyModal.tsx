@@ -25,7 +25,7 @@ import {
   SmartToy as AIIcon
 } from '@mui/icons-material';
 import { TransitionProps } from '@mui/material/transitions';
-import { InboxMessage } from '@/lib/content/SocialInboxService';
+import { InboxMessage } from '@/lib/features/content/SocialInboxService';
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {

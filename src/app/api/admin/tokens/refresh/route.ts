@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { withAdmin } from '@/lib/auth/route-handlers';
-import { tokenRefreshScheduler } from '@/lib/scheduler/token-refresh-scheduler';
-import { logger } from '@/lib/logging/logger';
+import { withAdmin } from '@/lib/features/auth/route-handlers';
+import { tokenRefreshScheduler } from '@/lib/core/scheduler/token-refresh-scheduler';
+import { logger } from '@/lib/core/logging/logger';
 
 /**
  * POST /api/admin/tokens/refresh

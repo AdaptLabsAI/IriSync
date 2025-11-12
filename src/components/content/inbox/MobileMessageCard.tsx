@@ -21,7 +21,7 @@ import {
   Circle as CircleIcon
 } from '@mui/icons-material';
 import { formatDistanceToNow } from 'date-fns';
-import { InboxMessage } from '@/lib/content/SocialInboxService';
+import { InboxMessage } from '@/lib/features/content/SocialInboxService';
 
 interface MobileMessageCardProps {
   message: InboxMessage;

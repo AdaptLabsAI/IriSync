@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth';
-import { getStripeClient } from '@/lib/billing/stripe';
+import { authOptions } from '@/lib/features/auth';
+import { getStripeClient } from '@/lib/features/billing/stripe';
 import { getDoc, doc } from 'firebase/firestore';
-import { firestore } from '@/lib/firebase';
-import { logger } from '@/lib/logging/logger';
+import { firestore } from '@/lib/core/firebase';
+import { logger } from '@/lib/core/logging/logger';
 
 /**
  * Create a Stripe Customer Portal session

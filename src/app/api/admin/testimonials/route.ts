@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getFirestore } from '@/lib/firebase/admin';
-import { withAdmin } from '@/lib/auth/route-handlers';
+import { getFirestore } from '@/lib/core/firebase/admin';
+import { withAdmin } from '@/lib/features/auth/route-handlers';
 import { Timestamp } from 'firebase-admin/firestore';
 
 const db = getFirestore();

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { generateOrganizationId, validateUserOrganizationConnections } from '@/lib/utils';
-import { getFirestore } from '@/lib/firebase/admin';
+import { generateOrganizationId, validateUserOrganizationConnections } from '@/lib/core/utils';
+import { getFirestore } from '@/lib/core/firebase/admin';
 
 export async function GET(req: NextRequest) {
   if (process.env.NODE_ENV === 'production') {

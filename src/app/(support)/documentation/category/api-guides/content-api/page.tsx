@@ -31,7 +31,7 @@ import InfoIcon from '@mui/icons-material/Info';
 import LaunchIcon from '@mui/icons-material/Launch';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 // Import with proper type handling for optional dependencies
-import { SyntaxHighlighter, materialLight } from '@/lib/support/syntax-highlighter';
+import { SyntaxHighlighter, materialLight } from '@/lib/features/support/syntax-highlighter';
 
 // Example code snippet
 const codeExample = `// Create a new content post

@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { withAdmin } from '@/lib/auth/route-handlers';
-import { firestore } from '@/lib/firebase/admin';
-import { AITaskType } from '@/lib/ai/models/AITask';
-import { SubscriptionTier } from '@/lib/subscription/models/subscription';
-import { logger } from '@/lib/logging/logger';
+import { withAdmin } from '@/lib/features/auth/route-handlers';
+import { firestore } from '@/lib/core/firebase/admin';
+import { AITaskType } from '@/lib/features/ai/models/AITask';
+import { SubscriptionTier } from '@/lib/features/subscription/models/subscription';
+import { logger } from '@/lib/core/logging/logger';
 
 // Define the token usage record interface
 interface TokenUsageRecord {

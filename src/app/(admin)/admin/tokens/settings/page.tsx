@@ -32,7 +32,7 @@ import SaveIcon from '@mui/icons-material/Save';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import InfoIcon from '@mui/icons-material/Info';
 import AdminGuard from '@/components/admin/AdminGuard';
-import { AITaskType } from '@/lib/ai/models/AITask';
+import { AITaskType } from '@/lib/features/ai/models/AITask';
 import useApi from '@/hooks/useApi';
 
 // Create a properly typed Grid wrapper component for MUI v7

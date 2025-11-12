@@ -49,7 +49,7 @@ import {
   CheckCircle
 } from '@mui/icons-material';
 import { useToast } from '@/components/ui/use-toast';
-import { StockPhoto, StockPhotoFilters, StockPhotoSearchResult } from '@/lib/content/StockPhotoService';
+import { StockPhoto, StockPhotoFilters, StockPhotoSearchResult } from '@/lib/features/content/StockPhotoService';
 
 interface StockPhotoBrowserProps {
   onPhotoSelect?: (photo: StockPhoto, downloadInfo?: any) => void;

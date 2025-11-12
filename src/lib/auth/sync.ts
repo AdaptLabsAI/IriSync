@@ -5,11 +5,11 @@
  * to prevent permission denied errors in security rules.
  */
 
-import { getAuth, getFirestore, serverTimestamp } from '@/lib/firebase/admin';
+import { getAuth, getFirestore, serverTimestamp } from '@/lib/core/firebase/admin';
 import { Timestamp } from 'firebase-admin/firestore';
 import { hash } from 'bcryptjs';
-import { logger } from '@/lib/logging/logger';
-import { SubscriptionTier, UserRole, mapSubscriptionToRole } from '@/lib/models/User';
+import { logger } from '@/lib/core/logging/logger';
+import { SubscriptionTier, UserRole, mapSubscriptionToRole } from '@/lib/core/models/User';
 
 /**
  * Ensures that a user has a Firestore document

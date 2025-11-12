@@ -22,7 +22,7 @@ import {
   Speed,
   Info as InfoIcon
 } from '@mui/icons-material';
-import { InboxMessage } from '@/lib/content/SocialInboxService';
+import { InboxMessage } from '@/lib/features/content/SocialInboxService';
 
 export interface InboxStatsProps {
   messages: InboxMessage[];

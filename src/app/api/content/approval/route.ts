@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth/auth-options';
-import { logger } from '@/lib/logging/logger';
-import { database } from '@/lib/database';
-import { verifyTeamAccess } from '@/lib/team/permissions';
+import { authOptions } from '@/lib/features/auth/auth-options';
+import { logger } from '@/lib/core/logging/logger';
+import { database } from '@/lib/core/database';
+import { verifyTeamAccess } from '@/lib/features/team/permissions';
 
 /**
  * API Handler for content approval workflows

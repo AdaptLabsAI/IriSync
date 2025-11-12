@@ -5,7 +5,7 @@ import { Box, Button, Typography, Paper, Stack } from '@mui/material';
 import { ErrorBoundary } from 'next/dist/client/components/error-boundary';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import RefreshIcon from '@mui/icons-material/Refresh';
-import { logger } from '@/lib/logging/logger';
+import { logger } from '@/lib/core/logging/logger';
 
 export default function Error({
   error,

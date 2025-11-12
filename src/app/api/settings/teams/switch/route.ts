@@ -10,9 +10,9 @@ import {
   getDocs,
   serverTimestamp
 } from 'firebase/firestore';
-import { firestore } from '@/lib/firebase';
-import { handleApiError } from '@/lib/auth/utils';
-import { logger } from '@/lib/logging/logger';
+import { firestore } from '@/lib/core/firebase';
+import { handleApiError } from '@/lib/features/auth/utils';
+import { logger } from '@/lib/core/logging/logger';
 
 /**
  * Switch user's current team context

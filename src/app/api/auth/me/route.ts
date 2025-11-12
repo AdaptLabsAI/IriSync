@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { verifyAuthentication } from '@/lib/auth/utils';
-import { getFirestore } from '@/lib/firebase/admin';
+import { verifyAuthentication } from '@/lib/features/auth/utils';
+import { getFirestore } from '@/lib/core/firebase/admin';
 import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth';
-import { validateUserOrganizationConnections } from '@/lib/utils';
+import { authOptions } from '@/lib/features/auth';
+import { validateUserOrganizationConnections } from '@/lib/core/utils';
 import { doc, updateDoc, serverTimestamp } from 'firebase/firestore';
 
 /**

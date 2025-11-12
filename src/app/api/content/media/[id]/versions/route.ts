@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { verifyAuthentication } from '@/lib/auth/utils';
-import { getFirestore } from '@/lib/firebase/admin';
-import { logger } from '@/lib/logging/logger';
+import { verifyAuthentication } from '@/lib/features/auth/utils';
+import { getFirestore } from '@/lib/core/firebase/admin';
+import { logger } from '@/lib/core/logging/logger';
 
 export async function GET(req: NextRequest, { params }: { params: { id: string } }) {
   try {

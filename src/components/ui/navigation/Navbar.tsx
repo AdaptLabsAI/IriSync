@@ -5,7 +5,7 @@ import Link from "next/link"
 import { MessageSquare, Menu, X, Bell, Settings, User } from "lucide-react"
 import { getAuth, onAuthStateChanged } from "firebase/auth"
 import { doc, getDoc } from "firebase/firestore"
-import { firestore } from "@/lib/firebase"
+import { firestore } from "@/lib/core/firebase"
 import { useRouter, usePathname } from "next/navigation"
 
 // Define the navigation links

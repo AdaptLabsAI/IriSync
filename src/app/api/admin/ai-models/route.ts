@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth';
-import { firestore } from '@/lib/firebase';
+import { authOptions } from '@/lib/features/auth';
+import { firestore } from '@/lib/core/firebase';
 import { 
   collection, 
   doc, 
@@ -14,8 +14,8 @@ import {
   query,
   orderBy
 } from 'firebase/firestore';
-import { logger } from '@/lib/logging/logger';
-import { TaskType, ModelType, SubscriptionTier } from '@/lib/ai/models/tiered-model-router';
+import { logger } from '@/lib/core/logging/logger';
+import { TaskType, ModelType, SubscriptionTier } from '@/lib/features/ai/models/tiered-model-router';
 
 interface ModelConfiguration {
   id?: string;

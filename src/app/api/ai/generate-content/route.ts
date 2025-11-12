@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth';
-import { firestore } from '@/lib/firebase';
+import { authOptions } from '@/lib/features/auth';
+import { firestore } from '@/lib/core/firebase';
 import { 
   collection, 
   query, 
@@ -15,13 +15,13 @@ import {
   addDoc,
   setDoc
 } from 'firebase/firestore';
-import { TieredModelRouter, TaskType, AITask, SubscriptionTier } from '@/lib/ai/models/tiered-model-router';
-import { logger } from '@/lib/logging/logger';
+import { TieredModelRouter, TaskType, AITask, SubscriptionTier } from '@/lib/features/ai/models/tiered-model-router';
+import { logger } from '@/lib/core/logging/logger';
 import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
-import { User } from '@/lib/models/User';
-import { AIService, AIServiceType } from '@/lib/ai/AIService';
-import { AITaskType } from '@/lib/ai/models/AITask';
+import { User } from '@/lib/core/models/User';
+import { AIService, AIServiceType } from '@/lib/features/ai/AIService';
+import { AITaskType } from '@/lib/features/ai/models/AITask';
 
 // Import AI provider clients for fallback
 import { GoogleGenerativeAI } from '@google/generative-ai';

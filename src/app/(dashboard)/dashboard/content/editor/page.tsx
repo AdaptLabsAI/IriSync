@@ -3,9 +3,9 @@
 import { useState, useEffect } from 'react';
 import { CircularProgress, Alert, Box, Button, Typography, Paper, Container } from '@mui/material';
 import { doc, getDoc, updateDoc, serverTimestamp, DocumentReference } from 'firebase/firestore';
-import { firestore, auth } from '@/lib/firebase/client';
+import { firestore, auth } from '@/lib/core/firebase/client';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { logger } from '@/lib/logging/logger';
+import { logger } from '@/lib/core/logging/logger';
 import ContentEditorForm from '../../../../../components/content/editor/ContentEditorForm';
 
 interface ContentPost {

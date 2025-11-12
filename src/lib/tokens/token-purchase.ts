@@ -1,9 +1,9 @@
 import { TokenService } from './token-service';
 import { TokenRepository } from './token-repository';
-import { NotificationService, NotificationPriority, NotificationCategory } from '@/lib/notifications/NotificationService';
-import { firebaseAdmin } from '@/lib/firebase/admin';
+import { NotificationService, NotificationPriority, NotificationCategory } from '@/lib/core/notifications/NotificationService';
+import { firebaseAdmin } from '@/lib/core/firebase/admin';
 import { calculateTokenPurchasePrice } from './token-tracker';
-import { getStripeClient } from '@/lib/billing/stripe';
+import { getStripeClient } from '@/lib/features/billing/stripe';
 import { stripeConfig } from '@/environment';
 import Stripe from 'stripe';
 import { SubscriptionTier } from '../subscription/models/subscription';

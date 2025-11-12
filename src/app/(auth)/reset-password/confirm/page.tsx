@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { Layout, Container, Typography, Button, Card } from '@/components/ui/new';
-import { completePasswordReset, getFirebaseErrorMessage } from '@/lib/auth/customAuth';
+import { completePasswordReset, getFirebaseErrorMessage } from '@/lib/features/auth/customAuth';
 
 export default function ResetPasswordConfirmPage() {
   const router = useRouter();

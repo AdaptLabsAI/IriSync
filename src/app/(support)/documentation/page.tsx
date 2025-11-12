@@ -25,7 +25,7 @@ import DescriptionIcon from '@mui/icons-material/Description';
 import FolderIcon from '@mui/icons-material/Folder';
 import Link from 'next/link';
 import { collection, getDocs, orderBy, query, where, limit } from 'firebase/firestore';
-import { firestore } from '@/lib/firebase';
+import { firestore } from '@/lib/core/firebase';
 import { useSession } from 'next-auth/react';
 
 // Documentation category data 

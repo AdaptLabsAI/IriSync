@@ -1,6 +1,6 @@
 import { collection, getDocs, orderBy, query } from 'firebase/firestore';
-import { firestore as db } from '@/lib/firebase';
-import { logger } from '@/lib/logging/logger';
+import { firestore as db } from '@/lib/core/firebase';
+import { logger } from '@/lib/core/logging/logger';
 
 export interface ForumCategory {
   id: string;

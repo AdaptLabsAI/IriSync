@@ -34,7 +34,7 @@ import {
   serverTimestamp,
   Timestamp
 } from 'firebase/firestore';
-import { firestore } from '@/lib/firebase';
+import { firestore } from '@/lib/core/firebase';
 import RichTextEditor from '@/components/common/RichTextEditor';
 
 // Fallback RichTextEditor if the imported one doesn't work

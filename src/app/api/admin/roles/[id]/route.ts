@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { Role, Permission } from '@/lib/team/role';
-import { RoleService } from '@/lib/team/role-service';
+import { Role, Permission } from '@/lib/features/team/role';
+import { RoleService } from '@/lib/features/team/role-service';
 import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth';
-import { TeamAuditLogger, AuditLogCategory, AuditLogSeverity } from '@/lib/team/activity/audit-logger';
-import { withAdmin } from '@/lib/auth/route-handlers';
+import { authOptions } from '@/lib/features/auth';
+import { TeamAuditLogger, AuditLogCategory, AuditLogSeverity } from '@/lib/features/team/activity/audit-logger';
+import { withAdmin } from '@/lib/features/auth/route-handlers';
 
 // Helper function for audit logging
 async function logAdminAction(params: {

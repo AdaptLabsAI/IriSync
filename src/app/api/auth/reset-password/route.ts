@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { logger } from '@/lib/logging/logger';
-import { handleApiError } from '@/lib/auth/utils';
+import { logger } from '@/lib/core/logging/logger';
+import { handleApiError } from '@/lib/features/auth/utils';
 
 export async function POST(request: NextRequest) {
   try {

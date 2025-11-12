@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { Layout, Container, Typography, Button, Card, Loading } from '@/components/ui/new';
-import { verifyEmail } from '@/lib/auth/customAuth';
+import { verifyEmail } from '@/lib/features/auth/customAuth';
 
 export default function VerifyEmailPage() {
   const router = useRouter();

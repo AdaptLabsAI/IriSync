@@ -23,7 +23,7 @@ import {
 import { DateRangePicker } from '@mui/x-date-pickers-pro';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import { InboxFilters as InboxFiltersType } from '@/lib/api/content';
+import { InboxFilters as InboxFiltersType } from '@/lib/core/api/content';
 
 export interface InboxFiltersProps {
   filters: InboxFiltersType;

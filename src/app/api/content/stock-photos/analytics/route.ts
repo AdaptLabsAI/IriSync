@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth';
-import stockPhotoService from '@/lib/content/StockPhotoService';
-import { logger } from '@/lib/logging/logger';
+import { authOptions } from '@/lib/features/auth';
+import stockPhotoService from '@/lib/features/content/StockPhotoService';
+import { logger } from '@/lib/core/logging/logger';
 
 export async function GET(request: NextRequest) {
   try {

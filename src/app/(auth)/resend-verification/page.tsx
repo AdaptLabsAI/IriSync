@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { Layout, Container, Typography, Button, Card } from '@/components/ui/new';
-import { resendVerificationEmail } from '@/lib/auth/customAuth';
+import { resendVerificationEmail } from '@/lib/features/auth/customAuth';
 
 export default function ResendVerificationPage() {
   const [email, setEmail] = useState('');

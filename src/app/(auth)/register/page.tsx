@@ -4,9 +4,9 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Layout, Container, Typography, Button, Card } from '@/components/ui/new';
-import { registerUser, loginWithGoogle, getFirebaseErrorMessage } from '@/lib/auth/customAuth';
-import { getEarlyRegistrationPrice } from '@/lib/subscription/earlyRegistration';
-import { SubscriptionTier } from '@/lib/subscription/utils';
+import { registerUser, loginWithGoogle, getFirebaseErrorMessage } from '@/lib/features/auth/customAuth';
+import { getEarlyRegistrationPrice } from '@/lib/features/subscription/earlyRegistration';
+import { SubscriptionTier } from '@/lib/features/subscription/utils';
 
 // Add a client-side check function to verify dashboard redirection is safe
 const safeDashboardRedirect = (router: any) => {

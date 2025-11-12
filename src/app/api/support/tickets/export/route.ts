@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { firestore } from '@/lib/firebase';
-import { getAuth } from '@/lib/firebase/admin';
+import { firestore } from '@/lib/core/firebase';
+import { getAuth } from '@/lib/core/firebase/admin';
 import { collection, getDocs, query, where, orderBy } from 'firebase/firestore';
-import { logger } from '@/lib/logging/logger';
+import { logger } from '@/lib/core/logging/logger';
 import { Parser as Json2CsvParser } from 'json2csv';
 import PDFDocument from 'pdfkit';
 import { Readable } from 'stream';

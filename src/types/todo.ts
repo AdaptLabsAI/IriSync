@@ -2,7 +2,7 @@
  * Enterprise Team-based TODO system types
  */
 
-import { OrganizationRole, TeamRole } from '@/lib/user/types';
+import { OrganizationRole, TeamRole } from '@/lib/features/user/types';
 
 /**
  * Enterprise TODO Priority Levels

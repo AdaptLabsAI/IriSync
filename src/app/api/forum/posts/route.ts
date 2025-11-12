@@ -1,13 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
-import ForumService from '@/lib/content/ForumService';
-import { logger } from '@/lib/logging/logger';
+import ForumService from '@/lib/features/content/ForumService';
+import { logger } from '@/lib/core/logging/logger';
 import { z } from 'zod';
-import { ForumPostStatus } from '@/lib/content/models/post';
-import { getCurrentUser, isAdmin } from '@/lib/auth/token';
-import { UserRole } from '@/lib/models/User';
+import { ForumPostStatus } from '@/lib/features/content/models/post';
+import { getCurrentUser, isAdmin } from '@/lib/features/auth/token';
+import { UserRole } from '@/lib/core/models/User';
 import { doc, getDoc } from 'firebase/firestore';
-import { firestore } from '@/lib/firebase';
+import { firestore } from '@/lib/core/firebase';
 
 // Schema for post creation
 const createPostSchema = z.object({

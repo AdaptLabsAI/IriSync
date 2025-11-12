@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
-import { authOptions } from '@/lib/auth';
-import { firestore, getFirestore } from '@/lib/firebase/admin';
-import { logger } from '@/lib/logging/logger';
-import { verifyAuthentication } from '@/lib/auth/utils';
+import { authOptions } from '@/lib/features/auth';
+import { firestore, getFirestore } from '@/lib/core/firebase/admin';
+import { logger } from '@/lib/core/logging/logger';
+import { verifyAuthentication } from '@/lib/features/auth/utils';
 
 // Interface for calendar posts
 interface CalendarPost {

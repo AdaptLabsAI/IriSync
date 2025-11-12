@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { Storage } from '@google-cloud/storage';
 import { v4 as uuidv4 } from 'uuid';
 import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth';
+import { authOptions } from '@/lib/features/auth';
 
 // Configure Google Cloud Storage
 const storage = new Storage({

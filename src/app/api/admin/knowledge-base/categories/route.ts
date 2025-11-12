@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
-import { withAdmin } from '@/lib/auth/route-handlers';
-import { KnowledgeRepository } from '@/lib/knowledge/repository';
-import { logger } from '@/lib/logging/logger';
+import { withAdmin } from '@/lib/features/auth/route-handlers';
+import { KnowledgeRepository } from '@/lib/features/knowledge/repository';
+import { logger } from '@/lib/core/logging/logger';
 
 const categoryCreateSchema = z.object({
   name: z.string().min(2, 'Category name must be at least 2 characters').max(50, 'Category name cannot exceed 50 characters')

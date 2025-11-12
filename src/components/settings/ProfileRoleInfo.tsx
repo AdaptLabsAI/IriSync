@@ -15,7 +15,7 @@ import {
 import { AdminPanelSettings, Security } from '@mui/icons-material';
 import { getAuth } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
-import { firestore } from '@/lib/firebase';
+import { firestore } from '@/lib/core/firebase';
 
 const ProfileRoleInfo = () => {
   const { data: session } = useSession();

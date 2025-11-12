@@ -3,8 +3,8 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { useToast } from '@/components/ui/use-toast';
 import { collection, doc, query, getDocs, addDoc, updateDoc, deleteDoc, where, orderBy, writeBatch, serverTimestamp, getDoc, setDoc } from 'firebase/firestore';
-import { firestore, auth } from '@/lib/firebase/client';
-import { logger } from '@/lib/logging/logger';
+import { firestore, auth } from '@/lib/core/firebase/client';
+import { logger } from '@/lib/core/logging/logger';
 
 export interface TodoItem {
   id: string;

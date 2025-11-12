@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
-import { authOptions } from '@/lib/auth';
-import { firestore } from '@/lib/firebase/client';
+import { authOptions } from '@/lib/features/auth';
+import { firestore } from '@/lib/core/firebase/client';
 import { doc, updateDoc } from 'firebase/firestore';
-import { logger } from '@/lib/logging/logger';
+import { logger } from '@/lib/core/logging/logger';
 
 // Environment variables
 const CLOUDINARY_CLOUD_NAME = process.env.CLOUDINARY_CLOUD_NAME;

@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth';
-import { UnsplashAdapter } from '@/lib/integrations/UnsplashAdapter';
-import { logger } from '@/lib/logging/logger';
-import { getFirestore } from '@/lib/firebase/admin';
+import { authOptions } from '@/lib/features/auth';
+import { UnsplashAdapter } from '@/lib/features/integrations/UnsplashAdapter';
+import { logger } from '@/lib/core/logging/logger';
+import { getFirestore } from '@/lib/core/firebase/admin';
 
 const firestore = getFirestore();
 
