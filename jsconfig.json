@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"],
+      "react": ["./node_modules/react"],
+      "react-dom": ["./node_modules/react-dom"],
+      "react/jsx-runtime": ["./node_modules/react/jsx-runtime"],
+      "react/jsx-dev-runtime": ["./node_modules/react/jsx-dev-runtime"]
+    },
+    "jsx": "preserve"
+  },
+  "exclude": ["node_modules", ".next"]
+} 

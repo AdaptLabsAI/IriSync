@@ -1,0 +1,93 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Content {
+  id                 String            @id @default(uuid())
+  title              String
+  status             String            @default("DRAFT")
+  createdAt          DateTime          @default(now())
+  updatedAt          DateTime          @updatedAt
+  createdById        String
+  approvedAt         DateTime?
+  approvedById       String?
+  approvalComment    String?
+  rejectedAt         DateTime?
+  rejectedById       String?
+  rejectionReason    String?
+  reviewedAt         DateTime?
+  reviewedById       String?
+  revisionNotes      String?
+  scheduledAt        DateTime?
+  scheduledById      String?
+  scheduledPlatforms String[]
+  organizationId     String
+  activities         Activity[]
+  schedules          ContentSchedule[]
+}
+
+model Activity {
+  id        String   @id @default(uuid())
+  type      String
+  userId    String
+  contentId String?
+  metadata  Json?
+  createdAt DateTime @default(now())
+  content   Content? @relation(fields: [contentId], references: [id])
+}
+
+model ContentSchedule {
+  id            String   @id @default(uuid())
+  contentId     String
+  platform      String
+  scheduledTime DateTime
+  status        String
+  content       Content  @relation(fields: [contentId], references: [id])
+}
+
+model Notification {
+  id        String   @id @default(uuid())
+  userId    String
+  title     String
+  message   String
+  type      String
+  linkType  String?
+  linkId    String?
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+model OrganizationMember {
+  userId         String
+  organizationId String
+  roleId         String
+  role           Role   @relation(fields: [roleId], references: [id])
+
+  @@id([userId, organizationId])
+}
+
+model Role {
+  id         String               @id @default(uuid())
+  name       String
+  permissions RolePermission[]
+  members    OrganizationMember[]
+}
+
+model RolePermission {
+  id         String @id @default(uuid())
+  roleId     String
+  permission String
+  role       Role   @relation(fields: [roleId], references: [id])
+}

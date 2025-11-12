@@ -1,0 +1,611 @@
+openapi: 3.0.0
+info:
+  title: IriSync API
+  description: API documentation for IriSync social media management platform
+  version: 1.0.0
+servers:
+  - url: https://api.irisync.io/v1
+    description: Production server
+  - url: https://staging-api.irisync.io/v1
+    description: Staging server
+  - url: http://localhost:3000/api
+    description: Development server
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  
+  schemas:
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+    
+    TokenBalance:
+      type: object
+      properties:
+        userId:
+          type: string
+        organizationId:
+          type: string
+        currentBalance:
+          type: number
+        totalUsed:
+          type: number
+        lastResetDate:
+          type: string
+          format: date-time
+        nextResetDate:
+          type: string
+          format: date-time
+    
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+        email:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        role:
+          type: string
+          enum: [user, admin]
+        subscriptionTier:
+          type: string
+          enum: [creator, influencer, enterprise, none]
+        organizationId:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+    
+    Organization:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        ownerId:
+          type: string
+        subscriptionTier:
+          type: string
+          enum: [creator, influencer, enterprise, none]
+        seats:
+          type: number
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+    
+    SocialAccount:
+      type: object
+      properties:
+        id:
+          type: string
+        userId:
+          type: string
+        organizationId:
+          type: string
+        platform:
+          type: string
+          enum: [twitter, facebook, instagram, linkedin, youtube, tiktok, pinterest, reddit]
+        accountId:
+          type: string
+        accountName:
+          type: string
+        profileUrl:
+          type: string
+        isConnected:
+          type: boolean
+        lastTokenRefresh:
+          type: string
+          format: date-time
+    
+    Content:
+      type: object
+      properties:
+        id:
+          type: string
+        userId:
+          type: string
+        organizationId:
+          type: string
+        title:
+          type: string
+        body:
+          type: string
+        mediaIds:
+          type: array
+          items:
+            type: string
+        status:
+          type: string
+          enum: [draft, scheduled, published]
+        scheduledDate:
+          type: string
+          format: date-time
+        platforms:
+          type: array
+          items:
+            type: string
+        tags:
+          type: array
+          items:
+            type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+    
+    Media:
+      type: object
+      properties:
+        id:
+          type: string
+        userId:
+          type: string
+        organizationId:
+          type: string
+        type:
+          type: string
+          enum: [image, video, audio]
+        url:
+          type: string
+        thumbnailUrl:
+          type: string
+        fileName:
+          type: string
+        fileSize:
+          type: number
+        metadata:
+          type: object
+        createdAt:
+          type: string
+          format: date-time
+    
+    Analytics:
+      type: object
+      properties:
+        id:
+          type: string
+        contentId:
+          type: string
+        platform:
+          type: string
+        metrics:
+          type: object
+          properties:
+            views:
+              type: number
+            likes:
+              type: number
+            shares:
+              type: number
+            comments:
+              type: number
+            engagementRate:
+              type: number
+        periodStart:
+          type: string
+          format: date-time
+        periodEnd:
+          type: string
+          format: date-time
+    
+    AuthResponse:
+      type: object
+      properties:
+        token:
+          type: string
+        refreshToken:
+          type: string
+        expiresIn:
+          type: number
+        user:
+          $ref: '#/components/schemas/User'
+
+paths:
+  /auth/login:
+    post:
+      summary: User login
+      description: Authenticate a user and return JWT tokens
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+              required:
+                - email
+                - password
+      responses:
+        '200':
+          description: Successful authentication
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+        '401':
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  
+  /auth/refresh:
+    post:
+      summary: Refresh access token
+      description: Generate a new access token using a refresh token
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                refreshToken:
+                  type: string
+              required:
+                - refreshToken
+      responses:
+        '200':
+          description: New tokens generated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                  expiresIn:
+                    type: number
+        '401':
+          description: Invalid refresh token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  
+  /tokens/balance:
+    get:
+      summary: Get token balance
+      description: Retrieve the current token balance for a user
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Token balance retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenBalance'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  
+  /tokens/purchase:
+    post:
+      summary: Purchase tokens
+      description: Purchase additional tokens for a user or organization
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                packageSize:
+                  type: string
+                  enum: [small, medium, large, enterprise]
+                organizationId:
+                  type: string
+              required:
+                - packageSize
+      responses:
+        '200':
+          description: Token purchase successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  purchaseId:
+                    type: string
+                  amount:
+                    type: number
+                  price:
+                    type: number
+                  newBalance:
+                    type: number
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  
+  /users:
+    get:
+      summary: Get current user
+      description: Retrieve the current authenticated user's profile
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: User profile retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  
+  /users/{userId}:
+    get:
+      summary: Get user by ID
+      description: Retrieve a user by their ID (admin only)
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: User retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  
+  /organizations:
+    get:
+      summary: Get user organizations
+      description: Retrieve organizations the current user belongs to
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Organizations retrieved
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Organization'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  
+  /social-accounts:
+    get:
+      summary: Get social accounts
+      description: Retrieve social accounts for the current user
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Social accounts retrieved
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SocialAccount'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  
+  /content:
+    get:
+      summary: Get content
+      description: Retrieve content for the current user
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [draft, scheduled, published, all]
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 20
+        - name: offset
+          in: query
+          schema:
+            type: integer
+            default: 0
+      responses:
+        '200':
+          description: Content retrieved
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Content'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  
+  /media:
+    get:
+      summary: Get media
+      description: Retrieve media for the current user
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: type
+          in: query
+          schema:
+            type: string
+            enum: [image, video, audio, all]
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 20
+        - name: offset
+          in: query
+          schema:
+            type: integer
+            default: 0
+      responses:
+        '200':
+          description: Media retrieved
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Media'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  
+  /analytics:
+    get:
+      summary: Get analytics
+      description: Retrieve analytics for the user's content
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: contentId
+          in: query
+          schema:
+            type: string
+        - name: platform
+          in: query
+          schema:
+            type: string
+        - name: startDate
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: endDate
+          in: query
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: Analytics retrieved
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Analytics'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  
+  /ai/toolkit/analyze:
+    post:
+      summary: Analyze content with AI
+      description: Use AI to analyze content and provide insights
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                content:
+                  type: string
+                analysisType:
+                  type: string
+                  enum: [sentiment, engagement, categorization]
+              required:
+                - content
+                - analysisType
+      responses:
+        '200':
+          description: Analysis completed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: object
+                  tokensUsed:
+                    type: number
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '402':
+          description: Payment required (insufficient tokens)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error' 

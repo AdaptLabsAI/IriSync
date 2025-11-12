@@ -1,0 +1,305 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Helper function to check if user is admin
+    function isAdmin() {
+      return request.auth != null && 
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role in ['admin', 'super_admin'];
+    }
+    
+    // Helper function to check if user is super admin
+    function isSuperAdmin() {
+      return request.auth != null && 
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'super_admin';
+    }
+    
+    // Allow users to read and write to their own user document
+    match /users/{userId} {
+      allow read: if request.auth != null && (request.auth.uid == userId || isAdmin());
+      allow write: if request.auth != null && (request.auth.uid == userId || isSuperAdmin());
+      
+      // User's collections
+      match /settings/{document=**} {
+        allow read, write: if request.auth != null && (request.auth.uid == userId || isAdmin());
+      }
+      
+      match /activities/{document=**} {
+        allow read, write: if request.auth != null && (request.auth.uid == userId || isAdmin());
+      }
+      
+      match /notifications/{document=**} {
+        allow read, write: if request.auth != null && (request.auth.uid == userId || isAdmin());
+      }
+      
+      match /calendarEvents/{document=**} {
+        allow read, write: if request.auth != null && (request.auth.uid == userId || isAdmin());
+      }
+    }
+    
+    // Content related collections
+    match /contentPosts/{postId} {
+      // Allow any authenticated user to read content posts, no additional checks
+      allow read: if request.auth != null;
+      
+      // Allow write only if the user owns the post or is an admin
+      allow write: if request.auth != null && (
+        resource == null || // For creating new documents
+        resource.data.userId == request.auth.uid || 
+        request.resource.data.userId == request.auth.uid || 
+        request.resource.data.createdBy == request.auth.uid ||
+        isAdmin()
+      );
+    }
+    
+    // Content collection (comprehensive content items)
+    match /content/{contentId} {
+      allow read: if request.auth != null && (
+        resource.data.userId == request.auth.uid || 
+        (resource.data.organizationId != null && 
+          exists(/databases/$(database)/documents/organizations/$(resource.data.organizationId)/members/$(request.auth.uid))) ||
+        isAdmin()
+      );
+      allow write: if request.auth != null && (
+        request.resource.data.userId == request.auth.uid || 
+        (request.resource.data.organizationId != null && 
+          exists(/databases/$(database)/documents/organizations/$(request.resource.data.organizationId)/members/$(request.auth.uid)) &&
+          get(/databases/$(database)/documents/organizations/$(request.resource.data.organizationId)/members/$(request.auth.uid)).data.role in ['admin', 'editor']) ||
+        isAdmin()
+      );
+    }
+    
+    // Dashboard data collections
+    match /dashboardStats/{statId} {
+      allow read: if request.auth != null && (
+        resource.data.userId == request.auth.uid || 
+        isAdmin()
+      );
+      allow write: if request.auth != null && (
+        request.resource.data.userId == request.auth.uid || 
+        isAdmin()
+      );
+    }
+    
+    match /platforms/{platformId} {
+      allow read: if request.auth != null && (
+        resource.data.userId == request.auth.uid || 
+        isAdmin()
+      );
+      allow write: if request.auth != null && (
+        request.resource.data.userId == request.auth.uid || 
+        isAdmin()
+      );
+    }
+    
+    match /activities/{activityId} {
+      allow read: if request.auth != null && (
+        resource.data.userId == request.auth.uid || 
+        isAdmin()
+      );
+      allow write: if request.auth != null && (
+        request.resource.data.userId == request.auth.uid || 
+        isAdmin()
+      );
+    }
+    
+    match /notifications/{notificationId} {
+      allow read: if request.auth != null && (
+        resource.data.userId == request.auth.uid || 
+        isAdmin()
+      );
+      allow write: if request.auth != null && (
+        request.resource.data.userId == request.auth.uid || 
+        isAdmin()
+      );
+    }
+    
+    // Media collection
+    match /media/{mediaId} {
+      allow read: if request.auth != null && (
+        resource.data.userId == request.auth.uid || 
+        resource.data.isPublic == true ||
+        isAdmin()
+      );
+      allow write: if request.auth != null && (
+        request.resource.data.userId == request.auth.uid || 
+        isAdmin()
+      );
+    }
+    
+    // Analytics data
+    match /analytics/{docId} {
+      allow read: if request.auth != null && (
+        resource.data.userId == request.auth.uid || 
+        isAdmin()
+      );
+      allow write: if request.auth != null && (
+        request.resource.data.userId == request.auth.uid || 
+        isAdmin()
+      );
+    }
+    
+    match /analyticsOverview/{docId} {
+      allow read: if request.auth != null && (
+        resource.data.userId == request.auth.uid || 
+        isAdmin()
+      );
+    }
+    
+    match /engagementHistory/{docId} {
+      allow read: if request.auth != null && (
+        resource.data.userId == request.auth.uid || 
+        isAdmin()
+      );
+    }
+    
+    match /performanceMetrics/{docId} {
+      allow read: if request.auth != null && (
+        resource.data.userId == request.auth.uid || 
+        isAdmin()
+      );
+    }
+    
+    match /platformComparison/{docId} {
+      allow read: if request.auth != null && (
+        resource.data.userId == request.auth.uid || 
+        isAdmin()
+      );
+    }
+    
+    match /audienceMetrics/{docId} {
+      allow read: if request.auth != null && (
+        resource.data.userId == request.auth.uid || 
+        isAdmin()
+      );
+    }
+    
+    // Admin-specific collections
+    match /adminStats/{docId} {
+      allow read, write: if isAdmin();
+    }
+    
+    match /systemSettings/{docId} {
+      allow read: if isAdmin();
+      allow write: if isSuperAdmin();
+    }
+    
+    match /userManagement/{docId} {
+      allow read: if isAdmin();
+      allow write: if isSuperAdmin();
+    }
+    
+    // Testimonials
+    match /testimonials/{testimonialId} {
+      allow read: if true; // Public read access
+      allow write: if isAdmin();
+    }
+    
+    // Job Listings - Public read access for published jobs, admin write access
+    match /jobListings/{jobId} {
+      allow read: if resource.data.status == 'published' || isAdmin();
+      allow write: if isAdmin();
+    }
+    
+    // Roadmap Items - Public read access for public items, authenticated users can vote
+    match /roadmapItems/{itemId} {
+      allow read: if resource.data.public == true || isAdmin();
+      allow create: if request.auth != null; // Authenticated users can submit feature requests
+      allow update: if isAdmin(); // Only admins can update roadmap items
+      allow delete: if isAdmin();
+    }
+    
+    // Roadmap Votes - Users can manage their own votes
+    match /roadmapVotes/{voteId} {
+      allow read, write: if request.auth != null && (
+        resource.data.userId == request.auth.uid || 
+        request.resource.data.userId == request.auth.uid ||
+        isAdmin()
+      );
+    }
+    
+    // Documentation - Public read access, admin write access
+    match /documentation/{docId} {
+      allow read: if true; // Public documentation
+      allow write: if isAdmin();
+    }
+    
+    // System Status - Public read access, admin write access
+    match /systemStatus/{statusId} {
+      allow read: if true; // Public system status
+      allow write: if isAdmin();
+    }
+    
+    // Incidents - Public read access, admin write access
+    match /incidents/{incidentId} {
+      allow read: if true; // Public incident reports
+      allow write: if isAdmin();
+    }
+    
+    // Support Tickets - Users can access their own tickets, admins can access all
+    match /supportTickets/{ticketId} {
+      allow read: if request.auth != null && (
+        resource.data.userId == request.auth.uid || 
+        isAdmin()
+      );
+      allow write: if request.auth != null && (
+        resource.data.userId == request.auth.uid || 
+        request.resource.data.userId == request.auth.uid ||
+        isAdmin()
+      );
+    }
+    
+    // Forum Posts - Public read for published posts, authenticated users can create
+    match /forumPosts/{postId} {
+      allow read: if resource.data.status == 'published' || isAdmin();
+      allow create: if request.auth != null;
+      allow update: if request.auth != null && (
+        resource.data.authorId == request.auth.uid || 
+        isAdmin()
+      );
+      allow delete: if isAdmin();
+    }
+    
+    // Blog Posts - Public read for published posts, admin write access
+    match /blogPosts/{postId} {
+      allow read: if resource.data.status == 'published' || isAdmin();
+      allow write: if isAdmin();
+    }
+    
+    // Organization-level access control (keep your existing rules)
+    match /organizations/{orgId} {
+      // Base rule: users can only access their own organization or admins can access any
+      allow read, write: if request.auth != null && 
+        (request.auth.token.orgId == orgId || 
+         exists(/databases/$(database)/documents/organizations/$(orgId)/members/$(request.auth.uid)) ||
+         isAdmin());
+      
+      // Nested collections inherit permissions but can be overridden
+      match /{document=**} {
+        allow read, write: if request.auth != null && 
+          (request.auth.token.orgId == orgId || 
+           exists(/databases/$(database)/documents/organizations/$(orgId)/members/$(request.auth.uid)) ||
+           isAdmin());
+      }
+      
+      // Special rule for sensitive OAuth data
+      match /socialAccounts/{accountId} {
+        // Only allow access to encrypted tokens with specific permission
+        allow read: if request.auth != null && 
+          (request.auth.token.orgId == orgId && 
+           (request.auth.token.role == 'admin' || request.auth.token.permissions.social_management == true ||
+            isAdmin()));
+      }
+    }
+    
+    // User Profiles Collection (for public profiles)
+    match /userProfiles/{userId} {
+      allow read: if true; // Public profiles are readable by anyone
+      allow write: if request.auth != null && (request.auth.uid == userId || isAdmin());
+    }
+    
+    // User settings
+    match /userSettings/{userId} {
+      allow read, write: if request.auth != null && (request.auth.uid == userId || isAdmin());
+    }
+  }
+} 

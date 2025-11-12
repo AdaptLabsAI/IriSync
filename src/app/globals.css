@@ -1,0 +1,9 @@
+/* Base styles for app directory */
+@import "tailwindcss";
+
+
+/* Any app directory specific styles go here */
+body {
+  background-color: #f7f9fc;
+  color: #1a202c;
+}

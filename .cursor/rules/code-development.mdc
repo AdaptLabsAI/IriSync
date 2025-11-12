@@ -1,0 +1,8 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+always write in complete, functional, production ready code. we deploy to live agents.
+Use the environment.md files, as you are unable to see the .env and we cannot get that to work.
+Use documentation and the code structure as much as possible.

@@ -1,0 +1,33 @@
+# IrisSync CODEOWNERS File
+# For more info: https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+# Default owners for everything in the repo
+* @IriSyncAdmin
+
+# Core application code
+/irisync/src/app/ @IriSyncAdmin @IriSyncFrontendTeam
+/irisync/src/components/ @IriSyncFrontendTeam
+/irisync/src/hooks/ @IriSyncFrontendTeam
+/irisync/src/styles/ @IriSyncFrontendTeam
+/irisync/src/utils/ @IriSyncBackendTeam @IriSyncFrontendTeam
+
+# Backend infrastructure and API
+/irisync/src/lib/ @IriSyncBackendTeam
+/irisync/src/pages/api/ @IriSyncBackendTeam
+
+# AI and RAG systems
+/irisync/src/lib/ai/ @IriSyncAITeam
+/irisync/src/lib/rag/ @IriSyncAITeam
+/irisync/src/lib/knowledge/ @IriSyncAITeam
+/irisync/scripts/ @IriSyncAITeam
+
+# Testing
+/irisync/src/__tests__/ @IriSyncQATeam
+
+# GitHub workflows and infrastructure
+/.github/ @DevOpsTeam
+/irisync/.github/ @DevOpsTeam
+
+# Documentation
+/docs/ @DocTeam
+/irisync/docs/ @DocTeam

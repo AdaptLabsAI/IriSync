@@ -1,0 +1,48 @@
+{
+  "tests": [
+    {
+      "name": "Health Check API",
+      "url": "http://localhost:3000/api/health",
+      "method": "GET",
+      "iterations": 100,
+      "concurrency": 5,
+      "timeout": 3000
+    },
+    {
+      "name": "Authentication API",
+      "url": "http://localhost:3000/api/auth/session",
+      "method": "GET",
+      "iterations": 50,
+      "concurrency": 3,
+      "timeout": 5000
+    },
+    {
+      "name": "Knowledge Content List API",
+      "url": "http://localhost:3000/api/admin/knowledge",
+      "method": "GET",
+      "headers": {
+        "Authorization": "Bearer {{AUTH_TOKEN}}"
+      },
+      "iterations": 20,
+      "concurrency": 2,
+      "timeout": 5000
+    },
+    {
+      "name": "RAG Retrieval API",
+      "url": "http://localhost:3000/api/rag/retrieval/search",
+      "method": "POST",
+      "headers": {
+        "Authorization": "Bearer {{AUTH_TOKEN}}",
+        "Content-Type": "application/json"
+      },
+      "body": {
+        "query": "How do I connect social media accounts?",
+        "limit": 5,
+        "includeContent": true
+      },
+      "iterations": 10,
+      "concurrency": 1,
+      "timeout": 10000
+    }
+  ]
+} 
