@@ -1,5 +1,5 @@
 import { firestore as adminFirestore } from '../core/firebase/admin';
-import { firestore } from '../core/firebase';
+import { firestore } from '../firebase';
 import { 
   doc, 
   collection, 

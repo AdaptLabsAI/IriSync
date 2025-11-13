@@ -5,12 +5,12 @@
 
 import { TokenService } from '../tokens/token-service';
 import { TokenRepository } from '../tokens/token-repository';
-import { NotificationService } from '../notifications/NotificationService';
+import { NotificationService } from '../../core/notifications/NotificationService';
 import { TieredModelRouter, TaskType, AIResponse as ModelRouterResponse } from './models/tiered-model-router';
 import { AITaskType, AITaskParams } from './models/AITask';
-import { logger } from '../logging/logger';
+import { logger } from '../../core/logging/logger';
 import { User } from '../core/models/User';
-import { firestore } from '../core/firebase';
+import { firestore } from '../../core/firebase';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/features/auth';
 import { doc, getDoc } from 'firebase/firestore';

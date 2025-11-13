@@ -5,7 +5,7 @@ import { getAnalyticsId } from './utils/browser';
 // For server-side analytics
 import { AxiosError } from 'axios';
 import axios from 'axios';
-import logger from '../logging/logger';
+import logger from '../../core/logging/logger';
 
 /**
  * Analytics configuration

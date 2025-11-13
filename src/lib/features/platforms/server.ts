@@ -2,7 +2,7 @@
 
 import { SocialAccount, PlatformType } from './client';
 import { firestore } from '../core/firebase/admin';
-import { logger } from '../logging/logger';
+import { logger } from '../../core/logging/logger';
 import { 
   getDoc, 
   doc, 

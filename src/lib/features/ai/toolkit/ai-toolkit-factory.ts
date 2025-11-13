@@ -1,7 +1,7 @@
 import { TokenService } from '../../tokens/token-service';
 import { TokenRepository } from '../../tokens/token-repository';
 import { NotificationService } from '../../notifications/NotificationService';
-import { logger } from '../../logging/logger';
+import { logger } from '../../../core/logging/logger';
 import { TokenTracker } from '../../tokens/token-tracker';
 import { SubscriptionTier } from '../../subscription/models/subscription';
 import { AIToolkit } from './AIToolkit';

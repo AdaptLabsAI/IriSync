@@ -1,6 +1,6 @@
 import { SocialInboxService, InboxMessage, MessageType, MessageStatus, MessagePriority } from './SocialInboxService';
 import { PlatformType } from '../platforms/PlatformProvider';
-import { logger } from '../logging/logger';
+import { logger } from '../../core/logging/logger';
 
 // Import all social inbox adapters
 import { TwitterSocialInboxAdapter } from './TwitterSocialInboxAdapter';

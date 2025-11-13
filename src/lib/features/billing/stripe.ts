@@ -1,5 +1,5 @@
 import Stripe from 'stripe';
-import { logger } from '../logging/logger';
+import { logger } from '../../core/logging/logger';
 
 /**
  * Initialize Stripe client

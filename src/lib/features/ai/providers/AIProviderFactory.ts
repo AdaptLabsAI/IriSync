@@ -1,6 +1,6 @@
 import { AIProvider, AIProviderConfig, AIRequestOptions } from './AIProvider';
 import { ProviderType } from './ProviderType';
-import { logger } from '../../logging/logger';
+import { logger } from '../../../core/logging/logger';
 import config from '../../config';
 
 /**

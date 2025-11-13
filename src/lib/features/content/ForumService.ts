@@ -31,7 +31,7 @@ import {
 } from './models/post';
 import { v4 as uuidv4 } from 'uuid';
 import { generateSlug } from '../utils/slug';
-import { logger } from '../logging/logger';
+import { logger } from '../../core/logging/logger';
 import { UserRole } from '../core/models/User';
 
 // Collection names

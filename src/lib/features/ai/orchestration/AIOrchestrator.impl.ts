@@ -2,7 +2,7 @@ import { AIProvider } from '../providers/AIProvider';
 import { AIToolkit } from '../toolkit/AIToolkit';
 import { RAGSystem } from '../../rag/RAGSystem';
 import { TokenService } from '../../tokens/token-service';
-import { logger } from '../../logging/logger';
+import { logger } from '../../../core/logging/logger';
 import { 
   AIOrchestrator, 
   AITaskConfig, 

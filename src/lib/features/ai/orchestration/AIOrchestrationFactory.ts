@@ -4,7 +4,7 @@ import { TokenService } from '../../tokens/token-service';
 import { AIOrchestrator } from './AIOrchestrator';
 import { AIOrchestratorImpl } from './AIOrchestrator.impl';
 import { AIProvider } from '../providers/AIProvider';
-import { logger } from '../../logging/logger';
+import { logger } from '../../../core/logging/logger';
 
 /**
  * Options for creating an AI orchestrator

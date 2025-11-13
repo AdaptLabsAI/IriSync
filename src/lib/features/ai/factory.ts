@@ -5,9 +5,9 @@ import { TokenTracker } from '../tokens/token-tracker';
 import { OpenAIProvider } from './providers/OpenAIProvider';
 import { AnthropicProvider } from './providers/AnthropicProvider';
 import { GoogleAIProvider } from './providers/GoogleAIProvider';
-import { Cache } from '../cache/Cache';
+import { Cache } from '../../core/cache/Cache';
 import { doc, getDoc } from 'firebase/firestore';
-import { firestore } from '../core/firebase';
+import { firestore } from '../../core/firebase';
 
 /**
  * Factory options for provider creation
