@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getFirestore } from '../../../../../lib/firebase/admin';
+import { getFirestore } from '../../../../../lib/core/firebase/admin';
 import { FieldValue } from 'firebase-admin/firestore';
 import { verifyAuthentication, handleApiError } from '../../../../../lib/auth/utils';
-import { logger } from '../../../../../lib/logging/logger';
+import { logger } from '../../../../../lib/core/logging/logger';
 import { v4 as uuidv4 } from 'uuid';
 import sharp from 'sharp';
 

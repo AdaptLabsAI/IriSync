@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { logger } from '../../../../lib/logging/logger';
+import { logger } from '../../../../lib/core/logging/logger';
 import { WebhookService, WebhookEventType } from '../../../../lib/webhooks/WebhookService';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '../../../../lib/auth';

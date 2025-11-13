@@ -2,10 +2,10 @@ import { FacebookProvider } from '../platforms/providers/FacebookProvider';
 import { InstagramProvider } from '../platforms/providers/InstagramProvider';
 import { SocialInboxService, InboxMessage, MessageType, MessageStatus, MessagePriority } from './SocialInboxService';
 import { PlatformType } from '../platforms/PlatformProvider';
-import { logger } from '../logging/logger';
+import { logger } from '../../core/logging/logger';
 import { v4 as uuidv4 } from 'uuid';
 import { tieredModelRouter, TaskType } from '../ai/models/tiered-model-router';
-import { User } from '../models/User';
+import { User } from '../../core/models/User';
 
 /**
  * Facebook & Instagram Social Inbox Adapter
@@ -778,7 +778,7 @@ export class FacebookSocialInboxAdapter {
   private async findExistingMessage(platformId: string, type: string): Promise<InboxMessage | null> {
     try {
       // Query Firestore for existing message with this platform ID
-      const { firestore } = await import('../firebase/client');
+      const { firestore } = await import('../../core/firebase/client');
       const { collection, query, where, getDocs } = await import('firebase/firestore');
       
       const platformType = type.includes('instagram') ? PlatformType.INSTAGRAM : PlatformType.FACEBOOK;

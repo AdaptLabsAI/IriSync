@@ -17,7 +17,7 @@ import {
   limit,
   startAfter
 } from 'firebase/firestore';
-import { firestore } from '../../../../lib/firebase';
+import { firestore } from '../../../../lib/core/firebase';
 import { handleApiError } from '../../../../lib/auth/utils';
 import { 
   TeamTodoItem, 
@@ -27,7 +27,7 @@ import {
   TodoType,
   ENTERPRISE_FEATURES 
 } from '../../../../types/todo';
-import { OrganizationRole, TeamRole } from '../../../../lib/user/types';
+import { OrganizationRole, TeamRole } from '../../../../lib/features/user/types';
 
 /**
  * Get user's subscription tier from session or database

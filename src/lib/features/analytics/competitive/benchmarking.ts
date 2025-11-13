@@ -13,9 +13,9 @@ import {
   FirestoreDataConverter,
   QueryDocumentSnapshot
 } from 'firebase/firestore';
-import { firestore as db } from '../../../lib/firebase';
+import { firestore as db } from '../../../lib/core/firebase';
 import logger from '../../../lib/logging/logger';
-import { User } from '../../../lib/models/User';
+import { User } from '../../../lib/core/models/User';
 import { 
   BenchmarkingResult,
   CompetitorData,

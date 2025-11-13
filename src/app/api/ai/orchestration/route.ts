@@ -2,14 +2,14 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/lib/features/auth';
 import { TokenService } from '../../../../lib/tokens/token-service';
-import { AIOrchestrationFactory } from '../../../../lib/ai/orchestration/AIOrchestrationFactory';
+import { AIOrchestrationFactory } from '../../../../lib/features/ai/orchestration/AIOrchestrationFactory';
 import { AITaskConfig } from '../../../../lib/ai/orchestration/AIOrchestrator';
-import { AIFactory } from '../../../../lib/ai/factory';
-import { logger } from '../../../../lib/logging/logger';
-import { ProviderType } from '../../../../lib/ai/models';
+import { AIFactory } from '../../../../lib/features/ai/factory';
+import { logger } from '../../../../lib/core/logging/logger';
+import { ProviderType } from '../../../../lib/features/ai/models';
 import { TokenRepository } from '../../../../lib/tokens/token-repository';
-import { NotificationService } from '../../../../lib/notifications/NotificationService';
-import { firestore } from '../../../../lib/firebase';
+import { NotificationService } from '../../../../lib/core/notifications/NotificationService';
+import { firestore } from '../../../../lib/core/firebase';
 
 /**
  * Helper function to get organization ID using organization-centric approach

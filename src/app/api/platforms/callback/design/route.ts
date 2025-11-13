@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { logger } from '../../../../../lib/logging/logger';
+import { logger } from '../../../../../lib/core/logging/logger';
 import { AdobeExpressAdapter } from '../../../../../lib/integrations/AdobeExpressAdapter';
 import { CanvaAdapter } from '../../../../../lib/integrations/CanvaAdapter';
 import { NotionAdapter } from '../../../../../lib/integrations/NotionAdapter';
@@ -7,7 +7,7 @@ import { GoogleDriveAdapter } from '../../../../../lib/integrations/GoogleDriveA
 import { OneDriveAdapter } from '../../../../../lib/integrations/OneDriveAdapter';
 import { DropboxAdapter } from '../../../../../lib/integrations/DropboxAdapter';
 import { AirtableAdapter } from '../../../../../lib/integrations/AirtableAdapter';
-import { getFirestore } from '../../../../../lib/firebase/admin';
+import { getFirestore } from '../../../../../lib/core/firebase/admin';
 import { FieldValue } from 'firebase-admin/firestore';
 import { PlatformAdapterFactory } from '../../../../../lib/platforms/adapters/PlatformAdapterFactory';
 

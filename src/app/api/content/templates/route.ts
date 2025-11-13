@@ -5,8 +5,8 @@ import {
   PostTemplateCategory,
   PostTemplatePlatform,
   CreateTemplateParams
-} from '../../../../lib/content/posts/templates';
-import { logger } from '../../../../lib/logging/logger';
+} from '../../../../lib/features/content/posts/templates';
+import { logger } from '../../../../lib/core/logging/logger';
 
 const templateService = new PostTemplateService();
 

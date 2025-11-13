@@ -1,8 +1,8 @@
 import { BaseActionHandler } from '../../handlers';
 import logger from '../../../../lib/logging/logger';
-import { tieredModelRouter, TaskType } from '../../../../lib/ai/models/tiered-model-router';
+import { tieredModelRouter, TaskType } from '../../../../lib/features/ai/models/tiered-model-router';
 import { config } from '../../../../lib/config';
-import { User } from '../../../../lib/models/User';
+import { User } from '../../../../lib/core/models/User';
 
 /**
  * Action handler for AI content generation

@@ -1,11 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '../../../../lib/auth/auth-options';
-import unifiedSocialInboxManager, { SocialAccount, SyncConfiguration } from '../../../../lib/content/UnifiedSocialInboxManager';
-import { SocialInboxService, InboxFilter, MessageStatus, MessagePriority } from '../../../../lib/content/SocialInboxService';
-import { PlatformType } from '../../../../lib/platforms/PlatformProvider';
-import { logger } from '../../../../lib/logging/logger';
-import { firestore } from '../../../../lib/firebase/client';
+import unifiedSocialInboxManager, { SocialAccount, SyncConfiguration } from '../../../../lib/features/content/UnifiedSocialInboxManager';
+import { SocialInboxService, InboxFilter, MessageStatus, MessagePriority } from '../../../../lib/features/content/SocialInboxService';
+import { PlatformType } from '../../../../lib/features/platforms/PlatformProvider';
+import { logger } from '../../../../lib/core/logging/logger';
+import { firestore } from '../../../../lib/core/firebase/client';
 import { collection, query, where, getDocs } from 'firebase/firestore';
 
 const socialInboxService = new SocialInboxService();
@@ -530,7 +530,7 @@ async function getConnectedAccounts(organizationId: string): Promise<SocialAccou
 
 async function getUserOrganizationId(userId: string): Promise<string | null> {
   try {
-    const { firestore } = await import('../../../../lib/firebase/client');
+    const { firestore } = await import('../../../../lib/core/firebase/client');
     const { doc, getDoc } = await import('firebase/firestore');
     
     const userDoc = await getDoc(doc(firestore, 'users', userId));

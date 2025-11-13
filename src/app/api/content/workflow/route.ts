@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import workflowService, { WorkflowError } from '../../../../lib/content/workflow/WorkflowService';
+import workflowService, { WorkflowError } from '../../../../lib/features/content/workflow/WorkflowService';
 import { 
   CreateWorkflowTemplateInput, 
   UpdateWorkflowTemplateInput,
@@ -8,12 +8,12 @@ import {
   WorkflowFilter,
   WorkflowAction,
   WorkflowState
-} from '../../../../lib/content/models/workflow';
+} from '../../../../lib/features/content/models/workflow';
 import { TeamRole } from '../../../../lib/auth/roles';
 import { OrganizationRole } from '../../../../lib/team/users/organization';
 import { getCurrentUser } from '../../../../lib/auth/token';
 import { hasOrganizationRole } from '../../../../lib/auth/middleware';
-import { Logger, LogLevel } from '../../../../lib/logging/logger';
+import { Logger, LogLevel } from '../../../../lib/core/logging/logger';
 
 const logger = new Logger({
   minLevel: LogLevel.INFO,

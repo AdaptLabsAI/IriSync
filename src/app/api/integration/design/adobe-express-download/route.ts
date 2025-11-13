@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { AdobeExpressAdapter } from '../../../../../lib/integrations/AdobeExpressAdapter';
-import { handleApiError, handleValidationError, handleNotFoundError } from '../../../../../lib/api/errorHandler';
+import { handleApiError, handleValidationError, handleNotFoundError } from '../../../../../lib/core/api/errorHandler';
 
 const ENDPOINT = 'POST /api/integration/design/adobe-express-download';
 

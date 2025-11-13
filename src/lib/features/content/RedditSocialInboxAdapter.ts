@@ -1,9 +1,9 @@
 import { RedditProvider } from '../platforms/providers/RedditProvider';
 import { SocialInboxService, InboxMessage, MessageType, MessageStatus, MessagePriority } from './SocialInboxService';
 import { PlatformType } from '../platforms/PlatformProvider';
-import { logger } from '../logging/logger';
+import { logger } from '../../core/logging/logger';
 import { tieredModelRouter, TaskType } from '../ai/models/tiered-model-router';
-import { User } from '../models/User';
+import { User } from '../../core/models/User';
 import { v4 as uuidv4 } from 'uuid';
 
 export interface RedditReplyOptions {
@@ -884,7 +884,7 @@ export class RedditSocialInboxAdapter {
   private async findExistingMessage(platformId: string, type: string): Promise<InboxMessage | null> {
     try {
       // Query Firestore for existing message with this platform ID
-      const { firestore } = await import('../firebase/client');
+      const { firestore } = await import('../../core/firebase/client');
       const { collection, query, where, getDocs } = await import('firebase/firestore');
       
       const messagesQuery = query(

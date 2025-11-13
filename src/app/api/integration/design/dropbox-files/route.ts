@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { DropboxAdapter } from '../../../../../lib/integrations/DropboxAdapter';
-import { handleApiError, handleValidationError } from '../../../../../lib/api/errorHandler';
+import { handleApiError, handleValidationError } from '../../../../../lib/core/api/errorHandler';
 
 const ENDPOINT = 'POST /api/integration/design/dropbox-files';
 

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { logger } from '../../../../lib/logging/logger';
-import { getFirestore } from '../../../../lib/firebase/admin';
+import { logger } from '../../../../lib/core/logging/logger';
+import { getFirestore } from '../../../../lib/core/firebase/admin';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '../../../../lib/auth';
 

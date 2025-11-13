@@ -10,7 +10,7 @@ import { Star, MoreHorizontal, MessageSquare, RefreshCw, AlertTriangle, AlertCir
 import { Card, CardBody } from '../../ui/card';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../../ui/tooltip';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, DropdownMenuSeparator } from '../../ui/dropdown-menu';
-import { MessageStatus } from '../../../lib/content/SocialInboxService';
+import { MessageStatus } from '../../../lib/features/content/SocialInboxService';
 
 export type MessagePriority = 'low' | 'normal' | 'high' | 'urgent';
 

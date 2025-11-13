@@ -1,9 +1,9 @@
 import { TikTokProvider } from '../platforms/providers/TikTokProvider';
 import { SocialInboxService, InboxMessage, MessageType, MessageStatus, MessagePriority } from './SocialInboxService';
 import { PlatformType } from '../platforms/PlatformProvider';
-import { logger } from '../logging/logger';
+import { logger } from '../../core/logging/logger';
 import { tieredModelRouter, TaskType, SubscriptionTier } from '../ai/models/tiered-model-router';
-import { User } from '../models/User';
+import { User } from '../../core/models/User';
 import { v4 as uuidv4 } from 'uuid';
 
 export interface TikTokReplyOptions {
@@ -553,7 +553,7 @@ export class TikTokSocialInboxAdapter {
   private async findExistingMessage(platformId: string, type: string): Promise<InboxMessage | null> {
     try {
       // Query Firestore for existing message with this platform ID
-      const { firestore } = await import('../firebase/client');
+      const { firestore } = await import('../../core/firebase/client');
       const { collection, query, where, getDocs } = await import('firebase/firestore');
       
       const messagesQuery = query(
