@@ -4,7 +4,7 @@ import knowledgeBaseService, { AccessLevel, DocumentType } from '../rag/knowledg
 import vectorDatabase, { EmbeddingModelType } from '../rag/vector-database';
 import config from '../config';
 import { v4 as uuidv4 } from 'uuid';
-import { firestore } from '../firebase/admin';
+import { firestore } from '../core/firebase/admin';
 import { logger } from '../logging/logger';
 
 /**

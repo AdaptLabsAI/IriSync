@@ -1,7 +1,7 @@
 import { TokenService } from '../tokens/token-service';
 import { Cache } from '../cache/Cache';
 import { logger } from '../logging/logger';
-import { firestore } from '../firebase';
+import { firestore } from '../core/firebase';
 import { 
   collection, 
   doc, 

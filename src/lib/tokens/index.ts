@@ -16,7 +16,7 @@ import {
   TokenPurchaseResponse
 } from './token-purchase';
 import { NotificationService } from '../notifications/NotificationService';
-import { firebaseAdmin } from '../firebase/admin';
+import { firebaseAdmin } from '../core/firebase/admin';
 import {
   SubscriptionTier,
   TIER_TOKEN_LIMITS,

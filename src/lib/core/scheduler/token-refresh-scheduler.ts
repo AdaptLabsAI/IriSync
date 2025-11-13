@@ -1,6 +1,6 @@
 import { logger } from '../logging/logger';
-import tokenPurchaseService from '../tokens/TokenPurchaseService';
-import { firestore } from '../firebase';
+import tokenPurchaseService from '../features/tokens/TokenPurchaseService';
+import { firestore } from '../core/firebase';
 import { collection, query, where, getDocs, updateDoc, doc } from 'firebase/firestore';
 import { SubscriptionTier } from '../subscription/models/subscription';
 

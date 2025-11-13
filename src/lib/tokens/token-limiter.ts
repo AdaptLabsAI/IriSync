@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { TokenService } from './token-service';
-import { firebaseAdmin } from '../firebase/admin';
+import { firebaseAdmin } from '../core/firebase/admin';
 import { TokenRepository } from './token-repository';
 import { TokenBalance, SubscriptionTier } from '../ai/models/tokens';
 import { NotificationService } from '../notifications/NotificationService';

@@ -1,4 +1,4 @@
-import { firestore } from '../firebase/admin';
+import { firestore } from '../core/firebase/admin';
 import { v4 as uuidv4 } from 'uuid';
 import { 
   Workflow, 

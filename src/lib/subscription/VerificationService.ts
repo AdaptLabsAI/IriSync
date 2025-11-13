@@ -1,4 +1,4 @@
-import { firestore } from '../firebase';
+import { firestore } from '../core/firebase';
 import { collection, query, where, limit, getDocs, doc, setDoc, getDoc } from 'firebase/firestore';
 import { getStripeClient } from '../billing/stripe';
 import { logger } from '../logging/logger';

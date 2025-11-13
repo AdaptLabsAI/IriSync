@@ -18,7 +18,7 @@ import {
   arrayUnion,
   arrayRemove
 } from 'firebase/firestore';
-import { firestore } from '../firebase';
+import { firestore } from '../core/firebase';
 import { 
   KnowledgeContent, 
   KnowledgeContentType, 

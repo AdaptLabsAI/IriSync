@@ -2,7 +2,7 @@ import { RAGSystem, RAGDocument, SimilaritySearchResult } from './RAGSystem';
 import { TokenService } from '../tokens/token-service';
 import { TokenRepository } from '../tokens/token-repository';
 import { NotificationService } from '../notifications/NotificationService';
-import { getFirestore } from '../firebase/admin';
+import { getFirestore } from '../core/firebase/admin';
 import { logger } from '../logging/logger';
 
 export interface RAGQueryParams {

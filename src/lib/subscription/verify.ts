@@ -1,4 +1,4 @@
-import { getFirestore } from '../firebase/admin';
+import { getFirestore } from '../core/firebase/admin';
 
 const firestore = getFirestore();
 

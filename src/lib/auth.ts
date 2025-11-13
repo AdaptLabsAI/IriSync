@@ -1,11 +1,11 @@
 import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
-import { getFirestore, getAuth } from './firebase/admin';
-import { serverTimestamp } from './firebase/admin';
+import { getFirestore, getAuth } from './core/firebase/admin';
+import { serverTimestamp } from './core/firebase/admin';
 import { compare } from 'bcryptjs';
 import { generateOrganizationId, validateUserOrganizationConnections } from './utils';
-import { UserRole } from './models/User';
+import { UserRole } from './core/models/User';
 import { SubscriptionTier as BaseSubscriptionTier } from './subscription/models/subscription';
 import { getGoogleOAuthClientId } from '@/lib/server/env';
 

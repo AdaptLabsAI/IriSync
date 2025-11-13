@@ -1,6 +1,6 @@
 import { UnsplashAdapter, UnsplashPhoto } from '../integrations/UnsplashAdapter';
 import { PexelsAdapter, PexelsPhoto } from '../integrations/PexelsAdapter';
-import { firestore } from '../firebase';
+import { firestore } from '../core/firebase';
 import { collection, doc, setDoc, getDoc, getDocs, query, where, orderBy, limit, updateDoc, Timestamp } from 'firebase/firestore';
 import { v4 as uuidv4 } from 'uuid';
 

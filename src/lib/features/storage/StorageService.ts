@@ -22,7 +22,7 @@ import { MediaProcessor } from './media/MediaProcessor';
 import { ValidationUtils } from './utils/validation';
 import { CacheManager } from './utils/cache';
 import { Logger } from '../logging';
-import { firestore } from '../firebase';
+import { firestore } from '../core/firebase';
 import { 
   collection, 
   doc, 

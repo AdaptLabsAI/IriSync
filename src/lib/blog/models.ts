@@ -1,5 +1,5 @@
 import { Timestamp } from 'firebase/firestore';
-import { User } from '../models/User';
+import { User } from '../core/models/User';
 
 export enum BlogPostStatus {
   DRAFT = 'draft',

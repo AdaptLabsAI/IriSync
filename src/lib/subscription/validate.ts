@@ -1,7 +1,7 @@
-import { firestore } from '../firebase';
+import { firestore } from '../core/firebase';
 import { doc, getDoc } from 'firebase/firestore';
 import { logger } from '../logging/logger';
-import { firebaseAdmin } from '../firebase/admin';
+import { firebaseAdmin } from '../core/firebase/admin';
 import { database as prisma } from '../database';
 
 /**

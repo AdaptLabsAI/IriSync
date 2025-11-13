@@ -1,8 +1,8 @@
-import { firestore } from '../firebase';
+import { firestore } from '../core/firebase';
 import { doc, getDoc, setDoc, updateDoc, Timestamp, collection, query, where, getDocs, writeBatch } from 'firebase/firestore';
 import { compare, hash } from 'bcryptjs';
 import { sign, verify } from 'jsonwebtoken';
-import { SubscriptionTier, SubscriptionTierValues, UserRole } from '../models/User';
+import { SubscriptionTier, SubscriptionTierValues, UserRole } from '../core/models/User';
 import { getTokenAllocationForTier } from '../subscription';
 import { generateOrganizationId, validateUserOrganizationConnections } from '../utils';
 

@@ -5,7 +5,7 @@ import { config } from '../config';
 import { tieredModelRouter, TaskType } from '../ai/models/tiered-model-router';
 import { AIProviderFactory, AIProvider } from '../ai/providers/AIProviderFactory';
 import { ProviderType } from '../ai/providers/ProviderType';
-import { User } from '../models/User';
+import { User } from '../core/models/User';
 
 /**
  * Citation information for retrieved content

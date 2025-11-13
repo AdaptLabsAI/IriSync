@@ -26,7 +26,7 @@ import {
   UserPaginationParams
 } from '../types';
 import { Team, TeamUtils } from '../models/Team';
-import { User, UserUtils } from '../models/User';
+import { User, UserUtils } from '../core/models/User';
 import { ActivityUtils } from '../models/Activity';
 
 /**

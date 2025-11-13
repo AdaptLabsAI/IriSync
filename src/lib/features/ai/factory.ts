@@ -7,7 +7,7 @@ import { AnthropicProvider } from './providers/AnthropicProvider';
 import { GoogleAIProvider } from './providers/GoogleAIProvider';
 import { Cache } from '../cache/Cache';
 import { doc, getDoc } from 'firebase/firestore';
-import { firestore } from '../firebase';
+import { firestore } from '../core/firebase';
 
 /**
  * Factory options for provider creation

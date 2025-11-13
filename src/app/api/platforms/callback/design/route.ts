@@ -9,7 +9,7 @@ import { DropboxAdapter } from '../../../../../lib/integrations/DropboxAdapter';
 import { AirtableAdapter } from '../../../../../lib/integrations/AirtableAdapter';
 import { getFirestore } from '../../../../../lib/core/firebase/admin';
 import { FieldValue } from 'firebase-admin/firestore';
-import { PlatformAdapterFactory } from '../../../../../lib/platforms/adapters/PlatformAdapterFactory';
+import { PlatformAdapterFactory } from '../../../../../lib/features/platforms/adapters/PlatformAdapterFactory';
 
 const firestore = getFirestore();
 

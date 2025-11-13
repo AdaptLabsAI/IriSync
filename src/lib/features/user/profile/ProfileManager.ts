@@ -31,7 +31,7 @@ import {
   UserNotificationType,
   NotificationChannel
 } from '../types';
-import { User, UserUtils, FirestoreUser } from '../models/User';
+import { User, UserUtils, FirestoreUser } from '../core/models/User';
 import { ActivityUtils } from '../models/Activity';
 
 /**

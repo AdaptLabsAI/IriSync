@@ -1,4 +1,4 @@
-import { firestore } from '../firebase';
+import { firestore } from '../core/firebase';
 import { doc, getDoc, updateDoc, increment, setDoc, collection, query, where, getDocs, Timestamp, limit, orderBy } from 'firebase/firestore';
 import { SubscriptionTier } from '../subscription/models/subscription';
 import { TokenRepository } from './token-repository';

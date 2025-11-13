@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { getDoc, doc } from 'firebase/firestore';
-import { firestore } from '../firebase';
+import { firestore } from '../core/firebase';
 import { logger } from '../logging/logger';
 
 /**

@@ -27,7 +27,7 @@ import {
 import { 
   User, 
   UserUtils 
-} from '../models/User';
+} from '../core/models/User';
 import { 
   UserError, 
   UserErrorType, 

@@ -1,10 +1,10 @@
 import { verify } from 'jsonwebtoken';
 import { cookies } from 'next/headers';
-import { firestore } from '../firebase';
+import { firestore } from '../core/firebase';
 import { doc, getDoc } from 'firebase/firestore';
-import { UserRole, SubscriptionTier } from '../models/User';
+import { UserRole, SubscriptionTier } from '../core/models/User';
 import jwt, { JwtPayload } from 'jsonwebtoken';
-import { Logger, LogLevel } from '../logging/logger';
+import { Logger, LogLevel } from '../core/logging/logger';
 
 const logger = new Logger({
   minLevel: LogLevel.INFO,

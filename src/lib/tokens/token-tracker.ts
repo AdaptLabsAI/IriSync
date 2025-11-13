@@ -1,9 +1,9 @@
-import { firestore } from '../firebase';
+import { firestore } from '../core/firebase';
 import { collection, query, where, getDocs, addDoc, Timestamp, orderBy, limit, doc, updateDoc, increment, getDoc, setDoc } from 'firebase/firestore';
 import { TokenService } from './token-service';
 import { AITaskType } from '../ai/models';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { firebaseAdmin } from '../firebase/admin';
+import { firebaseAdmin } from '../core/firebase/admin';
 import { getAuth } from 'firebase-admin/auth';
 import { TokenRepository } from './token-repository';
 import { NotificationService } from '../notifications/NotificationService';

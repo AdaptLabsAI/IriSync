@@ -2,7 +2,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { logger } from '../logging/logger';
 import VectorDatabase from './vector-database';
 import TextChunker from './text-chunker';
-import { firestore } from '../firebase';
+import { firestore } from '../core/firebase';
 import { collection, doc, getDoc, setDoc, updateDoc, deleteDoc, query, where, getDocs } from 'firebase/firestore';
 import { SubscriptionTier } from '../subscription/models/subscription';
 import { getTokenAllocationForTier } from '../subscription/index';

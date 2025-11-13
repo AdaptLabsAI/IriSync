@@ -16,7 +16,7 @@ import {
   Timestamp,
   serverTimestamp
 } from 'firebase/firestore';
-import { firestore } from '../firebase';
+import { firestore } from '../core/firebase';
 import { 
   ForumCategory, 
   ForumPost, 
@@ -32,7 +32,7 @@ import {
 import { v4 as uuidv4 } from 'uuid';
 import { generateSlug } from '../utils/slug';
 import { logger } from '../logging/logger';
-import { UserRole } from '../models/User';
+import { UserRole } from '../core/models/User';
 
 // Collection names
 const CATEGORIES_COLLECTION = 'forumCategories';

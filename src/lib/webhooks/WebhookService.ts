@@ -1,5 +1,5 @@
-import { firestore } from '../firebase';
-import { getFirestore } from '../firebase/admin';
+import { firestore } from '../core/firebase';
+import { getFirestore } from '../core/firebase/admin';
 import { 
   doc, 
   collection, 
