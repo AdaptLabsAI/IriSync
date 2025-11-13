@@ -3,7 +3,7 @@ import { collection, doc, setDoc, getDoc, getDocs, updateDoc, query, where, limi
 import { v4 as uuidv4 } from 'uuid';
 import { SubscriptionTier } from './models/subscription';
 import { sendTrialWelcomeEmail, sendTrialExpirationReminderEmail } from '../core/notifications/email';
-import { getStripeClient, createSubscription } from '../billing/stripe';
+import { getStripeClient, createSubscription } from '../features/billing/stripe';
 
 /**
  * Interface for trial subscription record

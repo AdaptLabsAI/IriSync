@@ -3,7 +3,7 @@ import { doc, getDoc, updateDoc, increment, setDoc, collection, query, where, ge
 import { SubscriptionTier } from '../subscription/models/subscription';
 import { TokenRepository } from './token-repository';
 import { NotificationService } from '../core/notifications/NotificationService';
-import { logger } from '../logging/logger';
+import { logger } from '../core/logging/logger';
 
 /**
  * Monthly token limits by subscription tier

@@ -15,7 +15,7 @@ import {
 } from 'firebase/firestore';
 import axios from 'axios';
 import crypto from 'crypto';
-import { logger } from '../logging/logger';
+import { logger } from '../core/logging/logger';
 
 const adminFirestore = getFirestore();
 

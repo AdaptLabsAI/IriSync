@@ -1,5 +1,5 @@
 import { SubscriptionTier } from '../../subscription/models/subscription';
-import { AITaskType } from '../../ai/models/AITask';
+import { AITaskType } from '../../features/ai/models/AITask';
 
 /**
  * Base monthly token limits by subscription tier

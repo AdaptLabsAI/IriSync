@@ -1,11 +1,11 @@
-import { AIProvider } from '../ai/providers/AIProvider';
+import { AIProvider } from '../features/ai/providers/AIProvider';
 import { TokenService } from '../tokens/token-service';
 import knowledgeBaseService, { AccessLevel, DocumentType } from '../rag/knowledge-base';
 import vectorDatabase, { EmbeddingModelType } from '../rag/vector-database';
 import config from '../config';
 import { v4 as uuidv4 } from 'uuid';
 import { firestore } from '../core/firebase/admin';
-import { logger } from '../logging/logger';
+import { logger } from '../core/logging/logger';
 
 /**
  * User tier types

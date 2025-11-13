@@ -14,7 +14,7 @@ import {
 } from './models';
 import { ActionHandler, TriggerHandler } from './handlers';
 import { getActionHandler, getTriggerHandler } from './registry';
-import logger from '../logging/logger';
+import logger from '../core/logging/logger';
 
 /**
  * Event data for automation processing

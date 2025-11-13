@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { getDoc, doc } from 'firebase/firestore';
 import { firestore } from '../core/firebase';
-import { logger } from '../logging/logger';
+import { logger } from '../core/logging/logger';
 
 /**
  * Middleware to check if an organization is suspended for non-payment

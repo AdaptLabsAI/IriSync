@@ -1,8 +1,8 @@
 import { firestore } from '../core/firebase';
 import { doc, getDoc } from 'firebase/firestore';
-import { logger } from '../logging/logger';
+import { logger } from '../core/logging/logger';
 import { firebaseAdmin } from '../core/firebase/admin';
-import { database as prisma } from '../database';
+import { database as prisma } from '../core/database';
 
 /**
  * Supported feature keys for subscription validation

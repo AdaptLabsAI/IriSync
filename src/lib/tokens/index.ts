@@ -26,7 +26,7 @@ import {
   TokenUsageRecord,
   TokenPurchaseTransaction,
   TokenUsageNotification
-} from '../ai/models/tokens';
+} from '../features/ai/models/tokens';
 
 /**
  * Create a token service instance

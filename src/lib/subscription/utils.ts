@@ -2,7 +2,7 @@
  * Subscription utility functions
  */
 
-import { logger } from '../logging/logger';
+import { logger } from '../core/logging/logger';
 import { formatCurrency } from '../../utils/formatting';
 
 /**
@@ -263,7 +263,7 @@ export function getPlanPricing(planId: string): string {
 export async function getSubscriptionTier(userId: string): Promise<SubscriptionTier> {
   try {
     // Import here to avoid circular dependencies
-    const { firestore } = await import('../firebase');
+    const { firestore } = await import('../core/firebase');
     const { doc, getDoc } = await import('firebase/firestore');
     
     const userDoc = await getDoc(doc(firestore, 'users', userId));

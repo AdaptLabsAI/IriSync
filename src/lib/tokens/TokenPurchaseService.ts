@@ -18,7 +18,7 @@ import {
 } from 'firebase/firestore';
 import { v4 as uuidv4 } from 'uuid';
 import { SubscriptionTier } from '../subscription/utils';
-import unifiedEmailService from '../notifications/unified-email-service';
+import unifiedEmailService from '../core/notifications/unified-email-service';
 
 /**
  * Token purchase record

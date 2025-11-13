@@ -1,6 +1,6 @@
 import { ActionHandler, TriggerHandler } from './handlers';
 import { TriggerType, ActionType } from './models';
-import logger from '../logging/logger';
+import logger from '../core/logging/logger';
 
 // Storage for registered handlers
 const triggerHandlers = new Map<string, TriggerHandler>();

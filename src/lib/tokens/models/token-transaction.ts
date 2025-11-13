@@ -1,4 +1,4 @@
-import { AITaskType } from '../../ai/models/AITask';
+import { AITaskType } from '../../features/ai/models/AITask';
 
 /**
  * Types of token transactions

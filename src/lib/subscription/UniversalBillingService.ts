@@ -1,8 +1,8 @@
 import { firestore } from '../core/firebase';
 import { doc, getDoc, updateDoc, collection, query, where, getDocs, Timestamp } from 'firebase/firestore';
-import { getStripeClient } from '../billing/stripe';
-import { logger } from '../logging/logger';
-import unifiedEmailService from '../notifications/unified-email-service';
+import { getStripeClient } from '../features/billing/stripe';
+import { logger } from '../core/logging/logger';
+import unifiedEmailService from '../core/notifications/unified-email-service';
 
 /**
  * Universal billing status for all subscription tiers
