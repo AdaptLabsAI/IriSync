@@ -2,7 +2,10 @@ import { Storage } from '@google-cloud/storage';
 import { v4 as uuidv4 } from 'uuid';
 import path from 'path';
 import sharp from 'sharp';
-import ffmpeg from 'fluent-ffmpeg';
+import ffmpegInstaller from '@ffmpeg-installer/ffmpeg';
+import ffprobeInstaller from '@ffprobe-installer/ffprobe';
+import { execFile } from 'child_process';
+import { promisify } from 'util';
 import { firestore } from '../firebase';
 import { doc, getDoc, setDoc, updateDoc, deleteDoc, arrayUnion, arrayRemove } from 'firebase/firestore';
 import axios from 'axios';
@@ -70,6 +73,9 @@ export interface TransformOptions {
  * transformations, and storage management.
  */
 export class MediaService {
+  private readonly ffmpegPath = ffmpegInstaller.path;
+  private readonly ffprobePath = ffprobeInstaller.path;
+  private readonly execFileAsync = promisify(execFile);
   private storage: Storage;
   private bucketName: string;
   private cdnUrl?: string;
@@ -530,45 +536,50 @@ export class MediaService {
   /**
    * Get video metadata using ffmpeg
    */
-  private getVideoMetadata(filePath: string): Promise<{ width: number; height: number; duration: number }> {
-    return new Promise((resolve, reject) => {
-      ffmpeg.ffprobe(filePath, (err, metadata) => {
-        if (err) {
-          reject(err);
-          return;
-        }
-        
-        const videoStream = metadata.streams.find(stream => stream.codec_type === 'video');
-        
-        if (!videoStream) {
-          reject(new Error('No video stream found'));
-          return;
-        }
-        
-        resolve({
-          width: videoStream.width || 0,
-          height: videoStream.height || 0,
-          duration: metadata.format.duration || 0
-        });
-      });
-    });
+  private async getVideoMetadata(filePath: string): Promise<{ width: number; height: number; duration: number }> {
+    try {
+      const { stdout } = await this.execFileAsync(this.ffprobePath, [
+        '-v',
+        'error',
+        '-select_streams',
+        'v:0',
+        '-show_entries',
+        'stream=width,height:format=duration',
+        '-of',
+        'json',
+        filePath
+      ]);
+
+      const parsed = JSON.parse(stdout || '{}');
+      const stream = Array.isArray(parsed.streams) ? parsed.streams.find((entry: any) => entry.codec_type === 'video') : undefined;
+      const width = stream?.width ? Number(stream.width) : 0;
+      const height = stream?.height ? Number(stream.height) : 0;
+      const duration = parsed.format?.duration ? Number(parsed.format.duration) : 0;
+
+      if (!stream) {
+        throw new Error('No video stream found');
+      }
+
+      return { width, height, duration };
+    } catch (error) {
+      throw error;
+    }
   }
   
   /**
    * Generate video thumbnail using ffmpeg
    */
-  private generateVideoThumbnail(videoPath: string, outputPath: string): Promise<void> {
-    return new Promise((resolve, reject) => {
-      ffmpeg(videoPath)
-        .screenshots({
-          timestamps: ['50%'], // Take screenshot from middle of video
-          filename: path.basename(outputPath),
-          folder: path.dirname(outputPath),
-          size: '320x240'
-        })
-        .on('end', () => resolve())
-        .on('error', (err) => reject(err));
-    });
+  private async generateVideoThumbnail(videoPath: string, outputPath: string): Promise<void> {
+    await this.execFileAsync(this.ffmpegPath, [
+      '-y',
+      '-i',
+      videoPath,
+      '-ss',
+      '00:00:01.000',
+      '-vframes',
+      '1',
+      outputPath
+    ]);
   }
   
   /**
