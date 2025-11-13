@@ -31,7 +31,7 @@ import { doc, getDoc } from 'firebase/firestore';
 import { firestore } from '@/lib/core/firebase';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
-import TeamSwitcher from '@/components/ui/TeamSwitcher';
+import { TeamSwitcher } from '@/components/ui/TeamSwitcher';
 import { useTeam } from '@/context/TeamContext';
 import {  MdHealthAndSafety, MdLock, MdOutlineAnalytics, MdOutlineWindow } from 'react-icons/md';
 // Interface for sidebar item
