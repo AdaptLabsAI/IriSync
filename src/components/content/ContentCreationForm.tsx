@@ -20,7 +20,7 @@ import {
   IconButton
 } from '@mui/material';
 import { useRouter } from 'next/navigation';
-import { SocialAccount, PlatformType, AttachmentType } from '../../lib/platforms/client';
+import { SocialAccount, PlatformType, AttachmentType } from '../../lib/features/platforms/client';
 import { SubscriptionData } from '../../lib/subscription/models/subscription';
 import Image from 'next/image';
 import { BsImage, BsTrash, BsCalendar, BsLink, BsLightning } from 'react-icons/bs';

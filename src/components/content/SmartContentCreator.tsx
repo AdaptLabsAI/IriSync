@@ -41,7 +41,7 @@ import {
   Timeline as TimelineIcon,
   Speed as SpeedIcon
 } from '@mui/icons-material';
-import { PlatformType, SocialAccount } from '../../lib/platforms/client';
+import { PlatformType, SocialAccount } from '../../lib/features/platforms/client';
 import { SubscriptionData } from '../../lib/subscription/models/subscription';
 
 // Enhanced interfaces

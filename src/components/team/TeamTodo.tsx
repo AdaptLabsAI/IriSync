@@ -2,8 +2,8 @@
 
 import React, { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
-import { useTeamTodo } from '../context/TeamTodoContext';
-import { useTeam } from '../context/TeamContext';
+import { useTeamTodo } from '../../context/TeamTodoContext';
+import { useTeam } from '../../context/TeamContext';
 import type { 
   TeamTodoItem, 
   TodoPermissions

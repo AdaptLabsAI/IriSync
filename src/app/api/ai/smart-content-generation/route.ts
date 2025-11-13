@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '../../../../lib/firebase/admin';
 import { firestore } from '../../../../lib/firebase/admin';
 import { TieredModelRouter, TaskType, SubscriptionTier } from '../../../../lib/ai/models/tiered-model-router';
-import { PlatformType } from '../../../../lib/platforms/client';
+import { PlatformType } from '../../../../lib/features/platforms/client';
 import { User } from '../../../../lib/models/User';
 
 // Production-ready Smart Content Generation Service

@@ -3,7 +3,7 @@
 import React from 'react';
 import { Box, Container, Typography } from '@mui/material';
 import SmartContentCreator from '../../../../../components/content/SmartContentCreator';
-import { SocialAccount, PlatformType } from '../../../../../lib/platforms/client';
+import { SocialAccount, PlatformType } from '../../../../../lib/features/platforms/client';
 
 export default function SmartCreatorPage() {
   // Mock data for demo - in real app, this would come from context/API

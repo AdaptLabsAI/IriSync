@@ -15,7 +15,7 @@ import {
 import { ArrowBack } from '@mui/icons-material';
 import DashboardLayout from '../../../../../components/layouts/DashboardLayout';
 import SmartContentCreator from '../../../../../components/content/SmartContentCreator';
-import { SocialAccount, PlatformType } from '../../../../../lib/platforms/client';
+import { SocialAccount, PlatformType } from '../../../../../lib/features/platforms/client';
 import { SubscriptionData } from '../../../../../lib/subscription/models/subscription';
 
 export default function SmartContentCreatePage() {

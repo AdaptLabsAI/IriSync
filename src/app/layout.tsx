@@ -1,7 +1,6 @@
 import './globals.css';
 import { Providers } from './providers';
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
 import dynamic from 'next/dynamic';
 
 // Dynamically import the ChatbotWidget with no SSR
@@ -9,12 +8,8 @@ const ChatbotWidget = dynamic(() => import('@/components/support/ChatbotWidget')
   ssr: false,
 });
 
-// Load the Inter font
-const inter = Inter({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-inter',
-});
+// Font will be loaded via CSS and Tailwind configuration
+// Using system fonts as fallback for better performance and reliability
 
 // Get site URL from environment variable
 const siteUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://irisync.com';
@@ -59,7 +54,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={inter.variable}>
+    <html lang="en">
       <body>
         <Providers>
           {children}
