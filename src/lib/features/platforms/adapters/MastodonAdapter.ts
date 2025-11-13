@@ -2,7 +2,7 @@ import { PlatformAdapter } from './PlatformAdapter';
 import { PlatformAccountInfo, PlatformAuthData } from '../models';
 import axios from 'axios';
 import crypto from 'crypto';
-import { logger } from '../../../lib/logging/logger';
+import { logger } from '../../../core/logging/logger';
 import { PlatformType } from '../models/PlatformType';
 
 interface MastodonPost {

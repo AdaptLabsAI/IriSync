@@ -6,7 +6,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { firebaseAdmin } from '../core/firebase/admin';
 import { getAuth } from 'firebase-admin/auth';
 import { TokenRepository } from './token-repository';
-import { NotificationService } from '../notifications/NotificationService';
+import { NotificationService } from '../core/notifications/NotificationService';
 
 /**
  * Interface for token usage alert thresholds

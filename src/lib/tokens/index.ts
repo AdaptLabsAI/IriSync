@@ -15,7 +15,7 @@ import {
   TokenPurchaseRequest,
   TokenPurchaseResponse
 } from './token-purchase';
-import { NotificationService } from '../notifications/NotificationService';
+import { NotificationService } from '../core/notifications/NotificationService';
 import { firebaseAdmin } from '../core/firebase/admin';
 import {
   SubscriptionTier,

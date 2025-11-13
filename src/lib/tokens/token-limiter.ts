@@ -3,7 +3,7 @@ import { TokenService } from './token-service';
 import { firebaseAdmin } from '../core/firebase/admin';
 import { TokenRepository } from './token-repository';
 import { TokenBalance, SubscriptionTier } from '../ai/models/tokens';
-import { NotificationService } from '../notifications/NotificationService';
+import { NotificationService } from '../core/notifications/NotificationService';
 import { logger } from '../logging/logger';
 
 /**

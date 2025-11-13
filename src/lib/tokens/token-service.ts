@@ -2,7 +2,7 @@ import { firestore } from '../core/firebase';
 import { doc, getDoc, updateDoc, increment, setDoc, collection, query, where, getDocs, Timestamp, limit, orderBy } from 'firebase/firestore';
 import { SubscriptionTier } from '../subscription/models/subscription';
 import { TokenRepository } from './token-repository';
-import { NotificationService } from '../notifications/NotificationService';
+import { NotificationService } from '../core/notifications/NotificationService';
 import { logger } from '../logging/logger';
 
 /**

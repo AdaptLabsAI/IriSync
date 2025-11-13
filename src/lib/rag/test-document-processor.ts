@@ -1,5 +1,5 @@
 import documentProcessor, { DocumentType, AccessLevel, ChunkingStrategy } from './document-processor';
-import { logger } from '../logging/logger';
+import { logger } from '../core/logging/logger';
 
 /**
  * Test the document processor with different chunking strategies

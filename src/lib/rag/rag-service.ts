@@ -1,9 +1,9 @@
 import { RAGSystem, RAGDocument, SimilaritySearchResult } from './RAGSystem';
 import { TokenService } from '../tokens/token-service';
 import { TokenRepository } from '../tokens/token-repository';
-import { NotificationService } from '../notifications/NotificationService';
+import { NotificationService } from '../core/notifications/NotificationService';
 import { getFirestore } from '../core/firebase/admin';
-import { logger } from '../logging/logger';
+import { logger } from '../core/logging/logger';
 
 export interface RAGQueryParams {
   query: string;

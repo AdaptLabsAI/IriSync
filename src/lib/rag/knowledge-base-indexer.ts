@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import { logger } from '../logging/logger';
+import { logger } from '../core/logging/logger';
 import DocumentProcessor, { Document } from './document-processor';
 import { RAGService } from './rag-service';
 

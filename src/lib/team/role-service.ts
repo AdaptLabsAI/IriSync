@@ -2,7 +2,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { Role, Permission, systemRoles, getEffectivePermissions, isRoleAvailableForTier, SubscriptionTier } from './role';
 import { logger } from '../logging/logger';
 import { getSubscriptionTier } from '../subscription/utils';
-import { db } from '../database/firestore';
+import { db } from '../core/database/firestore';
 
 /**
  * User role assignment

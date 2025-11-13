@@ -28,10 +28,10 @@ import {
   CreateKnowledgeContentInput,
   UpdateKnowledgeContentInput
 } from './models';
-import { generateSlug } from '../utils/slug';
+import { generateSlug } from '../core/utils/slug';
 import { Document } from '../rag/document-processor';
 import { RAGService } from '../rag/rag-service';
-import { logger } from '../logging/logger';
+import { logger } from '../core/logging/logger';
 import { AccessLevel } from '../rag/knowledge-base';
 
 // Collection references

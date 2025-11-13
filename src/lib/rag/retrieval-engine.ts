@@ -3,8 +3,8 @@ import vectorDatabase, { VectorSearchResult } from './vector-database';
 import knowledgeBaseService, { AccessLevel, DocumentType, KnowledgeDocument } from './knowledge-base';
 import { config } from '../config';
 import { tieredModelRouter, TaskType } from '../ai/models/tiered-model-router';
-import { AIProviderFactory, AIProvider } from '../ai/providers/AIProviderFactory';
-import { ProviderType } from '../ai/providers/ProviderType';
+import { AIProviderFactory, AIProvider } from '../features/ai/providers/AIProviderFactory';
+import { ProviderType } from '../features/ai/providers/ProviderType';
 import { User } from '../core/models/User';
 
 /**

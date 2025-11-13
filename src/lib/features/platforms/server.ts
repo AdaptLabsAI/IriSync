@@ -16,7 +16,7 @@ import {
   Timestamp 
 } from 'firebase/firestore';
 import { firestore as db } from '../core/firebase';
-import { encrypt, decrypt } from '../security/encryption';
+import { encrypt, decrypt } from '../core/security/encryption';
 import { PlatformConnection } from '../core/models/Organization';
 
 // Production-ready server-side functions for platform account management

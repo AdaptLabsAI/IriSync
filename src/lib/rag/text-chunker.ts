@@ -1,5 +1,5 @@
 import { ChunkingStrategy } from './document-processor';
-import { logger } from '../logging/logger';
+import { logger } from '../core/logging/logger';
 
 /**
  * Chunk options for text processing
