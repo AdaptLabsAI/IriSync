@@ -13,6 +13,13 @@ function readEnv(key: string, { optional = false }: { optional?: boolean } = {})
       return '';
     }
 
+    // During build time, return empty string instead of throwing
+    if (process.env.NEXT_PHASE === 'phase-production-build') {
+      console.warn(`Environment variable ${key} not available during build`);
+      cache.set(key, '');
+      return '';
+    }
+
     throw new Error(`Missing required environment variable: ${key}`);
   }
 

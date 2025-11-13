@@ -27,11 +27,22 @@ function getGlobalModelRouter(): TieredModelRouter {
  * Check if user has admin privileges
  */
 async function checkAdminAccess(userId: string): Promise<boolean> {
-  const userDoc = await getDoc(doc(firestore, 'users', userId));
-  if (!userDoc.exists()) return false;
-  
-  const userData = userDoc.data();
-  return userData.role === 'admin' || userData.role === 'super_admin';
+  // Check if Firestore is available (it won't be during build)
+  if (!firestore) {
+    console.warn('Firestore not available - skipping admin check');
+    return false;
+  }
+
+  try {
+    const userDoc = await getDoc(doc(firestore, 'users', userId));
+    if (!userDoc.exists()) return false;
+    
+    const userData = userDoc.data();
+    return userData.role === 'admin' || userData.role === 'super_admin';
+  } catch (error) {
+    console.error('Error checking admin access:', error);
+    return false;
+  }
 }
 
 /**
@@ -39,6 +50,14 @@ async function checkAdminAccess(userId: string): Promise<boolean> {
  */
 export async function POST(req: NextRequest) {
   try {
+    // Check if Firebase is available (won't be during build)
+    if (!firestore) {
+      return NextResponse.json({ 
+        error: 'Service Unavailable', 
+        message: 'Firebase is not initialized. Please check server configuration.' 
+      }, { status: 503 });
+    }
+
     const session = await getServerSession(authOptions);
     if (!session?.user?.id) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -99,6 +118,14 @@ export async function POST(req: NextRequest) {
  */
 export async function GET(req: NextRequest) {
   try {
+    // Check if Firebase is available (won't be during build)
+    if (!firestore) {
+      return NextResponse.json({ 
+        error: 'Service Unavailable', 
+        message: 'Firebase is not initialized. Please check server configuration.' 
+      }, { status: 503 });
+    }
+
     const session = await getServerSession(authOptions);
     if (!session?.user?.id) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
