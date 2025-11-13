@@ -2,11 +2,21 @@
 
 This guide provides step-by-step instructions for deploying IriSync to production on Vercel with Firebase backend. No coding experience required.
 
+> **📌 IMPORTANT: Environment Variables Configuration**
+>
+> Environment variables should be configured as **GitHub Secrets**, not in the Vercel dashboard. Vercel automatically reads secrets from your GitHub repository when deploying.
+>
+> **See [ENVIRONMENT_SETUP.md](./ENVIRONMENT_SETUP.md) for the complete guide on:**
+> - Which Firebase services are used (Authentication, Firestore, Storage)
+> - How to get all API keys and credentials
+> - Step-by-step GitHub Secrets configuration
+> - Minimum 20 required secrets for production
+
 ## Table of Contents
 1. [Prerequisites](#prerequisites)
 2. [Firebase Setup](#firebase-setup)
-3. [Vercel Setup](#vercel-setup)
-4. [Environment Variables](#environment-variables)
+3. [GitHub Secrets Configuration](#github-secrets-configuration)
+4. [Vercel Setup](#vercel-setup)
 5. [Deployment Steps](#deployment-steps)
 6. [Post-Deployment](#post-deployment)
 7. [Monitoring & Maintenance](#monitoring--maintenance)
@@ -17,11 +27,11 @@ This guide provides step-by-step instructions for deploying IriSync to productio
 ## Prerequisites
 
 Before starting, you'll need accounts for:
-- [ ] [GitHub](https://github.com/) - For code repository
-- [ ] [Firebase](https://firebase.google.com/) - For database and authentication
-- [ ] [Vercel](https://vercel.com/) - For hosting the application
+- [ ] [GitHub](https://github.com/) - For code repository and secrets management
+- [ ] [Firebase](https://firebase.google.com/) - For database, authentication, and file storage
+- [ ] [Vercel](https://vercel.com/) - For hosting (automatically deploys from GitHub)
 - [ ] [Stripe](https://stripe.com/) - For payment processing
-- [ ] [OpenAI](https://openai.com/) - For AI features (optional but recommended)
+- [ ] [OpenAI](https://openai.com/) - For AI features (required for core functionality)
 
 ---
 
@@ -111,6 +121,52 @@ Before starting, you'll need accounts for:
 
 ---
 
+## GitHub Secrets Configuration
+
+> **⚠️ IMPORTANT: Configure secrets in GitHub, NOT Vercel**
+>
+> Vercel automatically reads environment variables from GitHub repository secrets during deployment. This is the recommended and most secure approach.
+
+### Step 1: Access GitHub Secrets
+
+1. Go to your GitHub repository: `https://github.com/AdaptLabsAI/IriSync`
+2. Click **Settings** tab (top menu)
+3. In left sidebar: **Secrets and variables** → **Actions**
+4. Click **"New repository secret"** button
+
+### Step 2: Add Required Secrets
+
+You need to add approximately 20 secrets minimum. For each secret:
+
+1. Click **"New repository secret"**
+2. Enter **Name** (must match exactly, case-sensitive)
+3. Enter **Value** (the actual API key or credential)
+4. Click **"Add secret"**
+
+### Step 3: Required Secrets List
+
+**See [ENVIRONMENT_SETUP.md](./ENVIRONMENT_SETUP.md) for:**
+- Complete list of all required secrets with examples
+- Where to get each API key and credential
+- Detailed Firebase, Stripe, and OpenAI setup instructions
+- Troubleshooting for common issues
+
+**Minimum required secrets (20):**
+- Application URLs (3): `NEXTAUTH_URL`, `NEXTAUTH_SECRET`, `NEXT_PUBLIC_APP_URL`
+- Firebase Client (6): All `NEXT_PUBLIC_FIREBASE_*` variables
+- Firebase Admin (3): `FIREBASE_ADMIN_*` variables
+- Stripe (6): Keys and price IDs
+- AI Service (2): `OPENAI_API_KEY`, `AI_PROVIDER_TYPE`
+
+### Step 4: Verify Secrets
+
+After adding all secrets:
+1. Go to **Settings** → **Secrets and variables** → **Actions**
+2. You should see 20+ repository secrets listed
+3. Secrets are encrypted and hidden (shows `****`)
+
+---
+
 ## Vercel Setup
 
 ### Step 1: Import Repository
@@ -120,6 +176,7 @@ Before starting, you'll need accounts for:
 3. Import your GitHub repository:
    - Click **"Import Git Repository"**
    - Select **"AdaptLabsAI/IriSync"**
+   - Select branch: `copilot/fix-production-ready-deployment`
    - Click **"Import"**
 
 ### Step 2: Configure Build Settings
@@ -130,85 +187,61 @@ Before starting, you'll need accounts for:
 4. **Output Directory**: `.next` (default)
 5. **Install Command**: `npm install`
 
-**Do not click Deploy yet!** We need to set up environment variables first.
+### Step 3: Environment Variables in Vercel
+
+**✅ Automatic:** Vercel reads secrets from GitHub automatically
+**❌ Manual:** You do NOT need to add them in Vercel dashboard
+
+However, Vercel will show environment variables in **Settings** → **Environment Variables** after they're synced from GitHub.
+
+**You can now click "Deploy"!** Vercel will:
+- Clone repository
+- Read secrets from GitHub
+- Install dependencies
+- Build Next.js app
+- Deploy to production URL
 
 ---
 
-## Environment Variables
+## Environment Variables Reference
 
-### Step 1: Prepare Environment Variables
+**All environment variables are now configured as GitHub Secrets** (see section above).
 
-Create a text file with all your environment variables. Use this template:
+For your reference, here's what each category of secrets contains:
 
-```bash
-# === REQUIRED: Application Settings ===
-NEXTAUTH_URL=https://your-app.vercel.app
-NEXTAUTH_SECRET=generate-a-random-32-char-string-here
-APP_URL=https://your-app.vercel.app
-NEXT_PUBLIC_APP_URL=https://your-app.vercel.app
+### Application Settings (3 secrets)
+- `NEXTAUTH_URL` - Your production URL
+- `NEXTAUTH_SECRET` - 32-character random string
+- `NEXT_PUBLIC_APP_URL` - Your production URL
 
-# === REQUIRED: Firebase Client (Public) ===
-NEXT_PUBLIC_FIREBASE_API_KEY=your-firebase-api-key
-NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your-project.firebaseapp.com
-NEXT_PUBLIC_FIREBASE_PROJECT_ID=your-project-id
-NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=your-project.appspot.com
-NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your-sender-id
-NEXT_PUBLIC_FIREBASE_APP_ID=your-app-id
+### Firebase Configuration (9 secrets)
+**Client (Public - safe in browser):**
+- `NEXT_PUBLIC_FIREBASE_API_KEY`
+- `NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN`
+- `NEXT_PUBLIC_FIREBASE_PROJECT_ID`
+- `NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET`
+- `NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID`
+- `NEXT_PUBLIC_FIREBASE_APP_ID`
 
-# === REQUIRED: Firebase Admin (Private) ===
-FIREBASE_ADMIN_PROJECT_ID=your-project-id
-FIREBASE_ADMIN_CLIENT_EMAIL=firebase-adminsdk@your-project.iam.gserviceaccount.com
-FIREBASE_ADMIN_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----\n"
+**Admin (Private - server only):**
+- `FIREBASE_ADMIN_PROJECT_ID`
+- `FIREBASE_ADMIN_CLIENT_EMAIL`
+- `FIREBASE_ADMIN_PRIVATE_KEY`
 
-# === REQUIRED: Stripe ===
-STRIPE_SECRET_KEY=sk_live_...
-NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_live_...
-STRIPE_WEBHOOK_SECRET=whsec_...
-STRIPE_PRICE_CREATOR_ID=price_...
-STRIPE_PRICE_INFLUENCER_ID=price_...
-STRIPE_PRICE_ENTERPRISE_ID=price_...
+### Stripe Configuration (6 secrets)
+- `STRIPE_SECRET_KEY` - Server-side key
+- `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` - Client-side key
+- `STRIPE_WEBHOOK_SECRET` - Webhook signing secret
+- `STRIPE_PRICE_CREATOR_ID` - Creator plan price
+- `STRIPE_PRICE_INFLUENCER_ID` - Influencer plan price
+- `STRIPE_PRICE_ENTERPRISE_ID` - Enterprise plan price
 
-# === OPTIONAL: AI Services ===
-OPENAI_API_KEY=sk-...
-AI_PROVIDER_TYPE=openai
-AI_MODEL_ID=gpt-4
+### AI Services (2-3 secrets)
+- `OPENAI_API_KEY` - OpenAI API key
+- `AI_PROVIDER_TYPE` - Usually "openai"
+- `AI_MODEL_ID` - Model name (optional)
 
-# === OPTIONAL: OAuth Providers ===
-GOOGLE_OAUTH_CLIENT_ID=your-client-id.apps.googleusercontent.com
-GOOGLE_CLIENT_SECRET=your-client-secret
-
-# === OPTIONAL: Email Service ===
-EMAIL_PROVIDER=sendgrid
-SENDGRID_API_KEY=SG...
-EMAIL_FROM=noreply@yourdomain.com
-```
-
-### Step 2: Generate Required Secrets
-
-#### NEXTAUTH_SECRET
-Generate a random 32-character string:
-```bash
-openssl rand -base64 32
-```
-Or use: https://generate-secret.vercel.app/32
-
-#### Firebase Private Key
-From the JSON file you downloaded:
-1. Copy the entire `private_key` value
-2. Keep the `\n` characters as-is
-3. Wrap in double quotes
-
-### Step 3: Add Variables to Vercel
-
-1. In Vercel project settings, go to **Settings** → **Environment Variables**
-2. For each variable:
-   - **Key**: Variable name (e.g., `NEXTAUTH_URL`)
-   - **Value**: Your value
-   - **Environments**: Select **Production**, **Preview**, and **Development**
-   - Click **"Add"**
-
-**Important Notes:**
-- Variables starting with `NEXT_PUBLIC_` are exposed to the browser
+**For detailed instructions on getting these values, see [ENVIRONMENT_SETUP.md](./ENVIRONMENT_SETUP.md)**
 - Other variables are server-only and kept secure
 - The `FIREBASE_ADMIN_PRIVATE_KEY` should include the literal `\n` characters
 
