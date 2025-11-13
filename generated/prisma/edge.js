@@ -207,7 +207,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "/home/user/IriSync/generated/prisma",
+      "value": "/home/runner/work/IriSync/IriSync/generated/prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -216,12 +216,12 @@ const config = {
     "binaryTargets": [
       {
         "fromEnvVar": null,
-        "value": "debian-openssl-1.1.x",
+        "value": "debian-openssl-3.0.x",
         "native": true
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "/home/user/IriSync/prisma/schema.prisma",
+    "sourceFilePath": "/home/runner/work/IriSync/IriSync/prisma/schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
@@ -235,6 +235,7 @@ const config = {
   ],
   "activeProvider": "postgresql",
   "postinstall": true,
+  "ciName": "GitHub Actions",
   "inlineDatasources": {
     "db": {
       "url": {
