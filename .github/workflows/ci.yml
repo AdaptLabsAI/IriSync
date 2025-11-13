@@ -1,0 +1,160 @@
+name: CI - Build, Test & Security
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  # Job 1: Quality checks
+  quality:
+    name: Code Quality
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Check for secrets
+        run: npm run check-secrets
+      
+      - name: Run linter
+        run: npm run lint
+      
+      - name: Check TypeScript
+        run: npx tsc --noEmit
+
+  # Job 2: Security audit
+  security:
+    name: Security Audit
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Run security audit
+        run: npm audit --audit-level=moderate
+        continue-on-error: true
+      
+      - name: Check for known vulnerabilities
+        run: npm audit --production
+        continue-on-error: true
+
+  # Job 3: Tests
+  test:
+    name: Run Tests
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Run tests
+        run: npm test -- --coverage
+      
+      - name: Upload coverage reports
+        uses: codecov/codecov-action@v3
+        if: always()
+        with:
+          files: ./coverage/lcov.info
+          flags: unittests
+          name: codecov-umbrella
+          fail_ci_if_error: false
+
+  # Job 4: Build
+  build:
+    name: Build Application
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Create dummy env file
+        run: |
+          cat > .env.local << EOF
+          NEXTAUTH_URL=http://localhost:3000
+          NEXTAUTH_SECRET=test-secret-for-ci-build-only
+          NEXT_PUBLIC_APP_URL=http://localhost:3000
+          NEXT_PUBLIC_FIREBASE_API_KEY=test-key
+          NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=test.firebaseapp.com
+          NEXT_PUBLIC_FIREBASE_PROJECT_ID=test-project
+          NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=test.appspot.com
+          NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=123456
+          NEXT_PUBLIC_FIREBASE_APP_ID=test-app-id
+          EOF
+      
+      - name: Build application
+        run: npm run build
+        env:
+          CI: true
+          NODE_ENV: production
+      
+      - name: Check build output
+        run: |
+          if [ ! -d ".next" ]; then
+            echo "Build failed - .next directory not found"
+            exit 1
+          fi
+          echo "Build successful!"
+
+  # Job 5: Bundle size check
+  size:
+    name: Bundle Size Check
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Analyze bundle size
+        run: npx @next/bundle-analyzer
+        continue-on-error: true

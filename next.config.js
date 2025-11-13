@@ -4,19 +4,19 @@ const path = require('path');
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
-  // Disable ESLint during production builds
+  // Enable ESLint during builds for better code quality
   eslint: {
-    // Warning: This allows production builds to successfully complete even if
-    // your project has ESLint errors.
-    ignoreDuringBuilds: true,
+    // Only ignore during builds if absolutely necessary
+    // Set to false to enforce linting in production
+    ignoreDuringBuilds: false,
+    // Specify directories to lint
+    dirs: ['src/app', 'src/components', 'src/lib'],
   },
-  // Disable TypeScript type checking
+  // Enable TypeScript type checking for production builds
   typescript: {
-    // !! WARN !!
-    // Dangerously allow production builds to successfully complete even if
-    // your project has type errors.
-    // !! WARN !!
-    ignoreBuildErrors: true,
+    // Enable type checking to catch errors before deployment
+    // Set to false to enforce strict type checking
+    ignoreBuildErrors: false,
   },
  images: {
     remotePatterns: [
