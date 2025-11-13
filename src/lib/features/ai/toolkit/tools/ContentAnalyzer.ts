@@ -2,8 +2,8 @@ import { AIProvider } from '../../providers/AIProviderFactory';
 import { ContentAnalyzer, AITaskResult, ToolkitRequestOptions, SentimentAnalysisResult, CategoryAnalysisResult, EngagementAnalysisResult } from '../interfaces';
 import { TokenTracker } from '../../../tokens/token-tracker';
 import { estimateTokenUsage } from '../../utils/token-counter';
-import { Cache } from '../../../cache/Cache';
-import { logger } from '../../../logging/logger';
+import { Cache } from '../../../../core/cache/Cache';
+import { logger } from '../../../../core/logging/logger';
 
 export class ContentAnalyzerImpl implements ContentAnalyzer {
   private provider: AIProvider;

@@ -13,7 +13,7 @@ import {
   serverTimestamp,
   Timestamp
 } from 'firebase/firestore';
-import { firestore } from '../../firebase';
+import { firestore } from '../../core/firebase';
 import {
   UserSessionData,
   SessionStatus,

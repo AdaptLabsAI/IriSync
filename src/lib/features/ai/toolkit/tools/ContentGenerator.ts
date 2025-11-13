@@ -2,8 +2,8 @@ import { AIProvider } from '../../providers/AIProviderFactory';
 import { ContentGenerator, AITaskResult, ToolkitRequestOptions, PostGenerationParams, CaptionGenerationParams, HashtagGenerationParams } from '../interfaces';
 import { TokenTracker } from '../../../tokens/token-tracker';
 import { estimateTokenUsage } from '../../utils/token-counter';
-import { Cache } from '../../../cache/Cache';
-import { logger } from '../../../logging/logger';
+import { Cache } from '../../../../core/cache/Cache';
+import { logger } from '../../../../core/logging/logger';
 
 /**
  * Implementation of ContentGenerator that uses AI providers to generate content

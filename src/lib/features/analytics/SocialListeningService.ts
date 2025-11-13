@@ -14,7 +14,7 @@ import {
 } from 'firebase/firestore';
 import { firestore } from '../core/firebase';
 import { tieredModelRouter, TaskType } from '../ai/models/tiered-model-router';
-import { User } from '../core/models/User';
+import { User } from '../../core/models/User';
 import { logger } from '../../core/logging/logger';
 
 /**

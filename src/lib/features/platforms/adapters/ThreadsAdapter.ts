@@ -5,8 +5,8 @@ import crypto from 'crypto';
 import { FormData } from 'formdata-node';
 import { fileFromPath } from 'formdata-node/file-from-path';
 import fs from 'fs';
-import { logger } from '../../logging/logger';
-import { SocialPlatform } from '../../models/SocialAccount';
+import { logger } from '../../../core/logging/logger';
+import { SocialPlatform } from '../../../core/models/SocialAccount';
 
 /**
  * Threads platform adapter implementation

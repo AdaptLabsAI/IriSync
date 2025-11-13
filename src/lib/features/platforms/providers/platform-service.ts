@@ -1,5 +1,5 @@
 import { logger } from '../../logging/logger';
-import { firestore } from '../../firebase';
+import { firestore } from '../../core/firebase';
 import { collection, query, where, getDocs, doc, getDoc } from 'firebase/firestore';
 
 /**

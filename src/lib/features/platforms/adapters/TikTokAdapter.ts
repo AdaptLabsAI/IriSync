@@ -4,9 +4,9 @@ import axios from 'axios';
 import crypto from 'crypto';
 import FormData from 'form-data';
 import fs from 'fs';
-import { logger } from '../../logging/logger';
+import { logger } from '../../../core/logging/logger';
 import { PostData, PostResult, PlatformAnalytics } from '../models';
-import { SocialPlatform } from '../../models/SocialAccount';
+import { SocialPlatform } from '../../../core/models/SocialAccount';
 
 /**
  * TikTok platform adapter implementation with content publishing

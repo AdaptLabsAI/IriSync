@@ -9,7 +9,7 @@ import { NotificationService } from '../../core/notifications/NotificationServic
 import { TieredModelRouter, TaskType, AIResponse as ModelRouterResponse } from './models/tiered-model-router';
 import { AITaskType, AITaskParams } from './models/AITask';
 import { logger } from '../../core/logging/logger';
-import { User } from '../core/models/User';
+import { User } from '../../core/models/User';
 import { firestore } from '../../core/firebase';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/features/auth';

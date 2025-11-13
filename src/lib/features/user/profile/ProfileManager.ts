@@ -19,7 +19,7 @@ import {
   getDownloadURL,
   deleteObject
 } from 'firebase/storage';
-import { firestore, storage } from '../../firebase';
+import { firestore, storage } from '../../core/firebase';
 import {
   UserActivityType,
   ActivityContext,
@@ -31,7 +31,7 @@ import {
   UserNotificationType,
   NotificationChannel
 } from '../types';
-import { User, UserUtils, FirestoreUser } from '../core/models/User';
+import { User, UserUtils, FirestoreUser } from '../../core/models/User';
 import { ActivityUtils } from '../models/Activity';
 
 /**

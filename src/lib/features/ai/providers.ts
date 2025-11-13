@@ -1,4 +1,4 @@
-import { config } from '../config';
+import { config } from '../../config';
 
 /**
  * AI models available for text generation

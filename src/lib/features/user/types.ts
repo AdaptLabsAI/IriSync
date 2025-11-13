@@ -1,5 +1,5 @@
 import { Timestamp } from 'firebase/firestore';
-import { UserRole, SubscriptionTier } from '../core/models/User';
+import { UserRole, SubscriptionTier } from '../../core/models/User';
 import { OrganizationRoleType } from '../core/models/Organization';
 
 /**

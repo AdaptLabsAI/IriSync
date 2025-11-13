@@ -1,6 +1,6 @@
 import { PlatformAccountInfo, PlatformAuthData } from '../models';
 import axios from 'axios';
-import { logger } from '../../logging/logger';
+import { logger } from '../../../core/logging/logger';
 
 /**
  * Slack platform adapter implementation

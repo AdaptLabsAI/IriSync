@@ -14,7 +14,7 @@ import {
   serverTimestamp,
   Timestamp
 } from 'firebase/firestore';
-import { firestore } from '../../firebase';
+import { firestore } from '../../core/firebase';
 import {
   OrganizationRole,
   TeamRole,
@@ -26,7 +26,7 @@ import {
   UserPaginationParams
 } from '../types';
 import { Team, TeamUtils } from '../models/Team';
-import { User, UserUtils } from '../core/models/User';
+import { User, UserUtils } from '../../core/models/User';
 import { ActivityUtils } from '../models/Activity';
 
 /**

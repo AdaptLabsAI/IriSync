@@ -8,7 +8,7 @@ import {
   AITaskConfig, 
   AIOrchestrationResult 
 } from './AIOrchestrator';
-import { Cache } from '../../cache/Cache';
+import { Cache } from '../../../core/cache/Cache';
 
 /**
  * Implementation of the AI Orchestrator
