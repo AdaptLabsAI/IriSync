@@ -1,4 +1,4 @@
-import { firestore as adminFirestore } from '../firebase/admin';
+import { firestore as adminFirestore } from '../core/firebase/admin';
 import { firestore } from '../firebase';
 import { 
   doc, 
@@ -13,7 +13,7 @@ import {
   Timestamp, 
   writeBatch
 } from 'firebase/firestore';
-import { Team, FirestoreTeam } from '../models/Organization';
+import { Team, FirestoreTeam } from '../core/models/Organization';
 
 /**
  * Repository for team data in Firestore

@@ -2,8 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { AuthService } from '../../../../../lib/auth/auth-service';
 import { validateSubscription } from '../../../../../lib/subscription/validate';
 import VectorDatabase from '../../../../../lib/rag/vector-database';
-import { logger } from '../../../../../lib/logging/logger';
-import { AIProviderFactory, ProviderType, type AIProvider } from '../../../../../lib/ai/providers/AIProviderFactory';
+import { logger } from '../../../../../lib/core/logging/logger';
+import { AIProviderFactory, ProviderType, type AIProvider } from '../../../../../lib/features/ai/providers/AIProviderFactory';
 import { trackDirectTokenUsage } from '../../../../../lib/tokens/token-tracker';
 import TextChunker from '../../../../../lib/rag/text-chunker';
 

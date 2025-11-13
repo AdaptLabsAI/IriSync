@@ -1,4 +1,4 @@
-import { logger } from '../../logging/logger';
+import { logger } from '../../../core/logging/logger';
 import { SlackAdapter } from './SlackAdapter';
 
 // Note: Other workflow adapters are not yet implemented

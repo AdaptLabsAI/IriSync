@@ -10,10 +10,10 @@ import {
   orderBy,
   limit
 } from 'firebase/firestore';
-import { firestore as db } from '../../../lib/firebase';
+import { firestore as db } from '../../../lib/core/firebase';
 import logger from '../../../lib/logging/logger';
 import { CompetitorData } from '../models/benchmarking';
-import { User } from '../../../lib/models/User';
+import { User } from '../../../lib/core/models/User';
 import { getUserCompetitorLimit } from './benchmarking';
 
 // Collection references

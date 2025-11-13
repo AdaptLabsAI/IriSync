@@ -4,18 +4,19 @@ const path = require('path');
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
-  // Disable ESLint during production builds
+  // ESLint configuration for builds
   eslint: {
-    // Warning: This allows production builds to successfully complete even if
-    // your project has ESLint errors.
+    // Warning: Temporarily disabled during builds due to configuration warnings
+    // Enable after resolving ESLint configuration issues
     ignoreDuringBuilds: true,
+    // Specify directories to lint when enabled
+    dirs: ['src/app', 'src/components', 'src/lib'],
   },
-  // Disable TypeScript type checking
+  // TypeScript configuration for builds
   typescript: {
-    // !! WARN !!
-    // Dangerously allow production builds to successfully complete even if
-    // your project has type errors.
-    // !! WARN !!
+    // Warning: Temporarily disabled due to memory constraints with large codebase
+    // Run 'tsc --noEmit' locally to check types before committing
+    // Enable after optimizing TypeScript configuration
     ignoreBuildErrors: true,
   },
  images: {

@@ -1,12 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '../../../../lib/auth/auth-options';
-import { aiAnalyticsSummaryService } from '../../../../lib/analytics/ai-analytics-summary';
-import { getUserAnalyticsSummary } from '../../../../lib/analytics/models/analyticsService';
-import { compareWithCompetitor } from '../../../../lib/analytics/competitive/comparator';
-import { benchmarkOrganizationMetrics } from '../../../../lib/analytics/competitive/benchmarking';
-import { logger } from '../../../../lib/logging/logger';
-import { UserRole, User } from '../../../../lib/models/User';
+import { aiAnalyticsSummaryService } from '../../../../lib/features/analytics/ai-analytics-summary';
+import { getUserAnalyticsSummary } from '../../../../lib/features/analytics/models/analyticsService';
+import { compareWithCompetitor } from '../../../../lib/features/analytics/competitive/comparator';
+import { benchmarkOrganizationMetrics } from '../../../../lib/features/analytics/competitive/benchmarking';
+import { logger } from '../../../../lib/core/logging/logger';
+import { UserRole, User } from '../../../../lib/core/models/User';
 import { Timestamp } from 'firebase/firestore';
 
 /**
@@ -320,7 +320,7 @@ async function getHistoricalAnalyticsData(organizationId: string, timeRange: str
     }
 
     // Query Firestore for historical analytics data BY ORGANIZATION
-    const { firestore } = await import('../../../../lib/firebase/client');
+    const { firestore } = await import('../../../../lib/core/firebase/client');
     const { collection, query, where, orderBy, getDocs } = await import('firebase/firestore');
     
     const analyticsQuery = query(
@@ -388,7 +388,7 @@ async function getHistoricalAnalyticsData(organizationId: string, timeRange: str
 
 async function getUserOrganizationId(userId: string): Promise<string | null> {
   try {
-    const { firestore } = await import('../../../../lib/firebase/client');
+    const { firestore } = await import('../../../../lib/core/firebase/client');
     const { doc, getDoc } = await import('firebase/firestore');
     
     const userDoc = await getDoc(doc(firestore, 'users', userId));
@@ -431,7 +431,7 @@ async function getBenchmarkingResult(organizationId: string, industry: string): 
 
 async function createUserForAI(userId: string, organizationId: string): Promise<User> {
   try {
-    const { firestore } = await import('../../../../lib/firebase/client');
+    const { firestore } = await import('../../../../lib/core/firebase/client');
     const { doc, getDoc } = await import('firebase/firestore');
     const { Timestamp } = await import('firebase/firestore');
     

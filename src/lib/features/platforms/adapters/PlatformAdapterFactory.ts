@@ -9,7 +9,7 @@ import { TikTokAdapter } from './TikTokAdapter';
 import { RedditAdapter } from './RedditAdapter';
 import { MastodonAdapter } from './MastodonAdapter';
 import { ThreadsAdapter } from './ThreadsAdapter';
-import { logger } from '../../logging/logger';
+import { logger } from '../../../core/logging/logger';
 
 /**
  * Factory for creating platform-specific adapters

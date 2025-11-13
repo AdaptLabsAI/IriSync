@@ -1,5 +1,5 @@
 import { Timestamp } from 'firebase/firestore';
-import { SubscriptionTier as BaseSubscriptionTier } from '../subscription/models/subscription';
+import { SubscriptionTier as BaseSubscriptionTier } from '../../subscription/models/subscription';
 
 /**
  * User role within the application (system-level role)

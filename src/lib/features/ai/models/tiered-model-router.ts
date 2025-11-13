@@ -1,6 +1,6 @@
-import { User } from '../../models/User';
-import { logger } from '../../logging/logger';
-import { firestore } from '../../firebase';
+import { User } from '../../../core/models/User';
+import { logger } from '../../../core/logging/logger';
+import { firestore } from '../../../core/firebase';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 // Import error class directly instead of from a module
 /**

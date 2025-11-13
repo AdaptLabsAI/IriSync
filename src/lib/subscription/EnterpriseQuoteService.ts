@@ -1,12 +1,12 @@
-import { firestore } from '../firebase';
+import { firestore } from '../core/firebase';
 import { collection, doc, getDoc, getDocs, setDoc, updateDoc, query, where, orderBy, limit, Timestamp } from 'firebase/firestore';
 import { v4 as uuidv4 } from 'uuid';
-import { SubscriptionTier } from '../models/User';
-import unifiedEmailService from '../notifications/unified-email-service';
+import { SubscriptionTier } from '../core/models/User';
+import unifiedEmailService from '../core/notifications/unified-email-service';
 import { formatCurrency } from '../../utils/formatting';
 import * as Yup from 'yup';
-import { logger } from '../logging/logger';
-import { createCustomer, getStripeClient, createSubscription } from '../billing/stripe';
+import { logger } from '../core/logging/logger';
+import { createCustomer, getStripeClient, createSubscription } from '../features/billing/stripe';
 import { generateOrganizationId } from '../utils';
 import { z } from 'zod';
 

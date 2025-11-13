@@ -6,7 +6,7 @@ import ffmpegInstaller from '@ffmpeg-installer/ffmpeg';
 import ffprobeInstaller from '@ffprobe-installer/ffprobe';
 import { execFile } from 'child_process';
 import { promisify } from 'util';
-import { firestore } from '../firebase';
+import { firestore } from '../core/firebase';
 import { doc, getDoc, setDoc, updateDoc, deleteDoc, arrayUnion, arrayRemove } from 'firebase/firestore';
 import axios from 'axios';
 import { createReadStream, createWriteStream } from 'fs';

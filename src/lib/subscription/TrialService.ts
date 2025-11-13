@@ -1,9 +1,9 @@
-import { firestore } from '../firebase';
+import { firestore } from '../core/firebase';
 import { collection, doc, setDoc, getDoc, getDocs, updateDoc, query, where, limit, orderBy } from 'firebase/firestore';
 import { v4 as uuidv4 } from 'uuid';
 import { SubscriptionTier } from './models/subscription';
-import { sendTrialWelcomeEmail, sendTrialExpirationReminderEmail } from '../notifications/email';
-import { getStripeClient, createSubscription } from '../billing/stripe';
+import { sendTrialWelcomeEmail, sendTrialExpirationReminderEmail } from '../core/notifications/email';
+import { getStripeClient, createSubscription } from '../features/billing/stripe';
 
 /**
  * Interface for trial subscription record

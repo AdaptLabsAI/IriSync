@@ -12,10 +12,10 @@ import {
   writeBatch,
   addDoc
 } from 'firebase/firestore';
-import { firestore as db } from '../firebase';
-import { auth } from '../firebase/admin';
-import logger from '../logging/logger';
-import { User, UserRole, SubscriptionTier, SubscriptionTierValues } from '../models/User';
+import { firestore as db } from '../core/firebase';
+import { auth } from '../core/firebase/admin';
+import logger from '../core/logging/logger';
+import { User, UserRole, SubscriptionTier, SubscriptionTierValues } from '../core/models/User';
 import { SubscriptionTier as BaseSubscriptionTier } from '../subscription/models/subscription';
 import { 
   Organization,
@@ -26,7 +26,7 @@ import {
   OrganizationRoleType,
   OrganizationStatus,
   createBusinessOrganization
-} from '../models/Organization';
+} from '../core/models/Organization';
 import Stripe from 'stripe';
 import { getAuth } from 'firebase/auth';
 

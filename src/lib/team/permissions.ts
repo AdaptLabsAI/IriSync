@@ -1,5 +1,5 @@
-import { database } from '../database';
-import { logger } from '../logging/logger';
+import { database } from '../core/database';
+import { logger } from '../core/logging/logger';
 
 /**
  * Verify if a user has the requested access level in an organization

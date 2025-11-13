@@ -1,4 +1,4 @@
-import { firestore } from '../../firebase';
+import { firestore } from '../../../core/firebase';
 import { 
   collection, 
   doc, 
@@ -34,7 +34,7 @@ import {
   WorkflowFilter
 } from '../models/workflow';
 import { TeamRole } from '../../auth/roles';
-import { Logger } from '../../logging/logger';
+import { Logger } from '../../../core/logging/logger';
 import { ContentItem } from '../CalendarService';
 import { getUserProfile } from '../../auth/userProfile';
 

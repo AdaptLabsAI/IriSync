@@ -1,16 +1,8 @@
 import React from 'react';
 import type { Metadata } from 'next';
 import { Box, Container } from '@mui/material';
-import { Inter } from 'next/font/google';
 import Navbar from '@/components/ui/navigation/Navbar';
 import Footer from '@/components/ui/navigation/Footer';
-
-// Load Inter font
-const inter = Inter({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-inter',
-});
 
 export const metadata: Metadata = {
   title: {
@@ -44,8 +36,7 @@ export default function MarketingLayout({
 }) {
   return (
     <Box 
-      component="div" 
-      className={inter.className}
+      component="div"
       sx={{ 
         minHeight: '100vh',
         display: 'flex',

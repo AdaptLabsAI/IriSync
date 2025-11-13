@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { auth, firestore } from '../../../../lib/firebase/admin';
-import { TieredModelRouter, TaskType, SubscriptionTier } from '../../../../lib/ai/models/tiered-model-router';
-import { User } from '../../../../lib/models/User';
-import { DEFAULT_ENGAGEMENT_BENCHMARKS } from '../../../../lib/analytics/models/engagement-benchmarks';
+import { auth, firestore } from '../../../../lib/core/firebase/admin';
+import { TieredModelRouter, TaskType, SubscriptionTier } from '../../../../lib/features/ai/models/tiered-model-router';
+import { User } from '../../../../lib/core/models/User';
+import { DEFAULT_ENGAGEMENT_BENCHMARKS } from '../../../../lib/features/analytics/models/engagement-benchmarks';
 import { getUserSubscriptionTier } from '../../../../lib/subscription';
 import { SubscriptionTier as BaseSubscriptionTier } from '../../../../lib/subscription/models/subscription';
 

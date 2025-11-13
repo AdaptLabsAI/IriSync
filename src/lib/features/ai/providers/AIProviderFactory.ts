@@ -1,7 +1,7 @@
 import { AIProvider, AIProviderConfig, AIRequestOptions } from './AIProvider';
 import { ProviderType } from './ProviderType';
-import { logger } from '../../logging/logger';
-import config from '../../config';
+import { logger } from '../../../core/logging/logger';
+import config from '../../../config';
 
 /**
  * OpenAI provider implementation

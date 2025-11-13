@@ -2,33 +2,33 @@
 
 import React, { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
-import { useTeamTodo } from '../context/TeamTodoContext';
-import { useTeam } from '../context/TeamContext';
+import { useTeamTodo } from '../../context/TeamTodoContext';
+import { useTeam } from '../../context/TeamContext';
 import type { 
   TeamTodoItem, 
   TodoPermissions
-} from '../types/todo';
+} from '../../types/todo';
 import { 
   TodoStatus, 
   TodoPriority, 
   TodoType,
   ENTERPRISE_FEATURES 
-} from '../types/todo';
-import { Button } from './ui/button/Button';
-import { Card, CardBody, CardFooter, CardTitle } from './ui/card';
-import { Input } from './ui/input/Input';
-import { Checkbox } from './ui/checkbox/Checkbox';
-import { Select } from './ui/select/Select';
-import { DatePicker } from './ui/datepicker';
-import DialogAdapter from './ui/dialog/DialogAdapter';
-import SimplifiedTabs from './ui/tabs/SimplifiedTabs';
-import Alert from './ui/alert';
-import Spinner from './ui/spinner/Spinner';
-import { useToast } from './ui/use-toast/index';
-import TeamSwitcher from './ui/TeamSwitcher';
-import { BasicTodoForm } from './todo/BasicTodoForm';
-import { AdvancedTodoForm } from './todo/AdvancedTodoForm';
-import { CollaborationTodoForm } from './todo/CollaborationTodoForm';
+} from '../../types/todo';
+import { Button } from '../ui/button/Button';
+import { Card, CardBody, CardFooter, CardTitle } from '../ui/card';
+import { Input } from '../ui/input/Input';
+import { Checkbox } from '../ui/checkbox/Checkbox';
+import { Select } from '../ui/select/Select';
+import { DatePicker } from '../ui/datepicker';
+import DialogAdapter from '../ui/dialog/DialogAdapter';
+import SimplifiedTabs from '../ui/tabs/SimplifiedTabs';
+import Alert from '../ui/alert';
+import Spinner from '../ui/spinner/Spinner';
+import { useToast } from '../ui/use-toast/index';
+import TeamSwitcher from '../ui/TeamSwitcher';
+import { BasicTodoForm } from '../todo/BasicTodoForm';
+import { AdvancedTodoForm } from '../todo/AdvancedTodoForm';
+import { CollaborationTodoForm } from '../todo/CollaborationTodoForm';
 
 const priorityColors = {
   [TodoPriority.CRITICAL]: '#d32f2f',

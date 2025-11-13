@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { auth } from '../../../../lib/firebase/admin';
-import { firestore } from '../../../../lib/firebase/admin';
-import { TieredModelRouter, TaskType, SubscriptionTier } from '../../../../lib/ai/models/tiered-model-router';
-import { PlatformType } from '../../../../lib/platforms/client';
-import { User } from '../../../../lib/models/User';
+import { auth } from '../../../../lib/core/firebase/admin';
+import { firestore } from '../../../../lib/core/firebase/admin';
+import { TieredModelRouter, TaskType, SubscriptionTier } from '../../../../lib/features/ai/models/tiered-model-router';
+import { PlatformType } from '../../../../lib/features/platforms/client';
+import { User } from '../../../../lib/core/models/User';
 
 // Production-ready Smart Content Generation Service
 class SmartContentGenerationService {

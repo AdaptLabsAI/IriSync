@@ -7,8 +7,8 @@ import {
   getDocs,
   orderBy
 } from 'firebase/firestore';
-import { firestore } from '../../../../../lib/firebase';
-import { OrganizationRole, TeamRole } from '../../../../../lib/user/types';
+import { firestore } from '../../../../../lib/core/firebase';
+import { OrganizationRole, TeamRole } from '../../../../../lib/features/user/types';
 
 interface TeamMembership {
   teamId: string;

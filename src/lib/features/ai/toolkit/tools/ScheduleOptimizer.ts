@@ -1,7 +1,7 @@
 import { ScheduleOptimizerTool, AITaskResult, ToolkitRequestOptions, OptimalTimeResult, ContentSchedule, TimeSlot } from '../interfaces';
 import { BaseTool } from './BaseTool';
 import { TokenService } from '../../../tokens/token-service';
-import { logger } from '../../../logging/logger';
+import { logger } from '../../../../core/logging/logger';
 import { PlatformService } from '../../../platforms/providers/platform-service';
 import { v4 as uuidv4 } from 'uuid';
 

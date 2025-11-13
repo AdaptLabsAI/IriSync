@@ -13,7 +13,7 @@ import {
   Timestamp,
   serverTimestamp
 } from 'firebase/firestore';
-import { firestore } from '../../firebase';
+import { firestore } from '../../core/firebase';
 import { 
   Permission, 
   FirestorePermission, 
@@ -27,7 +27,7 @@ import {
 import { 
   User, 
   UserUtils 
-} from '../models/User';
+} from '../../core/models/User';
 import { 
   UserError, 
   UserErrorType, 

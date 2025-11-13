@@ -1,4 +1,4 @@
-import { firestore as adminFirestore } from '../firebase/admin';
+import { firestore as adminFirestore } from '../core/firebase/admin';
 import { firestore } from '../firebase';
 import { 
   doc, 
@@ -20,8 +20,8 @@ import {
   FirestoreTeam,
   firestoreToOrganization,
   organizationToFirestore
-} from '../models/Organization';
-import { SubscriptionTier } from '../models/User';
+} from '../core/models/Organization';
+import { SubscriptionTier } from '../core/models/User';
 
 /**
  * Repository for organization data in Firestore

@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { logger } from '../../../../../lib/logging/logger';
-import { getFirestore } from '../../../../../lib/firebase/admin';
+import { logger } from '../../../../../lib/core/logging/logger';
+import { getFirestore } from '../../../../../lib/core/firebase/admin';
 import { PlatformType } from '../../../../../lib/platforms/models';
-import { PlatformAdapterFactory } from '../../../../../lib/platforms/adapters/PlatformAdapterFactory';
+import { PlatformAdapterFactory } from '../../../../../lib/features/platforms/adapters/PlatformAdapterFactory';
 import { FieldValue } from 'firebase-admin/firestore';
 
 const firestore = getFirestore();

@@ -2,8 +2,8 @@ import { PlatformAccountInfo, PlatformAuthData, PlatformType } from '../models';
 import { PlatformAdapter } from './PlatformAdapter';
 import axios from 'axios';
 import crypto from 'crypto';
-import { logger } from '../../logging/logger';
-import { SocialPlatform } from '../../models/SocialAccount';
+import { logger } from '../../../core/logging/logger';
+import { SocialPlatform } from '../../../core/models/SocialAccount';
 
 /**
  * Reddit adapter for authentication and account information

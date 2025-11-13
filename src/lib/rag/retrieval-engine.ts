@@ -2,10 +2,10 @@ import { v4 as uuidv4 } from 'uuid';
 import vectorDatabase, { VectorSearchResult } from './vector-database';
 import knowledgeBaseService, { AccessLevel, DocumentType, KnowledgeDocument } from './knowledge-base';
 import { config } from '../config';
-import { tieredModelRouter, TaskType } from '../ai/models/tiered-model-router';
-import { AIProviderFactory, AIProvider } from '../ai/providers/AIProviderFactory';
-import { ProviderType } from '../ai/providers/ProviderType';
-import { User } from '../models/User';
+import { tieredModelRouter, TaskType } from '../features/ai/models/tiered-model-router';
+import { AIProviderFactory, AIProvider } from '../features/ai/providers/AIProviderFactory';
+import { ProviderType } from '../features/ai/providers/ProviderType';
+import { User } from '../core/models/User';
 
 /**
  * Citation information for retrieved content

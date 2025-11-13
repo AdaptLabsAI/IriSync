@@ -1,12 +1,12 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { AuthService } from './auth-service';
-import { UserRole, isRegularUser } from '../models/User';
-import { firestore } from '../firebase';
+import { UserRole, isRegularUser } from '../core/models/User';
+import { firestore } from '../core/firebase';
 import { doc, getDoc } from 'firebase/firestore';
 import { OrganizationRole, getOrganization, getUserOrganizationRole, isMemberOfOrganization } from '../team/users/organization';
 import { getCurrentUser } from './token';
 import { NextRequest, NextResponse } from 'next/server';
-import { Logger } from '../logging/logger';
+import { Logger } from '../core/logging/logger';
 
 const logger = new Logger({
   minLevel: 'info',

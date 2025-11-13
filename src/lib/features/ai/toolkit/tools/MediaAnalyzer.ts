@@ -2,8 +2,8 @@ import { AIProvider } from '../../providers/AIProvider';
 import { MediaAnalyzer, AITaskResult, ToolkitRequestOptions } from '../interfaces';
 import { TokenTracker } from '../../../tokens/token-tracker';
 import { estimateTokenUsage } from '../../utils/token-counter';
-import { Cache } from '../../../cache/Cache';
-import { logger } from '../../../logging/logger';
+import { Cache } from '../../../../core/cache/Cache';
+import { logger } from '../../../../core/logging/logger';
 
 /**
  * Implementation of MediaAnalyzer that uses AI providers to analyze media

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { OneDriveAdapter } from '../../../../../lib/integrations/OneDriveAdapter';
-import { handleApiError, handleValidationError } from '../../../../../lib/api/errorHandler';
+import { handleApiError, handleValidationError } from '../../../../../lib/core/api/errorHandler';
 
 const ENDPOINT = 'POST /api/integration/design/onedrive-files';
 

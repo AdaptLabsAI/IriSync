@@ -6,6 +6,10 @@ import { doc, getDoc } from 'firebase/firestore';
 import { TieredModelRouter } from '@/lib/features/ai/models/tiered-model-router';
 import { logger } from '@/lib/core/logging/logger';
 
+// Force dynamic rendering - this route requires runtime environment variables
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
 // Global router instance
 let globalModelRouter: TieredModelRouter;
 

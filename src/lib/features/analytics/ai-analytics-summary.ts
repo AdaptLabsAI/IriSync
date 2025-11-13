@@ -1,6 +1,6 @@
 import { tieredModelRouter, TaskType } from '../ai/models/tiered-model-router';
-import { User } from '../models/User';
-import { logger } from '../logging/logger';
+import { User } from '../../core/models/User';
+import { logger } from '../../core/logging/logger';
 import { AnalyticsSummary, EngagementMetrics } from '../models/Analytics';
 import { SocialPlatform } from '../models/SocialAccount';
 import { CompetitiveComparison } from './competitive/comparator';

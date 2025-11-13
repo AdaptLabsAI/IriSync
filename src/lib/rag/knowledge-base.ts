@@ -1,4 +1,4 @@
-import { getFirestore } from '../firebase/admin';
+import { getFirestore } from '../core/firebase/admin';
 import { v4 as uuidv4 } from 'uuid';
 import vectorDatabase from './vector-database';
 import documentChunker, { ChunkingOptions } from './document-chunker';

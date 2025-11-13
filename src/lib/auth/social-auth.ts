@@ -1,9 +1,9 @@
-import { firestore } from '../firebase';
+import { firestore } from '../core/firebase';
 import { doc, getDoc, setDoc, updateDoc, collection, query, where, getDocs } from 'firebase/firestore';
 import { AuthUser, AuthResponse } from './auth-service';
 import { sign } from 'jsonwebtoken';
 import fetch from 'node-fetch';
-import { SubscriptionTier, UserRole, SubscriptionTierValues } from '../models/User';
+import { SubscriptionTier, UserRole, SubscriptionTierValues } from '../core/models/User';
 import { getTokenAllocationForTier } from '../subscription';
 import { generateOrganizationId, validateUserOrganizationConnections } from '../utils';
 import { getGoogleOAuthClientId } from '@/lib/server/env';

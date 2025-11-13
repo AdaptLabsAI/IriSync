@@ -47,8 +47,8 @@ export type {
 } from './types';
 
 // Re-export commonly used types from other modules
-export type { UserRole, SubscriptionTier } from '../models/User';
-export type { OrganizationRoleType } from '../models/Organization';
+export type { UserRole, SubscriptionTier } from '../../core/models/User';
+export type { OrganizationRoleType } from '../core/models/Organization';
 
 // Models - using correct exports
 export type {

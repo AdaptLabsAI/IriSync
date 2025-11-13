@@ -1,5 +1,5 @@
-import { UserRole } from '../models/User';
-import { OrganizationRole, TeamRole } from '../user/types';
+import { UserRole } from '../core/models/User';
+import { OrganizationRole, TeamRole } from '../features/user/types';
 import { Role } from '../team/role';
 
 /**

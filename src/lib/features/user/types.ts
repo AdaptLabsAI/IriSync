@@ -1,6 +1,6 @@
 import { Timestamp } from 'firebase/firestore';
-import { UserRole, SubscriptionTier } from '../models/User';
-import { OrganizationRoleType } from '../models/Organization';
+import { UserRole, SubscriptionTier } from '../../core/models/User';
+import { OrganizationRoleType } from '../core/models/Organization';
 
 /**
  * User status enumeration

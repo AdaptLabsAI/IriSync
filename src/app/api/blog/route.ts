@@ -22,6 +22,10 @@ import { logger } from '@/lib/core/logging/logger';
 import { BlogPost, BlogPostStatus, BlogPostMetadata } from '@/lib/blog/models';
 import { z } from 'zod';
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
 // Validation schemas
 const createBlogPostSchema = z.object({
   title: z.string().min(1, 'Title is required'),

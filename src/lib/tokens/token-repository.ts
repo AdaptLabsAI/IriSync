@@ -4,7 +4,7 @@ import {
   TokenUsageRecord, 
   TokenPurchaseTransaction,
   TokenUsageNotification
-} from '../ai/models/tokens';
+} from '../features/ai/models/tokens';
 
 /**
  * Repository class for managing token-related data in Firestore

@@ -30,7 +30,7 @@ import {
   User,
   UserUtils,
   FirestoreUser
-} from '../models/User';
+} from '../../core/models/User';
 import {
   OrganizationRole,
   TeamRole,

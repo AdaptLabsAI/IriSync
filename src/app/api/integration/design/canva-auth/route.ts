@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { CanvaAdapter } from '../../../../../lib/integrations/CanvaAdapter';
-import { handleApiError, handleValidationError } from '../../../../../lib/api/errorHandler';
+import { handleApiError, handleValidationError } from '../../../../../lib/core/api/errorHandler';
 
 const ENDPOINT = 'POST /api/integration/design/canva-auth';
 

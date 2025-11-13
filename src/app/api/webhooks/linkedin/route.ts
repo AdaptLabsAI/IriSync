@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { logger } from '../../../../lib/logging/logger';
-import { SocialInboxController } from '../../../../lib/content/SocialInboxController';
+import { logger } from '../../../../lib/core/logging/logger';
+import { SocialInboxController } from '../../../../lib/features/content/SocialInboxController';
 import crypto from 'crypto';
 
 const LINKEDIN_WEBHOOK_SECRET = process.env.LINKEDIN_WEBHOOK_SECRET || '';

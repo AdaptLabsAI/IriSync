@@ -1,7 +1,7 @@
 import { TokenService } from '../../tokens/token-service';
 import { TokenRepository } from '../../tokens/token-repository';
 import { NotificationService } from '../../notifications/NotificationService';
-import { logger } from '../../logging/logger';
+import { logger } from '../../../core/logging/logger';
 import { TokenTracker } from '../../tokens/token-tracker';
 import { SubscriptionTier } from '../../subscription/models/subscription';
 import { AIToolkit } from './AIToolkit';
@@ -10,7 +10,7 @@ import { ContentGeneratorImpl } from './tools/ContentGenerator';
 import { MediaAnalyzerImpl } from './tools/MediaAnalyzer';
 import { ResponseAssistantImpl } from './tools/ResponseAssistant';
 import { AITaskResult, ToolkitRequestOptions } from './interfaces';
-import { firestore } from '../../firebase';
+import { firestore } from '../../core/firebase';
 import { doc, getDoc, collection, query, where, getDocs, limit } from 'firebase/firestore';
 import { OpenAIProvider } from '../providers/OpenAIProvider';
 import { AnthropicProvider } from '../providers/AnthropicProvider';

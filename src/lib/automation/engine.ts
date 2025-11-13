@@ -1,4 +1,4 @@
-import { firestore } from '../firebase/admin';
+import { firestore } from '../core/firebase/admin';
 import { v4 as uuidv4 } from 'uuid';
 import { 
   Workflow, 
@@ -14,7 +14,7 @@ import {
 } from './models';
 import { ActionHandler, TriggerHandler } from './handlers';
 import { getActionHandler, getTriggerHandler } from './registry';
-import logger from '../logging/logger';
+import logger from '../core/logging/logger';
 
 /**
  * Event data for automation processing

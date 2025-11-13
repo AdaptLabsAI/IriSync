@@ -12,10 +12,10 @@ import {
   serverTimestamp,
   Timestamp
 } from 'firebase/firestore';
-import { firestore } from '../firebase';
+import { firestore } from '../core/firebase';
 import { tieredModelRouter, TaskType } from '../ai/models/tiered-model-router';
-import { User } from '../models/User';
-import { logger } from '../logging/logger';
+import { User } from '../../core/models/User';
+import { logger } from '../../core/logging/logger';
 
 /**
  * Content Source Configuration

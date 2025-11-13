@@ -1,8 +1,8 @@
 import { PlatformAccountInfo, PlatformAuthData, PlatformType } from '../models';
 import { PlatformAdapter } from './PlatformAdapter';
 import axios from 'axios';
-import { logger } from '../../logging/logger';
-import { SocialPlatform } from '../../models/SocialAccount';
+import { logger } from '../../../core/logging/logger';
+import { SocialPlatform } from '../../../core/models/SocialAccount';
 
 /**
  * Production-ready Facebook platform adapter implementation

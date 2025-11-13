@@ -1,10 +1,10 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { TokenService } from './token-service';
-import { firebaseAdmin } from '../firebase/admin';
+import { firebaseAdmin } from '../core/firebase/admin';
 import { TokenRepository } from './token-repository';
-import { TokenBalance, SubscriptionTier } from '../ai/models/tokens';
-import { NotificationService } from '../notifications/NotificationService';
-import { logger } from '../logging/logger';
+import { TokenBalance, SubscriptionTier } from '../features/ai/models/tokens';
+import { NotificationService } from '../core/notifications/NotificationService';
+import { logger } from '../core/logging/logger';
 
 /**
  * Enum for AI task types
@@ -845,7 +845,7 @@ export function createTokenLimiter(): TokenLimiter {
   const tokenRepository = new TokenRepository(db);
   
   // Import services dynamically to avoid circular dependencies
-  const { default: notificationService } = require('../notifications/NotificationService');
+  const { default: notificationService } = require('../core/notifications/NotificationService');
   const { default: subscriptionService } = require('../subscription/SubscriptionService');
   
   const tokenService = new TokenService(tokenRepository, notificationService);

@@ -3,7 +3,7 @@ import { PlatformAdapter } from './PlatformAdapter';
 import axios from 'axios';
 import crypto from 'crypto';
 import FormData from 'form-data';
-import { logger } from '../../../lib/logging/logger';
+import { logger } from '../../../core/logging/logger';
 import { v4 as uuidv4 } from 'uuid';
 import fs from 'fs';
 

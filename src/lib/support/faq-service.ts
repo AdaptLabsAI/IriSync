@@ -1,7 +1,7 @@
-import { firestore } from '../firebase/admin';
+import { firestore } from '../core/firebase/admin';
 import { v4 as uuidv4 } from 'uuid';
 import vectorDatabase, { EmbeddingModelType } from '../rag/vector-database';
-import { logger } from '../logging/logger';
+import { logger } from '../core/logging/logger';
 
 /**
  * FAQ entry structure

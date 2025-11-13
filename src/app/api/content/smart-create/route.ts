@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { auth, firestore, collection, serverTimestamp } from '../../../../lib/firebase/admin';
-import { User } from '../../../../lib/models/User';
-import { TieredModelRouter, TaskType } from '../../../../lib/ai/models/tiered-model-router';
+import { auth, firestore, collection, serverTimestamp } from '../../../../lib/core/firebase/admin';
+import { User } from '../../../../lib/core/models/User';
+import { TieredModelRouter, TaskType } from '../../../../lib/features/ai/models/tiered-model-router';
 
 // Production-ready Smart Content Publisher
 class SmartContentPublisher {

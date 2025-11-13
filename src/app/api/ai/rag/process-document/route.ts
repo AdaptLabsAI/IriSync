@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { AuthService } from '../../../../../lib/auth/auth-service';
 import { validateSubscription } from '../../../../../lib/subscription/validate';
 import documentProcessor, { ChunkingStrategy, DocumentType, AccessLevel } from '../../../../../lib/rag/document-processor';
-import { logger } from '../../../../../lib/logging/logger';
+import { logger } from '../../../../../lib/core/logging/logger';
 import { trackDirectTokenUsage } from '../../../../../lib/tokens/token-tracker';
 
 /**

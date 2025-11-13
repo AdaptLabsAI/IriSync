@@ -1,5 +1,5 @@
 import SyntaxHighlighter from 'react-syntax-highlighter';
-import { atomOneLight } from 'react-syntax-highlighter/dist/styles';
+import { atomOneLight } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 
 /**
  * Wrapper exports for syntax highlighting that work with the installed

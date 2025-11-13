@@ -1,4 +1,4 @@
-import { firestore } from '../firebase';
+import { firestore } from '../core/firebase';
 import { collection, addDoc, Timestamp, query, where, getDocs, orderBy, limit } from 'firebase/firestore';
 import { TokenService } from './token-service';
 

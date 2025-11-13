@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 import { Pinecone } from '@pinecone-database/pinecone';
 import config from '../config';
-import { logger } from '../logging/logger';
+import { logger } from '../core/logging/logger';
 import { getOptionalEnv } from '@/lib/server/env';
 
 /**

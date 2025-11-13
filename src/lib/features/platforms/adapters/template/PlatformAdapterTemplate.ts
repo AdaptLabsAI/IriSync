@@ -1,7 +1,7 @@
 import { PlatformAccountInfo, PlatformAuthData, PlatformType } from '../../models';
 import { PlatformAdapter } from '../PlatformAdapter';
 import axios from 'axios';
-import { logger } from '../../../logging/logger';
+import { logger } from '../../../../core/logging/logger';
 
 /**
  * Template for platform adapter implementation

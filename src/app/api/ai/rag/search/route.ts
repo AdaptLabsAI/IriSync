@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { AuthService } from '../../../../../lib/auth/auth-service';
 import { validateSubscription } from '../../../../../lib/subscription/validate';
 import VectorDatabase, { VectorSearchParams } from '../../../../../lib/rag/vector-database';
-import { logger } from '../../../../../lib/logging/logger';
+import { logger } from '../../../../../lib/core/logging/logger';
 import { AccessLevel, DocumentType } from '../../../../../lib/rag/document-processor';
 import { trackDirectTokenUsage } from '../../../../../lib/tokens/token-tracker';
 

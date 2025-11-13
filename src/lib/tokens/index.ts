@@ -15,8 +15,8 @@ import {
   TokenPurchaseRequest,
   TokenPurchaseResponse
 } from './token-purchase';
-import { NotificationService } from '../notifications/NotificationService';
-import { firebaseAdmin } from '../firebase/admin';
+import { NotificationService } from '../core/notifications/NotificationService';
+import { firebaseAdmin } from '../core/firebase/admin';
 import {
   SubscriptionTier,
   TIER_TOKEN_LIMITS,
@@ -26,7 +26,7 @@ import {
   TokenUsageRecord,
   TokenPurchaseTransaction,
   TokenUsageNotification
-} from '../ai/models/tokens';
+} from '../features/ai/models/tokens';
 
 /**
  * Create a token service instance

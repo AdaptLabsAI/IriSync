@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { PlatformType } from '../../lib/platforms/client';
+import { PlatformType } from '../../lib/features/platforms/client';
 import axios from 'axios';
 import { 
   Button, 

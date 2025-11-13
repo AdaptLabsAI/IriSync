@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { auth, firestore } from '../../../../lib/firebase/admin';
-import { TieredModelRouter, TaskType, SubscriptionTier } from '../../../../lib/ai/models/tiered-model-router';
-import { User, SubscriptionTierValues } from '../../../../lib/models/User';
+import { auth, firestore } from '../../../../lib/core/firebase/admin';
+import { TieredModelRouter, TaskType, SubscriptionTier } from '../../../../lib/features/ai/models/tiered-model-router';
+import { User, SubscriptionTierValues } from '../../../../lib/core/models/User';
 import { getUserSubscriptionTier } from '../../../../lib/subscription';
 import { SubscriptionTier as BaseSubscriptionTier } from '../../../../lib/subscription/models/subscription';
 

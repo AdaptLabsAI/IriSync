@@ -1,8 +1,8 @@
 import { NextApiRequest } from 'next';
 import { NextRequest } from 'next/server';
-import { getAuth, getFirestore, increment } from '../firebase/admin';
+import { getAuth, getFirestore, increment } from '../core/firebase/admin';
 import { cookies } from 'next/headers';
-import { logger } from '../logging/logger';
+import { logger } from '../core/logging/logger';
 import { isPermissionDeniedError } from './error-middleware';
 
 /**

@@ -16,9 +16,9 @@ import {
   DocumentReference,
   serverTimestamp
 } from 'firebase/firestore';
-import { db } from '../firebase';
+import { db } from '../core/firebase';
 import { BlogPost, BlogComment, BlogPostStatus, CommentStatus, BlogCategory } from './models';
-import { User } from '../models/User';
+import { User } from '../core/models/User';
 import { generateSlug } from '../utils/slug';
 
 // Collection references

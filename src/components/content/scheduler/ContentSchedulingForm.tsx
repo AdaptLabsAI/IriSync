@@ -7,7 +7,7 @@ import { AIOptimalTimePicker } from './AIOptimalTimePicker';
 import { useAuth } from '../../../hooks/useAuth';
 import { SocialPlatform } from '../../../lib/models/SocialAccount';
 import { AIOptimalTime } from '../../../lib/scheduler/ai-optimal-times';
-import { CalendarService } from '../../../lib/content/CalendarService';
+import { CalendarService } from '../../../lib/features/content/CalendarService';
 import { logger } from '../../../lib/logging/logger';
 import { Calendar, Clock, Send, Save, Lightbulb, AlertCircle, CheckCircle } from 'lucide-react';
 

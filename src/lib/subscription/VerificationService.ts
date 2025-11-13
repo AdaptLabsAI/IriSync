@@ -1,7 +1,7 @@
-import { firestore } from '../firebase';
+import { firestore } from '../core/firebase';
 import { collection, query, where, limit, getDocs, doc, setDoc, getDoc } from 'firebase/firestore';
-import { getStripeClient } from '../billing/stripe';
-import { logger } from '../logging/logger';
+import { getStripeClient } from '../features/billing/stripe';
+import { logger } from '../core/logging/logger';
 
 /**
  * Service to handle verification for trial accounts

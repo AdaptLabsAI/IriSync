@@ -2,6 +2,10 @@ import { NextResponse } from 'next/server';
 import { firestore } from '@/lib/core/firebase';
 import { collection, getDocs, query, orderBy, where } from 'firebase/firestore';
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
 export async function GET() {
   try {
     // Fetch published roadmap items from Firestore

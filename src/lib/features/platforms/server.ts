@@ -1,8 +1,8 @@
 // Server-side functions for platform accounts
 
 import { SocialAccount, PlatformType } from './client';
-import { firestore } from '../firebase/admin';
-import { logger } from '../logging/logger';
+import { firestore } from '../core/firebase/admin';
+import { logger } from '../../core/logging/logger';
 import { 
   getDoc, 
   doc, 
@@ -15,9 +15,9 @@ import {
   deleteDoc,
   Timestamp 
 } from 'firebase/firestore';
-import { firestore as db } from '../firebase';
-import { encrypt, decrypt } from '../security/encryption';
-import { PlatformConnection } from '../models/Organization';
+import { firestore as db } from '../core/firebase';
+import { encrypt, decrypt } from '../core/security/encryption';
+import { PlatformConnection } from '../core/models/Organization';
 
 // Production-ready server-side functions for platform account management
 // This module provides secure access to organization platform connections

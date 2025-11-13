@@ -1,5 +1,5 @@
-import { logger } from '../../logging/logger';
-import { getDoc, updateDoc, queryDocs } from '../../database/firestore';
+import { logger } from '../../core/logging/logger';
+import { getDoc, updateDoc, queryDocs } from '../../core/database/firestore';
 
 /**
  * Organization membership role

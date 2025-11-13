@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getFirestore } from '../../../../lib/firebase/admin';
+import { getFirestore } from '../../../../lib/core/firebase/admin';
 import { verifyAuthentication } from '../../../../lib/auth/utils';
 import { v4 as uuidv4 } from 'uuid';
 
