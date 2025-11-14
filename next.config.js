@@ -17,32 +17,11 @@ const nextConfig = {
     },
   },
   
-  // Experimental: Disable static optimization to prevent build-time analysis
-  experimental: {
-    // workerThreads: false,  // Disable worker threads
-    // Optimize for faster builds
-    turbo: {
-      rules: {
-        '*.svg': {
-          loaders: ['@svgr/webpack'],
-          as: '*.js',
-        },
-      },
-    },
-  },
-  
   // TypeScript configuration for builds
   typescript: {
     // Warning: Temporarily disabled due to memory constraints with large codebase
     // Run 'tsc --noEmit' locally to check types before committing
-    // Enable after optimizing TypeScript configuration
     ignoreBuildErrors: true,
-  },
-  
-  // ESLint configuration for builds
-  eslint: {
-    // Only run ESLint on specific directories during production builds
-    ignoreDuringBuilds: true,
   },
   
   images: {
