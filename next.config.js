@@ -7,8 +7,10 @@ const nextConfig = {
   
   // Skip all static generation - this is a fully dynamic app
   // Pages and API routes are only executed at request time, not at build time
+  // Note: isrMemoryCacheSize was removed in Next.js 15
+  // ISR is disabled by using 'standalone' output mode
   experimental: {
-    isrMemoryCacheSize: 0, // Disable ISR cache
+    // Future experimental features can be added here
   },
   
   // Configure Next.js to handle page data collection failures gracefully
