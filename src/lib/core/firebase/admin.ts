@@ -3,6 +3,7 @@ import { getFirestore as getAdminFirestore, FieldValue, Timestamp } from 'fireba
 import { getAuth as getAdminAuth } from 'firebase-admin/auth';
 import { getStorage as getAdminStorage } from 'firebase-admin/storage';
 import * as admin from 'firebase-admin';
+import { validateFirebaseAdmin, logValidationResults } from '@/lib/env/validation';
 
 type ServiceAccount = {
   projectId?: string;
@@ -147,6 +148,16 @@ const initializeFirebaseAdmin = () => {
   }
 
   initializationAttempted = true;
+  
+  // Validate environment variables first
+  const validationResult = validateFirebaseAdmin();
+  logValidationResults(validationResult, 'Firebase Admin');
+  
+  if (!validationResult.isValid) {
+    console.error('Firebase Admin initialization skipped due to invalid configuration');
+    return;
+  }
+  
   logFirebaseConfigState();
 
   try {
