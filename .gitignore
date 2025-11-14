@@ -28,6 +28,7 @@ build/
 # Production build artifacts
 dist/
 *.tsbuildinfo
+tsconfig.tsbuildinfo
 
 # Coverage
 coverage/

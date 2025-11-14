@@ -1,5 +1,7 @@
 {
   "framework": "nextjs",
+  "buildCommand": "npm ci --no-audit --prefer-offline && npm run build",
+  "installCommand": "npm ci --no-audit --prefer-offline",
   "crons": [
     {
       "path": "/api/cron/token-refresh",
