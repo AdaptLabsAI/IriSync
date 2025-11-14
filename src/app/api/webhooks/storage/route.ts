@@ -4,6 +4,11 @@ import { WebhookService, WebhookEventType } from '../../../../lib/webhooks/Webho
 import { getServerSession } from 'next-auth';
 import { authOptions } from '../../../../lib/auth';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 /**
  * Storage Webhook Integration Endpoint
  * Handles file upload/deletion events and storage quota notifications

@@ -5,6 +5,11 @@ import { AITaskType } from '@/lib/features/ai/models/AITask';
 import { SubscriptionTier } from '@/lib/features/subscription/models/subscription';
 import { logger } from '@/lib/core/logging/logger';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 // Define the token usage record interface
 interface TokenUsageRecord {
   id: string;

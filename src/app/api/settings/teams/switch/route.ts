@@ -14,6 +14,11 @@ import { firestore } from '@/lib/core/firebase';
 import { handleApiError } from '@/lib/features/auth/utils';
 import { logger } from '@/lib/core/logging/logger';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 /**
  * Switch user's current team context
  */

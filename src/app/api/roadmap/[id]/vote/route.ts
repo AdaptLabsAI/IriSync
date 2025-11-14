@@ -2,6 +2,11 @@ import { NextRequest, NextResponse } from 'next/server';
 import { auth, firestore } from '@/lib/core/firebase/admin';
 import { FieldValue } from 'firebase-admin/firestore';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 export async function POST(request: NextRequest, { params }: { params: { id: string } }) {
   try {
     // Verify authentication

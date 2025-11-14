@@ -21,6 +21,11 @@ import { logger } from '@/lib/core/logging/logger';
 import { JobListing, JobApplication, JobType, JobLocationType } from '@/lib/careers/models';
 import { z } from 'zod';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 /**
  * Check if user has admin privileges
  */

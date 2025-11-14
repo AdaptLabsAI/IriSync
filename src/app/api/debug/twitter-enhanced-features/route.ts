@@ -4,6 +4,11 @@ import { PlatformType } from '@/lib/features/platforms/PlatformProvider';
 import { TwitterProvider } from '@/lib/features/platforms/providers/TwitterProvider';
 import { logger } from '@/lib/core/logging/logger';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 /**
  * Debug endpoint to test enhanced Twitter API functionality
  * GET /api/debug/twitter-enhanced-features?feature=dm|mentions|search|follow

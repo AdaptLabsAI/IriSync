@@ -3,6 +3,11 @@ import { firestore } from '@/lib/core/firebase';
 import { doc, updateDoc, deleteDoc, getDoc, serverTimestamp } from 'firebase/firestore';
 import { withAdmin } from '@/lib/features/auth/route-handlers';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 // GET a specific roadmap item
 export const GET = withAdmin(async (request: NextRequest, adminUser: any) => {
   try {

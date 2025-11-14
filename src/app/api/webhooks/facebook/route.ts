@@ -3,6 +3,11 @@ import { logger } from '../../../../lib/core/logging/logger';
 import { SocialInboxController } from '../../../../lib/features/content/SocialInboxController';
 import crypto from 'crypto';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 const FACEBOOK_APP_SECRET = process.env.FACEBOOK_APP_SECRET || '';
 const FACEBOOK_VERIFY_TOKEN = process.env.FACEBOOK_WEBHOOK_VERIFY_TOKEN || 'irisync_facebook_webhook_2024';
 

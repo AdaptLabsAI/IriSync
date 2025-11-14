@@ -13,6 +13,11 @@ import { AirtableAdapter } from '@/lib/features/integrations/AirtableAdapter';
 import { TokenRefreshService, TokenData, PlatformConfig, RefreshResult } from '@/lib/features/integrations/TokenRefreshService';
 import { getGoogleOAuthClientId } from '@/lib/server/env';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 // Interface for file data returned from adapters
 interface FileData {
   data: Buffer | ArrayBuffer;

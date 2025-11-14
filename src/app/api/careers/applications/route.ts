@@ -7,6 +7,11 @@ import { authOptions } from '@/lib/features/auth';
 import { handleApiError } from '@/lib/features/auth/utils';
 import { sendApplicationConfirmation, sendNewApplicationNotification } from '@/lib/core/notifications/careers';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 // GET handler for retrieving job applications (admin only)
 export async function GET(request: NextRequest) {
   try {

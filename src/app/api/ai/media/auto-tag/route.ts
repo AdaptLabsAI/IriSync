@@ -6,6 +6,11 @@ import { getServerSession } from 'next-auth/next';
 import { firestore } from '@/lib/core/firebase';
 import { collection, doc, getDoc, getDocs, query, where, setDoc } from 'firebase/firestore';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 // Define interfaces for formidable types

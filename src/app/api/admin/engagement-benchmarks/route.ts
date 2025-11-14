@@ -11,6 +11,11 @@ import {
 } from '@/lib/features/analytics/models/engagement-benchmarks';
 import { EngagementBenchmarkService } from '@/lib/features/analytics/engagement-benchmark-service';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 // Collection name constants
 const AUDIT_LOGS_COLLECTION = 'auditLogs';
 

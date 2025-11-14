@@ -29,7 +29,8 @@ const isBuildPhase = (): boolean => {
   return process.env.NEXT_PHASE === 'phase-production-build' ||
          process.env.IS_BUILD_PHASE === 'true' ||
          !process.env.NEXT_PUBLIC_FIREBASE_API_KEY ||
-         process.env.NEXT_PUBLIC_FIREBASE_API_KEY === 'build-placeholder';
+         process.env.NEXT_PUBLIC_FIREBASE_API_KEY === 'build-placeholder' ||
+         process.env.NEXT_PUBLIC_FIREBASE_API_KEY === '';
 };
 
 /**
@@ -123,15 +124,29 @@ export const getAppInstance = (): FirebaseApp => {
 };
 
 /**
+ * Create a build-time safe mock that prevents actual Firebase calls
+ */
+const createBuildTimeMock = () => {
+  const mockHandler = {
+    get(target: any, prop: string | symbol) {
+      // Return the mock itself for chaining
+      return mockProxy;
+    }
+  };
+  const mockProxy = new Proxy({}, mockHandler);
+  return mockProxy;
+};
+
+/**
  * For backward compatibility - lazy getter properties
  * These use Proxies but safely handle build-time access
  */
 export const firestore = new Proxy({} as Firestore, {
   get(target, prop) {
-    // During build, return undefined for any property access
-    // This prevents the proxy from trying to initialize Firebase
+    // During build, return a chainable mock to prevent errors
+    // This allows modules to be imported without crashing during build
     if (isBuildPhase()) {
-      return undefined;
+      return createBuildTimeMock();
     }
     const instance = getFirestoreInstance();
     return instance[prop as keyof Firestore];

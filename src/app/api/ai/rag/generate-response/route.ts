@@ -7,6 +7,11 @@ import { AIProviderFactory, ProviderType, type AIProvider } from '../../../../..
 import { trackDirectTokenUsage } from '../../../../../lib/tokens/token-tracker';
 import TextChunker from '../../../../../lib/rag/text-chunker';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 /**
  * Helper to extract user ID from authorization header
  * @param request Next.js request

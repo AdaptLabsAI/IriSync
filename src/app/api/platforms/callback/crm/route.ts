@@ -7,6 +7,11 @@ import { firestore } from '@/lib/core/firebase/client';
 import { doc, collection, setDoc, updateDoc, serverTimestamp, arrayUnion } from 'firebase/firestore';
 import { logger } from '@/lib/core/logging/logger';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 /**
  * OAuth callback handler for CRM platform integrations
  * Handles HubSpot, Salesforce, Zoho, Pipedrive, Microsoft Dynamics, and SugarCRM

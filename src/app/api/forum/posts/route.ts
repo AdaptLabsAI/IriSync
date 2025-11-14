@@ -9,6 +9,11 @@ import { UserRole } from '@/lib/core/models/User';
 import { doc, getDoc } from 'firebase/firestore';
 import { firestore } from '@/lib/core/firebase';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 // Schema for post creation
 const createPostSchema = z.object({
   title: z.string().min(5).max(150),

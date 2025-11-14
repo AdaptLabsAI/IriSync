@@ -5,6 +5,11 @@ import { getApp } from 'firebase/app';
 import { doc, getDoc } from 'firebase/firestore';
 import { handleApiError } from '@/lib/features/auth/utils';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 /**
  * Login route handler
  * @param request Request object

@@ -22,6 +22,11 @@ import { Ticket, convertFirestoreTicket } from '@/lib/features/support/models';
 import { TokenRepository } from '@/lib/features/tokens/token-repository';
 import { firestore as adminFirestore } from '@/lib/core/firebase/admin';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 const TICKETS_COLLECTION = 'supportTickets';
 const AUDIT_LOGS_COLLECTION = 'auditLogs';
 

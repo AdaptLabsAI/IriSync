@@ -5,6 +5,11 @@ import { firestore } from '@/lib/core/firebase';
 import {   collection,   doc,   getDoc,   getDocs,  setDoc,  serverTimestamp,  writeBatch} from 'firebase/firestore';
 import { logger } from '@/lib/core/logging/logger';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 /**
  * Check if user has admin privileges
  */

@@ -6,6 +6,11 @@ import { authOptions } from '@/lib/features/auth';
 import { sendRejectionEmail } from '@/lib/core/notifications/careers';
 import { handleApiError } from '@/lib/features/auth/utils';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 export async function POST(request: NextRequest) {
   try {
     // Check if user is authenticated and has admin rights

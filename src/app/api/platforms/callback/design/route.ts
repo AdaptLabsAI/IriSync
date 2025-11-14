@@ -11,6 +11,11 @@ import { getFirestore } from '../../../../../lib/core/firebase/admin';
 import { FieldValue } from 'firebase-admin/firestore';
 import { PlatformAdapterFactory } from '../../../../../lib/features/platforms/adapters/PlatformAdapterFactory';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 const firestore = getFirestore();
 
 /**

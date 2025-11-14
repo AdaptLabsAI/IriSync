@@ -6,6 +6,11 @@ import { getStripeClient } from '@/lib/features/billing/stripe';
 import { hasOrganizationRole, OrganizationRole, isMemberOfOrganization } from '@/lib/features/team/users/organization';
 import { SubscriptionTier, SubscriptionTierValues } from '@/lib/core/models/User';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 /**
  * API endpoint to add seats to an organization's subscription
  */

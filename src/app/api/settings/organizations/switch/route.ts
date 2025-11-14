@@ -7,6 +7,11 @@ import { logger } from '@/lib/core/logging/logger';
 import { TeamAuditLogger } from '@/lib/features/team/activity/audit-logger';
 import { AuditLogCategory, AuditLogSeverity } from '@/lib/features/team/activity/audit-logger';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 interface SessionUser {
   id?: string;
   email?: string;

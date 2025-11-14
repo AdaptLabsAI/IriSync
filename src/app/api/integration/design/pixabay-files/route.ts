@@ -4,6 +4,11 @@ import { authOptions } from '@/lib/features/auth';
 import { PixabayAdapter } from '@/lib/features/integrations/PixabayAdapter';
 import { logger } from '@/lib/core/logging/logger';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 export async function POST(request: NextRequest) {
   try {
     const session = await getServerSession(authOptions);

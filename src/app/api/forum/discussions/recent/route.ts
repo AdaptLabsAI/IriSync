@@ -1,6 +1,11 @@
 import { NextResponse } from 'next/server';
 import { getRecentDiscussions } from '@/lib/features/forum/discussions';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 export async function GET() {
   try {
     // Fetch recent discussions from the database

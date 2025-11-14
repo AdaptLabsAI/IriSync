@@ -6,6 +6,11 @@ import { firestore } from '@/lib/core/firebase';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { compare, hash } from 'bcryptjs';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 // Type definitions
 interface SessionUser {
   name?: string | null;

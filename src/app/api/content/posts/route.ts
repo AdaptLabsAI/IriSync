@@ -4,6 +4,11 @@ import { PlatformType, AttachmentType } from '@/lib/features/platforms/client';
 import { getFirestore, serverTimestamp } from '@/lib/core/firebase/admin';
 import { logger } from '@/lib/core/logging/logger';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 /**
  * GET handler for retrieving content posts
  */

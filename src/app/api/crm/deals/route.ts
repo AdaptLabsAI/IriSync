@@ -12,6 +12,11 @@ import { SugarCRMAdapter } from '@/lib/features/integrations/SugarCRMAdapter';
 import { handleApiError } from '@/lib/features/auth/utils';
 import { TokenRefreshService } from '@/lib/features/integrations/TokenRefreshService';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 // Type definitions for CRM deals
 interface HubspotDeal {
   id: string;

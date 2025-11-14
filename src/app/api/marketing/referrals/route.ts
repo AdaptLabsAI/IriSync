@@ -5,6 +5,11 @@ import { ReferralService } from '@/lib/features/referrals/ReferralService';
 import { handleApiError } from '@/lib/features/auth/utils';
 import { logger } from '@/lib/core/logging/logger';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 /**
  * GET /api/referrals - Get user's referral code and statistics
  */

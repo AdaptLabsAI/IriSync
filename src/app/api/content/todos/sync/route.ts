@@ -18,6 +18,11 @@ import { handleApiError } from '@/lib/features/auth/utils';
 import axios from 'axios';
 import { getGoogleOAuthClientId } from '@/lib/server/env';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 interface ExternalTask {
   id: string;
   title: string;

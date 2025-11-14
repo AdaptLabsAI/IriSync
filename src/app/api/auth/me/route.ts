@@ -6,6 +6,11 @@ import { authOptions } from '@/lib/features/auth';
 import { validateUserOrganizationConnections } from '@/lib/core/utils';
 import { doc, updateDoc, serverTimestamp } from 'firebase/firestore';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 /**
  * Debug endpoint to get the current user information
  * This is useful for troubleshooting authentication issues

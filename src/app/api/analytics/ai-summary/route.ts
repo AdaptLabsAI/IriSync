@@ -9,6 +9,11 @@ import { logger } from '../../../../lib/core/logging/logger';
 import { UserRole, User } from '../../../../lib/core/models/User';
 import { Timestamp } from 'firebase/firestore';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 /**
  * GET /api/analytics/ai-summary
  * Generate AI-powered analytics summary and insights

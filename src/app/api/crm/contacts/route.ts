@@ -9,6 +9,11 @@ import { ZohoCRMAdapter } from '@/lib/features/integrations/ZohoCRMAdapter';
 import { handleApiError } from '@/lib/features/auth/utils';
 import { TokenRefreshService } from '@/lib/features/integrations/TokenRefreshService';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 // Define types for CRM contacts
 interface HubspotContact {
   id: string;

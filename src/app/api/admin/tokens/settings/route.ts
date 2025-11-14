@@ -6,6 +6,11 @@ import { logger } from '@/lib/core/logging/logger';
 import { TOKEN_COST_PER_OPERATION } from '@/lib/features/tokens/models/token-limits';
 import { MONTHLY_TOKEN_LIMITS } from '@/lib/features/tokens/models/token-limits';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 // Settings document ID in Firestore
 const SETTINGS_DOC_ID = 'token_settings';
 

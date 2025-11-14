@@ -3,6 +3,11 @@ import { verifyAuthentication } from '@/lib/features/auth/utils';
 import { getFirestore } from '@/lib/core/firebase/admin';
 import { logger } from '@/lib/core/logging/logger';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 export async function GET(req: NextRequest, { params }: { params: { id: string } }) {
   try {
     // Get authenticated user ID

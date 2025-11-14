@@ -4,6 +4,11 @@ import { logger } from '@/lib/core/logging/logger';
 import { PlatformType } from '@/lib/features/platforms/models';
 import { PlatformAdapterFactory } from '@/lib/features/platforms/adapters/PlatformAdapterFactory';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 /**
  * OAuth callback handler for all platform integrations
  * This route processes the authorization code returned by the platform after user consent

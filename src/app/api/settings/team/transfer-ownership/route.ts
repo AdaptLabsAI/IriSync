@@ -11,6 +11,11 @@ import {
   firestoreToOrganization
 } from '@/lib/core/models/Organization';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 interface SessionUser {
   name?: string | null;
   email?: string | null;

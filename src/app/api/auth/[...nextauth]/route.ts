@@ -6,6 +6,11 @@ import { handleApiError } from "@/lib/features/auth/utils";
 import { NextResponse } from "next/server";
 import { ensureUserDocument } from "@/lib/features/auth/sync";
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 // Extend the handler to synchronize cookies and ensure Firestore documents
 const handler = async (req: Request, context: any) => {
   try {

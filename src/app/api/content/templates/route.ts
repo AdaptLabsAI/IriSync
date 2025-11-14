@@ -8,6 +8,11 @@ import {
 } from '../../../../lib/features/content/posts/templates';
 import { logger } from '../../../../lib/core/logging/logger';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 const templateService = new PostTemplateService();
 
 export async function GET(req: NextRequest) {

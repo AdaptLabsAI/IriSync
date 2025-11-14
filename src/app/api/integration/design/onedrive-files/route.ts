@@ -2,6 +2,11 @@ import { NextRequest, NextResponse } from 'next/server';
 import { OneDriveAdapter } from '../../../../../lib/integrations/OneDriveAdapter';
 import { handleApiError, handleValidationError } from '../../../../../lib/core/api/errorHandler';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 const ENDPOINT = 'POST /api/integration/design/onedrive-files';
 
 export async function POST(req: NextRequest) {

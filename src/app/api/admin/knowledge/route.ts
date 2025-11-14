@@ -26,6 +26,11 @@ import {
 import { KnowledgeRepository } from '@/lib/knowledge/repository';
 import { generateSlug } from '@/lib/core/utils/slug';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 // Collection name constants
 const KNOWLEDGE_COLLECTION = 'knowledgeContent';
 const AUDIT_LOGS_COLLECTION = 'auditLogs';

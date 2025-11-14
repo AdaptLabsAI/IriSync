@@ -7,6 +7,11 @@ import { logger } from '@/lib/core/logging/logger';
 import { firestore } from '@/lib/core/firebase';
 import { collection, doc, getDoc, getDocs, query, where, orderBy, limit } from 'firebase/firestore';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 /**
  * POST /api/content/linkedin-social-sync
  * Sync LinkedIn social actions (comments, likes) to unified social inbox

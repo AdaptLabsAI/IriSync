@@ -2,6 +2,11 @@ import { NextRequest, NextResponse } from 'next/server';
 import { generateOrganizationId, validateUserOrganizationConnections } from '@/lib/core/utils';
 import { getFirestore } from '@/lib/core/firebase/admin';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 export async function GET(req: NextRequest) {
   if (process.env.NODE_ENV === 'production') {
     return NextResponse.json({ error: 'Not available in production' }, { status: 403 });

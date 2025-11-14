@@ -10,7 +10,9 @@ const nextConfig = {
   // Note: isrMemoryCacheSize was removed in Next.js 15
   // ISR is disabled by using 'standalone' output mode
   experimental: {
-    // Future experimental features can be added here
+    // Reduce memory usage during builds
+    workerThreads: false,
+    cpus: 1,
   },
   
   // Configure Next.js to handle page data collection failures gracefully
@@ -19,6 +21,13 @@ const nextConfig = {
     maxInactiveAge: 60 * 1000,
     pagesBufferLength: 5,
   },
+  
+  // Prevent static optimization for dynamic API routes
+  // All API routes marked with 'force-dynamic' will skip static analysis during build
+  staticPageGenerationTimeout: 120,
+  
+  // Skip trailing slash redirects which can cause issues with API routes
+  skipTrailingSlashRedirect: false,
   
   // Custom build ID to ensure fresh builds
   generateBuildId: async () => {

@@ -5,6 +5,11 @@ import { collection, query, where, getDocs } from 'firebase/firestore';
 import { logger } from '@/lib/core/logging/logger';
 import { handleApiError } from '@/lib/features/auth/utils';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 export async function GET(request: NextRequest) {
   try {
     // Get the user session

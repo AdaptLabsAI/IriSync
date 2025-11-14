@@ -4,6 +4,11 @@ import { firestore } from '../../../../lib/core/firebase/admin';
 import { TieredModelRouter, TaskType, SubscriptionTier } from '../../../../lib/features/ai/models/tiered-model-router';
 import { User } from '../../../../lib/core/models/User';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 // Production-ready Content Refinement Service
 class ContentRefinementService {
   private router: TieredModelRouter;

@@ -2,6 +2,11 @@ import { NextResponse } from 'next/server';
 import { firestore } from '@/lib/core/firebase';
 import { collection, getDocs, query, orderBy, limit, Timestamp } from 'firebase/firestore';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 export interface ServiceStatus {
   id: string;
   name: string;

@@ -5,6 +5,11 @@ import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/lib/features/auth';
 import { withAdmin } from '@/lib/features/auth/route-handlers';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 // Helper function to check if user is admin
 async function isUserAdmin(email: string | null | undefined) {
   if (!email) return false;

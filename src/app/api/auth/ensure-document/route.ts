@@ -4,6 +4,11 @@ import { ensureUserDocument } from '@/lib/features/auth/sync';
 import { logger } from '@/lib/core/logging/logger';
 import { handleApiError } from '@/lib/features/auth/utils';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 /**
  * Ensure user document API route
  * 

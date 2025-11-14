@@ -6,6 +6,11 @@ import { logger } from '../../../../../lib/core/logging/logger';
 import { AccessLevel, DocumentType } from '../../../../../lib/rag/document-processor';
 import { trackDirectTokenUsage } from '../../../../../lib/tokens/token-tracker';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 /**
  * Helper to extract user ID from authorization header
  * @param request Next.js request

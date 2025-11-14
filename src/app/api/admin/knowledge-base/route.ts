@@ -20,6 +20,11 @@ import {
 import { z } from 'zod';
 import { logger } from '@/lib/core/logging/logger';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 // Collection name constants
 const KNOWLEDGE_BASE_COLLECTION = 'knowledgeBase';
 const KNOWLEDGE_CONTENT_COLLECTION = 'knowledgeContent';

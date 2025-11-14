@@ -4,6 +4,11 @@ import { authOptions } from '@/lib/features/auth';
 import { getToken } from 'next-auth/jwt';
 import { hasPermission, systemRoles } from '@/lib/features/team/role';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 export async function GET(request: NextRequest) {
   try {
     // Get both session and token for debugging

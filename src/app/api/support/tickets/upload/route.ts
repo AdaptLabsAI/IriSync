@@ -2,6 +2,11 @@ import { NextRequest, NextResponse } from 'next/server';
 import { auth, storage } from '@/lib/core/firebase/admin';
 import { v4 as uuidv4 } from 'uuid';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 export async function POST(request: NextRequest) {
   try {
     // Verify authentication

@@ -3,6 +3,11 @@ import { getFirestore } from '@/lib/core/firebase/admin';
 import { withAdmin } from '@/lib/features/auth/route-handlers';
 import { Timestamp } from 'firebase-admin/firestore';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 const db = getFirestore();
 const testimonialCollection = 'testimonials';
 

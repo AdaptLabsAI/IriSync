@@ -5,6 +5,11 @@ import { firestore, getFirestore } from '@/lib/core/firebase/admin';
 import { logger } from '@/lib/core/logging/logger';
 import { verifyAuthentication } from '@/lib/features/auth/utils';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 // Interface for calendar posts
 interface CalendarPost {
   id: string;

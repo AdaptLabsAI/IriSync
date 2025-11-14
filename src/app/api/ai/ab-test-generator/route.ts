@@ -5,6 +5,11 @@ import { User } from '../../../../lib/core/models/User';
 import { getUserSubscriptionTier } from '../../../../lib/subscription';
 import { SubscriptionTier as BaseSubscriptionTier } from '../../../../lib/subscription/models/subscription';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 // Production-ready A/B Testing Content Generator
 class ABTestContentGenerator {
   private router: TieredModelRouter;

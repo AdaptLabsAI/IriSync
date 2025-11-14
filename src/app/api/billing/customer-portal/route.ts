@@ -6,6 +6,11 @@ import { getDoc, doc } from 'firebase/firestore';
 import { firestore } from '@/lib/core/firebase';
 import { logger } from '@/lib/core/logging/logger';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 /**
  * Create a Stripe Customer Portal session
  * This allows customers to manage payment methods, view invoices, update billing info, etc.

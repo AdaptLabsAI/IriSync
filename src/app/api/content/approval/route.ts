@@ -5,6 +5,11 @@ import { logger } from '@/lib/core/logging/logger';
 import { database } from '@/lib/core/database';
 import { verifyTeamAccess } from '@/lib/features/team/permissions';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 /**
  * API Handler for content approval workflows
  * This endpoint handles approving, rejecting, and requesting changes to content

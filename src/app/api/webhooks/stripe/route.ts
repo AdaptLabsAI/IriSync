@@ -5,6 +5,11 @@ import { logger } from '@/lib/core/logging/logger';
 import Stripe from 'stripe';
 import { ReferralService } from '@/lib/features/referrals/ReferralService';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 // The webhook secret should be set in environment variables
 const STRIPE_WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET;
 

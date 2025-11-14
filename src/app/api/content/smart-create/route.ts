@@ -3,6 +3,11 @@ import { auth, firestore, collection, serverTimestamp } from '../../../../lib/co
 import { User } from '../../../../lib/core/models/User';
 import { TieredModelRouter, TaskType } from '../../../../lib/features/ai/models/tiered-model-router';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 // Production-ready Smart Content Publisher
 class SmartContentPublisher {
   private router: TieredModelRouter;

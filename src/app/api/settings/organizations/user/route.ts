@@ -4,6 +4,11 @@ import { authOptions } from '@/lib/features/auth';
 import { getOrganizationsByUser } from '@/lib/features/team/users/organization';
 import { logger } from '@/lib/core/logging/logger';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 interface SessionUser {
   id?: string;
   email?: string;

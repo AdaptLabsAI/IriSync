@@ -11,6 +11,11 @@ import { OpenAI } from 'openai';
 import { SocialPlatform } from '@/lib/core/models/SocialAccount';
 import { MediaType } from '@/lib/core/models/Media';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 // Initialize AI providers with API keys
 const googleAI = new GoogleGenerativeAI(process.env.GOOGLE_AI_API_KEY || '');
 const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY || '' });

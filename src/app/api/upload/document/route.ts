@@ -4,6 +4,11 @@ import { v4 as uuidv4 } from 'uuid';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/features/auth';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 // Configure Google Cloud Storage
 const storage = new Storage({
   projectId: process.env.FIREBASE_PROJECT_ID,
