@@ -7,10 +7,21 @@ import {
   KnowledgeAccessLevel,
   KnowledgeContentFilter
 } from '@/lib/knowledge/models';
-import { KnowledgeRepository } from '@/lib/knowledge/repository';
+// Dynamic import to prevent build-time Firebase initialization
+// import { KnowledgeRepository } from '@/lib/knowledge/repository';
 import { z } from 'zod';
 import { logger } from '@/lib/core/logging/logger';
 
+// Configure route as fully dynamic
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+export const dynamicParams = true;
+
+// Lazy-load KnowledgeRepository to prevent Firebase initialization during build
+const getKnowledgeRepository = async () => {
+  const { KnowledgeRepository } = await import('@/lib/knowledge/repository');
+  return KnowledgeRepository;
+};
 /**
  * Documentation filter schema
  */
@@ -105,6 +116,9 @@ export const GET = withAdmin(async (request: NextRequest, adminUser: any) => {
     
     const filters = validatedParams.data;
     
+    // Lazy-load repository at runtime
+    const KnowledgeRepository = await getKnowledgeRepository();
+    
     // Build filter for KnowledgeRepository
     const knowledgeFilter: KnowledgeContentFilter = {
       contentType: KnowledgeContentType.DOCUMENTATION,
@@ -179,6 +193,9 @@ export const POST = withAdmin(async (request: NextRequest, adminUser: any) => {
     }
     
     const documentationData = validatedData.data;
+    
+    // Lazy-load repository at runtime
+    const KnowledgeRepository = await getKnowledgeRepository();
     
     // Set content type to DOCUMENTATION
     const contentData = {
