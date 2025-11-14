@@ -4,6 +4,12 @@ const path = require('path');
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
+  output: 'standalone',
+  // Disable static page generation to prevent build-time issues
+  // All pages will be server-rendered
+  experimental: {
+    esmExternals: 'loose',
+  },
   // ESLint configuration for builds
   eslint: {
     // Warning: Temporarily disabled during builds due to configuration warnings
@@ -89,12 +95,6 @@ const nextConfig = {
   // Ignore specific pages/files that are causing build errors
   pageExtensions: ['js', 'jsx', 'ts', 'tsx'],
   transpilePackages: ['@chakra-ui/react'],
-  // Handle problematic aliases
-  experimental: {
-    esmExternals: 'loose',
-    
-   
-  },
   // Add rewrites for problematic pages to ensure they're handled statically
   async rewrites() {
     return [
