@@ -27,6 +27,7 @@ let _initialized = false;
  */
 const isBuildPhase = (): boolean => {
   return process.env.NEXT_PHASE === 'phase-production-build' ||
+         process.env.IS_BUILD_PHASE === 'true' ||
          !process.env.NEXT_PUBLIC_FIREBASE_API_KEY ||
          process.env.NEXT_PUBLIC_FIREBASE_API_KEY === 'build-placeholder';
 };
@@ -123,10 +124,15 @@ export const getAppInstance = (): FirebaseApp => {
 
 /**
  * For backward compatibility - lazy getter properties
- * These are only accessed at runtime, never during build
+ * These use Proxies but safely handle build-time access
  */
 export const firestore = new Proxy({} as Firestore, {
   get(target, prop) {
+    // During build, return undefined for any property access
+    // This prevents the proxy from trying to initialize Firebase
+    if (isBuildPhase()) {
+      return undefined;
+    }
     const instance = getFirestoreInstance();
     return instance[prop as keyof Firestore];
   }
@@ -134,6 +140,9 @@ export const firestore = new Proxy({} as Firestore, {
 
 export const auth = new Proxy({} as Auth, {
   get(target, prop) {
+    if (isBuildPhase()) {
+      return undefined;
+    }
     const instance = getAuthInstance();
     return instance[prop as keyof Auth];
   }
@@ -141,6 +150,9 @@ export const auth = new Proxy({} as Auth, {
 
 export const storage = new Proxy({} as FirebaseStorage, {
   get(target, prop) {
+    if (isBuildPhase()) {
+      return undefined;
+    }
     const instance = getStorageInstance();
     return instance[prop as keyof FirebaseStorage];
   }
@@ -148,6 +160,9 @@ export const storage = new Proxy({} as FirebaseStorage, {
 
 export const app = new Proxy({} as FirebaseApp, {
   get(target, prop) {
+    if (isBuildPhase()) {
+      return undefined;
+    }
     const instance = getAppInstance();
     return instance[prop as keyof FirebaseApp];
   }

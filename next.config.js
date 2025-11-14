@@ -5,14 +5,19 @@ const nextConfig = {
   reactStrictMode: true,
   output: 'standalone',
   
-  // Skip build-time page data collection for API routes
+  // Skip all static generation - this is a fully dynamic app
+  // Pages and API routes are only executed at request time, not at build time
   experimental: {
-    skipMiddlewareUrlNormalize: true,
-    skipTrailingSlashRedirect: true,
+    isrMemoryCacheSize: 0, // Disable ISR cache
+  },
+  
+  // Custom build ID to ensure fresh builds
+  generateBuildId: async () => {
+    return 'dynamic-' + Date.now();
   },
   
   // Webpack configuration for Next.js 15
-  webpack: (config, { isServer }) => {
+  webpack: (config, { isServer, webpack }) => {
     // Handle node: scheme imports
     config.resolve.alias = {
       ...config.resolve.alias,
@@ -30,6 +35,13 @@ const nextConfig = {
         child_process: false,
       };
     }
+    
+    // Define build-time environment variables
+    config.plugins.push(
+      new webpack.DefinePlugin({
+        'process.env.IS_BUILD_PHASE': JSON.stringify(process.env.NEXT_PHASE === 'phase-production-build'),
+      })
+    );
     
     return config;
   },
