@@ -25,7 +25,7 @@ import SimplifiedTabs from '../ui/tabs/SimplifiedTabs';
 import Alert from '../ui/alert';
 import Spinner from '../ui/spinner/Spinner';
 import { useToast } from '../ui/use-toast/index';
-import TeamSwitcher from '../ui/TeamSwitcher';
+import { TeamSwitcher } from '../ui/TeamSwitcher';
 import { BasicTodoForm } from '../todo/BasicTodoForm';
 import { AdvancedTodoForm } from '../todo/AdvancedTodoForm';
 import { CollaborationTodoForm } from '../todo/CollaborationTodoForm';

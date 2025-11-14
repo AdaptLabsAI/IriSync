@@ -10,6 +10,12 @@ type ServiceAccount = {
   privateKey?: string;
 };
 
+/**
+ * Check if we're in a build environment where Firebase may not be available
+ */
+const isBuildTime = process.env.NEXT_PHASE === 'phase-production-build' || 
+                    (process.env.NODE_ENV === 'production' && !process.env.FIREBASE_ADMIN_PROJECT_ID && !process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID);
+
 const stripWrappingQuotes = (value?: string | null) => {
   if (!value) {
     return undefined;
@@ -119,13 +125,30 @@ const logFirebaseConfigState = () => {
   console.log(`Private key present: ${privateKey ? 'yes' : 'no'}`);
 };
 
-logFirebaseConfigState();
+// Track initialization state
+let initializationAttempted = false;
+let initializationSuccess = false;
 
 // Initialize Firebase Admin if not already initialized
 const initializeFirebaseAdmin = () => {
+  // Skip if we're in build time
+  if (isBuildTime) {
+    console.warn('Skipping Firebase Admin initialization - build time or missing required env vars');
+    return;
+  }
+
+  // Skip if already attempted
+  if (initializationAttempted) {
+    return;
+  }
+
+  initializationAttempted = true;
+  logFirebaseConfigState();
+
   try {
     // Skip initialization if already initialized
     if (getApps().length > 0) {
+      initializationSuccess = true;
       return;
     }
 
@@ -148,7 +171,8 @@ const initializeFirebaseAdmin = () => {
           privateKeyMissing: !privateKey
         }
       );
-      throw new Error('Firebase Admin SDK is missing required environment variables');
+      console.warn('Firebase Admin SDK will not be available - required environment variables are missing');
+      return; // Don't throw during initialization
     }
     
     // Initialize app with credentials
@@ -161,18 +185,23 @@ const initializeFirebaseAdmin = () => {
       storageBucket,
     });
     
+    initializationSuccess = true;
     console.log('Firebase Admin SDK initialized successfully');
   } catch (error) {
     console.error('Error initializing Firebase Admin SDK:', error);
-    throw new Error('Failed to initialize Firebase Admin SDK');
+    console.warn('Firebase Admin SDK will not be available');
+    // Don't throw - let the app handle missing Firebase gracefully
   }
 };
 
-// Initialize on module load
+// Initialize on module load (will skip during build)
 initializeFirebaseAdmin();
 
 // Export Firestore service with error handling
 export const getFirestore = () => {
+  if (!initializationSuccess) {
+    throw new Error('Firebase Admin is not initialized. Please check your environment variables.');
+  }
   try {
     return getAdminFirestore();
   } catch (error) {
@@ -183,6 +212,9 @@ export const getFirestore = () => {
 
 // Export Auth service with error handling
 export const getAuth = () => {
+  if (!initializationSuccess) {
+    throw new Error('Firebase Admin is not initialized. Please check your environment variables.');
+  }
   try {
     return getAdminAuth();
   } catch (error) {
@@ -193,6 +225,9 @@ export const getAuth = () => {
 
 // Export Storage service with error handling
 export const getStorage = () => {
+  if (!initializationSuccess) {
+    throw new Error('Firebase Admin is not initialized. Please check your environment variables.');
+  }
   try {
     return getAdminStorage();
   } catch (error) {
@@ -211,6 +246,9 @@ export const deleteField = () => FieldValue.delete();
 
 // Batch processing helper
 export const createBatch = () => {
+  if (!initializationSuccess) {
+    throw new Error('Firebase Admin is not initialized. Please check your environment variables.');
+  }
   try {
     return getAdminFirestore().batch();
   } catch (error) {
@@ -221,6 +259,9 @@ export const createBatch = () => {
 
 // Transaction helper
 export const runTransaction = async (updateFunction: (transaction: FirebaseFirestore.Transaction) => Promise<any>) => {
+  if (!initializationSuccess) {
+    throw new Error('Firebase Admin is not initialized. Please check your environment variables.');
+  }
   try {
     return await getAdminFirestore().runTransaction(updateFunction);
   } catch (error) {
@@ -231,6 +272,9 @@ export const runTransaction = async (updateFunction: (transaction: FirebaseFires
 
 // Document and collection reference helpers
 export const doc = (path: string) => {
+  if (!initializationSuccess) {
+    throw new Error('Firebase Admin is not initialized. Please check your environment variables.');
+  }
   try {
     return getAdminFirestore().doc(path);
   } catch (error) {
@@ -240,6 +284,9 @@ export const doc = (path: string) => {
 };
 
 export const collection = (path: string) => {
+  if (!initializationSuccess) {
+    throw new Error('Firebase Admin is not initialized. Please check your environment variables.');
+  }
   try {
     return getAdminFirestore().collection(path);
   } catch (error) {
@@ -248,10 +295,10 @@ export const collection = (path: string) => {
   }
 };
 
-// Pre-initialized instances for convenience
-export const firestore = getFirestore();
-export const auth = getAuth();
-export const storage = getStorage();
+// Pre-initialized instances for convenience (will be null if not initialized)
+export const firestore = initializationSuccess ? getFirestore() : null;
+export const auth = initializationSuccess ? getAuth() : null;
+export const storage = initializationSuccess ? getStorage() : null;
 
 // Export the full admin object for advanced use cases
 export const firebaseAdmin = admin;

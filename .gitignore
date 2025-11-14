@@ -52,3 +52,4 @@ junit.xml
 # IDE
 .vscode/
 .idea/
+cache/

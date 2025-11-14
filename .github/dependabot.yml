@@ -23,19 +23,24 @@ updates:
         dependency-type: "production"
         update-types:
           - "patch"
+      # Group Next.js ecosystem updates together (including major versions)
+      nextjs-ecosystem:
+        patterns:
+          - "next"
+          - "react"
+          - "react-dom"
+        update-types:
+          - "major"
+          - "minor"
+          - "patch"
     # Automatically merge patch updates for dev dependencies
     # (requires GitHub branch protection rules to be configured)
     labels:
       - "dependencies"
       - "automated"
-    # Ignore major version updates for these packages (update manually)
-    ignore:
-      - dependency-name: "next"
-        update-types: ["version-update:semver-major"]
-      - dependency-name: "react"
-        update-types: ["version-update:semver-major"]
-      - dependency-name: "react-dom"
-        update-types: ["version-update:semver-major"]
+    # Allow major version updates for Next.js and React to stay current
+    # This is important for security, performance, and bug fixes
+    # No ignore rules - all updates are now allowed
     # Increase versioning strategy
     versioning-strategy: increase
     # Commit message prefix
