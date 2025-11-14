@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 import { withAdmin } from '@/lib/features/auth/route-handlers';
-import { KnowledgeRepository } from '@/lib/knowledge/repository';
 import { logger } from '@/lib/core/logging/logger';
 
 // Force dynamic rendering - required for Firebase/database access
@@ -49,6 +48,9 @@ async function logAdminAction(adminUser: { id: string, email: string, role: stri
  */
 export const GET = withAdmin(async (_request: NextRequest, adminUser: any) => {
   try {
+    // Dynamically import KnowledgeRepository to avoid build-time Firebase initialization
+    const { KnowledgeRepository } = await import('@/lib/knowledge/repository');
+    
     // Get all categories from repository
     const categories = await KnowledgeRepository.getCategories();
     
@@ -85,6 +87,9 @@ export const GET = withAdmin(async (_request: NextRequest, adminUser: any) => {
  */
 export const POST = withAdmin(async (request: NextRequest, adminUser: any) => {
   try {
+    // Dynamically import KnowledgeRepository to avoid build-time Firebase initialization
+    const { KnowledgeRepository } = await import('@/lib/knowledge/repository');
+    
     // Parse request body
     const body = await request.json();
     

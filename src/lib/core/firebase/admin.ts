@@ -215,9 +215,43 @@ initializeFirebaseAdmin();
 // Export Firestore service with error handling
 export const getFirestore = () => {
   if (!initializationSuccess) {
-    // During build, return undefined instead of throwing
+    // During build, return a mock instead of undefined to prevent errors
     if (isBuildTime) {
-      return undefined as any;
+      // Create a mock Firestore instance with basic methods
+      const mockCollection = {
+        add: async () => ({ id: 'mock-id' }),
+        doc: () => mockDoc,
+        get: async () => ({ empty: true, docs: [], size: 0 }),
+        where: () => mockCollection,
+        orderBy: () => mockCollection,
+        limit: () => mockCollection,
+      };
+      const mockDoc = {
+        get: async () => ({ exists: false, data: () => null }),
+        set: async () => {},
+        update: async () => {},
+        delete: async () => {},
+        id: 'mock-doc-id',
+      };
+      const mockFirestore: any = {
+        collection: () => mockCollection,
+        doc: () => mockDoc,
+        batch: () => ({
+          set: () => {},
+          update: () => {},
+          delete: () => {},
+          commit: async () => {},
+        }),
+        runTransaction: async (callback: any) => {
+          return callback({
+            get: async () => ({ exists: false, data: () => null }),
+            set: () => {},
+            update: () => {},
+            delete: () => {},
+          });
+        },
+      };
+      return mockFirestore;
     }
     throw new Error('Firebase Admin is not initialized. Please check your environment variables.');
   }
@@ -233,7 +267,18 @@ export const getFirestore = () => {
 export const getAuth = () => {
   if (!initializationSuccess) {
     if (isBuildTime) {
-      return undefined as any;
+      // Return a mock Auth instance during build
+      const mockAuth: any = {
+        getUser: async () => null,
+        getUserByEmail: async () => null,
+        createUser: async () => ({ uid: 'mock-uid' }),
+        updateUser: async () => ({ uid: 'mock-uid' }),
+        deleteUser: async () => {},
+        listUsers: async () => ({ users: [], pageToken: undefined }),
+        verifyIdToken: async () => ({ uid: 'mock-uid' }),
+        createCustomToken: async () => 'mock-token',
+      };
+      return mockAuth;
     }
     throw new Error('Firebase Admin is not initialized. Please check your environment variables.');
   }
@@ -249,7 +294,19 @@ export const getAuth = () => {
 export const getStorage = () => {
   if (!initializationSuccess) {
     if (isBuildTime) {
-      return undefined as any;
+      // Return a mock Storage instance during build
+      const mockStorage: any = {
+        bucket: () => ({
+          file: () => ({
+            save: async () => {},
+            download: async () => [Buffer.from('')],
+            delete: async () => {},
+            getSignedUrl: async () => ['mock-url'],
+          }),
+          upload: async () => [{ name: 'mock-file' }],
+        }),
+      };
+      return mockStorage;
     }
     throw new Error('Firebase Admin is not initialized. Please check your environment variables.');
   }

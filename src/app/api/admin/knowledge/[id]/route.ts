@@ -9,7 +9,6 @@ import {
   KnowledgeStatus, 
   KnowledgeAccessLevel 
 } from '@/lib/knowledge/models';
-import { KnowledgeRepository } from '@/lib/knowledge/repository';
 import { generateSlug } from '@/lib/core/utils/slug';
 
 // Force dynamic rendering - required for Firebase/database access
@@ -94,6 +93,9 @@ export async function GET(
 ) {
   return withAdmin(async (req: NextRequest, adminUser: any) => {
     try {
+      // Dynamically import KnowledgeRepository to avoid build-time Firebase initialization
+      const { KnowledgeRepository } = await import('@/lib/knowledge/repository');
+      
       const id = params.id;
       
       if (!id) {
@@ -158,6 +160,9 @@ export async function PATCH(
 ) {
   return withAdmin(async (req: NextRequest, adminUser: any) => {
     try {
+      // Dynamically import KnowledgeRepository to avoid build-time Firebase initialization
+      const { KnowledgeRepository } = await import('@/lib/knowledge/repository');
+      
       const id = params.id;
       
       if (!id) {
@@ -263,6 +268,9 @@ export async function DELETE(
 ) {
   return withAdmin(async (req: NextRequest, adminUser: any) => {
     try {
+      // Dynamically import KnowledgeRepository to avoid build-time Firebase initialization
+      const { KnowledgeRepository } = await import('@/lib/knowledge/repository');
+      
       const id = params.id;
       
       if (!id) {
