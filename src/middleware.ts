@@ -72,7 +72,7 @@ function hasRouteAccess(user: any, path: string): boolean {
   return !!user.role; // Only allow access if user has a role
 }
 
-export async function proxy(req: NextRequest) {
+export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
   const origin = req.headers.get('origin') || '';
   
