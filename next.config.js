@@ -5,19 +5,23 @@ const nextConfig = {
   reactStrictMode: true,
   output: 'standalone',
   
+  // Turbopack configuration (Next.js 16 default)
+  turbopack: {
+    resolveAlias: {
+      '@': path.resolve(__dirname, 'src'),
+      // Handle node: scheme imports
+      'node:events': 'events',
+      'node:stream': 'stream-browserify',
+      'node:util': 'util',
+      'node:process': 'process/browser',
+    },
+  },
+  
   // Experimental: Disable static optimization to prevent build-time analysis
   experimental: {
     // workerThreads: false,  // Disable worker threads
   },
   
-  // ESLint configuration for builds
-  eslint: {
-    // Warning: Temporarily disabled during builds due to configuration warnings
-    // Enable after resolving ESLint configuration issues
-    ignoreDuringBuilds: true,
-    // Specify directories to lint when enabled
-    dirs: ['src/app', 'src/components', 'src/lib'],
-  },
   // TypeScript configuration for builds
   typescript: {
     // Warning: Temporarily disabled due to memory constraints with large codebase
@@ -55,46 +59,11 @@ const nextConfig = {
       }
     ]
   },
-  webpack: (config, { isServer }) => {
-    config.resolve.alias = {
-      ...config.resolve.alias,
-      '@': path.resolve(__dirname, 'src'),
-    };
-
-    // Handle specific issues with NodeMailer and Node.js modules on the client side
-    if (!isServer) {
-      config.resolve.fallback = {
-        ...config.resolve.fallback,
-        fs: false,
-        net: false,
-        tls: false,
-        dns: false,
-        child_process: false,
-        http2: false,
-        util: false,
-        stream: false,
-        events: false,
-        process: false,
-        path: false,
-        zlib: false,
-        crypto: false,
-      };
-
-      // Handle node: scheme imports
-      config.resolve.alias = {
-        ...config.resolve.alias,
-        'node:events': 'events',
-        'node:stream': 'stream-browserify',
-        'node:util': 'util',
-        'node:process': 'process/browser',
-      };
-    }
-
-    return config;
-  },
-  // Ignore specific pages/files that are causing build errors
+  
+  // Page extensions
   pageExtensions: ['js', 'jsx', 'ts', 'tsx'],
   transpilePackages: ['@chakra-ui/react'],
+  
   // Add rewrites for problematic pages to ensure they're handled statically
   async rewrites() {
     return [

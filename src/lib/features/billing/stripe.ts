@@ -1,5 +1,10 @@
 import Stripe from 'stripe';
 import { logger } from '../../core/logging/logger';
+import { validateStripe, logValidationResults } from '@/lib/env/validation';
+
+// Validate Stripe environment variables on module load
+const validationResult = validateStripe();
+logValidationResults(validationResult, 'Stripe');
 
 /**
  * Initialize Stripe client
@@ -12,7 +17,7 @@ export function getStripeClient(): Stripe {
   }
   
   return new Stripe(apiKey, {
-    apiVersion: '2023-10-16', // Use the latest stable API version
+    apiVersion: '2024-12-18.acacia', // Use the latest stable API version
   });
 }
 
