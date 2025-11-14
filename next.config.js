@@ -4,8 +4,12 @@ const path = require('path');
 const nextConfig = {
   reactStrictMode: true,
   output: 'standalone',
-  // Disable static page generation to prevent build-time issues
-  // All pages will be server-rendered
+  
+  // Experimental: Disable static optimization to prevent build-time analysis
+  experimental: {
+    // workerThreads: false,  // Disable worker threads
+  },
+  
   // ESLint configuration for builds
   eslint: {
     // Warning: Temporarily disabled during builds due to configuration warnings

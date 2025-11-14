@@ -34,6 +34,10 @@ export class RAGService {
   private get ragSystem(): RAGSystem {
     if (!this._ragSystem) {
       const firestore = getFirestore();
+      // Don't initialize during build when firestore is undefined
+      if (!firestore) {
+        throw new Error('Firestore is not available - cannot initialize RAGSystem');
+      }
       const tokenRepository = new TokenRepository(firestore);
       const notificationService = new NotificationService();
       this._tokenService = new TokenService(tokenRepository, notificationService);

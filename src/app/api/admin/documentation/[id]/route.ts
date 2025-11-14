@@ -15,6 +15,9 @@ import { AuthUser } from '@/lib/features/auth/token';
 // Configure route as fully dynamic to prevent build-time evaluation
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
+export const dynamicParams = true;
+// Explicitly prevent static generation
+export const generateStaticParams = async () => [];
 /**
  * Update documentation schema
  */

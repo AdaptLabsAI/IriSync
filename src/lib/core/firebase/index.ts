@@ -75,9 +75,34 @@ export const getFirebaseStorage = () => {
   return _storage;
 };
 
-// For backward compatibility, export constants (but they'll be null during build)
-export const app = null;
-export const firestore = null;
-export const auth = null;
-export const storage = null;
-export const db = null; // Alias for compatibility with files expecting 'db'
+// For backward compatibility, export direct references (lazy-initialized)
+export const app = new Proxy({} as any, {
+  get(target, prop) {
+    if (!_app) initializeFirebase();
+    return _app ? _app[prop] : undefined;
+  }
+});
+
+export const firestore = new Proxy({} as any, {
+  get(target, prop) {
+    if (!_firestore) initializeFirebase();
+    return _firestore ? _firestore[prop] : undefined;
+  }
+});
+
+export const auth = new Proxy({} as any, {
+  get(target, prop) {
+    if (!_auth) initializeFirebase();
+    return _auth ? _auth[prop] : undefined;
+  }
+});
+
+export const storage = new Proxy({} as any, {
+  get(target, prop) {
+    if (!_storage) initializeFirebase();
+    return _storage ? _storage[prop] : undefined;
+  }
+});
+
+// Alias for compatibility with files expecting 'db'
+export const db = firestore;
