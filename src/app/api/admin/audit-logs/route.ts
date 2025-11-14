@@ -5,6 +5,10 @@ import { getFirestore } from '@/lib/core/firebase/admin';
 import { logger as appLogger } from '@/lib/core/logging/logger';
 import { parse } from 'json2csv';
 
+// Configure route as fully dynamic to prevent build-time evaluation
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
 const auditLogger = new TeamAuditLogger();
 
 function parseMultiValue(param: string | null): string[] | undefined {

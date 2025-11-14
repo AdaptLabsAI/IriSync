@@ -60,9 +60,25 @@ const getLoggerConfig = () => {
 };
 
 /**
- * Create the logger instance with environment-specific configuration
+ * Create the logger instance with environment-specific configuration (lazy-loaded)
  */
-export const logger = pino(getLoggerConfig());
+let _logger: pino.Logger | null = null;
+export const getLogger = (): pino.Logger => {
+  if (!_logger) {
+    _logger = pino(getLoggerConfig());
+  }
+  return _logger;
+};
+
+// Export a getter-based logger object that lazy-loads
+export const logger = {
+  trace: (...args: Parameters<pino.Logger['trace']>) => getLogger().trace(...args),
+  debug: (...args: Parameters<pino.Logger['debug']>) => getLogger().debug(...args),
+  info: (...args: Parameters<pino.Logger['info']>) => getLogger().info(...args),
+  warn: (...args: Parameters<pino.Logger['warn']>) => getLogger().warn(...args),
+  error: (...args: Parameters<pino.Logger['error']>) => getLogger().error(...args),
+  fatal: (...args: Parameters<pino.Logger['fatal']>) => getLogger().fatal(...args),
+};
 
 /**
  * Log a request with detailed information

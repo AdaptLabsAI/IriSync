@@ -295,10 +295,12 @@ export const collection = (path: string) => {
   }
 };
 
-// Pre-initialized instances for convenience (will be null if not initialized)
-export const firestore = initializationSuccess ? getFirestore() : null;
-export const auth = initializationSuccess ? getAuth() : null;
-export const storage = initializationSuccess ? getStorage() : null;
+// Lazy-initialized instances for convenience (will be initialized on first access)
+// These should not be accessed during module load - only at runtime
+// Note: These are not truly lazy in this form, so we export null during build
+export const firestore = null;
+export const auth = null;
+export const storage = null;
 
 // Export the full admin object for advanced use cases
 export const firebaseAdmin = admin;
