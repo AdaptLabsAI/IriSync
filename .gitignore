@@ -30,6 +30,9 @@ dist/
 *.tsbuildinfo
 tsconfig.tsbuildinfo
 
+# Prisma generated files
+generated/
+
 # Coverage
 coverage/
 
