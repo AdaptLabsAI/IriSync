@@ -1,10 +1,14 @@
 import './globals.css';
 import { Providers } from './providers';
 import type { Metadata } from 'next';
-import dynamic from 'next/dynamic';
+import dynamicImport from 'next/dynamic';
+
+// Force dynamic rendering for all routes to prevent build-time issues
+export const dynamic = 'force-dynamic';
+export const dynamicParams = true;
 
 // Dynamically import the ChatbotWidget with no SSR
-const ChatbotWidget = dynamic(() => import('@/components/support/ChatbotWidget'), {
+const ChatbotWidget = dynamicImport(() => import('@/components/support/ChatbotWidget'), {
   ssr: false,
 });
 
