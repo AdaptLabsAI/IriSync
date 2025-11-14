@@ -61,8 +61,14 @@ function getOpenAI() {
   return openai;
 }
 
-// Initialize the AI service singleton
-const aiService = AIService.getInstance();
+// Lazy initialize the AI service singleton
+let aiService: any = null;
+function getAIService() {
+  if (!aiService) {
+    aiService = AIService.getInstance();
+  }
+  return aiService;
+}
 
 // Map content generation request types to AITaskType enum
 function mapContentTypeToAITaskType(contentType: string): AITaskType {
@@ -175,7 +181,7 @@ export async function POST(request: NextRequest) {
       
       if (taskType === AITaskType.GENERATE_HASHTAGS) {
         // Handle hashtag generation specifically
-        response = await aiService.generateHashtags({
+        response = await getAIService().generateHashtags({
           userId,
           organizationId: orgId,
           content: prompt,
@@ -184,7 +190,7 @@ export async function POST(request: NextRequest) {
         });
       } else {
         // Handle all other content generation
-        response = await aiService.generateContent({
+        response = await getAIService().generateContent({
           userId,
           organizationId: orgId,
           topic: prompt,

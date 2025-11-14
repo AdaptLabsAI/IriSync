@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
 import formidable from 'formidable';
-import OpenAI from 'openai';
 import { Readable } from 'stream';
 import { getServerSession } from 'next-auth/next';
 import { firestore } from '@/lib/core/firebase';
@@ -11,7 +10,17 @@ export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
 
 
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+// Lazy initialize OpenAI client to avoid build-time errors
+let openai: any = null;
+function getOpenAI() {
+  if (!openai) {
+    const OpenAI = require('openai').default;
+    if (process.env.OPENAI_API_KEY) {
+      openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+    }
+  }
+  return openai;
+}
 
 // Define interfaces for formidable types
 interface FormidableFile {
@@ -56,10 +65,14 @@ async function autoTagAndModerate(files: FormidableFile[]): Promise<{ tags: stri
   const tags: string[] = [];
   let flagged = false;
   let reason = '';
+  const openaiClient = getOpenAI();
+  if (!openaiClient) {
+    throw new Error('OpenAI client not available - API key not configured');
+  }
   for (const file of files) {
     const prompt = `Suggest 5 relevant tags for a media file named: ${file.originalFilename}. Also, flag if the file name suggests inappropriate content.`;
     try {
-      const response = await openai.completions.create({
+      const response = await openaiClient.completions.create({
         model: 'text-davinci-003',
         prompt,
         max_tokens: 60,
