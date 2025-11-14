@@ -3,13 +3,13 @@ const path = require('path');
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  swcMinify: true,
   output: 'standalone',
-  // Disable static page generation to prevent build-time issues
-  // All pages will be server-rendered
+  
+  // Experimental: Disable static optimization to prevent build-time analysis
   experimental: {
-    esmExternals: 'loose',
+    // workerThreads: false,  // Disable worker threads
   },
+  
   // ESLint configuration for builds
   eslint: {
     // Warning: Temporarily disabled during builds due to configuration warnings

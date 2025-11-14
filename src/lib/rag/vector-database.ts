@@ -54,7 +54,7 @@ export interface EmbeddingModelConfig {
  * Vector database service for RAG implementation
  */
 export class VectorDatabase {
-  private client: Pinecone;
+  private _client: Pinecone | null = null;
   private indexName: string;
   private namespace: string;
   private isInitialized: boolean = false;
@@ -62,10 +62,19 @@ export class VectorDatabase {
   private defaultEmbeddingModel: EmbeddingModelType;
   private apiKeys: Record<string, string>;
 
+  /**
+   * Lazy-load Pinecone client to avoid initialization during build time
+   */
+  private get client(): Pinecone {
+    if (!this._client) {
+      this._client = new Pinecone({
+        apiKey: config.pinecone.apiKey,
+      });
+    }
+    return this._client;
+  }
+
   constructor() {
-    this.client = new Pinecone({
-      apiKey: config.pinecone.apiKey,
-    });
     this.indexName = config.pinecone.indexName;
     this.namespace = config.pinecone.namespace;
     
@@ -445,4 +454,4 @@ export class VectorDatabase {
   }
 }
 
-export default new VectorDatabase(); 
+export default VectorDatabase; 

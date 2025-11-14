@@ -12,9 +12,13 @@ type ServiceAccount = {
 
 /**
  * Check if we're in a build environment where Firebase may not be available
+ * Enhanced detection for various build scenarios
  */
-const isBuildTime = process.env.NEXT_PHASE === 'phase-production-build' || 
-                    (process.env.NODE_ENV === 'production' && !process.env.FIREBASE_ADMIN_PROJECT_ID && !process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID);
+const isBuildTime = 
+  process.env.NEXT_PHASE === 'phase-production-build' || 
+  process.env.NEXT_PHASE === 'phase-production-server' ||
+  // During 'next build', NODE_ENV is production but runtime env vars might not be available
+  (typeof window === 'undefined' && process.env.NODE_ENV === 'production' && (!process.env.FIREBASE_ADMIN_PROJECT_ID || process.argv.includes('build')));
 
 const stripWrappingQuotes = (value?: string | null) => {
   if (!value) {
@@ -200,6 +204,10 @@ initializeFirebaseAdmin();
 // Export Firestore service with error handling
 export const getFirestore = () => {
   if (!initializationSuccess) {
+    // During build, return undefined instead of throwing
+    if (isBuildTime) {
+      return undefined as any;
+    }
     throw new Error('Firebase Admin is not initialized. Please check your environment variables.');
   }
   try {
@@ -213,6 +221,9 @@ export const getFirestore = () => {
 // Export Auth service with error handling
 export const getAuth = () => {
   if (!initializationSuccess) {
+    if (isBuildTime) {
+      return undefined as any;
+    }
     throw new Error('Firebase Admin is not initialized. Please check your environment variables.');
   }
   try {
@@ -226,6 +237,9 @@ export const getAuth = () => {
 // Export Storage service with error handling
 export const getStorage = () => {
   if (!initializationSuccess) {
+    if (isBuildTime) {
+      return undefined as any;
+    }
     throw new Error('Firebase Admin is not initialized. Please check your environment variables.');
   }
   try {
@@ -295,10 +309,50 @@ export const collection = (path: string) => {
   }
 };
 
-// Pre-initialized instances for convenience (will be null if not initialized)
-export const firestore = initializationSuccess ? getFirestore() : null;
-export const auth = initializationSuccess ? getAuth() : null;
-export const storage = initializationSuccess ? getStorage() : null;
+// Lazy-initialized instances for convenience using Proxy for truly lazy access
+// These will be initialized on first property access, not at module load
+export const firestore = new Proxy({} as any, {
+  get(target, prop) {
+    // During build or if not initialized, return a no-op proxy
+    if (!initializationSuccess || prop === 'then') {
+      return undefined;
+    }
+    try {
+      const fs = getFirestore();
+      return fs[prop];
+    } catch {
+      return undefined;
+    }
+  }
+});
+
+export const auth = new Proxy({} as any, {
+  get(target, prop) {
+    if (!initializationSuccess || prop === 'then') {
+      return undefined;
+    }
+    try {
+      const a = getAuth();
+      return a[prop];
+    } catch {
+      return undefined;
+    }
+  }
+});
+
+export const storage = new Proxy({} as any, {
+  get(target, prop) {
+    if (!initializationSuccess || prop === 'then') {
+      return undefined;
+    }
+    try {
+      const s = getStorage();
+      return s[prop];
+    } catch {
+      return undefined;
+    }
+  }
+});
 
 // Export the full admin object for advanced use cases
 export const firebaseAdmin = admin;

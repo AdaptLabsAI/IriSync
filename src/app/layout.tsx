@@ -7,10 +7,8 @@ import dynamicImport from 'next/dynamic';
 export const dynamic = 'force-dynamic';
 export const dynamicParams = true;
 
-// Dynamically import the ChatbotWidget with no SSR
-const ChatbotWidget = dynamicImport(() => import('@/components/support/ChatbotWidget'), {
-  ssr: false,
-});
+// Dynamically import the ChatbotWidget
+const ChatbotWidget = dynamicImport(() => import('@/components/support/ChatbotWidget'));
 
 // Font will be loaded via CSS and Tailwind configuration
 // Using system fonts as fallback for better performance and reliability

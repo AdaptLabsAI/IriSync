@@ -39,7 +39,13 @@ const KNOWLEDGE_COLLECTION = 'knowledgeContent';
 const KNOWLEDGE_CATEGORY_COLLECTION = 'knowledgeCategories';
 
 // RAG Service instance
-const ragService = new RAGService();
+let _ragService: RAGService | null = null;
+const getRagService = () => {
+  if (!_ragService) {
+    _ragService = new RAGService();
+  }
+  return _ragService;
+};
 
 /**
  * Index a knowledge content in RAG
@@ -47,13 +53,13 @@ const ragService = new RAGService();
  */
 async function _indexForRAG(id: string, content: KnowledgeContent): Promise<string[]> {
   // Initialize RAG service
-  await ragService.initialize();
+  await getRagService().initialize();
   
   // First remove old vector entries if they exist
   if (content.vectorIds?.length) {
     for (const vectorId of content.vectorIds) {
       try {
-        await ragService.deleteDocument(vectorId, 'knowledge');
+        await getRagService().deleteDocument(vectorId, 'knowledge');
       } catch (error) {
         logger.warn(`Error deleting vector ID ${vectorId}: ${error instanceof Error ? error.message : String(error)}`);
       }
@@ -86,7 +92,7 @@ async function _indexForRAG(id: string, content: KnowledgeContent): Promise<stri
   };
   
   // Index document and get vector IDs
-  const vectorIds = await ragService.indexDocument(document, {
+  const vectorIds = await getRagService().indexDocument(document, {
     collection: 'knowledge',
     chunkSize: 1000,
     chunkOverlap: 200
@@ -101,12 +107,12 @@ async function _indexForRAG(id: string, content: KnowledgeContent): Promise<stri
  */
 async function _removeFromRAG(id: string, vectorIds: string[]): Promise<void> {
   // Initialize RAG service
-  await ragService.initialize();
+  await getRagService().initialize();
   
   // Delete each vector ID
   for (const vectorId of vectorIds) {
     try {
-      await ragService.deleteDocument(vectorId, 'knowledge');
+      await getRagService().deleteDocument(vectorId, 'knowledge');
     } catch (error) {
       logger.warn(`Error deleting vector ID ${vectorId}: ${error instanceof Error ? error.message : String(error)}`);
     }

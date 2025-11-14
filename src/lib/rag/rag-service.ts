@@ -24,24 +24,45 @@ export interface RAGSearchResult {
  * RAGService - Wrapper around RAGSystem for simplified API usage
  */
 export class RAGService {
-  private ragSystem: RAGSystem;
-  private tokenService: TokenService;
+  private _ragSystem: RAGSystem | null = null;
+  private _tokenService: TokenService | null = null;
   private isInitialized: boolean = false;
 
-  constructor() {
-    const firestore = getFirestore();
-    const tokenRepository = new TokenRepository(firestore);
-    const notificationService = new NotificationService();
-    this.tokenService = new TokenService(tokenRepository, notificationService);
-    this.ragSystem = new RAGSystem(this.tokenService, {
-      embeddingModel: 'text-embedding-ada-002',
-      chunkSize: 1000,
-      chunkOverlap: 200,
-      maxSearchResults: 10,
-      cacheTtl: 3600,
-      documentsCollection: 'ragDocuments',
-      chunksCollection: 'ragChunks'
-    });
+  /**
+   * Lazy-load RAGSystem to avoid initialization during build time
+   */
+  private get ragSystem(): RAGSystem {
+    if (!this._ragSystem) {
+      const firestore = getFirestore();
+      // Don't initialize during build when firestore is undefined
+      if (!firestore) {
+        throw new Error('Firestore is not available - cannot initialize RAGSystem');
+      }
+      const tokenRepository = new TokenRepository(firestore);
+      const notificationService = new NotificationService();
+      this._tokenService = new TokenService(tokenRepository, notificationService);
+      this._ragSystem = new RAGSystem(this._tokenService, {
+        embeddingModel: 'text-embedding-ada-002',
+        chunkSize: 1000,
+        chunkOverlap: 200,
+        maxSearchResults: 10,
+        cacheTtl: 3600,
+        documentsCollection: 'ragDocuments',
+        chunksCollection: 'ragChunks'
+      });
+    }
+    return this._ragSystem;
+  }
+
+  /**
+   * Lazy-load TokenService to avoid initialization during build time
+   */
+  private get tokenService(): TokenService {
+    if (!this._tokenService) {
+      // This will be initialized when ragSystem is accessed
+      return this.ragSystem && this._tokenService!;
+    }
+    return this._tokenService;
   }
 
   /**

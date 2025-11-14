@@ -52,7 +52,17 @@ export interface AuditLogEntry {
  */
 export class TeamAuditLogger {
   private readonly AUDIT_LOG_COLLECTION = 'audit_logs';
-  private firestore = getFirestore();
+  private _firestore: ReturnType<typeof getFirestore> | null = null;
+  
+  /**
+   * Lazy-load Firestore instance to avoid initialization during build time
+   */
+  private get firestore(): ReturnType<typeof getFirestore> {
+    if (!this._firestore) {
+      this._firestore = getFirestore();
+    }
+    return this._firestore;
+  }
   
   /**
    * Log an audit event
@@ -316,6 +326,6 @@ export class TeamAuditLogger {
   }
 }
 
-// Create singleton instance
-const teamAuditLogger = new TeamAuditLogger();
-export default teamAuditLogger;
+// Export the class so it can be instantiated when needed
+// Don't create a singleton at module level to avoid build-time initialization
+export default TeamAuditLogger;
