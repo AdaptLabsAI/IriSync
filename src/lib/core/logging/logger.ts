@@ -13,13 +13,20 @@ export enum LogLevel {
 }
 
 /**
+ * Check if we're in a build environment
+ */
+const isBuildTime = 
+  process.env.NEXT_PHASE === 'phase-production-build' || 
+  process.env.IS_BUILD_PHASE === 'true';
+
+/**
  * Environment-specific logger configuration
  */
 const loggerConfig = {
   development: {
     level: 'debug',
-    transport: process.env.NODE_ENV === 'development' 
-      ? undefined // In development, don't use transport to avoid the issue
+    transport: (process.env.NODE_ENV === 'development' || isBuildTime)
+      ? undefined // In development or build, don't use transport
       : {
           target: 'pino-pretty',
           options: {
@@ -31,14 +38,14 @@ const loggerConfig = {
   },
   test: {
     level: 'info',
-    transport: {
+    transport: isBuildTime ? undefined : {
       target: 'pino/file',
       options: { destination: './logs/test.log' }
     }
   },
   production: {
     level: 'info',
-    transport: {
+    transport: isBuildTime ? undefined : {
       target: 'pino/file',
       options: { destination: './logs/app.log' }
     }
