@@ -4,6 +4,11 @@ import { getServerSession } from 'next-auth';
 import { logger } from '../../../../lib/core/logging/logger';
 import { authOptions } from '../../../../lib/auth';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 export async function GET(req: NextRequest) {
   try {
     // Get the current user session

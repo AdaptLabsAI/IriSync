@@ -3,6 +3,11 @@ import { getServerSession } from 'next-auth/next';
 import { firestore } from '@/lib/core/firebase';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 // Default tones for fallback
 const DEFAULT_TONES = [
   { id: 'professional', name: 'Professional' },

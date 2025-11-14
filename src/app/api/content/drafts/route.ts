@@ -3,6 +3,11 @@ import { getServerSession } from 'next-auth/next';
 import { firestore } from '@/lib/core/firebase';
 import { collection, doc, getDoc, addDoc, serverTimestamp, getDocs, query, where, orderBy, limit, deleteDoc, updateDoc } from 'firebase/firestore';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 // Interface for content draft
 interface ContentDraft {
   id?: string;

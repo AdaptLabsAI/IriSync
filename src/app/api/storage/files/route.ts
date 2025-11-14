@@ -12,6 +12,11 @@ import { AdobeExpressAdapter } from '@/lib/features/integrations/AdobeExpressAda
 import { NotionAdapter } from '@/lib/features/integrations/NotionAdapter';
 import { AirtableAdapter } from '@/lib/features/integrations/AirtableAdapter';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 // Define supported platforms
 const SUPPORTED_PLATFORMS = [
   'google-drive', 

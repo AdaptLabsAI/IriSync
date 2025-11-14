@@ -4,6 +4,11 @@ import { WebhookService, WebhookEventType } from '../../../../lib/webhooks/Webho
 import { getServerSession } from 'next-auth';
 import { authOptions } from '../../../../lib/auth';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 /**
  * CRM Webhook Integration Endpoint
  * Handles outbound webhooks to CRM systems when social inbox events occur

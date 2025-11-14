@@ -1,6 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getFirestore, serverTimestamp, increment } from '@/lib/core/firebase/admin';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();

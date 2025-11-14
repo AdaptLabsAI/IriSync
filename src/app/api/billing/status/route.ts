@@ -3,6 +3,11 @@ import { getFirestore } from '@/lib/core/firebase/admin';
 import { getStripeClient } from '@/lib/features/billing/stripe';
 import { logger } from '@/lib/core/logging/logger';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 /**
  * Simple endpoint to check if user has access to the platform
  * Used by TrialGate component for access control

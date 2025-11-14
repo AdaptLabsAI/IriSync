@@ -3,6 +3,11 @@ import { logger } from '../../../../lib/core/logging/logger';
 import { SocialInboxController } from '../../../../lib/features/content/SocialInboxController';
 import crypto from 'crypto';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 const TIKTOK_WEBHOOK_SECRET = process.env.TIKTOK_WEBHOOK_SECRET || '';
 
 /**

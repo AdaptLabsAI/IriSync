@@ -1,6 +1,11 @@
 import { NextResponse } from 'next/server';
 import { getForumStats } from '@/lib/features/forum/stats';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 export async function GET() {
   try {
     // Fetch forum statistics from the database

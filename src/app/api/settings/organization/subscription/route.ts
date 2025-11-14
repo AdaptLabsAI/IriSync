@@ -11,6 +11,11 @@ import {
 import { v4 as uuidv4 } from 'uuid';
 import { isMemberOfOrganization, hasOrganizationRole, OrganizationRole } from '@/lib/features/team/users/organization';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 /**
  * Get subscription information for the current user's organization
  */

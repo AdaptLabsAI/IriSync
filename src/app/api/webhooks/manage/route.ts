@@ -4,6 +4,11 @@ import { getFirestore } from '../../../../lib/core/firebase/admin';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '../../../../lib/auth';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 const firestore = getFirestore();
 
 /**

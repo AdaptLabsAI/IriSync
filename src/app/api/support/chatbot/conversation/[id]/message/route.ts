@@ -7,6 +7,11 @@ import { TokenService } from '@/lib/features/tokens/token-service';
 import { logger } from '@/lib/core/logging/logger';
 import { config } from '@/lib/config';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 interface SessionUser {
   id?: string;
   email?: string;

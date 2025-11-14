@@ -4,6 +4,11 @@ import { authOptions } from '@/lib/features/auth/nextauth';
 import { SocialInboxController } from '@/lib/features/content/SocialInboxController';
 import { logger } from '@/lib/core/logging/logger';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 /**
  * GET /api/content/inbox/stats
  * Get comprehensive inbox statistics and analytics

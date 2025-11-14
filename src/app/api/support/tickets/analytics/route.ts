@@ -5,6 +5,11 @@ import { firestore } from '@/lib/core/firebase';
 import { collection, getDocs, query, where, orderBy } from 'firebase/firestore';
 import { logger } from '@/lib/core/logging/logger';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 // Collection names
 const TICKETS_COLLECTION = 'supportTickets';
 

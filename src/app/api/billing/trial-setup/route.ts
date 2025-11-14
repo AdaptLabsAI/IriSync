@@ -4,6 +4,11 @@ import { getStripeClient } from '@/lib/features/billing/stripe';
 import { handleApiError } from '@/lib/features/auth/utils';
 import { logger } from '@/lib/core/logging/logger';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 /**
  * Stripe-Native Trial Setup Endpoint
  * This endpoint is called AFTER registration to set up a trial with Stripe

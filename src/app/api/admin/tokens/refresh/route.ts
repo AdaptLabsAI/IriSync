@@ -3,6 +3,11 @@ import { withAdmin } from '@/lib/features/auth/route-handlers';
 import { tokenRefreshScheduler } from '@/lib/core/scheduler/token-refresh-scheduler';
 import { logger } from '@/lib/core/logging/logger';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 /**
  * POST /api/admin/tokens/refresh
  * Manually trigger monthly token refresh and audit token packages

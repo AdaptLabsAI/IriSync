@@ -29,6 +29,11 @@ import {
 } from '../../../../types/todo';
 import { OrganizationRole, TeamRole } from '../../../../lib/features/user/types';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 /**
  * Get user's subscription tier from session or database
  */

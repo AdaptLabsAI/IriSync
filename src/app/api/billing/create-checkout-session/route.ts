@@ -3,6 +3,11 @@ import { getFirestore, getAuth } from '@/lib/core/firebase/admin';
 import { getStripeClient } from '@/lib/features/billing/stripe';
 import { handleApiError } from '@/lib/features/auth/utils';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 /**
  * Price IDs for different subscription tiers and additional seats
  * These should be created in the Stripe dashboard and referenced here

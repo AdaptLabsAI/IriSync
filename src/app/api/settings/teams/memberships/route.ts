@@ -10,6 +10,11 @@ import {
 import { firestore } from '../../../../../lib/core/firebase';
 import { OrganizationRole, TeamRole } from '../../../../../lib/features/user/types';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 interface TeamMembership {
   teamId: string;
   teamName: string;

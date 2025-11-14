@@ -5,6 +5,11 @@ import { UnsplashAdapter } from '@/lib/features/integrations/UnsplashAdapter';
 import { logger } from '@/lib/core/logging/logger';
 import { getFirestore } from '@/lib/core/firebase/admin';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 const firestore = getFirestore();
 
 export async function GET(request: NextRequest) {

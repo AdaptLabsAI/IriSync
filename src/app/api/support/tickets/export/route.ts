@@ -7,6 +7,11 @@ import { Parser as Json2CsvParser } from 'json2csv';
 import PDFDocument from 'pdfkit';
 import { Readable } from 'stream';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 // Admin check middleware (simplified version)
 async function isAdmin(request: NextRequest): Promise<boolean> {
   try {

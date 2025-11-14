@@ -14,6 +14,11 @@ import {
 import { firestore } from '@/lib/core/firebase';
 import { handleApiError } from '@/lib/features/auth/utils';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 export async function GET(request: NextRequest) {
   try {
     const session = await getServerSession();

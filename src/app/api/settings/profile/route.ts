@@ -4,6 +4,11 @@ import { authOptions } from '@/lib/features/auth';
 import { getFirestore, serverTimestamp } from '@/lib/core/firebase/admin';
 import { logger } from '@/lib/core/logging/logger';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 const firestore = getFirestore();
 
 interface SessionUser {

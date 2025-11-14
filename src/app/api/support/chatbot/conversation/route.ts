@@ -10,6 +10,11 @@ import { config } from '@/lib/config';
 import { isMemberOfOrganization } from '@/lib/features/team/users/organization';
 import { getUserSubscriptionTier } from '@/lib/features/subscription';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 interface SessionUser {
   id?: string;
   email?: string;

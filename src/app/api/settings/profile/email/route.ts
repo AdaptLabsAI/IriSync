@@ -5,6 +5,11 @@ import { getAuth } from 'firebase-admin/auth';
 import { firestore } from '@/lib/core/firebase';
 import { doc, getDoc, updateDoc, deleteDoc } from 'firebase/firestore';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 // Type definitions
 interface SessionUser {
   name?: string | null;

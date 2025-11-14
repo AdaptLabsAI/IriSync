@@ -6,6 +6,11 @@ import { doc, getDoc, setDoc, updateDoc, arrayUnion, arrayRemove, deleteDoc } fr
 import { generateOAuthUrl } from '@/lib/features/platforms/auth/oauth';
 import { getGoogleOAuthClientId } from '@/lib/server/env';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 // Type definitions
 interface SessionUser {
   name?: string | null;

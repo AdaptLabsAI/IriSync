@@ -4,6 +4,11 @@ import { withAdmin } from '@/lib/features/auth/route-handlers';
 import { KnowledgeRepository } from '@/lib/knowledge/repository';
 import { logger } from '@/lib/core/logging/logger';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 const categoryDeleteSchema = z.object({
   name: z.string().min(2, 'Category name must be at least 2 characters')
 });

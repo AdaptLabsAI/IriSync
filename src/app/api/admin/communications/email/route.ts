@@ -17,6 +17,11 @@ import { logger } from '@/lib/core/logging/logger';
 import { z } from 'zod';
 import unifiedEmailService from '@/lib/core/notifications/unified-email-service';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 // Email validation schema
 const emailRequestSchema = z.object({
   userIds: z.array(z.string()).min(1, 'At least one user ID is required'),

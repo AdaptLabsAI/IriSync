@@ -5,6 +5,11 @@ import { TieredModelRouter, TaskType, SubscriptionTier } from '../../../../lib/f
 import { PlatformType } from '../../../../lib/features/platforms/client';
 import { User } from '../../../../lib/core/models/User';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 // Production-ready Smart Content Generation Service
 class SmartContentGenerationService {
   private router: TieredModelRouter;

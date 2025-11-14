@@ -11,6 +11,11 @@ import { TokenRepository } from '../../../../lib/tokens/token-repository';
 import { NotificationService } from '../../../../lib/core/notifications/NotificationService';
 import { firestore } from '../../../../lib/core/firebase';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 /**
  * Helper function to get organization ID using organization-centric approach
  */

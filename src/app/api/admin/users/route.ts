@@ -22,6 +22,11 @@ import { UserRole, SubscriptionTier, SubscriptionTierValues, getDefaultFeaturesF
 import { hash } from 'bcryptjs';
 import { logger } from '@/lib/core/logging/logger';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 // Collection name constants
 const USERS_COLLECTION = 'users';
 const AUDIT_LOGS_COLLECTION = 'auditLogs';

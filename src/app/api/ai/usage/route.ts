@@ -4,6 +4,11 @@ import { authOptions } from '@/lib/features/auth';
 import { firestore } from '@/lib/core/firebase';
 import { collection, doc, getDoc, getDocs, query, where, setDoc } from 'firebase/firestore';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 // Define the structure of the usage stats
 interface UsageStats {
   used: number;

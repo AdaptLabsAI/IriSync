@@ -6,6 +6,11 @@ import { authOptions } from '@/lib/features/auth';
 import auditLogger from '@/lib/features/team/activity/audit-logger';
 import { withAdmin } from '@/lib/features/auth/route-handlers';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 // Handler for GET /api/admin/roles - Get all roles
 export const GET = withAdmin(async (req: NextRequest, adminUser: any) => {
   try {

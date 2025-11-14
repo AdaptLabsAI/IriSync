@@ -8,6 +8,11 @@ import { auth as adminAuth } from '@/lib/core/firebase/admin';
 import logger from '@/lib/core/logging/logger';
 import { handleApiError } from '@/lib/features/auth/utils';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 // Service instances
 const userService = new UserService();
 

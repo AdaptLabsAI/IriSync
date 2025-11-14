@@ -4,6 +4,11 @@ import { authOptions } from '@/lib/features/auth';
 import stockPhotoService from '@/lib/features/content/StockPhotoService';
 import { logger } from '@/lib/core/logging/logger';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 export async function GET(request: NextRequest) {
   try {
     const session = await getServerSession(authOptions);

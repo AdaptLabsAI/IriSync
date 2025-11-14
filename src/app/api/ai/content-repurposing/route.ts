@@ -5,6 +5,11 @@ import { User, SubscriptionTierValues } from '../../../../lib/core/models/User';
 import { getUserSubscriptionTier } from '../../../../lib/subscription';
 import { SubscriptionTier as BaseSubscriptionTier } from '../../../../lib/subscription/models/subscription';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 // Production-ready Content Repurposing Engine
 class ContentRepurposingEngine {
   private router: TieredModelRouter;

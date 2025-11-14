@@ -3,6 +3,11 @@ import { verifyAuthentication } from '@/lib/features/auth/utils';
 import { getFirestore, serverTimestamp } from '@/lib/core/firebase/admin';
 import { logger } from '@/lib/core/logging/logger';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 // Define interfaces for version data
 interface MediaVersion {
   id: string;

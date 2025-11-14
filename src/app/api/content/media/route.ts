@@ -4,6 +4,11 @@ import { verifyAuthentication, handleApiError } from '../../../../lib/auth/utils
 import { logger } from '../../../../lib/core/logging/logger';
 import { v4 as uuidv4 } from 'uuid';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 const firestore = getFirestore();
 
 export async function GET(req: NextRequest) {

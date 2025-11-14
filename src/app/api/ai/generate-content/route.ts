@@ -28,6 +28,11 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 import Anthropic from '@/lib/integrations/anthropic/client';
 import { OpenAI } from 'openai';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 // Initialize AI providers with API keys (fallback only)
 const googleAI = new GoogleGenerativeAI(process.env.GOOGLE_AI_API_KEY || '');
 const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY || '' });

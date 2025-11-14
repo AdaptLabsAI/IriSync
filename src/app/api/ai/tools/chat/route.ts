@@ -8,6 +8,11 @@ import { TokenRepository } from '@/lib/features/tokens/token-repository';
 import { TokenService } from '@/lib/features/tokens/token-service';
 import { trackDirectTokenUsage } from '@/lib/features/tokens/token-tracker';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 // Create necessary services
 const tokenRepository = new TokenRepository(firestore as any);
 const notificationService = new NotificationService();

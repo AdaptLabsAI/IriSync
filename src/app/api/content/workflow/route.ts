@@ -15,6 +15,11 @@ import { getCurrentUser } from '../../../../lib/auth/token';
 import { hasOrganizationRole } from '../../../../lib/auth/middleware';
 import { Logger, LogLevel } from '../../../../lib/core/logging/logger';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 const logger = new Logger({
   minLevel: LogLevel.INFO,
   enableConsole: true,

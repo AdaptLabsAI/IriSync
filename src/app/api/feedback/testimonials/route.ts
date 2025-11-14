@@ -4,6 +4,11 @@ import { DocumentData } from 'firebase-admin/firestore';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/lib/features/auth';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 export const revalidate = 3600; // Revalidate this data every hour
 
 // Helper function to add CORS headers to responses

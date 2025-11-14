@@ -6,6 +6,11 @@ import { MessageStatus, MessagePriority, MessageType } from '@/lib/features/cont
 import { PlatformType } from '@/lib/features/platforms/PlatformProvider';
 import { logger } from '@/lib/core/logging/logger';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 /**
  * GET /api/content/inbox
  * Get unified inbox messages with advanced filtering

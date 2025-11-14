@@ -1,6 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { RetrievalEngine } from '@/lib/features/rag/retrieval-engine';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 const retrievalEngine = new RetrievalEngine();
 
 async function smartSearch(query: string, filters: any): Promise<any[]> {

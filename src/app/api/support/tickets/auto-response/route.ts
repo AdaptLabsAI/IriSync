@@ -8,6 +8,11 @@ import { RAGService, RAGQueryParams } from '@/lib/features/rag/rag-service';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/features/auth';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 // Collection names
 const KB_COLLECTION = 'knowledgeContent';
 const FAQ_COLLECTION = 'supportFaqs';

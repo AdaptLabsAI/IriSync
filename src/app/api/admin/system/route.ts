@@ -22,6 +22,11 @@ import { z } from 'zod';
 import { logger } from '@/lib/core/logging/logger';
 import { RedisService } from '@/lib/core/cache/redis-service';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 // Collection name constants
 const SYSTEM_SETTINGS_COLLECTION = 'systemSettings';
 const AUDIT_LOGS_COLLECTION = 'auditLogs';

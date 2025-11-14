@@ -14,6 +14,11 @@ import {
 } from 'firebase/firestore';
 import { logger } from '@/lib/core/logging/logger';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 /**
  * GET handler for teams with pagination and filtering
  */

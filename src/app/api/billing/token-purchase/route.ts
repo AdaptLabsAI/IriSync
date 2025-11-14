@@ -4,6 +4,11 @@ import { getStripeClient } from '@/lib/features/billing/stripe';
 import { handleApiError } from '@/lib/features/auth/utils';
 import { stripeConfig } from '@/environment';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 /**
  * Available token packages with their corresponding Stripe price IDs
  */

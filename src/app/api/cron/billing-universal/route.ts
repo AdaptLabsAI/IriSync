@@ -2,6 +2,11 @@ import { NextRequest, NextResponse } from 'next/server';
 import { universalBillingService } from '@/lib/features/subscription/UniversalBillingService';
 import { logger } from '@/lib/core/logging/logger';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 /**
  * Universal billing cron endpoint for all subscription tiers
  * This replaces the enterprise-only billing cron job

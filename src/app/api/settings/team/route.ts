@@ -15,6 +15,11 @@ import {
 } from '@/lib/core/models/Organization';
 import { OrganizationRole, TeamRole } from '@/lib/features/user/types';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 // Type definitions
 interface SessionUser {
   name?: string | null;

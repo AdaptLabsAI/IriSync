@@ -12,6 +12,11 @@ import { SubscriptionTier } from '@/lib/features/subscription/models/subscriptio
 import { getFirestore } from '@/lib/core/firebase/admin';
 import { handleApiError } from '@/lib/features/auth/utils';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 /**
  * Universal Billing Subscription API with Trial Fraud Protection
  * Integrates TrialService, VerificationService, and UniversalBillingService

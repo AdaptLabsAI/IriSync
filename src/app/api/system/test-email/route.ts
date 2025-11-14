@@ -1,6 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { testEmailSetup, validateSendGridKey } from '@/lib/core/notifications/test-email';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 /**
  * Test endpoint for email service validation
  * GET /api/test-email?action=validate|send

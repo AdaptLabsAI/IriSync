@@ -3,6 +3,11 @@ import { getAuth } from 'firebase-admin/auth';
 import { getAuth as getAdminAuth } from '@/lib/core/firebase/admin';
 import { getFirestore } from 'firebase-admin/firestore';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 export async function GET(request: NextRequest) {
   try {
     // Get the authorization header

@@ -8,6 +8,11 @@ import { logger } from '../../../../lib/core/logging/logger';
 import { firestore } from '../../../../lib/core/firebase/client';
 import { collection, query, where, getDocs } from 'firebase/firestore';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 const socialInboxService = new SocialInboxService();
 
 /**

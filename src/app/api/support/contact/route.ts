@@ -2,6 +2,11 @@ import { NextRequest, NextResponse } from 'next/server';
 import { sendEmail } from '@/lib/core/notifications/email';
 import { logger } from '@/lib/core/logging/logger';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 export async function POST(request: NextRequest) {
   try {
     // Parse request body

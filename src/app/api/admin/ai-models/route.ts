@@ -17,6 +17,11 @@ import {
 import { logger } from '@/lib/core/logging/logger';
 import { TaskType, ModelType, SubscriptionTier } from '@/lib/features/ai/models/tiered-model-router';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 interface ModelConfiguration {
   id?: string;
   tier: SubscriptionTier;

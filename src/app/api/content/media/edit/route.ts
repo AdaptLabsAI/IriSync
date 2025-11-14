@@ -6,6 +6,11 @@ import { logger } from '../../../../../lib/core/logging/logger';
 import { v4 as uuidv4 } from 'uuid';
 import sharp from 'sharp';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 const firestore = getFirestore();
 
 export async function POST(req: NextRequest) {

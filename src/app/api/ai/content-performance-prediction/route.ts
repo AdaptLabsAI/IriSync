@@ -6,6 +6,11 @@ import { DEFAULT_ENGAGEMENT_BENCHMARKS } from '../../../../lib/features/analytic
 import { getUserSubscriptionTier } from '../../../../lib/subscription';
 import { SubscriptionTier as BaseSubscriptionTier } from '../../../../lib/subscription/models/subscription';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 // Production-ready Content Performance Prediction Service
 class ContentPerformancePredictionService {
   private router: TieredModelRouter;

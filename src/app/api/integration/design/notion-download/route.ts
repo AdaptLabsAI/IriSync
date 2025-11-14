@@ -1,6 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { NotionAdapter } from '../../../../../lib/integrations/NotionAdapter';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();

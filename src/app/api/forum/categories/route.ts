@@ -9,6 +9,11 @@ import { doc, getDoc } from 'firebase/firestore';
 import { firestore } from '@/lib/core/firebase';
 import { getCategories } from '@/lib/features/forum/categories';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 // Schema for category creation
 const createCategorySchema = z.object({
   name: z.string().min(3).max(50),

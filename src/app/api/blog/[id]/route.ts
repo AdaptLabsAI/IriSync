@@ -13,6 +13,11 @@ import { logger } from '@/lib/core/logging/logger';
 import { BlogPost, BlogPostStatus } from '@/lib/blog/models';
 import { z } from 'zod';
 
+// Force dynamic rendering - required for Firebase/database access
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
+
 // Validation schema for updating blog posts
 const updateBlogPostSchema = z.object({
   title: z.string().min(1, 'Title is required').optional(),
