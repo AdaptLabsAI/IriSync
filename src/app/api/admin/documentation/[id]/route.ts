@@ -7,7 +7,8 @@ import {
   KnowledgeAccessLevel,
   UpdateKnowledgeContentInput
 } from '@/lib/knowledge/models';
-import { KnowledgeRepository } from '@/lib/knowledge/repository';
+// Dynamic import to prevent build-time Firebase initialization
+// import { KnowledgeRepository } from '@/lib/knowledge/repository';
 import { z } from 'zod';
 import { logger } from '@/lib/core/logging/logger';
 import { AuthUser } from '@/lib/features/auth/token';
@@ -18,6 +19,12 @@ export const runtime = 'nodejs';
 export const dynamicParams = true;
 // Explicitly prevent static generation
 export const generateStaticParams = async () => [];
+
+// Lazy-load KnowledgeRepository to prevent Firebase initialization during build
+const getKnowledgeRepository = async () => {
+  const { KnowledgeRepository } = await import('@/lib/knowledge/repository');
+  return KnowledgeRepository;
+};
 /**
  * Update documentation schema
  */
@@ -83,6 +90,10 @@ export const GET = withAdmin(async (request: NextRequest, user: AuthUser) => {
   try {
     const { id } = (request as any).params || {};
     const documentationId = id || (request as any).query?.id;
+    
+    // Lazy-load repository at runtime
+    const KnowledgeRepository = await getKnowledgeRepository();
+    
     // Fetch the documentation item
     const documentationItem = await KnowledgeRepository.getById(documentationId);
     if (!documentationItem || !verifyDocumentationType(documentationItem)) {
@@ -113,6 +124,10 @@ export const PATCH = withAdmin(async (request: NextRequest, user: AuthUser) => {
   try {
     const { id } = (request as any).params || {};
     const documentationId = id || (request as any).query?.id;
+    
+    // Lazy-load repository at runtime
+    const KnowledgeRepository = await getKnowledgeRepository();
+    
     const existingDocumentation = await KnowledgeRepository.getById(documentationId);
     if (!existingDocumentation || !verifyDocumentationType(existingDocumentation)) {
       return NextResponse.json(
@@ -153,6 +168,10 @@ export const DELETE = withAdmin(async (request: NextRequest, user: AuthUser) => 
   try {
     const { id } = (request as any).params || {};
     const documentationId = id || (request as any).query?.id;
+    
+    // Lazy-load repository at runtime
+    const KnowledgeRepository = await getKnowledgeRepository();
+    
     const existingDocumentation = await KnowledgeRepository.getById(documentationId);
     if (!existingDocumentation || !verifyDocumentationType(existingDocumentation)) {
       return NextResponse.json(
