@@ -15,9 +15,46 @@ import {
   applyActionCode,
   confirmPasswordReset
 } from 'firebase/auth';
-import { auth, firestore } from '@/lib/core/firebase/client';
+import { getFirebaseClientAuth, FirebaseClientError } from '@/lib/core/firebase/client';
+import { getFirebaseFirestore } from '@/lib/core/firebase/client';
 import { doc, setDoc, serverTimestamp, updateDoc, getDoc } from 'firebase/firestore';
 import { sendWelcomeEmail, sendPasswordResetEmail, sendEmail } from '@/lib/core/notifications/email';
+
+/**
+ * Get Firebase Auth instance safely (only in browser)
+ * This ensures we don't try to use Firebase during SSR
+ */
+function getAuthSafely() {
+  if (typeof window === 'undefined') {
+    throw new Error('Firebase Auth functions cannot be called during server-side rendering');
+  }
+  
+  try {
+    return getFirebaseClientAuth();
+  } catch (e) {
+    if (e instanceof FirebaseClientError) {
+      if (e.code === 'FIREBASE_CLIENT_CONFIG_INCOMPLETE') {
+        throw new Error('Firebase is not configured. Please check environment variables.');
+      }
+    }
+    throw e;
+  }
+}
+
+/**
+ * Get Firestore instance safely (only in browser)
+ */
+function getFirestoreSafely() {
+  if (typeof window === 'undefined') {
+    throw new Error('Firestore cannot be called during server-side rendering');
+  }
+  
+  const firestore = getFirebaseFirestore();
+  if (!firestore) {
+    throw new Error('Firestore is not initialized');
+  }
+  return firestore;
+}
 
 /**
  * Custom email verification template data
@@ -78,6 +115,9 @@ export async function registerUser(
   additionalData: Record<string, any> = {}
 ): Promise<{success: boolean; user?: User; error?: string}> {
   try {
+    const auth = getAuthSafely();
+    const firestore = getFirestoreSafely();
+    
     // Create user with Firebase Authentication
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
     const user = userCredential.user;
@@ -148,6 +188,9 @@ export async function loginWithEmail(
   password: string
 ): Promise<{success: boolean; user?: User; error?: string}> {
   try {
+    const auth = getAuthSafely();
+    const firestore = getFirestoreSafely();
+    
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
     
     // Update the user's last login time in Firestore
@@ -176,6 +219,9 @@ export async function loginWithEmail(
  */
 export async function loginWithGoogle(): Promise<{success: boolean; user?: User; error?: string}> {
   try {
+    const auth = getAuthSafely();
+    const firestore = getFirestoreSafely();
+    
     const provider = new GoogleAuthProvider();
     
     // Add scopes to request
@@ -288,6 +334,8 @@ export async function loginWithGoogle(): Promise<{success: boolean; user?: User;
  */
 export async function sendPasswordResetRequest(email: string): Promise<{success: boolean; error?: string}> {
   try {
+    const auth = getAuthSafely();
+    
     // First use Firebase to handle the authentication part
     await firebaseResetPassword(auth, email);
     
@@ -320,6 +368,7 @@ export async function sendPasswordResetRequest(email: string): Promise<{success:
  */
 export async function completePasswordReset(code: string, newPassword: string): Promise<{success: boolean; error?: string}> {
   try {
+    const auth = getAuthSafely();
     await confirmPasswordReset(auth, code, newPassword);
     return { success: true };
   } catch (error: any) {
@@ -336,6 +385,9 @@ export async function completePasswordReset(code: string, newPassword: string): 
  */
 export async function verifyEmail(code: string): Promise<{success: boolean; error?: string}> {
   try {
+    const auth = getAuthSafely();
+    const firestore = getFirestoreSafely();
+    
     await applyActionCode(auth, code);
     
     // Also update the user document in Firestore
@@ -362,6 +414,7 @@ export async function verifyEmail(code: string): Promise<{success: boolean; erro
  */
 export async function resendVerificationEmail(): Promise<{success: boolean; error?: string}> {
   try {
+    const auth = getAuthSafely();
     const user = auth.currentUser;
     
     if (!user) {
@@ -393,6 +446,7 @@ export async function resendVerificationEmail(): Promise<{success: boolean; erro
  */
 export async function signOut(): Promise<boolean> {
   try {
+    const auth = getAuthSafely();
     await firebaseSignOut(auth);
     return true;
   } catch (error) {
