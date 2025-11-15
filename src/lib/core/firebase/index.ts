@@ -11,9 +11,12 @@
 
 export {
   getFirebaseApp,
+  getFirebaseClientApp,
   getFirebaseFirestore,
   getFirebaseAuth,
+  getFirebaseClientAuth,
   getFirebaseStorage,
+  FirebaseClientError,
   firestore,
   auth,
   storage,

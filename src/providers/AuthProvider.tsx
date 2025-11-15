@@ -2,7 +2,7 @@
 
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { onAuthStateChanged, User } from 'firebase/auth';
-import { getFirebaseAuth } from '@/lib/core/firebase/client';
+import { getFirebaseAuth, FirebaseClientError } from '@/lib/core/firebase/client';
 import { hasValidFirebaseClientEnv, logFirebaseConfigStatus } from '@/lib/core/firebase/health';
 import { useRouter, usePathname } from 'next/navigation';
 import { ensureUserProfile } from '@/lib/features/auth/userProfile';
@@ -40,6 +40,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   useEffect(() => {
     // Skip if not in browser (SSR)
+    // This is important: AuthProvider should not try to access Firebase during SSR
     if (typeof window === 'undefined') {
       return;
     }
@@ -51,6 +52,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       console.error('Firebase auth cannot initialize - required environment variables are missing');
       logFirebaseConfigStatus('AuthProvider');
       
+      // Only set error for actual config issues
       setError(errorMsg);
       setLoading(false);
       return;
@@ -58,7 +60,33 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
     // Try to get Firebase Auth instance
     // This will trigger initialization if not already done
-    const auth = getFirebaseAuth();
+    let auth;
+    try {
+      auth = getFirebaseAuth();
+    } catch (e) {
+      // Handle specific Firebase client errors
+      if (e instanceof FirebaseClientError) {
+        if (e.code === 'FIREBASE_CLIENT_USED_ON_SERVER') {
+          // This is a developer error - log it but don't show to users
+          // This case should not happen since we already check typeof window above
+          console.error('Developer error:', e.message);
+          setLoading(false);
+          return;
+        } else if (e.code === 'FIREBASE_CLIENT_CONFIG_INCOMPLETE') {
+          // Config is incomplete - show error to user
+          console.error('Firebase configuration error:', e.message);
+          setError('Firebase authentication is not available');
+          setLoading(false);
+          return;
+        }
+      }
+      
+      // Unknown error during auth initialization
+      console.error('Unexpected error getting Firebase auth:', e);
+      setError('Firebase authentication failed to initialize');
+      setLoading(false);
+      return;
+    }
 
     // If auth is still null after trying to initialize, there's a real problem
     if (!auth) {

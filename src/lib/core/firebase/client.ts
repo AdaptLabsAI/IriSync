@@ -8,6 +8,12 @@
  * - Firebase client SDK should ONLY run in the browser
  * - We use typeof window !== 'undefined' checks instead
  * 
+ * WHY FIREBASE CLIENT CANNOT BE USED ON THE SERVER:
+ * - Firebase Client SDK is designed for browser environments only
+ * - It relies on browser APIs (localStorage, IndexedDB, etc.)
+ * - Using it during SSR will cause initialization errors and hydration mismatches
+ * - For server-side operations, use Firebase Admin SDK instead
+ * 
  * ENVIRONMENT VARIABLES:
  * All configuration comes from environment variables (NEVER hardcoded):
  * - NEXT_PUBLIC_FIREBASE_API_KEY
@@ -17,18 +23,37 @@
  * - NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID (must be string: "554117967400")
  * - NEXT_PUBLIC_FIREBASE_APP_ID
  * 
- * WHY ENVIRONMENT VARIABLES:
+ * WHY WE BASE CONFIG PURELY ON NEXT_PUBLIC_FIREBASE_* ENV VARS:
+ * - Next.js inlines NEXT_PUBLIC_* variables at build time for client-side access
+ * - These are the ONLY env vars accessible in the browser
+ * - Non-NEXT_PUBLIC_* vars are server-side only and won't work for client SDK
  * - Keeps secrets out of source code
  * - Allows different configs per environment (dev/staging/prod)
  * - Set in hosting platform (e.g., Vercel project settings)
  * 
- * NEVER use hardcoded config like:
- *   const firebaseConfig = {
- *     apiKey: "AIza...",  // WRONG - never hardcode
- *     authDomain: "...",
- *     ...
- *   };
+ * WHY THE OLD FIREBASE QUICKSTART SNIPPET WITH HARDCODED CONFIG MUST NOT BE USED:
+ * - Hardcoding config exposes secrets in source code (security risk)
+ * - Makes it impossible to have different configs per environment
+ * - Goes against modern security best practices
+ * - Environment variables are the standard approach for 12-factor apps
+ * 
+ * ERROR TYPES:
+ * - FIREBASE_CLIENT_CONFIG_INCOMPLETE: Required env vars are missing
+ * - FIREBASE_CLIENT_USED_ON_SERVER: Client SDK called during SSR (developer error)
  */
+
+/**
+ * Custom error class for Firebase client configuration issues
+ */
+export class FirebaseClientError extends Error {
+  public readonly code: string;
+  
+  constructor(code: 'FIREBASE_CLIENT_CONFIG_INCOMPLETE' | 'FIREBASE_CLIENT_USED_ON_SERVER', message: string) {
+    super(message);
+    this.name = 'FirebaseClientError';
+    this.code = code;
+  }
+}
 
 import { initializeApp, getApps, getApp, FirebaseApp } from 'firebase/app';
 import { getFirestore, Firestore } from 'firebase/firestore';
@@ -138,15 +163,68 @@ function initializeFirebaseClient(): boolean {
 }
 
 /**
- * Get Firebase app instance
+ * Get Firebase app instance (legacy - returns null on failure)
  * Initializes Firebase on first call if not already initialized
  * 
+ * @deprecated Use getFirebaseClientApp() instead for better error handling
  * @returns {FirebaseApp | null} Firebase app instance or null if not available
  */
 export function getFirebaseApp(): FirebaseApp | null {
   if (!app && !initialized) {
     initializeFirebaseClient();
   }
+  return app;
+}
+
+/**
+ * Get Firebase Client App instance with proper error handling
+ * 
+ * IMPORTANT: This function MUST only be called in client-side code (browser).
+ * Never call this during server-side rendering (SSR) or in server components.
+ * 
+ * @throws {FirebaseClientError} FIREBASE_CLIENT_USED_ON_SERVER if called on server
+ * @throws {FirebaseClientError} FIREBASE_CLIENT_CONFIG_INCOMPLETE if config is missing
+ * @returns {FirebaseApp} Firebase app instance
+ */
+export function getFirebaseClientApp(): FirebaseApp {
+  // Guard: Detect SSR/server-side usage (developer error)
+  if (typeof window === 'undefined') {
+    throw new FirebaseClientError(
+      'FIREBASE_CLIENT_USED_ON_SERVER',
+      'Firebase Client SDK cannot be used on the server. This function was called during server-side rendering. ' +
+      'Only call Firebase client functions in "use client" components or client-side effects (useEffect, event handlers, etc.). ' +
+      'For server-side Firebase operations, use the Firebase Admin SDK instead.'
+    );
+  }
+
+  // Check configuration before initialization
+  if (!hasValidFirebaseClientEnv()) {
+    const status = logFirebaseConfigStatus('getFirebaseClientApp');
+    throw new FirebaseClientError(
+      'FIREBASE_CLIENT_CONFIG_INCOMPLETE',
+      'Firebase client configuration is incomplete. Required environment variables are missing. ' +
+      'Check that all NEXT_PUBLIC_FIREBASE_* environment variables are set in your hosting platform.'
+    );
+  }
+
+  // Initialize if needed
+  if (!app && !initialized) {
+    const success = initializeFirebaseClient();
+    if (!success || !app) {
+      throw new FirebaseClientError(
+        'FIREBASE_CLIENT_CONFIG_INCOMPLETE',
+        'Firebase client failed to initialize. Check browser console for details.'
+      );
+    }
+  }
+
+  if (!app) {
+    throw new FirebaseClientError(
+      'FIREBASE_CLIENT_CONFIG_INCOMPLETE',
+      'Firebase app is not initialized. This may indicate a configuration problem.'
+    );
+  }
+
   return app;
 }
 
@@ -162,13 +240,59 @@ export function getFirebaseFirestore(): Firestore | null {
 }
 
 /**
- * Get Auth instance
+ * Get Auth instance (legacy - returns null on failure)
+ * @deprecated Use getFirebaseClientAuth() instead for better error handling
  * @returns {Auth | null} Auth instance or null if not available
  */
 export function getFirebaseAuth(): Auth | null {
   if (!auth && !initialized) {
     initializeFirebaseClient();
   }
+  return auth;
+}
+
+/**
+ * Get Firebase Client Auth instance with proper error handling
+ * 
+ * IMPORTANT: This function MUST only be called in client-side code (browser).
+ * Never call this during server-side rendering (SSR) or in server components.
+ * 
+ * Usage:
+ * - Only call in "use client" components
+ * - Only call in client-side effects (useEffect)
+ * - Only call in event handlers (onClick, onSubmit, etc.)
+ * - NEVER call in server components or during SSR
+ * 
+ * @throws {FirebaseClientError} FIREBASE_CLIENT_USED_ON_SERVER if called on server
+ * @throws {FirebaseClientError} FIREBASE_CLIENT_CONFIG_INCOMPLETE if config is missing
+ * @returns {Auth} Firebase Auth instance
+ */
+export function getFirebaseClientAuth(): Auth {
+  // Guard: Detect SSR/server-side usage (developer error)
+  if (typeof window === 'undefined') {
+    throw new FirebaseClientError(
+      'FIREBASE_CLIENT_USED_ON_SERVER',
+      'Firebase Client Auth cannot be used on the server. This function was called during server-side rendering. ' +
+      'Only call Firebase auth functions in "use client" components or client-side effects. ' +
+      'For server-side auth operations, use Firebase Admin SDK instead.'
+    );
+  }
+
+  // Ensure app is initialized first
+  const firebaseApp = getFirebaseClientApp();
+
+  // Initialize auth if needed
+  if (!auth && !initialized) {
+    initializeFirebaseClient();
+  }
+
+  if (!auth) {
+    throw new FirebaseClientError(
+      'FIREBASE_CLIENT_CONFIG_INCOMPLETE',
+      'Firebase Auth is not initialized. This may indicate a configuration problem.'
+    );
+  }
+
   return auth;
 }
 
