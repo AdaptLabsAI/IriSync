@@ -4,10 +4,6 @@ import { firestore } from '@/lib/core/firebase';
 import { collection, doc, getDoc, query, where, getDocs, addDoc, serverTimestamp, setDoc } from 'firebase/firestore';
 import { v4 as uuidv4 } from 'uuid';
 
-// Import AI provider clients
-import { GoogleGenerativeAI } from '@google/generative-ai';
-import Anthropic from '@/lib/integrations/anthropic/client';
-import { OpenAI } from 'openai';
 import { SocialPlatform } from '@/lib/core/models/SocialAccount';
 import { MediaType } from '@/lib/core/models/Media';
 
@@ -16,10 +12,36 @@ export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
 
 
-// Initialize AI providers with API keys
-const googleAI = new GoogleGenerativeAI(process.env.GOOGLE_AI_API_KEY || '');
-const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY || '' });
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY || '' });
+// Lazy initialize AI providers to avoid build-time errors
+let googleAI: any = null;
+let anthropic: any = null;
+let openai: any = null;
+
+function getGoogleAI() {
+  if (!googleAI) {
+    const { GoogleGenerativeAI } = require('@google/generative-ai');
+    googleAI = new GoogleGenerativeAI(process.env.GOOGLE_AI_API_KEY || '');
+  }
+  return googleAI;
+}
+
+function getAnthropic() {
+  if (!anthropic) {
+    const Anthropic = require('@/lib/integrations/anthropic/client').default;
+    if (process.env.ANTHROPIC_API_KEY) {
+      anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+    }
+  }
+  return anthropic;
+}
+
+function getOpenAI() {
+  if (!openai) {
+    const { OpenAI } = require('openai');
+    openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY || '' });
+  }
+  return openai;
+}
 
 // Define supported operations
 type ToolkitOperation = 
@@ -85,13 +107,17 @@ async function generateWithAI(prompt: string, provider: 'google' | 'anthropic' |
     // Use the specified AI provider
     switch (provider) {
       case 'google':
-        const genAiModel = googleAI.getGenerativeModel({ model: 'gemini-pro' });
+        const genAiModel = getGoogleAI().getGenerativeModel({ model: 'gemini-pro' });
         const genAiResult = await genAiModel.generateContent(prompt);
         generatedText = genAiResult.response.text();
         break;
         
       case 'anthropic':
-        const claudeResult = await anthropic.messages.create({
+        const anthropicClient = getAnthropic();
+        if (!anthropicClient) {
+          throw new Error('Anthropic client not available - API key not configured');
+        }
+        const claudeResult = await anthropicClient.messages.create({
           model: 'claude-3-haiku-20240307',
           max_tokens: 1000,
           messages: [{ role: 'user', content: prompt }]
@@ -103,7 +129,7 @@ async function generateWithAI(prompt: string, provider: 'google' | 'anthropic' |
         
       case 'openai':
       default:
-        const openaiResult = await openai.chat.completions.create({
+        const openaiResult = await getOpenAI().chat.completions.create({
           model: 'gpt-4o-mini',
           messages: [{ role: 'user', content: prompt }],
           max_tokens: 1000

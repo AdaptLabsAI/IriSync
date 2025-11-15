@@ -23,7 +23,6 @@ import {
   KnowledgeStatus, 
   KnowledgeAccessLevel 
 } from '@/lib/knowledge/models';
-import { KnowledgeRepository } from '@/lib/knowledge/repository';
 import { generateSlug } from '@/lib/core/utils/slug';
 
 // Force dynamic rendering - required for Firebase/database access
@@ -181,6 +180,9 @@ const knowledgeFilterSchema = z.object({
  */
 export const GET = withAdmin(async (request: NextRequest, adminUser: any) => {
   try {
+    // Dynamically import KnowledgeRepository to avoid build-time Firebase initialization
+    const { KnowledgeRepository } = await import('@/lib/knowledge/repository');
+    
     // Get query parameters
     const url = new URL(request.url);
     
@@ -464,6 +466,9 @@ export const GET = withAdmin(async (request: NextRequest, adminUser: any) => {
  */
 export const POST = withAdmin(async (request: NextRequest, adminUser: any) => {
   try {
+    // Dynamically import KnowledgeRepository to avoid build-time Firebase initialization
+    const { KnowledgeRepository } = await import('@/lib/knowledge/repository');
+    
     // Parse request body
     const body = await request.json();
     

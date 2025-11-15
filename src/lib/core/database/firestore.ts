@@ -3,9 +3,21 @@ import { getFirestore, Firestore, Timestamp, FieldValue } from 'firebase-admin/f
 import { logger } from '../logging/logger';
 
 /**
+ * Check if we're in a build environment
+ */
+const isBuildTime = 
+  process.env.NEXT_PHASE === 'phase-production-build' || 
+  process.env.IS_BUILD_PHASE === 'true';
+
+/**
  * Initialize Firebase Admin SDK if it hasn't been initialized yet
  */
 function initializeFirebaseAdmin() {
+  // Skip if we're in build time
+  if (isBuildTime) {
+    return;
+  }
+  
   try {
     if (getApps().length === 0) {
       const serviceAccount = process.env.FIREBASE_SERVICE_ACCOUNT
@@ -21,7 +33,7 @@ function initializeFirebaseAdmin() {
     }
   } catch (error) {
     logger.error('Error initializing Firebase Admin SDK', { error });
-    throw new Error('Failed to initialize Firebase Admin SDK');
+    // Don't throw during initialization, let functions handle it
   }
 }
 
@@ -29,6 +41,44 @@ function initializeFirebaseAdmin() {
  * Get Firestore instance
  */
 export function getFirestoreDb(): Firestore {
+  // During build, return a mock Firestore instance
+  if (isBuildTime) {
+    const mockCollection: any = {
+      add: async () => ({ id: 'mock-id' }),
+      doc: () => mockDoc,
+      get: async () => ({ empty: true, docs: [], size: 0, forEach: () => {} }),
+      where: () => mockCollection,
+      orderBy: () => mockCollection,
+      limit: () => mockCollection,
+    };
+    const mockDoc: any = {
+      get: async () => ({ exists: false, data: () => null, id: 'mock-id' }),
+      set: async () => {},
+      update: async () => {},
+      delete: async () => {},
+      id: 'mock-doc-id',
+    };
+    const mockFirestore: any = {
+      collection: () => mockCollection,
+      doc: () => mockDoc,
+      batch: () => ({
+        set: () => {},
+        update: () => {},
+        delete: () => {},
+        commit: async () => {},
+      }),
+      runTransaction: async (callback: any) => {
+        return callback({
+          get: async () => ({ exists: false, data: () => null }),
+          set: () => {},
+          update: () => {},
+          delete: () => {},
+        });
+      },
+    };
+    return mockFirestore as any;
+  }
+  
   try {
     initializeFirebaseAdmin();
     return getFirestore();
@@ -38,8 +88,16 @@ export function getFirestoreDb(): Firestore {
   }
 }
 
-// Export db as alias for backward compatibility
-export const db = getFirestoreDb();
+// Lazy initialization - only get db when actually used, not at module load time
+let _db: Firestore | null = null;
+export const db = new Proxy({} as Firestore, {
+  get(target, prop) {
+    if (!_db) {
+      _db = getFirestoreDb();
+    }
+    return (_db as any)[prop];
+  }
+});
 
 /**
  * Firestore Document Reference type
