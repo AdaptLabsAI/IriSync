@@ -8,7 +8,16 @@ import { getTokenAllocationForTier } from '../subscription';
 import { generateOrganizationId, validateUserOrganizationConnections } from '../utils';
 import { getGoogleOAuthClientId } from '@/lib/server/env';
 
-const GOOGLE_OAUTH_CLIENT_ID = getGoogleOAuthClientId();
+/**
+ * Get Google OAuth client ID with runtime check
+ */
+function getGoogleClientId(): string {
+  const clientId = getGoogleOAuthClientId();
+  if (!clientId) {
+    throw new Error('Google OAuth is not configured. Missing GOOGLE_OAUTH_CLIENT_ID.');
+  }
+  return clientId;
+}
 
 /**
  * Supported social providers
@@ -293,7 +302,7 @@ export class SocialAuthService {
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: new URLSearchParams({
           code,
-          client_id: GOOGLE_OAUTH_CLIENT_ID,
+          client_id: getGoogleClientId(),
           client_secret: process.env.GOOGLE_CLIENT_SECRET!,
           redirect_uri: redirectUri,
           grant_type: 'authorization_code',

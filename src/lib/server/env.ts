@@ -14,7 +14,8 @@ function readEnv(key: string, { optional = false }: { optional?: boolean } = {})
     }
 
     // During build time, return empty string instead of throwing
-    if (process.env.NEXT_PHASE === 'phase-production-build') {
+    if (process.env.NEXT_PHASE === 'phase-production-build' || 
+        process.env.IS_BUILD_PHASE === 'true') {
       console.warn(`Environment variable ${key} not available during build`);
       cache.set(key, '');
       return '';
@@ -28,11 +29,11 @@ function readEnv(key: string, { optional = false }: { optional?: boolean } = {})
 }
 
 export function getGenLangApiKey(): string {
-  return readEnv('GEN_LANG_API_KEY');
+  return readEnv('GEN_LANG_API_KEY', { optional: true });
 }
 
 export function getGoogleOAuthClientId(): string {
-  return readEnv('GOOGLE_OAUTH_CLIENT_ID');
+  return readEnv('GOOGLE_OAUTH_CLIENT_ID', { optional: true });
 }
 
 export function getStripeSecretKey(): string {

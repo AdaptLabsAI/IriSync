@@ -43,7 +43,13 @@ type ProviderConfigs = {
   [key: string]: ProviderConfig;
 };
 
-const GOOGLE_OAUTH_CLIENT_ID = getGoogleOAuthClientId();
+/**
+ * Get Google OAuth client ID with runtime check
+ * Returns empty string if not configured (will be handled at request time)
+ */
+function getGoogleClientIdSafe(): string {
+  return getGoogleOAuthClientId() || '';
+}
 
 const PROVIDER_CONFIGS: ProviderConfigs = {
   twitter: {
@@ -78,7 +84,7 @@ const PROVIDER_CONFIGS: ProviderConfigs = {
   },
   youtube: {
     authUrl: 'https://accounts.google.com/o/oauth2/auth',
-    clientId: GOOGLE_OAUTH_CLIENT_ID,
+    clientId: getGoogleClientIdSafe(),
     redirectUri: process.env.YOUTUBE_CALLBACK_URL!,
     scope: ['https://www.googleapis.com/auth/youtube', 'https://www.googleapis.com/auth/youtube.upload'],
   },
@@ -121,7 +127,7 @@ const PROVIDER_CONFIGS: ProviderConfigs = {
   },
   google_drive: {
     authUrl: 'https://accounts.google.com/o/oauth2/auth',
-    clientId: GOOGLE_OAUTH_CLIENT_ID,
+    clientId: getGoogleClientIdSafe(),
     redirectUri: process.env.GOOGLE_DRIVE_CALLBACK_URL!,
     scope: ['https://www.googleapis.com/auth/drive.file', 'https://www.googleapis.com/auth/drive.metadata.readonly'],
   },
@@ -189,7 +195,7 @@ const PROVIDER_CONFIGS: ProviderConfigs = {
   // Analytics & Tracking
   google_analytics: {
     authUrl: 'https://accounts.google.com/o/oauth2/auth',
-    clientId: GOOGLE_OAUTH_CLIENT_ID,
+    clientId: getGoogleClientIdSafe(),
     redirectUri: process.env.GOOGLE_ANALYTICS_CALLBACK_URL!,
     scope: ['https://www.googleapis.com/auth/analytics.readonly', 'https://www.googleapis.com/auth/analytics.edit'],
   },
