@@ -1,197 +1,65 @@
-'use client';
+"use client";
 
-import React, { createContext, useContext, useEffect, useState } from 'react';
-import { onAuthStateChanged, User } from 'firebase/auth';
-import { getFirebaseAuth, FirebaseClientError } from '@/lib/core/firebase/client';
-import { hasValidFirebaseClientEnv, logFirebaseConfigStatus } from '@/lib/core/firebase/health';
-import { useRouter, usePathname } from 'next/navigation';
-import { ensureUserProfile } from '@/lib/features/auth/userProfile';
+import React, { useEffect, useState } from "react";
+import { onAuthStateChanged, User } from "firebase/auth";
+import { getFirebaseAuth } from "@/lib/firebase/client";
 
-// Define the Auth context type
-interface AuthContextType {
+type AuthContextValue = {
   user: User | null;
   loading: boolean;
-  error: string | null;
-}
-
-const defaultAuthContext: AuthContextType = {
-  user: null,
-  loading: true,
-  error: null
 };
 
-// Create context
-const AuthContext = createContext<AuthContextType>(defaultAuthContext);
+const AuthContext = React.createContext<AuthContextValue>({
+  user: null,
+  loading: true,
+});
 
-// Hook to use the auth context
-export const useAuth = () => useContext(AuthContext);
-
-// Auth provider props
-interface AuthProviderProps {
-  children: React.ReactNode;
-}
-
-export function AuthProvider({ children }: AuthProviderProps) {
+export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const router = useRouter();
-  const pathname = usePathname();
 
   useEffect(() => {
-    // Skip if not in browser (SSR)
-    // This is important: AuthProvider should not try to access Firebase during SSR
-    if (typeof window === 'undefined') {
-      return;
-    }
-
-    // IMPORTANT: Only check for Firebase configuration issues when env vars are actually missing
-    // This prevents false positives where Firebase is working fine but the check fails
-    if (!hasValidFirebaseClientEnv()) {
-      const errorMsg = 'Firebase authentication is not available';
-      console.error('Firebase auth cannot initialize - required environment variables are missing');
-      logFirebaseConfigStatus('AuthProvider');
-      
-      // Only set error for actual config issues
-      setError(errorMsg);
-      setLoading(false);
-      return;
-    }
-
-    // Try to get Firebase Auth instance
-    // This will trigger initialization if not already done
-    let auth;
-    try {
-      auth = getFirebaseAuth();
-    } catch (e) {
-      // Handle specific Firebase client errors
-      if (e instanceof FirebaseClientError) {
-        if (e.code === 'FIREBASE_CLIENT_USED_ON_SERVER') {
-          // This is a developer error - log it but don't show to users
-          // This case should not happen since we already check typeof window above
-          console.error('Developer error:', e.message);
-          setLoading(false);
-          return;
-        } else if (e.code === 'FIREBASE_CLIENT_CONFIG_INCOMPLETE') {
-          // Config is incomplete - show error to user
-          console.error('Firebase configuration error:', e.message);
-          setError('Firebase authentication is not available');
-          setLoading(false);
-          return;
-        }
-      }
-      
-      // Unknown error during auth initialization
-      console.error('Unexpected error getting Firebase auth:', e);
-      setError('Firebase authentication failed to initialize');
-      setLoading(false);
-      return;
-    }
-
-    // If auth is still null after trying to initialize, there's a real problem
-    if (!auth) {
-      const errorMsg = 'Firebase authentication failed to initialize';
-      console.error('Firebase auth is not initialized despite valid configuration');
-      console.error('This may indicate a Firebase initialization error - check browser console for details');
-      
-      setError(errorMsg);
-      setLoading(false);
-      return;
-    }
+    let unsub: (() => void) | undefined;
 
     try {
-      // Listen for authentication state changes
-      // NOTE: This callback handles AUTHENTICATION events (login, logout)
-      // It does NOT indicate configuration problems - those are caught above
-      const unsubscribe = onAuthStateChanged(
-        auth,
-        async (authUser) => {
-          if (authUser) {
-            // Ensure user has a profile in Firestore
-            try {
-              await ensureUserProfile(authUser);
-            } catch (profileError) {
-              console.error('Error ensuring user profile:', profileError);
-              // Continue with authentication even if profile creation fails
-              // This is NOT a configuration error - just a profile sync issue
-            }
-          }
+      const auth = getFirebaseAuth();
 
-          setUser(authUser);
-          setLoading(false);
-        },
-        (authError) => {
-          // This callback handles authentication state change errors
-          // These are NOT configuration errors - they're runtime auth errors
-          console.error('Auth state change error:', authError);
-          
-          // Don't set the configuration error state for auth errors
-          // Just log them and set loading to false
-          // The user can still use the app, they just might need to sign in again
-          console.warn('Authentication state listener encountered an error, but this is not a configuration issue');
-          setLoading(false);
-        }
+      unsub = onAuthStateChanged(auth, (firebaseUser) => {
+        setUser(firebaseUser);
+        setLoading(false);
+      });
+    } catch (err) {
+      console.error("[AuthProvider] Failed to initialize Firebase Auth:", err);
+      setError(
+        "Firebase authentication is temporarily unavailable. Please try again later."
       );
-
-      // Cleanup subscription on unmount
-      return () => unsubscribe();
-    } catch (error) {
-      // This catches errors in setting up the listener
-      // Could be a real configuration issue
-      console.error('Failed to setup auth state listener:', error);
-      
-      // Check if this is a Firebase initialization error
-      if (error instanceof Error && 
-          (error.message.includes('Firebase') || 
-           error.message.includes('auth') ||
-           error.message.includes('initialize'))) {
-        setError('Firebase authentication setup failed');
-      }
-      
       setLoading(false);
-      return () => {}; // Return empty cleanup function
     }
+
+    return () => {
+      if (unsub) unsub();
+    };
   }, []);
 
-  // Redirect based on auth state and current path
-  useEffect(() => {
-    if (!loading && !error) {
-      // Update path check to work with route groups
-      // The pattern /(auth)/login becomes /login in the pathname
-      const isAuthPage = 
-        pathname === '/login' || 
-        pathname === '/register' || 
-        pathname === '/reset-password' ||
-        pathname === '/resend-verification' ||
-        pathname === '/verify-email';
-      
-      // If user is authenticated and on an auth page, redirect to dashboard
-      if (user && isAuthPage) {
-        router.push('/dashboard');
-      }
-      
-      // If user is not authenticated and on a protected page, redirect to login
-      const isProtectedPage = 
-        pathname?.startsWith('/dashboard') || 
-        pathname?.startsWith('/admin') ||
-        pathname?.startsWith('/settings');
-      
-      if (!user && isProtectedPage) {
-        router.push(`/login?callbackUrl=${encodeURIComponent(pathname || '/dashboard')}`);
-      }
-    }
-  }, [user, loading, pathname, router, error]);
-
-  // Provide the auth context value
-  const contextValue = {
-    user,
-    loading,
-    error
-  };
+  if (error) {
+    // You can keep your existing error UI, just make sure it's not
+    // hardcoding a lie about "missing env vars" anymore.
+    return (
+      <div className="p-4 text-sm text-red-500">
+        <p>Firebase Authentication Error</p>
+        <p>{error}</p>
+      </div>
+    );
+  }
 
   return (
-    <AuthContext.Provider value={contextValue}>
+    <AuthContext.Provider value={{ user, loading }}>
       {children}
     </AuthContext.Provider>
   );
+}
+
+export function useAuth() {
+  return React.useContext(AuthContext);
 } 
