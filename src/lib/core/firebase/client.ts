@@ -18,24 +18,38 @@ let storage: FirebaseStorage | null = null;
 /**
  * Initialize Firebase for client-side use
  * This file should only be imported in client components
+ * 
+ * Uses environment variables that must be set in hosting platform:
+ * - NEXT_PUBLIC_FIREBASE_API_KEY
+ * - NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN
+ * - NEXT_PUBLIC_FIREBASE_PROJECT_ID
+ * - NEXT_PUBLIC_FIREBASE_APP_ID
  */
 try {
+  const debugInfo = getFirebaseConfigDebugInfo();
+  
   if (process.env.NODE_ENV !== 'production') {
     console.log('Initializing Firebase client...');
+    console.log('Firebase config debug info:', debugInfo);
   }
   
   // Check if environment variables are properly set
   if (!isFirebaseConfigValid()) {
-    const debugInfo = getFirebaseConfigDebugInfo();
     console.error('Firebase configuration is incomplete.');
     console.error('Missing environment variables:', debugInfo.missing);
     console.error('Present environment variables:', debugInfo.present);
     
+    if (process.env.NODE_ENV !== 'production' && debugInfo.values) {
+      console.error('Config values (partial):', debugInfo.values);
+    }
+    
     // Don't throw in production - let the app handle it gracefully
     if (process.env.NODE_ENV === 'production') {
       console.error('Firebase will not be initialized. Features requiring Firebase will be unavailable.');
+      console.error('Check that all NEXT_PUBLIC_FIREBASE_* environment variables are set in your hosting platform.');
     } else {
       console.error('Please check your .env.local file and ensure all required variables are set.');
+      console.error('Required: NEXT_PUBLIC_FIREBASE_API_KEY, NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN, NEXT_PUBLIC_FIREBASE_PROJECT_ID, NEXT_PUBLIC_FIREBASE_APP_ID');
     }
   } else {
     app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
