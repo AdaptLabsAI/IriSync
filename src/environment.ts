@@ -136,10 +136,12 @@ export const stripeConfig = {
 
 /**
  * Application URLs and endpoints
+ * IMPORTANT: Do not hard-code localhost - it breaks in production/preview environments
+ * These values should come from environment variables set in Vercel/deployment platform
  */
 export const appConfig = {
-  url: process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000',
-  apiUrl: process.env.API_URL || process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000/api'
+  url: process.env.NEXT_PUBLIC_APP_URL || (typeof window !== 'undefined' ? window.location.origin : ''),
+  apiUrl: process.env.API_URL || process.env.NEXT_PUBLIC_APP_URL || (typeof window !== 'undefined' ? `${window.location.origin}/api` : '/api')
 };
 
 /**

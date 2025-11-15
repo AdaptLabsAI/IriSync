@@ -30,10 +30,12 @@ export async function serverFetch<T>(
   options: FetchOptions = {}
 ): Promise<ApiResponse<T>> {
   try {
-    // Determine if it's an absolute URL or a relative path to our API
+    // IMPORTANT: Server-side API calls should use absolute URLs in production
+    // For same-origin API routes, we need the full URL when running in server components
+    // In production, NEXT_PUBLIC_APP_URL must be set to the deployment URL (e.g., https://iri-sync.vercel.app)
     const url = endpoint.startsWith('http') 
       ? endpoint 
-      : `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}${endpoint.startsWith('/') ? '' : '/'}${endpoint}`;
+      : `${process.env.NEXT_PUBLIC_APP_URL || ''}${endpoint.startsWith('/') ? endpoint : `/${endpoint}`}`;
     
     const response = await fetch(url, {
       ...options,
