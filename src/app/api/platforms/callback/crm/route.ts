@@ -342,6 +342,11 @@ function getCrmClientSecret(provider: string): string {
 }
 
 function getCrmRedirectUri(provider: string): string {
-  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
+  // IMPORTANT: Do not hard-code localhost - it breaks in production environments
+  // This redirect URI must match the one configured in the CRM OAuth app settings
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || '';
+  if (!baseUrl) {
+    throw new Error('NEXT_PUBLIC_APP_URL environment variable is required for CRM OAuth redirects');
+  }
   return `${baseUrl}/api/platforms/callback/crm?provider=${provider}`;
 } 

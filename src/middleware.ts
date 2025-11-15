@@ -49,11 +49,15 @@ const PUBLIC_PATHS = [
 ];
 
 // Define allowed origins for CORS
+// IMPORTANT: Do not hard-code localhost in production - use environment variables
+// In production, this should include the actual deployment URL
 const allowedOrigins = [
-  'http://localhost:3000',
-  'http://localhost:3002',
+  process.env.NEXT_PUBLIC_APP_URL || '',
+  'https://iri-sync.vercel.app',
   'https://www.irisync.com',
-];
+  // Only include localhost in development
+  ...(process.env.NODE_ENV === 'development' ? ['http://localhost:3000', 'http://localhost:3002'] : [])
+].filter(Boolean); // Remove empty strings
 
 /**
  * Role-based access control (RBAC) helper

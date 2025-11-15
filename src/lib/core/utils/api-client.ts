@@ -18,13 +18,16 @@ export async function apiRequest<T = any>(
   endpoint: string, 
   options: FetchOptions = {}
 ): Promise<T> {
-  // Set up base URL from env vars or default to localhost in development
+  // IMPORTANT: Do not hard-code localhost URLs - they break in production and preview environments
+  // Use relative URLs when called from the browser, or derive from environment variables
   const baseUrl = options.baseUrl || 
-    process.env.NEXT_PUBLIC_API_URL || 
-    'http://localhost:3000';
+    process.env.NEXT_PUBLIC_APP_URL || 
+    (typeof window !== 'undefined' ? window.location.origin : '');
   
-  // Build the complete URL
-  const url = `${baseUrl}${endpoint.startsWith('/') ? endpoint : `/${endpoint}`}`;
+  // Build the complete URL - use relative path if no baseUrl is needed
+  const url = baseUrl 
+    ? `${baseUrl}${endpoint.startsWith('/') ? endpoint : `/${endpoint}`}`
+    : endpoint;
   
   // Set up default options for fetch
   const fetchOptions: FetchOptions = {
