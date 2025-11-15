@@ -1,19 +1,21 @@
 import Stripe from 'stripe';
 import { logger } from '../../core/logging/logger';
-import { validateStripe, logValidationResults } from '@/lib/env/validation';
-
-// Validate Stripe environment variables on module load
-const validationResult = validateStripe();
-logValidationResults(validationResult, 'Stripe');
 
 /**
  * Initialize Stripe client
+ * Validates environment variables at runtime (not at module load)
  */
 export function getStripeClient(): Stripe {
   const apiKey = process.env.STRIPE_SECRET_KEY;
   if (!apiKey) {
     logger.error('Stripe secret key not found in environment variables');
-    throw new Error('Stripe secret key not configured');
+    throw new Error('Stripe is not configured. Missing STRIPE_SECRET_KEY.');
+  }
+  
+  // Validate key format
+  if (!apiKey.startsWith('sk_')) {
+    logger.error('Stripe secret key appears to be invalid (should start with "sk_")');
+    throw new Error('Stripe secret key is invalid');
   }
   
   return new Stripe(apiKey, {

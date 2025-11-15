@@ -40,8 +40,18 @@ export function AuthProvider({ children }: AuthProviderProps) {
   useEffect(() => {
     // Check if auth is available
     if (!auth) {
+      const errorMsg = 'Firebase authentication is not available';
       console.error('Firebase auth is not initialized - check your environment variables');
-      setError('Firebase authentication is not available');
+      
+      // In production, log details server-side but show generic message to user
+      if (process.env.NODE_ENV === 'production') {
+        console.error('Check that all required NEXT_PUBLIC_FIREBASE_* environment variables are set in your hosting platform.');
+      } else {
+        console.error('Check that all required NEXT_PUBLIC_FIREBASE_* environment variables are set in your .env.local file.');
+        console.error('Required: NEXT_PUBLIC_FIREBASE_API_KEY, NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN, NEXT_PUBLIC_FIREBASE_PROJECT_ID, NEXT_PUBLIC_FIREBASE_APP_ID');
+      }
+      
+      setError(errorMsg);
       setLoading(false);
       return;
     }

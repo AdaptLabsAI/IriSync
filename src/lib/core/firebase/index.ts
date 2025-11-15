@@ -125,10 +125,6 @@ const isRuntimeEnvironment = (): boolean => {
       return true;
     }
     
-    // Server-side: check for actual runtime indicators
-    const isNodeRuntime = process.env.NEXT_RUNTIME === 'nodejs';
-    const isEdgeRuntime = process.env.NEXT_RUNTIME === 'edge';
-    
     // Additional check: if we're in a build phase, definitely not runtime
     const isBuildPhase = process.env.NEXT_PHASE === 'phase-production-build' ||
                         process.env.IS_BUILD_PHASE === 'true';
@@ -137,11 +133,13 @@ const isRuntimeEnvironment = (): boolean => {
       return false;
     }
     
-    // Must have valid config to use real Firebase
-    const hasValidConfig = isFirebaseConfigValid();
+    // Server-side: check for actual runtime indicators
+    const isNodeRuntime = process.env.NEXT_RUNTIME === 'nodejs';
+    const isEdgeRuntime = process.env.NEXT_RUNTIME === 'edge';
     
-    // Only return true if we have clear runtime indicators AND valid config
-    return (isNodeRuntime || isEdgeRuntime) && hasValidConfig;
+    // In runtime, we should have at least one runtime indicator
+    // Don't check config validity here - that can cause build failures
+    return isNodeRuntime || isEdgeRuntime;
   } catch {
     // If anything fails, assume not runtime (safe default)
     return false;
@@ -175,6 +173,16 @@ const initializeFirebase = () => {
   }
 
   try {
+    // Check if config is valid before attempting to initialize
+    if (!isFirebaseConfigValid()) {
+      console.warn('Firebase: Config invalid at runtime, using mock');
+      _useMock = true;
+      _firestore = createMockFirestore();
+      _auth = createMockAuth();
+      _storage = createMockStorage();
+      return;
+    }
+    
     // Initialize real Firebase
     _app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
     _firestore = getFirestore(_app);
@@ -241,8 +249,8 @@ const getAppInstance = (): FirebaseApp | null => {
   return _app;
 };
 
-// Initialize immediately to ensure mock is available
-initializeFirebase();
+// Don't initialize at module load - this causes build failures
+// Initialization will happen lazily on first access
 
 /**
  * Direct exports - always return valid instances (real or mock)

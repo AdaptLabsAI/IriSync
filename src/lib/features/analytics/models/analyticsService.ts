@@ -1,4 +1,3 @@
-import { firestore } from '../../../core/firebase';
 import { collection, query, where, orderBy, limit, getDocs } from 'firebase/firestore';
 
 interface AnalyticsParams {
@@ -18,6 +17,8 @@ export async function getUserAnalyticsSummary(
   params: AnalyticsParams = {}
 ): Promise<any> {
   try {
+    // Lazy import to avoid build-time initialization
+    const { firestore } = await import('../../../core/firebase');
     // Create a query to get analytics data
     let analyticsQuery = query(
       collection(firestore, 'analytics'),

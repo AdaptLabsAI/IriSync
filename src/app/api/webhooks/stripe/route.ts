@@ -272,8 +272,37 @@ async function processSubscriptionCreation(
  */
 export async function POST(req: NextRequest) {
   try {
-    const stripe = getStripeClient();
-    const firestore = getFirestore();
+    // Validate Stripe secret key first (lazy check)
+    let stripe: Stripe;
+    try {
+      stripe = getStripeClient();
+    } catch (error) {
+      logger.error('Stripe not configured', { error });
+      return NextResponse.json(
+        { 
+          error: 'Service Configuration Error',
+          message: 'Stripe is not configured. Missing STRIPE_SECRET_KEY.',
+          endpoint: '/api/webhooks/stripe'
+        },
+        { status: 500 }
+      );
+    }
+    
+    // Validate Firebase is available
+    let firestore: FirebaseFirestore.Firestore;
+    try {
+      firestore = getFirestore();
+    } catch (error) {
+      logger.error('Firebase not configured', { error });
+      return NextResponse.json(
+        { 
+          error: 'Service Configuration Error',
+          message: 'Firebase is not configured.',
+          endpoint: '/api/webhooks/stripe'
+        },
+        { status: 500 }
+      );
+    }
     
     // Get the signature from headers
     const signature = req.headers.get('stripe-signature') || '';
@@ -298,7 +327,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json(
         { 
           error: 'Server Configuration Error',
-          message: 'Webhook secret not configured',
+          message: 'Webhook secret not configured. Missing STRIPE_WEBHOOK_SECRET.',
           endpoint: '/api/webhooks/stripe'
         },
         { status: 500 }

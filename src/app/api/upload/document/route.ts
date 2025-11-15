@@ -9,13 +9,31 @@ export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
 
 
-// Configure Google Cloud Storage
-const storage = new Storage({
-  projectId: process.env.FIREBASE_PROJECT_ID,
-  credentials: JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT_KEY || '{}')
-});
+// Lazy getter for Google Cloud Storage - avoids build-time initialization
+let _storage: Storage | null = null;
+let _bucket: any = null;
 
-const bucket = storage.bucket(process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET || '');
+function getStorageBucket() {
+  if (!_bucket) {
+    if (!_storage) {
+      const projectId = process.env.FIREBASE_PROJECT_ID;
+      const serviceAccountKey = process.env.FIREBASE_SERVICE_ACCOUNT_KEY;
+      const bucketName = process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET;
+      
+      if (!projectId || !serviceAccountKey || !bucketName) {
+        throw new Error('Firebase Storage is not configured. Missing required environment variables.');
+      }
+      
+      _storage = new Storage({
+        projectId,
+        credentials: JSON.parse(serviceAccountKey)
+      });
+    }
+    
+    _bucket = _storage.bucket(process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET || '');
+  }
+  return _bucket;
+}
 
 // Allowed file types for documents
 const ALLOWED_FILE_TYPES = [
@@ -83,7 +101,7 @@ export async function POST(request: NextRequest) {
     }
     
     // Create a new blob in the bucket
-    const blob = bucket.file(storagePath);
+    const blob = getStorageBucket().file(storagePath);
     
     // Create a write stream and upload the file
     const blobStream = blob.createWriteStream({
@@ -121,7 +139,7 @@ export async function POST(request: NextRequest) {
           });
           fileUrl = url;
         } else {
-          fileUrl = `https://storage.googleapis.com/${bucket.name}/${blob.name}`;
+          fileUrl = `https://storage.googleapis.com/${getStorageBucket().name}/${blob.name}`;
         }
         
         resolve(fileUrl);

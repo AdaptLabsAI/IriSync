@@ -1,10 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '../../../../lib/auth/auth-options';
-import { aiAnalyticsSummaryService } from '../../../../lib/features/analytics/ai-analytics-summary';
-import { getUserAnalyticsSummary } from '../../../../lib/features/analytics/models/analyticsService';
-import { compareWithCompetitor } from '../../../../lib/features/analytics/competitive/comparator';
-import { benchmarkOrganizationMetrics } from '../../../../lib/features/analytics/competitive/benchmarking';
 import { logger } from '../../../../lib/core/logging/logger';
 import { UserRole, User } from '../../../../lib/core/models/User';
 import { Timestamp } from 'firebase/firestore';
@@ -21,6 +17,10 @@ export const runtime = 'nodejs';
  */
 export async function GET(request: NextRequest) {
   try {
+    // Lazy import services to avoid build-time Firebase initialization
+    const { aiAnalyticsSummaryService } = await import('../../../../lib/features/analytics/ai-analytics-summary');
+    const { getUserAnalyticsSummary } = await import('../../../../lib/features/analytics/models/analyticsService');
+    
     const session = await getServerSession(authOptions);
     if (!session?.user?.id) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -149,6 +149,10 @@ export async function POST(request: NextRequest) {
 
 async function handleQuickInsights(userId: string, user: any, params: any) {
   try {
+    // Lazy import to avoid build-time initialization
+    const { getUserAnalyticsSummary } = await import('../../../../lib/features/analytics/models/analyticsService');
+    const { aiAnalyticsSummaryService } = await import('../../../../lib/features/analytics/ai-analytics-summary');
+    
     const { timeRange = '30d', organizationId } = params;
     const orgId = organizationId || user.organizationId;
 
@@ -236,6 +240,9 @@ async function handleQuickInsights(userId: string, user: any, params: any) {
 
 async function handleTrendAnalysis(userId: string, user: any, params: any) {
   try {
+    // Lazy import to avoid build-time initialization
+    const { aiAnalyticsSummaryService } = await import('../../../../lib/features/analytics/ai-analytics-summary');
+    
     const { timeRange = '90d', organizationId } = params;
     const orgId = organizationId || user.organizationId;
 
@@ -325,7 +332,7 @@ async function getHistoricalAnalyticsData(organizationId: string, timeRange: str
     }
 
     // Query Firestore for historical analytics data BY ORGANIZATION
-    const { firestore } = await import('../../../../lib/core/firebase/client');
+    const { firestore } = await import('../../../../lib/core/firebase');
     const { collection, query, where, orderBy, getDocs } = await import('firebase/firestore');
     
     const analyticsQuery = query(
@@ -393,7 +400,7 @@ async function getHistoricalAnalyticsData(organizationId: string, timeRange: str
 
 async function getUserOrganizationId(userId: string): Promise<string | null> {
   try {
-    const { firestore } = await import('../../../../lib/core/firebase/client');
+    const { firestore } = await import('../../../../lib/core/firebase');
     const { doc, getDoc } = await import('firebase/firestore');
     
     const userDoc = await getDoc(doc(firestore, 'users', userId));
@@ -436,7 +443,7 @@ async function getBenchmarkingResult(organizationId: string, industry: string): 
 
 async function createUserForAI(userId: string, organizationId: string): Promise<User> {
   try {
-    const { firestore } = await import('../../../../lib/core/firebase/client');
+    const { firestore } = await import('../../../../lib/core/firebase');
     const { doc, getDoc } = await import('firebase/firestore');
     const { Timestamp } = await import('firebase/firestore');
     

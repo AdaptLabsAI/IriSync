@@ -12,7 +12,6 @@ import {
   writeBatch,
   addDoc
 } from 'firebase/firestore';
-import { firestore as db } from '../core/firebase';
 import { auth } from '../core/firebase/admin';
 import logger from '../core/logging/logger';
 import { User, UserRole, SubscriptionTier, SubscriptionTierValues } from '../core/models/User';
@@ -30,16 +29,33 @@ import {
 import Stripe from 'stripe';
 import { getAuth } from 'firebase/auth';
 
+// Lazy Firebase firestore getter
+function getFirestore() {
+  // Import dynamically to avoid build-time issues
+  const { firestore } = require('../core/firebase');
+  return firestore;
+}
+
 // Extend the User interface to include the new effectiveDeletionDate field
 interface ExtendedUser extends User {
   effectiveDeletionDate?: Timestamp;
 }
 
-// Production Stripe client implementation
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
-  apiVersion: '2025-04-30.basil', // Latest stable API version
-  typescript: true,
-});
+// Lazy Stripe client initialization - only when needed
+let _stripe: Stripe | null = null;
+function getStripeClient(): Stripe {
+  if (!_stripe) {
+    const apiKey = process.env.STRIPE_SECRET_KEY;
+    if (!apiKey) {
+      throw new Error('Stripe is not configured. Missing STRIPE_SECRET_KEY.');
+    }
+    _stripe = new Stripe(apiKey, {
+      apiVersion: '2025-04-30.basil', // Latest stable API version
+      typescript: true,
+    });
+  }
+  return _stripe;
+}
 
 /**
  * Service for user management including account creation, deletion and organization handling
@@ -52,7 +68,7 @@ export class UserService {
    */
   async getUserById(userId: string): Promise<User | null> {
     try {
-      const userRef = doc(db, 'users', userId);
+      const userRef = doc(getFirestore(), 'users', userId);
       const userDoc = await getDoc(userRef);
       
       if (!userDoc.exists()) {
@@ -154,14 +170,14 @@ export class UserService {
       }
       
       // Write both documents in a batch
-      const batch = writeBatch(db);
+      const batch = writeBatch(getFirestore());
       
       // Set user document
-      const userRef = doc(db, 'users', userId);
+      const userRef = doc(getFirestore(), 'users', userId);
       batch.set(userRef, user);
       
       // Set organization document
-      const orgRef = doc(db, 'organizations', organizationId);
+      const orgRef = doc(getFirestore(), 'organizations', organizationId);
       batch.set(orgRef, personalOrg);
       
       // Commit the batch
@@ -176,7 +192,7 @@ export class UserService {
       
       // Create user settings if requested
       if (options?.userSettings !== false) {
-        await setDoc(doc(db, 'userSettings', userId), {
+        await setDoc(doc(getFirestore(), 'userSettings', userId), {
           userId,
           theme: 'light',
           emailNotifications: true,
@@ -189,7 +205,7 @@ export class UserService {
       if (options?.defaultFolders !== false) {
         const defaultFolders = ['Images', 'Videos', 'Documents'];
         const folderPromises = defaultFolders.map(folder =>
-          addDoc(collection(db, 'folders'), {
+          addDoc(collection(getFirestore(), 'folders'), {
             userId,
             name: folder,
             path: `/${folder}`,
@@ -354,7 +370,7 @@ export class UserService {
       
       // Update organization with new member
       const now = Timestamp.now();
-      const orgRef = doc(db, 'organizations', organizationId);
+      const orgRef = doc(getFirestore(), 'organizations', organizationId);
       await updateDoc(orgRef, {
         [`members.${userId}`]: {
           userId,
@@ -369,7 +385,7 @@ export class UserService {
       });
       
       // Update user's organizations array
-      const userRef = doc(db, 'users', userId);
+      const userRef = doc(getFirestore(), 'users', userId);
       const userOrgs = user.organizations || [];
       
       if (!userOrgs.includes(organizationId)) {
@@ -438,7 +454,7 @@ export class UserService {
       
       // Update organization by removing member
       const now = Timestamp.now();
-      const orgRef = doc(db, 'organizations', organizationId);
+      const orgRef = doc(getFirestore(), 'organizations', organizationId);
       
       // Create updated members object without the user
       const updatedMembers = { ...organization.members };
@@ -470,7 +486,7 @@ export class UserService {
       // Update user's organizations array
       const user = await this.getUserById(userId);
       if (user && user.organizations) {
-        const userRef = doc(db, 'users', userId);
+        const userRef = doc(getFirestore(), 'users', userId);
         const updatedOrgs = user.organizations.filter(id => id !== organizationId);
         
         let updates: any = {
@@ -530,7 +546,7 @@ export class UserService {
       }
       
       const now = Timestamp.now();
-      const userRef = doc(db, 'users', userId);
+      const userRef = doc(getFirestore(), 'users', userId);
       
       // Find active subscriptions across user's organizations
       const billingEndDate = await this.findLatestBillingPeriodEnd(user);
@@ -557,7 +573,7 @@ export class UserService {
       // Mark personal organization for deletion
       if (user.personalOrganizationId) {
         const orgId = user.personalOrganizationId;
-        const orgDoc = await getDoc(doc(db, 'organizations', orgId));
+        const orgDoc = await getDoc(doc(getFirestore(), 'organizations', orgId));
         
         if (orgDoc.exists()) {
           const organization = {
@@ -567,7 +583,7 @@ export class UserService {
           
           // Note: We're not calling prepareOrganizationForDeletion here because
           // we need to set a custom deletion date based on billing period
-          await updateDoc(doc(db, 'organizations', orgId), {
+          await updateDoc(doc(getFirestore(), 'organizations', orgId), {
             status: OrganizationStatus.PENDING_DELETION,
             deletionDate: Timestamp.fromDate(effectiveDeletionDate),
             updatedAt: now
@@ -617,7 +633,7 @@ export class UserService {
       
       // Check each organization for active subscriptions
       for (const orgId of user.organizations) {
-        const orgDoc = await getDoc(doc(db, 'organizations', orgId));
+        const orgDoc = await getDoc(doc(getFirestore(), 'organizations', orgId));
         
         if (!orgDoc.exists()) continue;
         
@@ -639,7 +655,7 @@ export class UserService {
           
           // To ensure we have the most up-to-date end date, also check with Stripe
           try {
-            const subscription = await stripe.subscriptions.retrieve(billing.subscriptionId);
+            const subscription = await getStripeClient().subscriptions.retrieve(billing.subscriptionId);
             
             if (subscription.status === 'active' || subscription.status === 'trialing') {
               // Cast to any to access the property that the typings aren't recognizing
@@ -675,7 +691,7 @@ export class UserService {
    */
   private async cancelOrganizationSubscription(organizationId: string): Promise<boolean> {
     try {
-      const orgDoc = await getDoc(doc(db, 'organizations', organizationId));
+      const orgDoc = await getDoc(doc(getFirestore(), 'organizations', organizationId));
       
       if (!orgDoc.exists()) {
         logger.warn('Organization not found for subscription cancellation', { organizationId });
@@ -691,7 +707,7 @@ export class UserService {
       }
       
       // Cancel the subscription in Stripe, allowing it to remain active until the end of the period
-      await stripe.subscriptions.update(billing.subscriptionId, {
+      await getStripeClient().subscriptions.update(billing.subscriptionId, {
         cancel_at_period_end: true,
         cancellation_details: {
           comment: 'Customer requested account deletion',
@@ -700,7 +716,7 @@ export class UserService {
       });
       
       // Update organization record with cancellation status
-      await updateDoc(doc(db, 'organizations', organizationId), {
+      await updateDoc(doc(getFirestore(), 'organizations', organizationId), {
         'billing.cancellationRequested': true,
         'billing.subscriptionStatus': 'canceled',
         'billing.cancellationDate': Timestamp.now(),
@@ -727,7 +743,7 @@ export class UserService {
   async executePendingDeletions(): Promise<number> {
     try {
       // Find users with pending deletion status
-      const usersRef = collection(db, 'users');
+      const usersRef = collection(getFirestore(), 'users');
       const q = query(
         usersRef, 
         where('status', '==', 'deletion_pending')
@@ -792,7 +808,7 @@ export class UserService {
       
       // Check each organization for active subscriptions
       for (const orgId of user.organizations) {
-        const orgDoc = await getDoc(doc(db, 'organizations', orgId));
+        const orgDoc = await getDoc(doc(getFirestore(), 'organizations', orgId));
         
         if (!orgDoc.exists()) continue;
         
@@ -806,7 +822,7 @@ export class UserService {
           
           // Double-check with Stripe to verify the subscription is truly active
           try {
-            const subscription = await stripe.subscriptions.retrieve(billing.subscriptionId);
+            const subscription = await getStripeClient().subscriptions.retrieve(billing.subscriptionId);
             
             if (subscription.status === 'active' || subscription.status === 'trialing') {
               // Cast to any to access the property that the typings aren't recognizing
@@ -854,7 +870,7 @@ export class UserService {
       
       // Delete user's personal organization if it exists
       if (user.personalOrganizationId) {
-        await deleteDoc(doc(db, 'organizations', user.personalOrganizationId));
+        await deleteDoc(doc(getFirestore(), 'organizations', user.personalOrganizationId));
         logger.info('Deleted personal organization', { 
           userId, 
           organizationId: user.personalOrganizationId 
@@ -865,7 +881,7 @@ export class UserService {
       // This would only be present on legacy user records that haven't migrated to org-based subscriptions
       try {
         // Find Stripe customer by email or metadata
-        const customers = await stripe.customers.list({
+        const customers = await getStripeClient().customers.list({
           email: user.email,
           limit: 1
         });
@@ -873,7 +889,7 @@ export class UserService {
         if (customers.data.length > 0) {
           const customerId = customers.data[0].id;
           // Delete the customer in Stripe
-          await stripe.customers.del(customerId);
+          await getStripeClient().customers.del(customerId);
           logger.info('Deleted Stripe customer', { 
             userId, 
             stripeCustomerId: customerId
@@ -888,7 +904,7 @@ export class UserService {
       }
       
       // Delete user document
-      await deleteDoc(doc(db, 'users', userId));
+      await deleteDoc(doc(getFirestore(), 'users', userId));
       
       logger.info('Permanently deleted user', { userId });
       return true;
@@ -905,7 +921,7 @@ export class UserService {
    */
   private async getOrganizationById(organizationId: string): Promise<Organization | null> {
     try {
-      const orgRef = doc(db, 'organizations', organizationId);
+      const orgRef = doc(getFirestore(), 'organizations', organizationId);
       const orgDoc = await getDoc(orgRef);
       
       if (!orgDoc.exists()) {
@@ -943,7 +959,7 @@ export class UserService {
       }
       
       // Get organization details
-      const orgRef = doc(db, 'organizations', orgId);
+      const orgRef = doc(getFirestore(), 'organizations', orgId);
       const orgDoc = await getDoc(orgRef);
       
       if (!orgDoc.exists()) {
@@ -981,7 +997,7 @@ export class UserService {
       }
       
       // Get organization details
-      const orgRef = doc(db, 'organizations', orgId);
+      const orgRef = doc(getFirestore(), 'organizations', orgId);
       const orgDoc = await getDoc(orgRef);
       
       if (!orgDoc.exists()) {
@@ -1019,7 +1035,7 @@ export class UserService {
       }
       
       // Get organization details
-      const orgRef = doc(db, 'organizations', orgId);
+      const orgRef = doc(getFirestore(), 'organizations', orgId);
       const orgDoc = await getDoc(orgRef);
       
       if (!orgDoc.exists()) {

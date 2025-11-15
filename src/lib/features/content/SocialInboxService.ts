@@ -1,5 +1,4 @@
 import { 
-  getFirestore, 
   collection, 
   doc as firestoreDoc, 
   query, 
@@ -18,7 +17,15 @@ import {
 import { v4 as uuidv4 } from 'uuid';
 import { PlatformType } from '../platforms/PlatformProvider';
 
-const firestore = getFirestore();
+// Lazy getter for firestore - avoids build-time initialization
+let _firestoreInstance: any = null;
+function getFirestoreInstance() {
+  if (!_firestoreInstance) {
+    const { firestore } = require('@/lib/core/firebase');
+    _firestoreInstance = firestore;
+  }
+  return _firestoreInstance;
+}
 
 export enum MessageType {
   DIRECT_MESSAGE = 'direct_message',
@@ -123,7 +130,7 @@ export class SocialInboxService {
     limit: number = 20,
     cursor?: string
   ): Promise<{ messages: InboxMessage[]; nextCursor?: string }> {
-    let q = query(collection(firestore, 'inbox'), where('userId', '==', userId));
+    let q = query(collection(getFirestoreInstance(), 'inbox'), where('userId', '==', userId));
     
     // Apply filters
     if (filter.platformTypes && filter.platformTypes.length > 0) {
@@ -155,7 +162,7 @@ export class SocialInboxService {
     
     // Apply cursor-based pagination
     if (cursor) {
-      const cursorDoc = await getDoc(firestoreDoc(collection(firestore, 'inbox'), cursor));
+      const cursorDoc = await getDoc(firestoreDoc(collection(getFirestoreInstance(), 'inbox'), cursor));
       if (cursorDoc.exists()) {
         q = query(q, startAfter(cursorDoc));
       }
@@ -223,7 +230,7 @@ export class SocialInboxService {
    * Get a single message by ID
    */
   async getMessage(messageId: string): Promise<InboxMessage | null> {
-    const docRef = await getDoc(firestoreDoc(collection(firestore, 'inbox'), messageId));
+    const docRef = await getDoc(firestoreDoc(collection(getFirestoreInstance(), 'inbox'), messageId));
     
     if (!docRef.exists()) {
       return null;
@@ -245,7 +252,7 @@ export class SocialInboxService {
     
     // Get all replies to this message
     const repliesQuery = query(
-      collection(firestore, 'inbox'),
+      collection(getFirestoreInstance(), 'inbox'),
       where('parentId', '==', parentId),
       orderBy('sentAt', 'asc')
     );
@@ -268,7 +275,7 @@ export class SocialInboxService {
     messageId: string, 
     status: MessageStatus
   ): Promise<InboxMessage | null> {
-    const messageRef = firestoreDoc(collection(firestore, 'inbox'), messageId);
+    const messageRef = firestoreDoc(collection(getFirestoreInstance(), 'inbox'), messageId);
     const messageDoc = await getDoc(messageRef);
     
     if (!messageDoc.exists()) {
@@ -321,7 +328,7 @@ export class SocialInboxService {
       const currentBatch = writeBatch(firestore);
       
       for (const id of chunk) {
-        const ref = firestoreDoc(collection(firestore, 'inbox'), id);
+        const ref = firestoreDoc(collection(getFirestoreInstance(), 'inbox'), id);
         currentBatch.update(ref, updateData);
         count++;
       }
@@ -398,7 +405,7 @@ export class SocialInboxService {
     
     // Set replied timestamp
     updatedMessage.repliedAt = new Date();
-    await updateDoc(doc(collection(firestore, 'inbox'), messageId), {
+    await updateDoc(doc(collection(getFirestoreInstance(), 'inbox'), messageId), {
       repliedAt: updatedMessage.repliedAt
     });
     
@@ -413,7 +420,7 @@ export class SocialInboxService {
       platformType: originalMessage.platformType
     };
     
-    await setDoc(doc(collection(firestore, 'inboxReplies'), replyRecord.id), replyRecord);
+    await setDoc(doc(collection(getFirestoreInstance(), 'inboxReplies'), replyRecord.id), replyRecord);
     
     return updatedMessage;
   }
@@ -431,7 +438,7 @@ export class SocialInboxService {
     const { LinkedInSocialInboxAdapter } = await import('./LinkedInSocialInboxAdapter');
     
     // Get LinkedIn account credentials
-    const accountDoc = await getDoc(firestoreDoc(collection(firestore, 'connectedAccounts'), originalMessage.accountId));
+    const accountDoc = await getDoc(firestoreDoc(collection(getFirestoreInstance(), 'connectedAccounts'), originalMessage.accountId));
       
     if (!accountDoc.exists()) {
       throw new Error('LinkedIn account not found');
@@ -484,7 +491,7 @@ export class SocialInboxService {
     const { TwitterSocialInboxAdapter } = await import('./TwitterSocialInboxAdapter');
     
     // Get Twitter account credentials
-    const accountDoc = await getDoc(doc(collection(firestore, 'connectedAccounts'), originalMessage.accountId));
+    const accountDoc = await getDoc(doc(collection(getFirestoreInstance(), 'connectedAccounts'), originalMessage.accountId));
       
     if (!accountDoc.exists()) {
       throw new Error('Twitter account not found');
@@ -534,7 +541,7 @@ export class SocialInboxService {
     const { TikTokSocialInboxAdapter } = await import('./TikTokSocialInboxAdapter');
     
     // Get TikTok account credentials
-    const accountDoc = await getDoc(doc(collection(firestore, 'connectedAccounts'), originalMessage.accountId));
+    const accountDoc = await getDoc(doc(collection(getFirestoreInstance(), 'connectedAccounts'), originalMessage.accountId));
       
     if (!accountDoc.exists()) {
       throw new Error('TikTok account not found');
@@ -578,7 +585,7 @@ export class SocialInboxService {
     const { YouTubeSocialInboxAdapter } = await import('./YouTubeSocialInboxAdapter');
     
     // Get YouTube account credentials
-    const accountDoc = await getDoc(doc(collection(firestore, 'connectedAccounts'), originalMessage.accountId));
+    const accountDoc = await getDoc(doc(collection(getFirestoreInstance(), 'connectedAccounts'), originalMessage.accountId));
       
     if (!accountDoc.exists()) {
       throw new Error('YouTube account not found');
@@ -622,7 +629,7 @@ export class SocialInboxService {
     const { RedditSocialInboxAdapter } = await import('./RedditSocialInboxAdapter');
     
     // Get Reddit account credentials
-    const accountDoc = await getDoc(doc(collection(firestore, 'connectedAccounts'), originalMessage.accountId));
+    const accountDoc = await getDoc(doc(collection(getFirestoreInstance(), 'connectedAccounts'), originalMessage.accountId));
       
     if (!accountDoc.exists()) {
       throw new Error('Reddit account not found');
@@ -666,7 +673,7 @@ export class SocialInboxService {
     const { MastodonSocialInboxAdapter } = await import('./MastodonSocialInboxAdapter');
     
     // Get Mastodon account credentials
-    const accountDoc = await getDoc(doc(collection(firestore, 'connectedAccounts'), originalMessage.accountId));
+    const accountDoc = await getDoc(doc(collection(getFirestoreInstance(), 'connectedAccounts'), originalMessage.accountId));
       
     if (!accountDoc.exists()) {
       throw new Error('Mastodon account not found');
@@ -762,7 +769,7 @@ export class SocialInboxService {
       id
     };
     
-    await setDoc(doc(collection(firestore, 'inbox'), id), newMessage);
+    await setDoc(doc(collection(getFirestoreInstance(), 'inbox'), id), newMessage);
     
     return newMessage;
   }
@@ -778,15 +785,15 @@ export class SocialInboxService {
       flaggedQuery,
       repliedQuery
     ] = await Promise.all([
-      getCountFromServer(query(collection(firestore, 'inbox'), where('userId', '==', userId))),
-      getCountFromServer(query(collection(firestore, 'inbox'), where('userId', '==', userId), where('status', '==', MessageStatus.UNREAD))),
-      getCountFromServer(query(collection(firestore, 'inbox'), where('userId', '==', userId), where('status', '==', MessageStatus.FLAGGED))),
-      getCountFromServer(query(collection(firestore, 'inbox'), where('userId', '==', userId), where('status', '==', MessageStatus.REPLIED)))
+      getCountFromServer(query(collection(getFirestoreInstance(), 'inbox'), where('userId', '==', userId))),
+      getCountFromServer(query(collection(getFirestoreInstance(), 'inbox'), where('userId', '==', userId), where('status', '==', MessageStatus.UNREAD))),
+      getCountFromServer(query(collection(getFirestoreInstance(), 'inbox'), where('userId', '==', userId), where('status', '==', MessageStatus.FLAGGED))),
+      getCountFromServer(query(collection(getFirestoreInstance(), 'inbox'), where('userId', '==', userId), where('status', '==', MessageStatus.REPLIED)))
     ]);
     
     // Get distribution by platform, type, and priority using efficient aggregation counters
     // First, check if we have aggregated stats available in the dedicated counters collection
-    const counterDoc = await getDoc(firestoreDoc(collection(firestore, 'inboxCounters'), userId));
+    const counterDoc = await getDoc(firestoreDoc(collection(getFirestoreInstance(), 'inboxCounters'), userId));
     
     // If we have pre-calculated counters, use them
     if (counterDoc.exists()) {
@@ -806,7 +813,7 @@ export class SocialInboxService {
     // If no pre-calculated counters exist, compute them from a reasonable sample
     // and store them for future use
     const messagesSnapshot = await getDocs(query(
-      collection(firestore, 'inbox'),
+      collection(getFirestoreInstance(), 'inbox'),
       where('userId', '==', userId),
       orderBy('receivedAt', 'desc'),
       firestoreLimit(1000)
@@ -830,7 +837,7 @@ export class SocialInboxService {
     });
     
     // Store the calculated counters for future use
-    await setDoc(firestoreDoc(collection(firestore, 'inboxCounters'), userId), {
+    await setDoc(firestoreDoc(collection(getFirestoreInstance(), 'inboxCounters'), userId), {
       byPlatform,
       byType,
       byPriority,
@@ -855,7 +862,7 @@ export class SocialInboxService {
     messageId: string,
     assigneeId: string
   ): Promise<InboxMessage | null> {
-    const messageRef = doc(collection(firestore, 'inbox'), messageId);
+    const messageRef = doc(collection(getFirestoreInstance(), 'inbox'), messageId);
     const messageDoc = await getDoc(messageRef);
     
     if (!messageDoc.exists()) {
@@ -877,7 +884,7 @@ export class SocialInboxService {
     messageId: string,
     labels: string[]
   ): Promise<InboxMessage | null> {
-    const messageRef = doc(collection(firestore, 'inbox'), messageId);
+    const messageRef = doc(collection(getFirestoreInstance(), 'inbox'), messageId);
     const messageDoc = await getDoc(messageRef);
     
     if (!messageDoc.exists()) {
@@ -899,7 +906,7 @@ export class SocialInboxService {
     messageId: string,
     priority: MessagePriority
   ): Promise<InboxMessage | null> {
-    const messageRef = doc(collection(firestore, 'inbox'), messageId);
+    const messageRef = doc(collection(getFirestoreInstance(), 'inbox'), messageId);
     const messageDoc = await getDoc(messageRef);
     
     if (!messageDoc.exists()) {
@@ -921,7 +928,7 @@ export class SocialInboxService {
     messageId: string,
     notes: string
   ): Promise<InboxMessage | null> {
-    const messageRef = doc(collection(firestore, 'inbox'), messageId);
+    const messageRef = doc(collection(getFirestoreInstance(), 'inbox'), messageId);
     const messageDoc = await getDoc(messageRef);
     
     if (!messageDoc.exists()) {
@@ -940,7 +947,7 @@ export class SocialInboxService {
    * Delete a message
    */
   async deleteMessage(messageId: string): Promise<boolean> {
-    const messageRef = doc(collection(firestore, 'inbox'), messageId);
+    const messageRef = doc(collection(getFirestoreInstance(), 'inbox'), messageId);
     const messageDoc = await getDoc(messageRef);
     
     if (!messageDoc.exists()) {

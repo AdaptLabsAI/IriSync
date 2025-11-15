@@ -1,10 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { SubscriptionTier as BaseSubscriptionTier } from '@/lib/features/subscription/models/subscription';
-import { UserService } from '@/lib/features/auth/user-service';
 import { UserRole } from '@/lib/core/models/User';
-import { auth as clientAuth } from '@/lib/core/firebase';
-import { auth as adminAuth } from '@/lib/core/firebase/admin';
 import logger from '@/lib/core/logging/logger';
 import { handleApiError } from '@/lib/features/auth/utils';
 
@@ -13,11 +10,16 @@ export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
 
 
-// Service instances
-const userService = new UserService();
-
 export async function POST(req: NextRequest) {
   try {
+    // Lazy imports to avoid build-time initialization
+    const { UserService } = await import('@/lib/features/auth/user-service');
+    const { auth: clientAuth } = await import('@/lib/core/firebase');
+    const { auth: adminAuth } = await import('@/lib/core/firebase/admin');
+    
+    // Service instances
+    const userService = new UserService();
+    
     const body = await req.json();
     const {
       firstName,
