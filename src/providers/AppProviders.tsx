@@ -20,6 +20,17 @@ const theme = createTheme({
 });
 
 // Firebase error handler component
+// This component displays an error UI when Firebase client configuration is incomplete
+// or when Firebase fails to initialize in the browser.
+// 
+// It will NOT show errors for:
+// - SSR usage of Firebase client (developer error, logged but not shown to users)
+// - Authentication failures (handled by individual auth forms)
+// - Network errors (handled by individual operations)
+// 
+// It ONLY shows for:
+// - Missing or incomplete NEXT_PUBLIC_FIREBASE_* environment variables
+// - Firebase initialization failures in the browser (runtime errors)
 const FirebaseErrorHandler = ({ children }: { children: ReactNode }) => {
   const { error } = useAuth();
 
