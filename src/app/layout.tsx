@@ -2,6 +2,7 @@ import './globals.css';
 import { Providers } from './providers';
 import type { Metadata } from 'next';
 import dynamicImport from 'next/dynamic';
+import { Analytics } from "@vercel/analytics/next";
 
 // Force dynamic rendering for all routes to prevent build-time issues
 export const dynamic = 'force-dynamic';
@@ -62,6 +63,7 @@ export default function RootLayout({
           {children}
           <ChatbotWidget position="bottom-right" />
         </Providers>
+        <Analytics />
       </body>
     </html>
   );
