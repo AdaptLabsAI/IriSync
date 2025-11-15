@@ -182,7 +182,8 @@ export default function HomePage() {
       
       try {
         console.log('Fetching testimonials from API');
-        const response = await get('/api/testimonials');
+        // Use the correct API endpoint - the route is at /api/feedback/testimonials
+        const response = await get('/api/feedback/testimonials');
         
         if (response.success && Array.isArray(response.data)) {
           const publishedTestimonials = response.data.filter((t: Testimonial) => t.isPublished);
