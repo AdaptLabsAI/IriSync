@@ -10,15 +10,14 @@
  * 
  * Usage:
  * npx ts-node scripts/setAdminAdminUser.ts
+ * or
+ * node scripts/setAdminAdminUser.js (if compiled)
  */
 
 // Load environment variables from .env.local
-import * as dotenv from 'dotenv';
-import * as path from 'path';
-import * as admin from 'firebase-admin';
+require('dotenv').config({ path: '.env.local' });
 
-// Load environment variables
-dotenv.config({ path: path.resolve(process.cwd(), '.env.local') });
+const admin = require('firebase-admin');
 
 // Admin email to promote
 const ADMIN_EMAIL = 'admin@irisync.com';
@@ -96,7 +95,7 @@ async function setAdminRole() {
 
     console.log(`✅ Admin role added to ${ADMIN_EMAIL}`);
     console.log(`\nℹ The user will need to sign out and sign back in for the changes to take effect.`);
-  } catch (error: any) {
+  } catch (error) {
     if (error.code === 'auth/user-not-found') {
       console.error(`❌ Failed to add admin role: User ${ADMIN_EMAIL} not found`);
       console.error('\nPlease create this user in Firebase Console first:');
