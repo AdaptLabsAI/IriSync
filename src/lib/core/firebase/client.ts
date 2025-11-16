@@ -68,6 +68,7 @@ let firestore: Firestore | null = null;
 let auth: Auth | null = null;
 let storage: FirebaseStorage | null = null;
 let initialized = false;
+let configWarningLogged = false; // Track if we've already logged the warning
 
 /**
  * Initialize Firebase client SDK
@@ -177,52 +178,52 @@ export function getFirebaseApp(): FirebaseApp | null {
 }
 
 /**
+ * Check if Firebase is properly configured
+ * Simple boolean check - safe to call anywhere
+ * 
+ * @returns {boolean} True if all required Firebase env vars are set
+ */
+export function isFirebaseConfigured(): boolean {
+  return hasValidFirebaseClientEnv();
+}
+
+/**
  * Get Firebase Client App instance with proper error handling
  * 
  * IMPORTANT: This function MUST only be called in client-side code (browser).
  * Never call this during server-side rendering (SSR) or in server components.
  * 
- * @throws {FirebaseClientError} FIREBASE_CLIENT_USED_ON_SERVER if called on server
- * @throws {FirebaseClientError} FIREBASE_CLIENT_CONFIG_INCOMPLETE if config is missing
- * @returns {FirebaseApp} Firebase app instance
+ * Behavior:
+ * - In development: Logs warning once if config is missing, returns null
+ * - In production: Returns null silently if config is missing (no throwing, no logging)
+ * - On server: Returns null (SSR safety)
+ * 
+ * @returns {FirebaseApp | null} Firebase app instance or null if not available
  */
-export function getFirebaseClientApp(): FirebaseApp {
-  // Guard: Detect SSR/server-side usage (developer error)
+export function getFirebaseClientApp(): FirebaseApp | null {
+  // Guard: Detect SSR/server-side usage - return null instead of throwing
   if (typeof window === 'undefined') {
-    throw new FirebaseClientError(
-      'FIREBASE_CLIENT_USED_ON_SERVER',
-      'Firebase Client SDK cannot be used on the server. This function was called during server-side rendering. ' +
-      'Only call Firebase client functions in "use client" components or client-side effects (useEffect, event handlers, etc.). ' +
-      'For server-side Firebase operations, use the Firebase Admin SDK instead.'
-    );
+    return null;
   }
 
   // Check configuration before initialization
   if (!hasValidFirebaseClientEnv()) {
-    const status = logFirebaseConfigStatus('getFirebaseClientApp');
-    throw new FirebaseClientError(
-      'FIREBASE_CLIENT_CONFIG_INCOMPLETE',
-      'Firebase client configuration is incomplete. Required environment variables are missing. ' +
-      'Check that all NEXT_PUBLIC_FIREBASE_* environment variables are set in your hosting platform.'
-    );
+    // In development, warn once
+    if (process.env.NODE_ENV !== 'production' && !configWarningLogged) {
+      console.warn('⚠️  Firebase is not configured. Please check environment variables.');
+      logFirebaseConfigStatus('getFirebaseClientApp');
+      configWarningLogged = true;
+    }
+    // In production, silently return null
+    return null;
   }
 
   // Initialize if needed
   if (!app && !initialized) {
     const success = initializeFirebaseClient();
     if (!success || !app) {
-      throw new FirebaseClientError(
-        'FIREBASE_CLIENT_CONFIG_INCOMPLETE',
-        'Firebase client failed to initialize. Check browser console for details.'
-      );
+      return null;
     }
-  }
-
-  if (!app) {
-    throw new FirebaseClientError(
-      'FIREBASE_CLIENT_CONFIG_INCOMPLETE',
-      'Firebase app is not initialized. This may indicate a configuration problem.'
-    );
   }
 
   return app;

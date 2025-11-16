@@ -59,6 +59,26 @@ const allowedOrigins = [
   ...(process.env.NODE_ENV === 'development' ? ['http://localhost:3000', 'http://localhost:3002'] : [])
 ].filter(Boolean); // Remove empty strings
 
+// Helper function to check if origin is allowed (including Vercel preview deployments)
+function isOriginAllowed(origin: string): boolean {
+  // Check exact match
+  if (allowedOrigins.includes(origin)) {
+    return true;
+  }
+  
+  // Allow any Vercel preview deployment for this project
+  // Pattern: https://iri-sync-*.vercel.app or https://iri-sync-*-adaptlabs.vercel.app
+  if (origin.match(/^https:\/\/iri-sync-[a-z0-9]+-adaptlabs\.vercel\.app$/)) {
+    return true;
+  }
+  
+  if (origin.match(/^https:\/\/iri-sync-[a-z0-9]+\.vercel\.app$/)) {
+    return true;
+  }
+  
+  return false;
+}
+
 /**
  * Role-based access control (RBAC) helper
  * @param user User token object
@@ -80,28 +100,33 @@ export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
   const origin = req.headers.get('origin') || '';
   
-  // Handle CORS for API routes
+  // Handle ALL OPTIONS requests early (CORS preflight)
+  // This prevents OPTIONS requests from going through auth logic
+  if (req.method === 'OPTIONS') {
+    const response = new NextResponse(null, { status: 204 });
+    
+    // Use helper to check if origin is allowed (includes Vercel previews)
+    const originAllowed = origin && isOriginAllowed(origin);
+    
+    response.headers.set('Access-Control-Allow-Origin', originAllowed ? origin : (allowedOrigins[0] || '*'));
+    response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With');
+    response.headers.set('Access-Control-Max-Age', '86400');
+    response.headers.set('Access-Control-Allow-Credentials', 'true');
+    
+    return response;
+  }
+  
+  // Handle CORS for API routes (actual requests, not OPTIONS)
   if (pathname.startsWith('/api/')) {
-    // Check if the origin is allowed
-    const isAllowedOrigin = allowedOrigins.includes(origin);
-    
-    // For API requests, we need to handle OPTIONS preflight requests
-    if (req.method === 'OPTIONS') {
-      const response = new NextResponse(null, { status: 204 });
-      
-      response.headers.set('Access-Control-Allow-Origin', isAllowedOrigin ? origin : allowedOrigins[0]);
-      response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-      response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With');
-      response.headers.set('Access-Control-Max-Age', '86400');
-      
-      return response;
-    }
-    
     // For actual API requests, handle the response with appropriate CORS headers
     const response = NextResponse.next();
     
+    // Use helper to check if origin is allowed (includes Vercel previews)
+    const originAllowed = origin && isOriginAllowed(origin);
+    
     // Set CORS headers
-    response.headers.set('Access-Control-Allow-Origin', isAllowedOrigin ? origin : allowedOrigins[0]);
+    response.headers.set('Access-Control-Allow-Origin', originAllowed ? origin : (allowedOrigins[0] || '*'));
     response.headers.set('Access-Control-Allow-Credentials', 'true');
     
     return response;

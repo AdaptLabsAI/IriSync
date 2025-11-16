@@ -32,36 +32,41 @@ export function isFirebaseConfigured(): boolean {
 /**
  * Get Firebase Auth instance safely (only in browser)
  * This ensures we don't try to use Firebase during SSR
+ * Returns null if Firebase is not configured
  */
-function getAuthSafely() {
+function getAuthSafely(): Auth | null {
   if (typeof window === 'undefined') {
-    throw new Error('Firebase Auth functions cannot be called during server-side rendering');
+    return null;
+  }
+  
+  // Check if Firebase is configured before trying to get auth
+  if (!isFirebaseConfigured()) {
+    return null;
   }
   
   try {
     return getFirebaseClientAuth();
   } catch (e) {
-    if (e instanceof FirebaseClientError) {
-      if (e.code === 'FIREBASE_CLIENT_CONFIG_INCOMPLETE') {
-        throw new Error('Firebase is not configured. Please check environment variables.');
-      }
-    }
-    throw e;
+    console.error('Error getting Firebase Auth:', e);
+    return null;
   }
 }
 
 /**
  * Get Firestore instance safely (only in browser)
+ * Returns null if Firebase is not configured
  */
-function getFirestoreSafely() {
+function getFirestoreSafely(): Firestore | null {
   if (typeof window === 'undefined') {
-    throw new Error('Firestore cannot be called during server-side rendering');
+    return null;
+  }
+  
+  // Check if Firebase is configured before trying to get Firestore
+  if (!isFirebaseConfigured()) {
+    return null;
   }
   
   const firestore = getFirebaseFirestore();
-  if (!firestore) {
-    throw new Error('Firestore is not initialized');
-  }
   return firestore;
 }
 
@@ -133,7 +138,20 @@ export async function registerUser(
     }
 
     const auth = getAuthSafely();
+    if (!auth) {
+      return {
+        success: false,
+        error: 'Firebase is not configured. Please check environment variables.'
+      };
+    }
+
     const firestore = getFirestoreSafely();
+    if (!firestore) {
+      return {
+        success: false,
+        error: 'Firebase is not configured. Please check environment variables.'
+      };
+    }
     
     // Create user with Firebase Authentication
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
@@ -214,7 +232,20 @@ export async function loginWithEmail(
     }
 
     const auth = getAuthSafely();
+    if (!auth) {
+      return {
+        success: false,
+        error: 'Firebase is not configured. Please check environment variables.'
+      };
+    }
+
     const firestore = getFirestoreSafely();
+    if (!firestore) {
+      return {
+        success: false,
+        error: 'Firebase is not configured. Please check environment variables.'
+      };
+    }
     
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
     
@@ -253,7 +284,20 @@ export async function loginWithGoogle(): Promise<{success: boolean; user?: User;
     }
 
     const auth = getAuthSafely();
+    if (!auth) {
+      return {
+        success: false,
+        error: 'Firebase is not configured. Please check environment variables.'
+      };
+    }
+
     const firestore = getFirestoreSafely();
+    if (!firestore) {
+      return {
+        success: false,
+        error: 'Firebase is not configured. Please check environment variables.'
+      };
+    }
     
     const provider = new GoogleAuthProvider();
     
