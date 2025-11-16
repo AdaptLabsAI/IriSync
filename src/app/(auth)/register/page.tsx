@@ -7,6 +7,7 @@ import { Layout, Container, Typography, Button, Card } from '@/components/ui/new
 import { registerUser, loginWithGoogle, getFirebaseErrorMessage } from '@/lib/features/auth/customAuth';
 import { getEarlyRegistrationPrice } from '@/lib/features/subscription/earlyRegistration';
 import { SubscriptionTier } from '@/lib/features/subscription/utils';
+import FirebaseConfigWarning from '@/components/auth/FirebaseConfigWarning';
 
 // Add a client-side check function to verify dashboard redirection is safe
 const safeDashboardRedirect = (router: any) => {
@@ -236,6 +237,9 @@ export default function RegisterPage() {
           </div>
 
           <Card className="p-8">
+            {/* Firebase Configuration Warning */}
+            <FirebaseConfigWarning />
+
             {/* Error Messages */}
             {errors.general && (
               <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">

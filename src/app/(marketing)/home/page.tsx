@@ -233,9 +233,11 @@ const data = [
         Stay ahead of the competition with the power of AI
       </p>
       <div className="flex flex-col sm:flex-row justify-center gap-4">
-        <button className="px-6 py-3 text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-100 transition">
-          Learn more
-        </button>
+        <Link href="/features-pricing">
+          <button className="px-6 py-3 text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-100 transition">
+            Learn more
+          </button>
+        </Link>
         <Link href="/register">
           <button className="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition">
             Start free trial
@@ -626,9 +628,11 @@ const data = [
 
       {/* Call-to-Action Button */}
       <div className="">
-        <button className=" text-white px-4 py-2 rounded-lg cursor-pointer bg-gradient-to-r from-[#00C853] to-[#003305] 0 transition duration-300">
-          Explore our AI toolkit features
-        </button>
+        <Link href="/features-pricing">
+          <button className=" text-white px-4 py-2 rounded-lg cursor-pointer bg-gradient-to-r from-[#00C853] to-[#003305] 0 transition duration-300">
+            Explore our AI toolkit features
+          </button>
+        </Link>
       </div>
     </div>
   </Container>
@@ -785,12 +789,16 @@ const data = [
             </p>
           </div>
           <div className="flex flex-col sm:flex-row gap-4 mt-17 lg:flex-shrink-0">
-            <button className="px-8 py-3 border border-gray-300 rounded-lg text-gray-800 font-medium hover:bg-gray-100 hover:border-gray-400 transition-colors">
-              Contact Sales
-            </button>
-            <button className="px-8 py-3 cursor-pointer bg-gradient-to-r from-[#00C853] to-[#003305] rounded-lg text-white font-medium  transition-colors">
-              Start free trial
-            </button>
+            <Link href="/contact-sales">
+              <button className="px-8 py-3 border border-gray-300 rounded-lg text-gray-800 font-medium hover:bg-gray-100 hover:border-gray-400 transition-colors">
+                Contact Sales
+              </button>
+            </Link>
+            <Link href="/register">
+              <button className="px-8 py-3 cursor-pointer bg-gradient-to-r from-[#00C853] to-[#003305] rounded-lg text-white font-medium  transition-colors">
+                Start free trial
+              </button>
+            </Link>
           </div>
         </div>
       </div>
