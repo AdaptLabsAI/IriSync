@@ -177,62 +177,122 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex">
-      {/* Left Side - Branding */}
-      <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-gray-900 via-green-900 to-gray-900 items-center justify-center p-12 relative overflow-hidden">
-        {/* Decorative elements */}
-        <div className="absolute top-20 left-20 w-64 h-64 bg-green-500 rounded-full opacity-10 blur-3xl"></div>
-        <div className="absolute bottom-20 right-20 w-96 h-96 bg-green-400 rounded-full opacity-10 blur-3xl"></div>
+    <div style={{ display: 'flex', minHeight: '100vh', width: '100%', background: '#131A13' }}>
+      {/* Left Side - Green Hero/Graphics */}
+      <div style={{ flex: 1, position: 'relative', background: '#1B5320', overflow: 'hidden' }} className="hidden lg:block">
+        {/* Decorative blurred shapes */}
+        <div style={{ 
+          position: 'absolute', 
+          top: '80px', 
+          left: '60px', 
+          width: '280px', 
+          height: '280px', 
+          background: '#00C853', 
+          borderRadius: '50%', 
+          opacity: 0.15, 
+          filter: 'blur(80px)' 
+        }}></div>
+        <div style={{ 
+          position: 'absolute', 
+          bottom: '100px', 
+          right: '80px', 
+          width: '350px', 
+          height: '350px', 
+          background: '#00C853', 
+          borderRadius: '50%', 
+          opacity: 0.12, 
+          filter: 'blur(100px)' 
+        }}></div>
         
-        <div className="relative z-10 max-w-md">
-          {/* Logo */}
-          <div className="mb-12">
-            <Link href="/" className="flex items-center space-x-3">
-              <svg className="w-10 h-10 text-green-500" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                <path d="M2 17L12 22L22 17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                <path d="M2 12L12 17L22 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-              <span className="text-2xl font-bold text-white">IriSync</span>
-            </Link>
-          </div>
+        {/* Decorative rings */}
+        <div style={{
+          position: 'absolute',
+          top: '120px',
+          right: '100px',
+          width: '200px',
+          height: '200px',
+          border: '2px solid rgba(0, 200, 83, 0.2)',
+          borderRadius: '50%'
+        }}></div>
+        <div style={{
+          position: 'absolute',
+          bottom: '150px',
+          left: '80px',
+          width: '150px',
+          height: '150px',
+          border: '2px solid rgba(0, 200, 83, 0.15)',
+          borderRadius: '50%'
+        }}></div>
+        
+        <div style={{ position: 'relative', zIndex: 10, display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', padding: '48px' }}>
+          <div style={{ maxWidth: '500px' }}>
+            {/* Logo */}
+            <div style={{ marginBottom: '80px' }}>
+              <Link href="/" className="flex items-center space-x-3">
+                <svg className="w-12 h-12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ color: '#00C853' }}>
+                  <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M2 17L12 22L22 17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M2 12L12 17L22 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+                <span style={{ fontSize: '28px', fontWeight: 600, color: 'white' }}>IriSync</span>
+              </Link>
+            </div>
 
-          {/* Decorative card */}
-          <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 border border-white/20">
-            <h3 className="text-white text-lg font-semibold mb-4">Top Integrations</h3>
-            <div className="grid grid-cols-2 gap-4">
-              {['Facebook', 'Instagram', 'Twitter', 'LinkedIn'].map((platform) => (
-                <div key={platform} className="bg-white/5 rounded-lg p-3 text-center">
-                  <div className="w-8 h-8 mx-auto mb-2 bg-green-500/20 rounded-full"></div>
-                  <span className="text-white/70 text-sm">{platform}</span>
-                </div>
-              ))}
+            {/* Top Integrations Card */}
+            <div style={{ 
+              background: 'rgba(255, 255, 255, 0.1)', 
+              backdropFilter: 'blur(20px)',
+              borderRadius: '20px', 
+              padding: '32px', 
+              border: '1px solid rgba(255, 255, 255, 0.2)' 
+            }}>
+              <h3 style={{ color: 'white', fontSize: '20px', fontWeight: 600, marginBottom: '24px' }}>Top Integrations</h3>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                {['Facebook', 'Instagram', 'Twitter', 'LinkedIn'].map((platform) => (
+                  <div key={platform} style={{ 
+                    background: 'rgba(255, 255, 255, 0.05)', 
+                    borderRadius: '12px', 
+                    padding: '16px', 
+                    textAlign: 'center' 
+                  }}>
+                    <div style={{ 
+                      width: '36px', 
+                      height: '36px', 
+                      margin: '0 auto 8px', 
+                      background: 'rgba(0, 200, 83, 0.2)', 
+                      borderRadius: '50%' 
+                    }}></div>
+                    <span style={{ color: 'rgba(255, 255, 255, 0.7)', fontSize: '14px' }}>{platform}</span>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Right Side - Login Form */}
-      <div className="w-full lg:w-1/2 flex items-center justify-center p-8 bg-white">
-        <div className="w-full max-w-md">
+      {/* Right Side - White Login Panel */}
+      <div style={{ flex: 1, background: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{ width: '100%', maxWidth: '520px', padding: '32px' }}>
           {/* Mobile Logo */}
           <div className="lg:hidden mb-8">
             <Link href="/" className="flex items-center space-x-3">
-              <svg className="w-8 h-8 text-green-500" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <svg className="w-8 h-8" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ color: '#00C853' }}>
                 <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                 <path d="M2 17L12 22L22 17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                 <path d="M2 12L12 17L22 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
-              <span className="text-2xl font-bold text-gray-900">IriSync</span>
+              <span style={{ fontSize: '24px', fontWeight: 600, color: '#131A13' }}>IriSync</span>
             </Link>
           </div>
 
           {/* Header */}
-          <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900">
-              Welcome to <span className="text-green-600">IriSync</span>
+          <div style={{ marginBottom: '48px' }}>
+            <h1 style={{ fontSize: '56px', lineHeight: '1.1', fontFamily: 'Inter, sans-serif', marginBottom: '8px' }}>
+              <span style={{ color: '#131A13', fontWeight: 400 }}>Welcome to</span>{' '}
+              <span style={{ color: '#00C853', fontWeight: 500 }}>IriSync</span>
             </h1>
-            <p className="mt-2 text-gray-600">Access your journey by logging in</p>
+            <p style={{ fontSize: '24px', color: 'rgba(19, 26, 19, 0.55)', marginTop: '16px' }}>Access your journey by logging in</p>
           </div>
 
           {/* Firebase Configuration Warning */}
@@ -254,48 +314,46 @@ export default function LoginPage() {
           )}
 
           {/* Login Form */}
-          <form onSubmit={handleSubmit} className="space-y-5">
+          <form onSubmit={handleSubmit} style={{ marginTop: '32px' }}>
             {/* Email Field */}
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+            <div style={{ marginBottom: '24px' }}>
+              <label htmlFor="email" style={{ display: 'block', fontSize: '14px', fontWeight: 500, color: '#131A13', marginBottom: '8px' }}>
                 Email Address
               </label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" />
-                  </svg>
-                </div>
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  autoComplete="email"
-                  required
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  className={`block w-full pl-10 pr-3 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors ${
-                    formErrors.email ? 'border-red-300' : 'border-gray-300'
-                  }`}
-                  placeholder="Enter your email"
-                />
-              </div>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                autoComplete="email"
+                required
+                value={formData.email}
+                onChange={handleInputChange}
+                style={{
+                  width: '100%',
+                  height: '64px',
+                  background: '#F5F5F7',
+                  border: formErrors.email ? '1px solid #ef4444' : 'none',
+                  borderRadius: '16px',
+                  padding: '0 20px',
+                  fontSize: '18px',
+                  outline: 'none',
+                  transition: 'border 0.2s'
+                }}
+                placeholder="Enter your email"
+                onFocus={(e) => e.target.style.border = '2px solid #00C853'}
+                onBlur={(e) => e.target.style.border = formErrors.email ? '1px solid #ef4444' : 'none'}
+              />
               {formErrors.email && (
-                <p className="mt-1 text-sm text-red-600">{formErrors.email}</p>
+                <p style={{ marginTop: '8px', fontSize: '14px', color: '#ef4444' }}>{formErrors.email}</p>
               )}
             </div>
 
             {/* Password Field */}
-            <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
+            <div style={{ marginBottom: '24px' }}>
+              <label htmlFor="password" style={{ display: 'block', fontSize: '14px', fontWeight: 500, color: '#131A13', marginBottom: '8px' }}>
                 Enter Password
               </label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                  </svg>
-                </div>
+              <div style={{ position: 'relative' }}>
                 <input
                   id="password"
                   name="password"
@@ -304,15 +362,34 @@ export default function LoginPage() {
                   required
                   value={formData.password}
                   onChange={handleInputChange}
-                  className={`block w-full pl-10 pr-10 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors ${
-                    formErrors.password ? 'border-red-300' : 'border-gray-300'
-                  }`}
+                  style={{
+                    width: '100%',
+                    height: '64px',
+                    background: '#F5F5F7',
+                    border: formErrors.password ? '1px solid #ef4444' : 'none',
+                    borderRadius: '16px',
+                    padding: '0 56px 0 20px',
+                    fontSize: '18px',
+                    outline: 'none',
+                    transition: 'border 0.2s'
+                  }}
                   placeholder="Enter your password"
+                  onFocus={(e) => e.target.style.border = '2px solid #00C853'}
+                  onBlur={(e) => e.target.style.border = formErrors.password ? '1px solid #ef4444' : 'none'}
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                  style={{
+                    position: 'absolute',
+                    right: '20px',
+                    top: '50%',
+                    transform: 'translateY(-50%)',
+                    background: 'none',
+                    border: 'none',
+                    cursor: 'pointer',
+                    padding: '8px'
+                  }}
                 >
                   {showPassword ? (
                     <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -327,13 +404,22 @@ export default function LoginPage() {
                 </button>
               </div>
               {formErrors.password && (
-                <p className="mt-1 text-sm text-red-600">{formErrors.password}</p>
+                <p style={{ marginTop: '8px', fontSize: '14px', color: '#ef4444' }}>{formErrors.password}</p>
               )}
             </div>
 
             {/* Forgot Password Link */}
-            <div className="text-right">
-              <Link href="/reset-password" className="text-sm font-medium text-gray-900 hover:text-green-600 uppercase">
+            <div style={{ textAlign: 'right', marginBottom: '24px' }}>
+              <Link 
+                href="/reset-password" 
+                style={{ 
+                  fontSize: '14px', 
+                  fontWeight: 600, 
+                  color: '#131A13', 
+                  textDecoration: 'underline', 
+                  textTransform: 'uppercase' 
+                }}
+              >
                 Forgot Password?
               </Link>
             </div>
@@ -342,10 +428,24 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full py-3 px-4 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              style={{
+                width: '100%',
+                height: '64px',
+                borderRadius: '16px',
+                background: isLoading ? '#cccccc' : 'linear-gradient(135deg, #00C853 0%, #003305 100%)',
+                border: 'none',
+                color: 'white',
+                fontSize: '20px',
+                fontWeight: 700,
+                cursor: isLoading ? 'not-allowed' : 'pointer',
+                transition: 'opacity 0.2s',
+                opacity: isLoading ? 0.5 : 1
+              }}
+              onMouseEnter={(e) => !isLoading && (e.currentTarget.style.opacity = '0.9')}
+              onMouseLeave={(e) => !isLoading && (e.currentTarget.style.opacity = '1')}
             >
               {isLoading ? (
-                <span className="flex items-center justify-center">
+                <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                   <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
@@ -359,10 +459,18 @@ export default function LoginPage() {
           </form>
 
           {/* Sign Up Link */}
-          <div className="mt-6 text-center">
-            <p className="text-sm text-gray-600">
+          <div style={{ marginTop: '32px', textAlign: 'center' }}>
+            <p style={{ fontSize: '16px', color: 'rgba(19, 26, 19, 0.55)' }}>
               Don&apos;t have an account?{' '}
-              <Link href="/register" className="font-medium text-gray-900 hover:text-green-600 uppercase">
+              <Link 
+                href="/register" 
+                style={{ 
+                  fontWeight: 600, 
+                  color: '#131A13', 
+                  textDecoration: 'underline', 
+                  textTransform: 'uppercase' 
+                }}
+              >
                 Create New
               </Link>
             </p>

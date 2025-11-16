@@ -43,13 +43,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   if (error) {
-    // You can keep your existing error UI, just make sure it's not
-    // hardcoding a lie about "missing env vars" anymore.
+    // In development, still render children even with Firebase errors
+    // The FirebaseConfigWarning component will show the appropriate message
+    console.warn("[AuthProvider] Firebase error, but continuing to render:", error);
     return (
-      <div className="p-4 text-sm text-red-500">
-        <p>Firebase Authentication Error</p>
-        <p>{error}</p>
-      </div>
+      <AuthContext.Provider value={{ user: null, loading: false }}>
+        {children}
+      </AuthContext.Provider>
     );
   }
 
