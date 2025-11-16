@@ -1,84 +1,38 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { Layout, Container, Typography, Button, Card } from '@/components/ui/new';
-import { registerUser, loginWithGoogle, getFirebaseErrorMessage } from '@/lib/features/auth/customAuth';
-import { getEarlyRegistrationPrice } from '@/lib/features/subscription/earlyRegistration';
-import { SubscriptionTier } from '@/lib/features/subscription/utils';
-import FirebaseConfigWarning from '@/components/auth/FirebaseConfigWarning';
-
-// Add a client-side check function to verify dashboard redirection is safe
-const safeDashboardRedirect = (router: any) => {
-  const url = '/dashboard';
-  console.log('Safely redirecting to dashboard...');
-  
-  // Using window.location.href for more reliable redirection
-  // especially after Google sign-in popup which can cause issues with Next.js router
-  setTimeout(() => {
-    try {
-      // Try Next.js router first
-      router.push(url);
-      
-      // Add a fallback in case router push fails silently
-      setTimeout(() => {
-        if (window.location.pathname !== url) {
-          console.log('Router push may have failed, using direct location change');
-          window.location.href = url;
-        }
-      }, 300);
-    } catch (err) {
-      console.error('Router redirect failed, falling back to location:', err);
-      window.location.href = url;
-    }
-  }, 100);
-};
+import Image from 'next/image';
+import { registerUser, getFirebaseErrorMessage } from '@/lib/features/auth/customAuth';
 
 export default function RegisterPage() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
+    userName: '',
     email: '',
     password: '',
-    businessType: 'company', // Default to company
-    companyName: '',
-    companySize: '',
-    subscriptionTier: 'creator', // Default subscription tier
-    acceptTerms: false
+    confirmPassword: ''
   });
-  const [useEarlyDiscount, setUseEarlyDiscount] = useState(false);
-
-  type FormField = keyof typeof formData;
-  
   const [errors, setErrors] = useState({
-    firstName: '',
-    lastName: '',
+    userName: '',
     email: '',
     password: '',
-    businessType: '',
-    companyName: '',
-    companySize: '',
-    subscriptionTier: '',
-    acceptTerms: '',
+    confirmPassword: '',
     general: ''
   });
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-    const target = e.target;
-    const value = target.type === 'checkbox' ? (target as HTMLInputElement).checked : target.value;
-    const name = target.name;
-    
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
     setFormData({
       ...formData,
       [name]: value
     });
-    
+
     // Clear error when typing
-    if (errors[name as FormField]) {
+    if (errors[name as keyof typeof errors]) {
       setErrors({
         ...errors,
         [name]: ''
@@ -88,96 +42,64 @@ export default function RegisterPage() {
 
   const validateForm = () => {
     const newErrors = {
-      firstName: '',
-      lastName: '',
+      userName: '',
       email: '',
       password: '',
-      businessType: '',
-      companyName: '',
-      companySize: '',
-      subscriptionTier: '',
-      acceptTerms: '',
+      confirmPassword: '',
       general: ''
     };
-    
-    // Simple validation
-    if (!formData.firstName) {
-      newErrors.firstName = 'First name is required';
+
+    if (!formData.userName) {
+      newErrors.userName = 'User name is required';
     }
-    
-    if (!formData.lastName) {
-      newErrors.lastName = 'Last name is required';
-    }
-    
+
     if (!formData.email) {
       newErrors.email = 'Email is required';
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
       newErrors.email = 'Email is invalid';
     }
-    
+
     if (!formData.password) {
       newErrors.password = 'Password is required';
     } else if (formData.password.length < 8) {
       newErrors.password = 'Password must be at least 8 characters';
     }
-    
-    if (!formData.businessType) {
-      newErrors.businessType = 'Business type is required';
+
+    if (!formData.confirmPassword) {
+      newErrors.confirmPassword = 'Please confirm your password';
+    } else if (formData.password !== formData.confirmPassword) {
+      newErrors.confirmPassword = 'Passwords do not match';
     }
-    
-    // Only validate company name if business type is company
-    if (formData.businessType === 'company' && !formData.companyName) {
-      newErrors.companyName = 'Company name is required';
-    }
-    
-    if (!formData.subscriptionTier) {
-      newErrors.subscriptionTier = 'Subscription tier is required';
-    }
-    
-    if (!formData.acceptTerms) {
-      newErrors.acceptTerms = 'You must accept the terms and conditions';
-    }
-    
+
     setErrors(newErrors);
-    
-    // Check if there are any errors
     return !Object.values(newErrors).some(error => error !== '');
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       return;
     }
-    
+
     setIsLoading(true);
-    
+
     try {
-      // Use our custom registration function with correct parameters
-      const result = await registerUser(
-        formData.email,
-        formData.password,
-        formData.firstName,
-        formData.lastName,
-        {
-          businessType: formData.businessType,
-          companyName: formData.companyName,
-          companySize: formData.companySize,
-          subscriptionTier: formData.subscriptionTier as SubscriptionTier,
-          useEarlyDiscount,
-          acceptTerms: formData.acceptTerms
-        }
-      );
-      
+      const result = await registerUser({
+        email: formData.email,
+        password: formData.password,
+        firstName: formData.userName.split(' ')[0] || formData.userName,
+        lastName: formData.userName.split(' ').slice(1).join(' ') || '',
+        businessType: 'individual',
+        subscriptionTier: 'creator'
+      });
+
       if (result.success) {
-        // Registration successful, redirect to dashboard
-        safeDashboardRedirect(router);
+        router.push('/dashboard');
       } else {
-        // Registration failed
         setErrors({
           ...errors,
-          general: result.error || 'Failed to create account. Please try again.'
+          general: result.error || 'Registration failed'
         });
       }
     } catch (error: any) {
@@ -189,421 +111,246 @@ export default function RegisterPage() {
       setIsLoading(false);
     }
   };
-
-  const handleGoogleSignIn = async () => {
-    setIsLoading(true);
-    
-    try {
-      console.log('Attempting Google sign-in...');
-      
-      const result = await loginWithGoogle();
-      
-      console.log('Google sign-in result:', result.success ? 'Success' : 'Failed', result.error || '');
-      
-      if (result.success) {
-        safeDashboardRedirect(router);
-      } else {
-        setErrors({
-          ...errors,
-          general: result.error || 'Failed to sign in with Google'
-        });
-      }
-    } catch (error: any) {
-      console.error('Google sign-in error:', error);
-      setErrors({
-        ...errors,
-        general: getFirebaseErrorMessage(error)
-      });
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  // Get pricing information
-  const creatorPrice = getEarlyRegistrationPrice('creator');
-  const influencerPrice = getEarlyRegistrationPrice('influencer');
 
   return (
-    <Layout>
-      <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
-        <Container maxWidth="md">
-          <div className="text-center mb-8">
-            <Typography variant="h2" className="mb-4">
-              Create your account
-            </Typography>
-            <Typography variant="body" color="secondary">
-              Join thousands of businesses using IriSync to grow their online presence
-            </Typography>
+    <div className="min-h-screen flex">
+      {/* Left Panel - Dark Green with Decorative Elements */}
+      <div className="hidden lg:flex lg:w-1/2 bg-[#1B5320] relative overflow-hidden">
+        {/* Decorative elements */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-20 left-20 w-64 h-64 border-2 border-white rounded-3xl"></div>
+          <div className="absolute bottom-32 right-32 w-48 h-48 border-2 border-white rounded-3xl"></div>
+          <div className="absolute top-1/2 left-1/4 w-32 h-32 border border-white rounded-full"></div>
+        </div>
+
+        {/* Logo */}
+        <div className="absolute top-10 left-10">
+          <Link href="/">
+            <Image
+              src="/logo-white.svg"
+              alt="IriSync"
+              width={120}
+              height={40}
+              className="cursor-pointer"
+              onError={(e) => {
+                const target = e.target as HTMLImageElement;
+                target.style.display = 'none';
+                const parent = target.parentElement;
+                if (parent) {
+                  parent.innerHTML = '<span class="text-white text-2xl font-bold">IriSync</span>';
+                }
+              }}
+            />
+          </Link>
+        </div>
+
+        {/* Top Integrations Label */}
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+          <div className="text-white text-center">
+            <h3 className="text-2xl font-semibold mb-8">Top integrations</h3>
+            {/* Integration Icons Placeholder */}
+            <div className="grid grid-cols-2 gap-6">
+              <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
+                <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+              </div>
+              <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
+                <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-2 16h-2v-6h2v6zm-1-6.891c-.607 0-1.1-.496-1.1-1.109 0-.612.492-1.109 1.1-1.109s1.1.497 1.1 1.109c0 .613-.493 1.109-1.1 1.109zm8 6.891h-1.998v-2.861c0-1.881-2.002-1.722-2.002 0v2.861h-2v-6h2v1.093c.872-1.616 4-1.736 4 1.548v3.359z"/></svg>
+              </div>
+              <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
+                <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/></svg>
+              </div>
+              <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
+                <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Right Panel - White Form */}
+      <div className="w-full lg:w-1/2 flex items-center justify-center p-8 bg-white">
+        <div className="w-full max-w-md">
+          {/* Mobile Logo */}
+          <div className="lg:hidden mb-8 text-center">
+            <Link href="/">
+              <Image
+                src="/logo.svg"
+                alt="IriSync"
+                width={120}
+                height={40}
+                className="mx-auto cursor-pointer"
+                onError={(e) => {
+                  const target = e.target as HTMLImageElement;
+                  target.style.display = 'none';
+                  const parent = target.parentElement;
+                  if (parent) {
+                    parent.innerHTML = '<span class="text-gray-900 text-2xl font-bold">IriSync</span>';
+                  }
+                }}
+              />
+            </Link>
           </div>
 
-          <Card className="p-8">
-            {/* Firebase Configuration Warning */}
-            <FirebaseConfigWarning />
+          {/* Header */}
+          <div className="text-center mb-8">
+            <h1 className="text-4xl font-semibold text-gray-900 mb-2">
+              Get Started with <span className="text-[#00C853]">IriSync</span>
+            </h1>
+            <p className="text-gray-600 text-lg">
+              Register now to begin your experience
+            </p>
+          </div>
 
-            {/* Error Messages */}
-            {errors.general && (
-              <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
-                <Typography variant="body" className="text-red-700">
-                  {errors.general}
-                </Typography>
-              </div>
-            )}
+          {/* Error Messages */}
+          {errors.general && (
+            <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-xl">
+              <p className="text-red-700 text-sm">{errors.general}</p>
+            </div>
+          )}
 
-            {/* Early Registration Banner */}
-            <div className="mb-6 p-4 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg">
-              <Typography variant="h6" className="text-white font-bold mb-2">
-                🎉 Limited Time: Early Registration Pricing
-              </Typography>
-              <Typography variant="body" className="text-white mb-3">
-                Get 50% off our regular pricing when you sign up during our launch period!
-              </Typography>
-              <label className="flex items-center">
+          {/* Form */}
+          <form onSubmit={handleSubmit} className="space-y-5">
+            {/* User Name */}
+            <div>
+              <div className="relative">
+                <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                  </svg>
+                </span>
                 <input
-                  type="checkbox"
-                  checked={useEarlyDiscount}
-                  onChange={(e) => setUseEarlyDiscount(e.target.checked)}
-                  className="h-4 w-4 text-white focus:ring-white border-white rounded"
+                  type="text"
+                  name="userName"
+                  value={formData.userName}
+                  onChange={handleInputChange}
+                  placeholder="User Name"
+                  className={`w-full pl-12 pr-4 py-4 border ${errors.userName ? 'border-red-300' : 'border-gray-200'} rounded-xl bg-gray-50 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all text-gray-900 placeholder-gray-400`}
                 />
-                <span className="ml-2 text-white">Apply early registration discount (50% off for life)</span>
-              </label>
+              </div>
+              {errors.userName && (
+                <p className="mt-1 text-sm text-red-600">{errors.userName}</p>
+              )}
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-6">
-              {/* Name Fields */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-2">
-                    First Name
-                  </label>
-                  <input
-                    id="firstName"
-                    name="firstName"
-                    type="text"
-                    required
-                    value={formData.firstName}
-                    onChange={handleInputChange}
-                    className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors ${
-                      errors.firstName ? 'border-red-300' : 'border-gray-300'
-                    }`}
-                    placeholder="Enter your first name"
-                  />
-                  {errors.firstName && (
-                    <Typography variant="caption" className="text-red-600 mt-1">
-                      {errors.firstName}
-                    </Typography>
-                  )}
-                </div>
-
-                <div>
-                  <label htmlFor="lastName" className="block text-sm font-medium text-gray-700 mb-2">
-                    Last Name
-                  </label>
-                  <input
-                    id="lastName"
-                    name="lastName"
-                    type="text"
-                    required
-                    value={formData.lastName}
-                    onChange={handleInputChange}
-                    className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors ${
-                      errors.lastName ? 'border-red-300' : 'border-gray-300'
-                    }`}
-                    placeholder="Enter your last name"
-                  />
-                  {errors.lastName && (
-                    <Typography variant="caption" className="text-red-600 mt-1">
-                      {errors.lastName}
-                    </Typography>
-                  )}
-                </div>
-              </div>
-
-              {/* Email Field */}
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                  Email address
-                </label>
+            {/* Email */}
+            <div>
+              <div className="relative">
+                <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" />
+                  </svg>
+                </span>
                 <input
-                  id="email"
-                  name="email"
                   type="email"
-                  autoComplete="email"
-                  required
+                  name="email"
                   value={formData.email}
                   onChange={handleInputChange}
-                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors ${
-                    errors.email ? 'border-red-300' : 'border-gray-300'
-                  }`}
-                  placeholder="Enter your email"
+                  placeholder="Email Address"
+                  className={`w-full pl-12 pr-4 py-4 border ${errors.email ? 'border-red-300' : 'border-gray-200'} rounded-xl bg-gray-50 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all text-gray-900 placeholder-gray-400`}
                 />
-                {errors.email && (
-                  <Typography variant="caption" className="text-red-600 mt-1">
-                    {errors.email}
-                  </Typography>
-                )}
               </div>
-
-              {/* Password Field */}
-              <div>
-                <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
-                  Password
-                </label>
-                <div className="relative">
-                  <input
-                    id="password"
-                    name="password"
-                    type={showPassword ? 'text' : 'password'}
-                    autoComplete="new-password"
-                    required
-                    value={formData.password}
-                    onChange={handleInputChange}
-                    className={`w-full px-4 py-3 pr-12 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors ${
-                      errors.password ? 'border-red-300' : 'border-gray-300'
-                    }`}
-                    placeholder="Create a password (min. 8 characters)"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    className="absolute inset-y-0 right-0 pr-3 flex items-center"
-                  >
-                    {showPassword ? (
-                      <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21" />
-                      </svg>
-                    ) : (
-                      <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                      </svg>
-                    )}
-                  </button>
-                </div>
-                {errors.password && (
-                  <Typography variant="caption" className="text-red-600 mt-1">
-                    {errors.password}
-                  </Typography>
-                )}
-              </div>
-
-              {/* Business Type */}
-              <div>
-                <label htmlFor="businessType" className="block text-sm font-medium text-gray-700 mb-2">
-                  Business Type
-                </label>
-                <select
-                  id="businessType"
-                  name="businessType"
-                  value={formData.businessType}
-                  onChange={handleInputChange}
-                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors ${
-                    errors.businessType ? 'border-red-300' : 'border-gray-300'
-                  }`}
-                >
-                  <option value="company">Company</option>
-                  <option value="individual">Individual Creator</option>
-                  <option value="agency">Agency</option>
-                  <option value="nonprofit">Non-profit</option>
-                </select>
-                {errors.businessType && (
-                  <Typography variant="caption" className="text-red-600 mt-1">
-                    {errors.businessType}
-                  </Typography>
-                )}
-              </div>
-
-              {/* Company Name (conditional) */}
-              {formData.businessType === 'company' && (
-                <div>
-                  <label htmlFor="companyName" className="block text-sm font-medium text-gray-700 mb-2">
-                    Company Name
-                  </label>
-                  <input
-                    id="companyName"
-                    name="companyName"
-                    type="text"
-                    value={formData.companyName}
-                    onChange={handleInputChange}
-                    className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors ${
-                      errors.companyName ? 'border-red-300' : 'border-gray-300'
-                    }`}
-                    placeholder="Enter your company name"
-                  />
-                  {errors.companyName && (
-                    <Typography variant="caption" className="text-red-600 mt-1">
-                      {errors.companyName}
-                    </Typography>
-                  )}
-                </div>
+              {errors.email && (
+                <p className="mt-1 text-sm text-red-600">{errors.email}</p>
               )}
+            </div>
 
-              {/* Company Size */}
-              <div>
-                <label htmlFor="companySize" className="block text-sm font-medium text-gray-700 mb-2">
-                  Company Size (Optional)
-                </label>
-                <select
-                  id="companySize"
-                  name="companySize"
-                  value={formData.companySize}
-                  onChange={handleInputChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors"
-                >
-                  <option value="">Select company size</option>
-                  <option value="1">Just me</option>
-                  <option value="2-10">2-10 employees</option>
-                  <option value="11-50">11-50 employees</option>
-                  <option value="51-200">51-200 employees</option>
-                  <option value="201-1000">201-1000 employees</option>
-                  <option value="1000+">1000+ employees</option>
-                </select>
-              </div>
-
-              {/* Subscription Tier */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-4">
-                  Choose Your Plan
-                </label>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <label className={`relative p-4 border-2 rounded-lg cursor-pointer transition-colors ${
-                    formData.subscriptionTier === 'creator' ? 'border-green-500 bg-green-50' : 'border-gray-200'
-                  }`}>
-                    <input
-                      type="radio"
-                      name="subscriptionTier"
-                      value="creator"
-                      checked={formData.subscriptionTier === 'creator'}
-                      onChange={handleInputChange}
-                      className="sr-only"
-                    />
-                    <div className="flex items-center justify-between mb-2">
-                      <Typography variant="h6">Creator</Typography>
-                      <div className="text-right">
-                        {useEarlyDiscount && (
-                          <div className="text-sm text-gray-500 line-through">${creatorPrice.originalPrice}/mo</div>
-                        )}
-                        <div className="text-lg font-bold">${creatorPrice.discountedPrice}/mo</div>
-                      </div>
-                    </div>
-                    <Typography variant="caption" color="secondary">
-                      Perfect for solo creators and small businesses
-                    </Typography>
-                  </label>
-
-                  <label className={`relative p-4 border-2 rounded-lg cursor-pointer transition-colors ${
-                    formData.subscriptionTier === 'influencer' ? 'border-green-500 bg-green-50' : 'border-gray-200'
-                  }`}>
-                    <input
-                      type="radio"
-                      name="subscriptionTier"
-                      value="influencer"
-                      checked={formData.subscriptionTier === 'influencer'}
-                      onChange={handleInputChange}
-                      className="sr-only"
-                    />
-                    <div className="flex items-center justify-between mb-2">
-                      <Typography variant="h6">Influencer</Typography>
-                      <div className="text-right">
-                        {useEarlyDiscount && (
-                          <div className="text-sm text-gray-500 line-through">${influencerPrice.originalPrice}/mo</div>
-                        )}
-                        <div className="text-lg font-bold">${influencerPrice.discountedPrice}/mo</div>
-                      </div>
-                    </div>
-                    <Typography variant="caption" color="secondary">
-                      Ideal for growing brands and influencers
-                    </Typography>
-                  </label>
-                </div>
-                {errors.subscriptionTier && (
-                  <Typography variant="caption" className="text-red-600 mt-1">
-                    {errors.subscriptionTier}
-                  </Typography>
-                )}
-              </div>
-
-              {/* Terms and Conditions */}
-              <div>
-                <label className="flex items-start">
-                  <input
-                    type="checkbox"
-                    name="acceptTerms"
-                    checked={formData.acceptTerms}
-                    onChange={handleInputChange}
-                    className="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded mt-1"
-                  />
-                  <span className="ml-2 text-sm text-gray-700">
-                    I agree to the{' '}
-                    <Link href="/terms" className="text-green-600 hover:text-green-800">
-                      Terms of Service
-                    </Link>{' '}
-                    and{' '}
-                    <Link href="/privacy" className="text-green-600 hover:text-green-800">
-                      Privacy Policy
-                    </Link>
-                  </span>
-                </label>
-                {errors.acceptTerms && (
-                  <Typography variant="caption" className="text-red-600 mt-1">
-                    {errors.acceptTerms}
-                  </Typography>
-                )}
-              </div>
-
-              {/* Submit Button */}
-              <Button
-                type="submit"
-                className="w-full"
-                size="lg"
-                isLoading={isLoading}
-              >
-                Create Account
-              </Button>
-            </form>
-
-            {/* Divider */}
-            <div className="mt-6">
+            {/* Password */}
+            <div>
               <div className="relative">
-                <div className="absolute inset-0 flex items-center">
-                  <div className="w-full border-t border-gray-300" />
-                </div>
-                <div className="relative flex justify-center text-sm">
-                  <span className="px-2 bg-white text-gray-500">Or continue with</span>
-                </div>
+                <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                  </svg>
+                </span>
+                <input
+                  type={showPassword ? 'text' : 'password'}
+                  name="password"
+                  value={formData.password}
+                  onChange={handleInputChange}
+                  placeholder="Enter Password"
+                  className={`w-full pl-12 pr-12 py-4 border ${errors.password ? 'border-red-300' : 'border-gray-200'} rounded-xl bg-gray-50 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all text-gray-900 placeholder-gray-400`}
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                >
+                  {showPassword ? (
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21" />
+                    </svg>
+                  ) : (
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                    </svg>
+                  )}
+                </button>
               </div>
+              {errors.password && (
+                <p className="mt-1 text-sm text-red-600">{errors.password}</p>
+              )}
             </div>
 
-            {/* Google Sign In */}
-            <div className="mt-6">
-              <Button
-                variant="outline"
-                onClick={handleGoogleSignIn}
-                className="w-full"
-                size="lg"
-                isLoading={isLoading}
-              >
-                <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24">
-                  <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-                  <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-                  <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
-                  <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
-                </svg>
-                Continue with Google
-              </Button>
+            {/* Confirm Password */}
+            <div>
+              <div className="relative">
+                <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                  </svg>
+                </span>
+                <input
+                  type={showPassword ? 'text' : 'password'}
+                  name="confirmPassword"
+                  value={formData.confirmPassword}
+                  onChange={handleInputChange}
+                  placeholder="Re-Enter Password"
+                  className={`w-full pl-12 pr-12 py-4 border ${errors.confirmPassword ? 'border-red-300' : 'border-gray-200'} rounded-xl bg-gray-50 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all text-gray-900 placeholder-gray-400`}
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                >
+                  {showPassword ? (
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21" />
+                    </svg>
+                  ) : (
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                    </svg>
+                  )}
+                </button>
+              </div>
+              {errors.confirmPassword && (
+                <p className="mt-1 text-sm text-red-600">{errors.confirmPassword}</p>
+              )}
             </div>
 
-            {/* Sign In Link */}
-            <div className="mt-6 text-center">
-              <Typography variant="body" color="secondary">
-                Already have an account?{' '}
-                <Link href="/login" className="text-green-600 hover:text-green-800 font-medium">
-                  Sign in
-                </Link>
-              </Typography>
-            </div>
-          </Card>
-        </Container>
+            {/* Submit Button */}
+            <button
+              type="submit"
+              disabled={isLoading}
+              className="w-full py-4 bg-gradient-to-r from-[#00C853] to-[#00A045] text-white rounded-xl font-medium text-lg hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {isLoading ? 'Registering...' : 'Register'}
+            </button>
+          </form>
+
+          {/* Login Link */}
+          <div className="mt-6 text-center">
+            <p className="text-gray-600">
+              Have an account?{' '}
+              <Link href="/login" className="text-gray-900 font-medium underline hover:text-green-600 transition-colors">
+                LOGIN
+              </Link>
+            </p>
+          </div>
+        </div>
       </div>
-    </Layout>
+    </div>
   );
-} 
+}

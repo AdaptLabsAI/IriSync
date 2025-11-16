@@ -216,28 +216,28 @@ const data = [
   return (
     <Layout>
       {/* Hero Section */}
-  <section className="relative pt-20 pb-32 overflow-hidden">
+  <section className="relative pt-20 pb-32 overflow-hidden bg-gray-50">
   <Container className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8">
     {/* Headings & Buttons */}
-    <div className="text-center max-w-4xl mx-auto">
-      <h1 className="text-3xl sm:text-4xl md:text-5xl font-semibold mb-4 text-gray-900">
+    <div className="text-center max-w-4xl mx-auto mb-16">
+      <h1 className="text-4xl sm:text-5xl md:text-6xl font-normal mb-4 text-gray-900">
         AI-Powered
       </h1>
-      <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6 py-4 bg-gradient-to-r from-green-400 to-green-700 bg-clip-text text-transparent">
+      <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-[#00C853] to-[#003305] bg-clip-text text-transparent">
         Marketing Mastery
       </h2>
-      <p className="text-gray-600 mb-10 text-base md:text-lg">
+      <p className="text-gray-600 mb-10 text-lg md:text-xl max-w-3xl mx-auto leading-relaxed">
         Transform your marketing strategy with intelligent automation, data-driven insights and creative optimization.<br />
         Stay ahead of the competition with the power of AI
       </p>
       <div className="flex flex-col sm:flex-row justify-center gap-4">
         <Link href="/features-pricing">
-          <button className="px-6 py-3 text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-100 transition">
+          <button className="px-8 py-4 text-gray-700 border border-gray-300 rounded-xl hover:bg-gray-100 transition-all font-medium">
             Learn more
           </button>
         </Link>
         <Link href="/register">
-          <button className="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition">
+          <button className="px-8 py-4 bg-gradient-to-r from-[#00C853] to-[#003305] text-white rounded-xl hover:shadow-lg transition-all font-medium">
             Start free trial
           </button>
         </Link>
@@ -245,15 +245,14 @@ const data = [
     </div>
 
     {/* Grid Section */}
-  
-    <div className="relative grid grid-cols-1 md:grid-cols-3 gap-6 mt-16 px-2 sm:px-4">
-      {/* Connector Lines */}
-      <div className="absolute top-1/2 left-1/4 right-1/4 h-0.5 bg-green-200 z-0"></div>
-      <div className="absolute top-1/3 left-1/4 h-[calc(50%-4rem)] w-0.5 bg-green-200 z-0"></div>
-      <div className="absolute top-1/3 right-1/4 h-[calc(50%-4rem)] w-0.5 bg-green-200 z-0"></div>
+    <div className="relative grid grid-cols-1 md:grid-cols-3 gap-6 px-2 sm:px-4">
+      {/* Connector Lines - Hidden on mobile, visible on md+ */}
+      <div className="hidden md:block absolute top-1/2 left-1/4 right-1/4 h-0.5 bg-green-200 z-0"></div>
+      <div className="hidden md:block absolute top-1/3 left-1/4 h-[calc(50%-4rem)] w-0.5 bg-green-200 z-0"></div>
+      <div className="hidden md:block absolute top-1/3 right-1/4 h-[calc(50%-4rem)] w-0.5 bg-green-200 z-0"></div>
 
       {/* Left Side */}
-      <div className="flex flex-col gap-6 relative z-10 w-full max-w-[300px] mx-auto">
+      <div className="flex flex-col gap-6 relative z-10 w-full max-w-[340px] mx-auto">
         <Card>
           <CardContent>
             <div className="flex items-center">
@@ -298,7 +297,7 @@ const data = [
       </div>
 
       {/* Center - Top Integrations */}
-      <Card className="relative z-10 w-full sm-mt-[-20px] mt-[-18px] md:mt-10 max-w-[230px] h-[250px] rounded-3xl mx-auto shadow-2xl shadow-green-200 flex flex-col items-center justify-center">
+      <Card className="relative z-10 w-full md:mt-0 max-w-[280px] h-[280px] rounded-3xl mx-auto shadow-2xl shadow-green-200 flex flex-col items-center justify-center">
      
         <div className="absolute w-16 h-16 rounded-full bg-white border border-gray-300 flex items-center justify-center z-20">
           <SendHorizonal className="w-6 h-6 text-gray-700" />
@@ -412,173 +411,177 @@ const data = [
         </Container>
       </section> */}
 
-<section className="w-full py-12 md:py-20 bg-white">
+<section className="w-full py-16 md:py-24 bg-white">
   <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-  <div className="flex gap-0 xl:gap-16 items-center">
-
-  {/* Left Column - Text */}
-  <div className="w-[80%]  mt-[-265px]">
-    <h2 className="text-xl  sm:text-4xl md:text-5xl font-semibold leading-tight sm:leading-snug mb-4">
-      A <span className="bg-gradient-to-r from-[#00C853] to-[#003305] bg-clip-text text-transparent">
-        smarter
-      </span> way to market
-    </h2>
-    <p className="text-gray-500 text-base sm:text-lg">
-      Take control of your marketing with <br className="hidden sm:block" />
-      our three-pillar approach to success.
-    </p>
-  </div>
-
-  {/* Right Column - Cards */}
-  <div className="max-w-full ">
-    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-0 p-4 sm:p-6 ">
-
-      {/* Automate */}
-      <div className="bg-white  p-4 sm:p-6 shadow-md  ">
-        <div className="mb-3">
-          <div className="w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-green-400 to-white flex items-center justify-center rounded-lg">
-            <Zap className='text-white w-6 h-6 sm:w-7 sm:h-7' />
-          </div>
-        </div>
-        <h3 className="font-semibold text-lg sm:text-xl mb-2">Automate</h3>
-        <p className="text-sm sm:text-base text-gray-500">
-          Eliminate manual tasks and streamline your workflow. Schedule content, analyze performance, and engage audiences—all on autopilot.
-        </p>
-      </div>
-
-      {/* Dominate */}
-      <div className="bg-white rounded-xl p-4 sm:p-6 shadow-sm">
-        <div className="mb-3">
-          <div className="w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-green-400 to-white flex items-center justify-center rounded-lg">
-            <ChartPie className='text-white w-6 h-6 sm:w-7 sm:h-7' />
-          </div>
-        </div>
-        <h3 className="font-semibold text-lg sm:text-xl mb-2">Dominate</h3>
-        <p className="text-sm sm:text-base text-gray-500">
-          Outperform competitors with AI-optimized strategies. Turn insights into action with precision targeting.
-        </p>
-      </div>
-
-      {/* Elevate */}
-      <div className="col-span-1 sm:col-span-2 bg-white rounded-xl p-4 sm:p-6 shadow-sm">
-        <div className="mb-3">
-          <div className="w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-green-400 to-white flex items-center justify-center rounded-lg">
-            <ChartColumn className='text-white w-6 h-6 sm:w-7 sm:h-7' />
-          </div>
-        </div>
-        <h3 className="font-semibold text-lg sm:text-xl mb-2">Elevate</h3>
-        <p className="text-sm sm:text-base text-gray-500">
-          Take your brand to new heights with insights and creative content that resonates and builds loyalty.
-        </p>
-      </div>
-
+    {/* Section Header */}
+    <div className="text-center mb-12">
+      <h2 className="text-3xl sm:text-4xl md:text-5xl font-semibold leading-tight mb-4">
+        A <span className="bg-gradient-to-r from-[#00C853] to-[#003305] bg-clip-text text-transparent">
+          smarter
+        </span> way to market
+      </h2>
+      <p className="text-gray-600 text-lg md:text-xl max-w-2xl mx-auto">
+        Take control of your marketing with our three-pillar approach to success.
+      </p>
     </div>
-  </div>
 
-</div>
+    {/* Cards Grid */}
+    <div className="max-w-4xl mx-auto">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
 
+        {/* Automate */}
+        <div className="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+          <div className="mb-4">
+            <div className="w-14 h-14 bg-gradient-to-br from-[#00C853] to-[#00C853]/20 flex items-center justify-center rounded-xl">
+              <Zap className='text-white w-7 h-7' />
+            </div>
+          </div>
+          <h3 className="font-semibold text-xl mb-3 text-gray-900">Automate</h3>
+          <p className="text-base text-gray-600 leading-relaxed">
+            Eliminate manual tasks and streamline your workflow. Schedule content, analyze performance, and engage audiences—all on autopilot.
+          </p>
+        </div>
+
+        {/* Dominate */}
+        <div className="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+          <div className="mb-4">
+            <div className="w-14 h-14 bg-gradient-to-br from-[#00C853] to-[#00C853]/20 flex items-center justify-center rounded-xl">
+              <ChartPie className='text-white w-7 h-7' />
+            </div>
+          </div>
+          <h3 className="font-semibold text-xl mb-3 text-gray-900">Dominate</h3>
+          <p className="text-base text-gray-600 leading-relaxed">
+            Outperform competitors with AI-optimized strategies. Turn insights into action with precision targeting.
+          </p>
+        </div>
+
+        {/* Elevate */}
+        <div className="col-span-1 sm:col-span-2 bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+          <div className="mb-4">
+            <div className="w-14 h-14 bg-gradient-to-br from-[#00C853] to-[#00C853]/20 flex items-center justify-center rounded-xl">
+              <ChartColumn className='text-white w-7 h-7' />
+            </div>
+          </div>
+          <h3 className="font-semibold text-xl mb-3 text-gray-900">Elevate</h3>
+          <p className="text-base text-gray-600 leading-relaxed">
+            Take your brand to new heights with insights and creative content that resonates and builds loyalty.
+          </p>
+        </div>
+
+      </div>
+    </div>
   </div>
 </section>
 
-<section className='py-10 bg-gray-100'>
+<section className='py-16 md:py-24 bg-gray-50'>
   <Container>
-  <div className="container mx-auto px-4 py-16">
+  <div className="container mx-auto px-4">
       {/* Header Section */}
-      <div className="mb-8">
-        <h1 className="text-5xl font-semibold mb-2">
+      <div className="mb-12 text-center md:text-left">
+        <h2 className="text-3xl sm:text-4xl md:text-5xl font-semibold mb-4 leading-tight">
           Everything you need to <span className="bg-gradient-to-r from-[#00C853] to-[#003305] bg-clip-text text-transparent">succeed</span>
-        </h1>
-        <p className="text-gray-400">
+        </h2>
+        <p className="text-gray-600 text-lg md:text-xl">
           Our comprehensive platform delivers tools for every aspect of modern marketing.
         </p>
       </div>
 
       {/* List of Features */}
-      <div className="flex flex-col md:flex-row gap-4 mt-10">
-        <div className="w-full md:w-1/3 text-xl">
-          <ul className="space-y-10">
-            <li className="flex items-center">
-          <svg
-  xmlns="http://www.w3.org/2000/svg"
-  className="h-5 w-5 text-gray-500 mr-2"
-  viewBox="0 0 20 20"
-  fill="currentColor"
->
-  <path
-    fillRule="evenodd"
-    d="M10.293 15.707a1 1 0 010-1.414L13.586 11H4a1 1 0 110-2h9.586l-3.293-3.293a1 1 0 111.414-1.414l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0z"
-    clipRule="evenodd"
-  />
-</svg>
-         <span className="bg-gradient-to-r from-[#00C853] to-[#003305] bg-clip-text text-transparent">     AI content creation</span>
-            </li>
-            <li className="flex items-center">
+      <div className="flex flex-col md:flex-row gap-8 md:gap-12">
+        <div className="w-full md:w-1/3">
+          <ul className="space-y-6">
+            <li className="flex items-center group">
               <svg
-  xmlns="http://www.w3.org/2000/svg"
-  className="h-5 w-5 text-gray-500 mr-2"
-  viewBox="0 0 20 20"
-  fill="currentColor"
->
-  <path
-    fillRule="evenodd"
-    d="M10.293 15.707a1 1 0 010-1.414L13.586 11H4a1 1 0 110-2h9.586l-3.293-3.293a1 1 0 111.414-1.414l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0z"
-    clipRule="evenodd"
-  />
-</svg>
-              Smart scheduling
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5 text-green-600 mr-3 flex-shrink-0"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M10.293 15.707a1 1 0 010-1.414L13.586 11H4a1 1 0 110-2h9.586l-3.293-3.293a1 1 0 111.414-1.414l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0z"
+                  clipRule="evenodd"
+                />
+              </svg>
+              <span className="text-lg font-medium bg-gradient-to-r from-[#00C853] to-[#003305] bg-clip-text text-transparent group-hover:opacity-80 transition">
+                AI content creation
+              </span>
             </li>
-            <li className="flex items-center">
+            <li className="flex items-center group">
               <svg
-  xmlns="http://www.w3.org/2000/svg"
-  className="h-5 w-5 text-gray-500 mr-2"
-  viewBox="0 0 20 20"
-  fill="currentColor"
->
-  <path
-    fillRule="evenodd"
-    d="M10.293 15.707a1 1 0 010-1.414L13.586 11H4a1 1 0 110-2h9.586l-3.293-3.293a1 1 0 111.414-1.414l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0z"
-    clipRule="evenodd"
-  />
-</svg>
-              Platform and tool integration
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5 text-green-600 mr-3 flex-shrink-0"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M10.293 15.707a1 1 0 010-1.414L13.586 11H4a1 1 0 110-2h9.586l-3.293-3.293a1 1 0 111.414-1.414l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0z"
+                  clipRule="evenodd"
+                />
+              </svg>
+              <span className="text-lg font-medium text-gray-800 group-hover:text-green-600 transition">
+                Smart scheduling
+              </span>
             </li>
-            <li className="flex items-center">
-               <svg
-  xmlns="http://www.w3.org/2000/svg"
-  className="h-5 w-5 text-gray-500 mr-2"
-  viewBox="0 0 20 20"
-  fill="currentColor"
->
-  <path
-    fillRule="evenodd"
-    d="M10.293 15.707a1 1 0 010-1.414L13.586 11H4a1 1 0 110-2h9.586l-3.293-3.293a1 1 0 111.414-1.414l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0z"
-    clipRule="evenodd"
-  />
-</svg>
-              Custom integration
+            <li className="flex items-center group">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5 text-green-600 mr-3 flex-shrink-0"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M10.293 15.707a1 1 0 010-1.414L13.586 11H4a1 1 0 110-2h9.586l-3.293-3.293a1 1 0 111.414-1.414l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0z"
+                  clipRule="evenodd"
+                />
+              </svg>
+              <span className="text-lg font-medium text-gray-800 group-hover:text-green-600 transition">
+                Platform and tool integration
+              </span>
             </li>
-            <li className="flex items-center">
-                <svg
-  xmlns="http://www.w3.org/2000/svg"
-  className="h-5 w-5 text-gray-500 mr-2"
-  viewBox="0 0 20 20"
-  fill="currentColor"
->
-  <path
-    fillRule="evenodd"
-    d="M10.293 15.707a1 1 0 010-1.414L13.586 11H4a1 1 0 110-2h9.586l-3.293-3.293a1 1 0 111.414-1.414l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0z"
-    clipRule="evenodd"
-  />
-</svg>
-              Tracking tools
+            <li className="flex items-center group">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5 text-green-600 mr-3 flex-shrink-0"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M10.293 15.707a1 1 0 010-1.414L13.586 11H4a1 1 0 110-2h9.586l-3.293-3.293a1 1 0 111.414-1.414l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0z"
+                  clipRule="evenodd"
+                />
+              </svg>
+              <span className="text-lg font-medium text-gray-800 group-hover:text-green-600 transition">
+                Custom integration
+              </span>
+            </li>
+            <li className="flex items-center group">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5 text-green-600 mr-3 flex-shrink-0"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M10.293 15.707a1 1 0 010-1.414L13.586 11H4a1 1 0 110-2h9.586l-3.293-3.293a1 1 0 111.414-1.414l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0z"
+                  clipRule="evenodd"
+                />
+              </svg>
+              <span className="text-lg font-medium text-gray-800 group-hover:text-green-600 transition">
+                Tracking tools
+              </span>
             </li>
           </ul>
         </div>
 
         {/* Card Sections */}
-        <div className="w-full md:w-2/3 grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="w-full md:w-2/3 grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Card 1 */}
-          <div className="bg-white p-4 rounded-4xl shadow">
+          <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
             <Image
               src="/images/card-image-1.png"
               alt="Card Image 1"
@@ -586,14 +589,14 @@ const data = [
               height={100}
               className="mx-auto mb-4"
             />
-            <h3 className="text-lg font-bold mb-2">Personalized content matching brand voice</h3>
-            <p className="text-gray-400">
+            <h3 className="text-lg font-semibold mb-3 text-gray-900">Personalized content matching brand voice</h3>
+            <p className="text-gray-600 leading-relaxed">
               Our AI analyzes your brand's existing content, tone of voice, and industry language to generate social media posts, ads, captions, and emails that feel authentically you.
             </p>
           </div>
 
           {/* Card 2 */}
-          <div className="bg-white p-4 rounded-4xl   shadow">
+          <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
             <Image
               src="/images/card-image-2.png"
               alt="Card Image 2"
@@ -601,14 +604,14 @@ const data = [
               height={100}
               className="mx-auto mb-4"
             />
-            <h3 className="text-lg font-bold mb-2">Trend-aware content suggestions based on industry</h3>
-            <p className="text-gray-400">
+            <h3 className="text-lg font-semibold mb-3 text-gray-900">Trend-aware content suggestions based on industry</h3>
+            <p className="text-gray-600 leading-relaxed">
               Our AI analyzes your brand's existing content, tone of voice, and industry language to generate social media posts, ads, captions, and emails that feel authentically you.
             </p>
           </div>
 
           {/* Card 3 */}
-          <div className="bg-white p-4 rounded-4xl   shadow">
+          <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow md:col-span-2">
             <Image
               src="/images/card-image-3.png"
               alt="Card Image 3"
@@ -616,8 +619,8 @@ const data = [
               height={100}
               className="mx-auto mb-4"
             />
-            <h3 className="text-lg font-bold mb-2">Platform-specific formatting</h3>
-            <p className="text-gray-400">
+            <h3 className="text-lg font-semibold mb-3 text-gray-900">Platform-specific formatting</h3>
+            <p className="text-gray-600 leading-relaxed">
               Create content that's optimized for each social media platform—automatically. Our AI adapts tone, format, and structure to suit the unique requirements and audience behavior of Instagram, LinkedIn, Twitter (X), Facebook, and more.
             </p>
           </div>
@@ -625,9 +628,9 @@ const data = [
       </div>
 
       {/* Call-to-Action Button */}
-      <div className="">
+      <div className="mt-10 text-center md:text-left">
         <Link href="/features-pricing">
-          <button className=" text-white px-4 py-2 rounded-lg cursor-pointer bg-gradient-to-r from-[#00C853] to-[#003305] 0 transition duration-300">
+          <button className="px-8 py-4 text-white rounded-xl cursor-pointer bg-gradient-to-r from-[#00C853] to-[#003305] hover:shadow-lg transition-all font-medium">
             Explore our AI toolkit features
           </button>
         </Link>
@@ -774,26 +777,26 @@ const data = [
       </section> */}
 
       {/* CTA Section */}
-   <section className="w-full bg-[#F5F5F7] py-16 px-4 sm:px-6 lg:px-8">
+   <section className="w-full bg-gray-50 py-20 px-4 sm:px-6 lg:px-8">
       <div className="container mx-auto max-w-7xl">
-        <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
-      
-          <div className="flex-1 text-center lg:text-left ">
-            <h2 className="text-xl sm:text-4xl lg:text-5xl font-bold text-gray-900 leading-tight mb-4 ">
-              Ready to <span className="text-green-500">transfer</span> your marketing strategy...?
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-12">
+
+          <div className="flex-1 text-center lg:text-left">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-gray-900 leading-tight mb-6">
+              Ready to <span className="bg-gradient-to-r from-[#00C853] to-[#003305] bg-clip-text text-transparent">transform</span> your marketing strategy...?
             </h2>
-            <p className="text-lg text-gray-600 max-w-2xl">
+            <p className="text-xl text-gray-600 max-w-2xl leading-relaxed">
               Join the future of marketing, using IriSync to automate, dominate, and elevate your marketing.
             </p>
           </div>
-          <div className="flex flex-col sm:flex-row gap-4 mt-17 lg:flex-shrink-0">
+          <div className="flex flex-col sm:flex-row gap-4 lg:flex-shrink-0">
             <Link href="/contact-sales">
-              <button className="px-8 py-3 border border-gray-300 rounded-lg text-gray-800 font-medium hover:bg-gray-100 hover:border-gray-400 transition-colors">
+              <button className="px-8 py-4 border-2 border-gray-300 rounded-xl text-gray-800 font-medium hover:bg-gray-100 hover:border-gray-400 transition-all">
                 Contact Sales
               </button>
             </Link>
             <Link href="/register">
-              <button className="px-8 py-3 cursor-pointer bg-gradient-to-r from-[#00C853] to-[#003305] rounded-lg text-white font-medium  transition-colors">
+              <button className="px-8 py-4 cursor-pointer bg-gradient-to-r from-[#00C853] to-[#003305] rounded-xl text-white font-medium hover:shadow-lg transition-all">
                 Start free trial
               </button>
             </Link>
