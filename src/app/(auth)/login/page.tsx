@@ -7,6 +7,7 @@ import { Layout, Container, Typography, Button, Card } from '@/components/ui/new
 // Import our custom auth functions instead of direct Firebase functions
 import { loginWithEmail, loginWithGoogle, getFirebaseErrorMessage } from '@/lib/features/auth/customAuth';
 import { getFirebaseAuthDiagnostics } from '@/lib/features/auth/troubleshoot';
+import FirebaseConfigWarning from '@/components/auth/FirebaseConfigWarning';
 
 // Add a client-side check function to verify dashboard redirection is safe
 const safeDashboardRedirect = (router: any, url: string) => {
@@ -215,6 +216,9 @@ export default function LoginPage() {
           </div>
 
           <Card className="p-8">
+            {/* Firebase Configuration Warning */}
+            <FirebaseConfigWarning />
+
             {/* Error Messages */}
             {formErrors.general && (
               <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
