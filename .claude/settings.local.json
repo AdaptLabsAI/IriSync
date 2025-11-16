@@ -8,7 +8,14 @@
       "Bash(copy /Y:*)",
       "Bash(del page-new.tsx)",
       "Bash(git add:*)",
-      "Bash(git commit -m \"$(cat <<''EOF''\nfeat: Redesign homepage and auth pages to match Figma specifications\n\nUpdated homepage, register, and login pages to align with Figma design file.\n\nChanges:\n- Homepage: Updated hero section, features cards, CTA sections with new color scheme and typography\n- Register: Complete redesign with split-screen layout (dark green left panel + white form)\n- Login: Similar split-screen design matching Figma specifications\n- Colors: Standardized to #00C853 (primary green) and #003305 (dark green)\n- Typography: Improved hierarchy with larger headings (4xl-6xl) and better spacing\n- Layout: Fixed negative margins, improved responsive design, added hover effects\n- Buttons: Updated to rounded-xl with gradient backgrounds and shadow effects\n- Cards: Consistent shadow-sm + border styling throughout\n\nTechnical improvements:\n- Simplified auth forms to match Figma (removed complex fields)\n- Better mobile responsiveness with proper breakpoints\n- Preserved all backend authentication logic\n- Created backup files for old implementations\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")"
+      "Bash(git commit -m \"$(cat <<''EOF''\nfeat: Redesign homepage and auth pages to match Figma specifications\n\nUpdated homepage, register, and login pages to align with Figma design file.\n\nChanges:\n- Homepage: Updated hero section, features cards, CTA sections with new color scheme and typography\n- Register: Complete redesign with split-screen layout (dark green left panel + white form)\n- Login: Similar split-screen design matching Figma specifications\n- Colors: Standardized to #00C853 (primary green) and #003305 (dark green)\n- Typography: Improved hierarchy with larger headings (4xl-6xl) and better spacing\n- Layout: Fixed negative margins, improved responsive design, added hover effects\n- Buttons: Updated to rounded-xl with gradient backgrounds and shadow effects\n- Cards: Consistent shadow-sm + border styling throughout\n\nTechnical improvements:\n- Simplified auth forms to match Figma (removed complex fields)\n- Better mobile responsiveness with proper breakpoints\n- Preserved all backend authentication logic\n- Created backup files for old implementations\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")",
+      "Bash(test:*)",
+      "Bash(xargs -I {} sh -c 'if [ ! -s \"\"\"\"{}\"\"\"\" ]; then echo \"\"\"\"{}\"\"\"\"; fi')",
+      "Bash(npm run build:*)",
+      "Bash(tee:*)",
+      "Bash(npx cross-env:*)",
+      "Bash(npx next build:*)",
+      "Bash(npm install:*)"
     ],
     "deny": [],
     "ask": []

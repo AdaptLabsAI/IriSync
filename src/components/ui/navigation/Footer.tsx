@@ -117,7 +117,7 @@ export default function Component() {
 
     
         <div className="flex flex-col sm:flex-row justify-between items-center pt-8 border-t border-gray-200/50 ">
-          <p className="text-gray-500 text-sm mb-4 sm:mb-0">2025 Iris AI. All rights reserved</p>
+          <p className="text-gray-500 text-sm mb-4 sm:mb-0">© 2025 Vetra Holdings, Inc. IriSync™ is a trademark and proprietary software product of Vetra Holdings. All Rights Reserved.</p>
           <nav className="flex flex-wrap gap-6">
             <Link href="#" className="text-gray-500 hover:text-gray-700 transition-colors text-sm">
               Privacy Policies

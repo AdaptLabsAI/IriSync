@@ -25,7 +25,7 @@ import WorkIcon from '@mui/icons-material/Work';
 import { useRouter } from 'next/navigation';
 import { JobListing, JobType, JobLocationType } from '@/lib/careers/models';
 import { collection, getDocs, query, where, orderBy, Timestamp } from 'firebase/firestore';
-import { firestore } from '@/lib/core/firebase/client';
+import { getFirebaseFirestore } from '@/lib/core/firebase/client';
 
 export default function CareersPage() {
   const router = useRouter();
@@ -38,17 +38,28 @@ export default function CareersPage() {
     jobType: '',
     location: ''
   });
-  
+
   useEffect(() => {
     // Fetch job listings from Firestore
     const fetchJobListings = async () => {
       setIsLoading(true);
       setError(null);
-      
+
       try {
+        // Get Firestore instance
+        const firestore = getFirebaseFirestore();
+
+        // Check if Firebase is initialized
+        if (!firestore) {
+          console.warn('Firebase is not initialized. Skipping job listings fetch.');
+          setJobListings([]);
+          setIsLoading(false);
+          return;
+        }
+
         // Create a query to get all published job listings
         let querySnapshot;
-        
+
         try {
           // Try the optimized query with composite index
           const jobsQuery = query(
