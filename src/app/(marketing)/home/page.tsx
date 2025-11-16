@@ -26,6 +26,8 @@ interface PricingPlan {
   highlighted?: boolean;
 }
 
+import { fetchTestimonials as fetchTestimonialsClient } from '@/lib/client/testimonials';
+
 // Testimonial type
 interface Testimonial {
   id: string;
@@ -176,27 +178,18 @@ export default function HomePage() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchTestimonials = async () => {
+    const loadTestimonials = async () => {
       setLoading(true);
       setError(null);
       
       try {
         console.log('Fetching testimonials from API');
-        // Use the correct API endpoint - the route is at /api/feedback/testimonials
-        const response = await get('/api/feedback/testimonials');
+        // Use the helper function which handles 401/403 gracefully
+        const data = await fetchTestimonialsClient({ limit: 6, featured: false });
         
-        // API returns an array directly
-        if (Array.isArray(response)) {
-          const publishedTestimonials = response.filter((t: Testimonial) => t.isPublished);
-          setTestimonials(publishedTestimonials.slice(0, 6));
-        } else if (response.success && Array.isArray(response.data)) {
-          // Fallback for old response format
-          const publishedTestimonials = response.data.filter((t: Testimonial) => t.isPublished);
-          setTestimonials(publishedTestimonials.slice(0, 6));
-        } else {
-          console.warn('No testimonials data or invalid format:', response);
-          setTestimonials([]);
-        }
+        // Filter published testimonials if needed
+        const publishedTestimonials = data.filter((t: Testimonial) => t.isPublished);
+        setTestimonials(publishedTestimonials);
       } catch (err) {
         console.error('Error fetching testimonials:', err);
         setError('Failed to load testimonials');
@@ -206,7 +199,7 @@ export default function HomePage() {
       }
     };
 
-    fetchTestimonials();
+    loadTestimonials();
   }, []);
 const data = [
   { name: "Point 1", value: 10 },

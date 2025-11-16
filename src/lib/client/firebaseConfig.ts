@@ -137,6 +137,16 @@ export function isFirebaseConfigComplete(): boolean {
 }
 
 /**
+ * Alias for isFirebaseConfigComplete for better semantic clarity
+ * Use this in user-facing code to check if Firebase is ready to use
+ * 
+ * @returns {boolean} True if Firebase is fully configured, false otherwise
+ */
+export function isFirebaseConfigured(): boolean {
+  return isFirebaseConfigComplete();
+}
+
+/**
  * Get detailed debug info about which Firebase config values are missing
  * For development/debugging only - does not expose actual values in production
  */
