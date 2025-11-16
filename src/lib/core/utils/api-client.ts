@@ -18,11 +18,10 @@ export async function apiRequest<T = any>(
   endpoint: string, 
   options: FetchOptions = {}
 ): Promise<T> {
-  // IMPORTANT: Do not hard-code localhost URLs - they break in production and preview environments
-  // Use relative URLs when called from the browser, or derive from environment variables
+  // IMPORTANT: Always use relative URLs in the browser to avoid CORS issues
+  // Only use baseUrl for server-side requests or when explicitly provided
   const baseUrl = options.baseUrl || 
-    process.env.NEXT_PUBLIC_APP_URL || 
-    (typeof window !== 'undefined' ? window.location.origin : '');
+    (typeof window === 'undefined' ? (process.env.NEXT_PUBLIC_APP_URL || '') : '');
   
   // Build the complete URL - use relative path if no baseUrl is needed
   const url = baseUrl 

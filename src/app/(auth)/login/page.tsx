@@ -1,10 +1,9 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { loginWithEmail, loginWithGoogle, getFirebaseErrorMessage } from '@/lib/features/auth/customAuth';
-import { getFirebaseAuthDiagnostics } from '@/lib/features/auth/troubleshoot';
 import FirebaseConfigWarning from '@/components/auth/FirebaseConfigWarning';
 
 // Add a client-side check function to verify dashboard redirection is safe
@@ -40,9 +39,6 @@ export default function LoginPage() {
   
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const [diagnosticsOpen, setDiagnosticsOpen] = useState(false);
-  const [authIssues, setAuthIssues] = useState<string[]>([]);
-  const [showDiagnostics, setShowDiagnostics] = useState(false);
   const [emailVerificationNeeded, setEmailVerificationNeeded] = useState(false);
   const [formData, setFormData] = useState({
     email: '',
@@ -55,20 +51,6 @@ export default function LoginPage() {
     password: '',
     general: error ? 'An error occurred during sign in' : ''
   });
-
-  // Check for Firebase auth configuration issues
-  useEffect(() => {
-    const diagResults = getFirebaseAuthDiagnostics();
-    setAuthIssues(diagResults.issues);
-    setShowDiagnostics(diagResults.issues.length > 0);
-    
-    // Log config issues for debugging
-    if (diagResults.issues.length > 0) {
-      console.warn('Firebase Auth Config Issues:', diagResults.issues);
-    } else {
-      console.log('Firebase Auth Config appears valid');
-    }
-  }, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, checked } = e.target;
@@ -177,11 +159,6 @@ export default function LoginPage() {
           ...formErrors,
           general: result.error || 'Failed to sign in with Google'
         });
-        
-        // If we received a specific error, show diagnostics
-        if (result.error?.includes('configuration') || result.error?.includes('config')) {
-          setShowDiagnostics(true);
-        }
       }
     } catch (error: any) {
       console.error('Google sign-in error:', error);
@@ -189,7 +166,6 @@ export default function LoginPage() {
         ...formErrors,
         general: getFirebaseErrorMessage(error)
       });
-      setShowDiagnostics(true);
     } finally {
       setIsLoading(false);
     }
@@ -277,55 +253,13 @@ export default function LoginPage() {
             </div>
           )}
 
-          {/* Diagnostics */}
-          {showDiagnostics && authIssues.length > 0 && (
-            <div className="mb-6">
-              <button
-                onClick={() => setDiagnosticsOpen(!diagnosticsOpen)}
-                className="flex items-center text-sm text-gray-600 hover:text-gray-800"
-              >
-                <span>Show diagnostics</span>
-                <svg 
-                  className={`ml-1 w-4 h-4 transform transition-transform ${diagnosticsOpen ? 'rotate-180' : ''}`}
-                  fill="none" 
-                  stroke="currentColor" 
-                  viewBox="0 0 24 24"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
-                </svg>
-              </button>
-              
-              {diagnosticsOpen && (
-                <div className="mt-2 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
-                  <p className="text-sm font-medium text-yellow-800">Configuration Issues:</p>
-                  <ul className="mt-1 text-sm text-yellow-700">
-                    {authIssues.map((issue, index) => (
-                      <li key={index} className="list-disc list-inside">
-                        {issue}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-            </div>
-          )}
-
           {/* Login Form */}
           <form onSubmit={handleSubmit} className="space-y-5">
             {/* Email Field */}
             <div>
-              <div className="flex items-center justify-between mb-2">
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                  Email Address
-                </label>
-                <button
-                  type="button"
-                  onClick={() => setFormData({ ...formData, email: 'admin@irisync.com' })}
-                  className="text-xs text-blue-600 hover:text-blue-800 underline"
-                >
-                  Admin login
-                </button>
-              </div>
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                Email Address
+              </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                   <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
