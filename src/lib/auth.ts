@@ -1,6 +1,9 @@
 import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
+import LinkedInProvider from "next-auth/providers/linkedin";
+import TwitterProvider from "next-auth/providers/twitter";
+import FacebookProvider from "next-auth/providers/facebook";
 import { getFirestore, getAuth } from './core/firebase/admin';
 import { serverTimestamp } from './core/firebase/admin';
 import { compare } from 'bcryptjs';
@@ -19,21 +22,6 @@ export const authOptions: NextAuthOptions = {
   
   // Authentication providers
   providers: [
-    // Google OAuth provider
-    GoogleProvider({
-      clientId: getGoogleOAuthClientId(),
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET || '',
-      profile(profile) {
-        return {
-          id: profile.sub,
-          name: profile.name,
-          email: profile.email,
-          image: profile.picture,
-          role: "user",
-        };
-      },
-    }),
-    
     // Credentials (email/password) provider
     CredentialsProvider({
       name: "credentials",
@@ -85,15 +73,51 @@ export const authOptions: NextAuthOptions = {
           throw new Error("Authentication failed");
         }
       }
-    })
+    }),
+
+    // Google OAuth
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID || '',
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET || '',
+      authorization: {
+        params: {
+          prompt: "consent",
+          access_type: "offline",
+          response_type: "code"
+        }
+      }
+    }),
+
+    // LinkedIn OAuth
+    LinkedInProvider({
+      clientId: process.env.LINKEDIN_CLIENT_ID || '',
+      clientSecret: process.env.LINKEDIN_CLIENT_SECRET || '',
+      authorization: {
+        params: {
+          scope: 'openid profile email'
+        }
+      }
+    }),
+
+    // Twitter OAuth
+    TwitterProvider({
+      clientId: process.env.TWITTER_CLIENT_ID || '',
+      clientSecret: process.env.TWITTER_CLIENT_SECRET || '',
+      version: "2.0",
+    }),
+
+    // Facebook OAuth
+    FacebookProvider({
+      clientId: process.env.FACEBOOK_CLIENT_ID || '',
+      clientSecret: process.env.FACEBOOK_CLIENT_SECRET || '',
+    }),
   ],
   
   // Custom pages
   pages: {
     signIn: "/login",
-    signOut: "/logout",
-    error: "/error",
-    newUser: "/register",
+    error: "/login",
+    signOut: "/login",
   },
   
   // Callbacks to customize JWT and session
@@ -263,7 +287,16 @@ export const authOptions: NextAuthOptions = {
       }
       return session;
     },
+
+    async redirect({ url, baseUrl }) {
+      // Redirect to dashboard after successful login
+      if (url.startsWith('/')) return `${baseUrl}${url}`;
+      else if (new URL(url).origin === baseUrl) return url;
+      return `${baseUrl}/dashboard`;
+    }
   },
+
+  secret: process.env.NEXTAUTH_SECRET,
   
   // Enable debug messages in development
   debug: process.env.NODE_ENV === "development",
