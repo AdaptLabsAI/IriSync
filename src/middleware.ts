@@ -3,6 +3,7 @@ import type { NextRequest } from 'next/server';
 import { getToken } from 'next-auth/jwt';
 import { UserRole } from './lib/models/User';
 import { hasPermission, systemRoles } from './lib/team/role';
+import { ratelimit, premiumRatelimit, isRedisConfigured } from './lib/rate-limit';
 
 // Paths that require authentication
 const PROTECTED_PATHS = [
@@ -119,6 +120,49 @@ export async function middleware(req: NextRequest) {
   
   // Handle CORS for API routes (actual requests, not OPTIONS)
   if (pathname.startsWith('/api/')) {
+    // Skip auth endpoints from rate limiting
+    if (!pathname.startsWith('/api/auth/')) {
+      // Rate limiting (only if Redis is configured)
+      if (isRedisConfigured()) {
+        const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
+        const isPremium = (token as any)?.subscriptionTier === 'premium' || (token as any)?.subscriptionTier === 'enterprise';
+        const identifier = token?.sub || req.ip || 'anonymous';
+        
+        const limiter = isPremium ? premiumRatelimit : ratelimit;
+        
+        if (limiter) {
+          const { success, limit, reset, remaining } = await limiter.limit(identifier);
+          
+          if (!success) {
+            return NextResponse.json(
+              { error: 'Too many requests' },
+              { 
+                status: 429,
+                headers: {
+                  'X-RateLimit-Limit': limit.toString(),
+                  'X-RateLimit-Remaining': '0',
+                  'X-RateLimit-Reset': reset.toString(),
+                }
+              }
+            );
+          }
+          
+          // Continue with rate limit headers
+          const response = NextResponse.next();
+          response.headers.set('X-RateLimit-Limit', limit.toString());
+          response.headers.set('X-RateLimit-Remaining', remaining.toString());
+          response.headers.set('X-RateLimit-Reset', reset.toString());
+          
+          // Set CORS headers
+          const originAllowed = origin && isOriginAllowed(origin);
+          response.headers.set('Access-Control-Allow-Origin', originAllowed ? origin : (allowedOrigins[0] || '*'));
+          response.headers.set('Access-Control-Allow-Credentials', 'true');
+          
+          return response;
+        }
+      }
+    }
+    
     // For actual API requests, handle the response with appropriate CORS headers
     const response = NextResponse.next();
     
