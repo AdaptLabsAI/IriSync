@@ -17,8 +17,17 @@ import {
 } from 'firebase/auth';
 import { getFirebaseClientAuth, FirebaseClientError } from '@/lib/core/firebase/client';
 import { getFirebaseFirestore } from '@/lib/core/firebase/client';
+import { isFirebaseConfigured as checkFirebaseConfigured } from '@/lib/client/firebaseConfig';
 import { doc, setDoc, serverTimestamp, updateDoc, getDoc } from 'firebase/firestore';
 import { sendWelcomeEmail, sendPasswordResetEmail, sendEmail } from '@/lib/core/notifications/email';
+
+/**
+ * Check if Firebase is properly configured
+ * Returns true if all required Firebase environment variables are set
+ */
+export function isFirebaseConfigured(): boolean {
+  return checkFirebaseConfigured();
+}
 
 /**
  * Get Firebase Auth instance safely (only in browser)
@@ -115,6 +124,14 @@ export async function registerUser(
   additionalData: Record<string, any> = {}
 ): Promise<{success: boolean; user?: User; error?: string}> {
   try {
+    // Check if Firebase is configured before attempting to use it
+    if (!isFirebaseConfigured()) {
+      return {
+        success: false,
+        error: 'Firebase is not configured. Please check environment variables.'
+      };
+    }
+
     const auth = getAuthSafely();
     const firestore = getFirestoreSafely();
     
@@ -188,6 +205,14 @@ export async function loginWithEmail(
   password: string
 ): Promise<{success: boolean; user?: User; error?: string}> {
   try {
+    // Check if Firebase is configured before attempting to use it
+    if (!isFirebaseConfigured()) {
+      return {
+        success: false,
+        error: 'Firebase is not configured. Please check environment variables.'
+      };
+    }
+
     const auth = getAuthSafely();
     const firestore = getFirestoreSafely();
     
@@ -219,6 +244,14 @@ export async function loginWithEmail(
  */
 export async function loginWithGoogle(): Promise<{success: boolean; user?: User; error?: string}> {
   try {
+    // Check if Firebase is configured before attempting to use it
+    if (!isFirebaseConfigured()) {
+      return {
+        success: false,
+        error: 'Firebase is not configured. Please check environment variables.'
+      };
+    }
+
     const auth = getAuthSafely();
     const firestore = getFirestoreSafely();
     
