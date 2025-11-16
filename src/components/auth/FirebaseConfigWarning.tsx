@@ -9,6 +9,9 @@ import { getFirebaseEnvStatus } from '@/lib/core/firebase/health';
  * Displays a detailed warning when Firebase environment variables are missing
  * Only shows in development or when explicitly enabled
  * Helps developers quickly identify configuration issues
+ * 
+ * IMPORTANT: This component uses client-side mounting to prevent hydration errors.
+ * It will not render anything until the component mounts on the client.
  */
 export default function FirebaseConfigWarning() {
   const [configStatus, setConfigStatus] = useState<{
@@ -19,8 +22,12 @@ export default function FirebaseConfigWarning() {
   
   const [isExpanded, setIsExpanded] = useState(false);
   const [showInProduction, setShowInProduction] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
+    // Mark as mounted to prevent hydration mismatch
+    setIsMounted(true);
+
     // Only run on client side
     if (typeof window === 'undefined') return;
 
@@ -32,6 +39,11 @@ export default function FirebaseConfigWarning() {
       setIsExpanded(true);
     }
   }, []);
+
+  // Don't render anything until mounted on client to prevent hydration mismatch
+  if (!isMounted) {
+    return null;
+  }
 
   // Don't show in production unless explicitly enabled
   if (!configStatus || (configStatus.environment === 'production' && !showInProduction)) {
