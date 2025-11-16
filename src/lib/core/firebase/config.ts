@@ -84,4 +84,13 @@ export function logFirebaseConfig(): void {
       logFirebaseConfigStatus('Firebase Config');
     }
   }
-} 
+}
+
+/**
+ * Re-export Firebase client instances
+ * These are initialized in the client module and should only be used client-side
+ */
+export { auth, firestore, storage } from './client';
+
+// For backward compatibility, export app as well
+export { default as app } from './client'; 

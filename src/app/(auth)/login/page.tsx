@@ -276,9 +276,18 @@ export default function LoginPage() {
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Email Field */}
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                  Email address
-                </label>
+                <div className="flex items-center justify-between mb-2">
+                  <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+                    Email address
+                  </label>
+                  <button
+                    type="button"
+                    onClick={() => setFormData({ ...formData, email: 'admin@irisync.com' })}
+                    className="text-xs text-blue-600 hover:text-blue-800 underline"
+                  >
+                    Admin login
+                  </button>
+                </div>
                 <input
                   id="email"
                   name="email"
