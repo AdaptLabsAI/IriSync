@@ -58,98 +58,120 @@ export async function GET(request: NextRequest) {
       });
     }
     
-    // Fetch testimonials from Firestore
-    const db = getFirestore();
-    let query = db.collection('testimonials')
-      .where('isPublished', '==', true);
+    // Return placeholder data if Firebase is not configured (common in preview deployments)
+    // This prevents errors when environment variables aren't set up yet
+    const placeholderData = [
+      {
+        id: 'coming-soon',
+        name: 'Testimonials Coming Soon',
+        role: '',
+        company: '',
+        content: 'We\'re collecting feedback from our customers. Be the first to share your experience!',
+        rating: 5,
+        avatar: null,
+        featured: true,
+        isPublished: true,
+        createdAt: new Date().toISOString(),
+        isPlaceholder: true
+      }
+    ];
     
-    // Add featured filter if requested
-    if (featured) {
-      query = query.where('featured', '==', true);
-    }
-    
-    // Add sorting and pagination
-    const skip = (page - 1) * limit;
-    query = query.orderBy('createdAt', 'desc');
-    
-    // Execute query with pagination
-    const testimonialSnapshot = await query.limit(limit + 1).offset(skip).get();
-    
-    // Check if we have any testimonials
-    if (testimonialSnapshot.empty) {
-      // Instead of returning an empty array, return an array with the testimonials-coming-soon message
-      return NextResponse.json([
-        {
-          id: 'coming-soon',
-          name: 'Testimonials Coming Soon',
-          role: '',
-          company: '',
-          content: 'We\'re collecting feedback from our customers. Be the first to share your experience!',
-          rating: 5,
-          avatar: null,
-          featured: true,
+    try {
+      // Fetch testimonials from Firestore
+      const db = getFirestore();
+      let query = db.collection('testimonials')
+        .where('isPublished', '==', true);
+      
+      // Add featured filter if requested
+      if (featured) {
+        query = query.where('featured', '==', true);
+      }
+      
+      // Add sorting and pagination
+      const skip = (page - 1) * limit;
+      query = query.orderBy('createdAt', 'desc');
+      
+      // Execute query with pagination
+      const testimonialSnapshot = await query.limit(limit + 1).offset(skip).get();
+      
+      // Check if we have any testimonials
+      if (testimonialSnapshot.empty) {
+        return NextResponse.json(placeholderData, { 
+          status: 200,
+          headers: {
+            ...corsHeaders,
+            'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400'
+          }
+        });
+      }
+      
+      // Check if there are more results
+      const hasMore = testimonialSnapshot.docs.length > limit;
+      const docs = hasMore ? testimonialSnapshot.docs.slice(0, limit) : testimonialSnapshot.docs;
+      
+      // Transform the data
+      const testimonials = docs.map((doc: DocumentData) => {
+        const data = doc.data();
+        return {
+          id: doc.id,
+          name: data.name,
+          role: data.role,
+          company: data.company,
+          content: data.content,
+          rating: data.rating,
+          avatar: data.avatar || null,
+          featured: data.featured || false,
           isPublished: true,
-          createdAt: new Date().toISOString(),
-          isPlaceholder: true
-        }
-      ], { 
+          createdAt: data.createdAt?.toDate().toISOString() || new Date().toISOString()
+        };
+      });
+      
+      // Return successful response with cache headers
+      return NextResponse.json(testimonials, { 
         status: 200,
         headers: {
           ...corsHeaders,
           'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400'
         }
       });
+    } catch (firestoreError) {
+      // If Firestore fails (e.g., not configured), return placeholder data
+      console.log('Firestore not available, returning placeholder testimonials:', firestoreError instanceof Error ? firestoreError.message : 'Unknown error');
+      return NextResponse.json(placeholderData, { 
+        status: 200,
+        headers: {
+          ...corsHeaders,
+          'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=600'
+        }
+      });
     }
-    
-    // Check if there are more results
-    const hasMore = testimonialSnapshot.docs.length > limit;
-    const docs = hasMore ? testimonialSnapshot.docs.slice(0, limit) : testimonialSnapshot.docs;
-    
-    // Transform the data
-    const testimonials = docs.map((doc: DocumentData) => {
-      const data = doc.data();
-      return {
-        id: doc.id,
-        name: data.name,
-        role: data.role,
-        company: data.company,
-        content: data.content,
-        rating: data.rating,
-        avatar: data.avatar || null,
-        featured: data.featured || false,
-        isPublished: true,
-        createdAt: data.createdAt?.toDate().toISOString() || new Date().toISOString()
-      };
-    });
-    
-    // Return successful response with cache headers
-    return NextResponse.json(testimonials, { 
-      status: 200,
-      headers: {
-        ...corsHeaders,
-        'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400'
-      }
-    });
   } catch (error) {
     console.error('Error fetching testimonials:', error);
     
-    // Return a detailed error message
-    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-    return NextResponse.json(
-      { 
-        error: 'Failed to fetch testimonials data',
-        details: errorMessage,
-        timestamp: new Date().toISOString(),
-        endpoint: '/api/testimonials'
-      },
-      { 
-        status: 500,
-        headers: {
-          ...corsHeaders,
-          'Cache-Control': 'no-cache, no-store, must-revalidate'
-        }
+    // Return placeholder data even on error to prevent breaking the UI
+    const placeholderData = [
+      {
+        id: 'error-fallback',
+        name: 'Service Temporarily Unavailable',
+        role: '',
+        company: '',
+        content: 'We\'re working on bringing you testimonials. Please check back soon!',
+        rating: 5,
+        avatar: null,
+        featured: true,
+        isPublished: true,
+        createdAt: new Date().toISOString(),
+        isPlaceholder: true
       }
-    );
+    ];
+    
+    return NextResponse.json(placeholderData, {
+      status: 200,
+      headers: {
+        ...corsHeaders,
+        'Cache-Control': 'no-cache, no-store, must-revalidate'
+      }
+    });
   }
 }
 

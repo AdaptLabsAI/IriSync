@@ -185,7 +185,12 @@ export default function HomePage() {
         // Use the correct API endpoint - the route is at /api/feedback/testimonials
         const response = await get('/api/feedback/testimonials');
         
-        if (response.success && Array.isArray(response.data)) {
+        // API returns an array directly
+        if (Array.isArray(response)) {
+          const publishedTestimonials = response.filter((t: Testimonial) => t.isPublished);
+          setTestimonials(publishedTestimonials.slice(0, 6));
+        } else if (response.success && Array.isArray(response.data)) {
+          // Fallback for old response format
           const publishedTestimonials = response.data.filter((t: Testimonial) => t.isPublished);
           setTestimonials(publishedTestimonials.slice(0, 6));
         } else {
