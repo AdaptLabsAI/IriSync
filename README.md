@@ -457,6 +457,82 @@ curl https://your-app.vercel.app/api/health
 Do **not** commit `.env`, credential files, or sensitive data to version control.
 Always validate OAuth, API keys, and database rules prior to deployment.
 
+## 🎨 Figma MCP Integration
+
+IriSync includes configuration for the **Figma Model Context Protocol (MCP)** server, enabling AI-powered code generation from Figma designs.
+
+### What is Figma MCP?
+
+The `mcp.config.json` file in this repository registers a Figma MCP server that allows compatible AI clients (like ChatGPT Desktop or VS Code with MCP support) to access Figma files and generate React/Next.js code based on your design layouts.
+
+**Important Notes:**
+- This configuration does **NOT** automatically sync Figma layouts into the app
+- It only gives AI tools access to Figma so they can read your designs and generate code
+- The MCP server is for AI tools, not for runtime browser/API use
+
+### How to Use Figma MCP
+
+#### Prerequisites
+- A Figma personal access token or OAuth setup in your MCP-aware AI client
+- ChatGPT Desktop app, Claude Desktop, or another MCP-compatible client
+- Figma file key(s) for the designs you want to reference
+
+#### Example Workflow
+
+1. **Open your MCP-aware AI client** (e.g., ChatGPT Desktop)
+
+2. **Point it at this repository** so it picks up `mcp.config.json`
+   - The client will automatically detect and load the Figma MCP server configuration
+
+3. **Request code generation** with a prompt like:
+   ```
+   "Open frame 'Dashboard Layout' from Figma file abc123xyz 
+   and generate a responsive React/Next.js component for that 
+   layout using Material-UI and Tailwind CSS"
+   ```
+
+4. **Review and integrate** the AI-generated code into your app
+   - Copy the component into `src/components/`
+   - Adjust imports and styling as needed
+   - Test the component in your application
+
+#### Authentication
+
+The Figma MCP server requires authentication to access your Figma files:
+- Authentication is handled by your AI client, not this repository
+- You'll need to provide a Figma personal access token to your AI client
+- Get your token from: [Figma Account Settings → Personal Access Tokens](https://www.figma.com/developers/api#access-tokens)
+
+#### Helper Types
+
+This repository includes TypeScript helper types in `src/utils/figma-types.ts` to make it easier to work with Figma data structures in your code:
+
+```typescript
+import { FigmaFrameSummary, FigmaComponent } from '@/utils/figma-types';
+
+// Use these types when working with AI-generated Figma data
+const frame: FigmaFrameSummary = {
+  id: 'frame-id',
+  name: 'Header Component',
+  width: 1440,
+  height: 80
+};
+```
+
+### Supported AI Clients
+
+MCP is supported by:
+- [ChatGPT Desktop App](https://openai.com/chatgpt/desktop/)
+- [Claude Desktop](https://claude.ai/download)
+- [VS Code with MCP extension](https://marketplace.visualstudio.com/items?itemName=ModelContextProtocol.mcp)
+- Other MCP-compatible tools
+
+### Figma Resources
+
+- [Figma Developer Documentation](https://www.figma.com/developers/docs)
+- [Figma REST API](https://www.figma.com/developers/api)
+- [Model Context Protocol Specification](https://modelcontextprotocol.io/)
+
 ## 📫 Contact
 
 For any inquiries, please reach out to our team at contact@irisync.com.

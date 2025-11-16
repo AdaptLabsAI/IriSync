@@ -310,16 +310,19 @@ class DevProvider implements EmailProvider {
   }
 
   async sendEmail(message: EmailMessage): Promise<EmailResult> {
-    logger.info('📧 Email would be sent in production:', {
-      to: message.to,
-      subject: message.subject,
-      provider: this.name,
-      hasHtml: !!message.htmlContent,
-      hasText: !!message.textContent,
-      hasAttachments: !!(message.attachments?.length),
-      priority: message.priority,
-      category: message.category
-    });
+    // Only log in non-production or when debug is enabled
+    if (process.env.NODE_ENV !== 'production' || process.env.EMAIL_DEBUG === 'true') {
+      logger.info('📧 Email would be sent in production:', {
+        to: message.to,
+        subject: message.subject,
+        provider: this.name,
+        hasHtml: !!message.htmlContent,
+        hasText: !!message.textContent,
+        hasAttachments: !!(message.attachments?.length),
+        priority: message.priority,
+        category: message.category
+      });
+    }
 
     return {
       success: true,
@@ -329,14 +332,17 @@ class DevProvider implements EmailProvider {
   }
 
   async sendBulkEmail(message: BulkEmailMessage): Promise<EmailResult> {
-    logger.info('📧 Bulk email would be sent in production:', {
-      recipientCount: message.recipients.length,
-      subject: message.subject,
-      provider: this.name,
-      hasTemplate: !!message.templateId,
-      priority: message.priority,
-      category: message.category
-    });
+    // Only log in non-production or when debug is enabled
+    if (process.env.NODE_ENV !== 'production' || process.env.EMAIL_DEBUG === 'true') {
+      logger.info('📧 Bulk email would be sent in production:', {
+        recipientCount: message.recipients.length,
+        subject: message.subject,
+        provider: this.name,
+        hasTemplate: !!message.templateId,
+        priority: message.priority,
+        category: message.category
+      });
+    }
 
     return {
       success: true,
@@ -361,13 +367,57 @@ export class UnifiedEmailService {
       new DevProvider()
     ];
 
-    // Select the first configured provider as primary
-    this.primaryProvider = this.providers.find(p => p.isConfigured()) || this.providers[this.providers.length - 1];
+    // Determine primary provider based on environment
+    // In production, never use the development provider
+    const isProduction = process.env.NODE_ENV === 'production';
+    
+    // Use EMAIL_PRIMARY_PROVIDER env var if specified, otherwise auto-select
+    const preferredProvider = process.env.EMAIL_PRIMARY_PROVIDER;
+    
+    if (preferredProvider) {
+      // Try to use the specified provider
+      const specified = this.providers.find(
+        p => p.name.toLowerCase() === preferredProvider.toLowerCase() && p.isConfigured()
+      );
+      
+      if (specified) {
+        this.primaryProvider = specified;
+      } else {
+        // Fallback to first configured non-dev provider in production
+        if (isProduction) {
+          this.primaryProvider = this.providers.find(p => p.isConfigured() && p.name !== 'development') 
+            || this.providers.find(p => p.isConfigured()) 
+            || this.providers[this.providers.length - 1];
+        } else {
+          this.primaryProvider = this.providers.find(p => p.isConfigured()) 
+            || this.providers[this.providers.length - 1];
+        }
+        
+        if (process.env.NODE_ENV !== 'production') {
+          console.warn(`Specified email provider "${preferredProvider}" not configured. Using "${this.primaryProvider.name}" instead.`);
+        }
+      }
+    } else {
+      // Auto-select: In production, skip development provider
+      if (isProduction) {
+        this.primaryProvider = this.providers.find(p => p.isConfigured() && p.name !== 'development')
+          || this.providers.find(p => p.isConfigured()) 
+          || this.providers[this.providers.length - 1];
+      } else {
+        // In development, use first configured provider (including dev)
+        this.primaryProvider = this.providers.find(p => p.isConfigured()) 
+          || this.providers[this.providers.length - 1];
+      }
+    }
 
-    logger.info('Unified Email Service initialized', {
-      primaryProvider: this.primaryProvider.name,
-      availableProviders: this.providers.filter(p => p.isConfigured()).map(p => p.name)
-    });
+    // Only log in non-production or when explicitly enabled
+    if (process.env.NODE_ENV !== 'production' || process.env.EMAIL_DEBUG === 'true') {
+      logger.info('Unified Email Service initialized', {
+        primaryProvider: this.primaryProvider.name,
+        availableProviders: this.providers.filter(p => p.isConfigured()).map(p => p.name),
+        environment: process.env.NODE_ENV
+      });
+    }
   }
 
   /**
@@ -376,13 +426,16 @@ export class UnifiedEmailService {
   async sendEmail(message: EmailMessage): Promise<EmailResult> {
     const result = await this.primaryProvider.sendEmail(message);
 
-    logger.info('Email sent', {
-      success: result.success,
-      provider: result.provider,
-      messageId: result.messageId,
-      to: Array.isArray(message.to) ? message.to.length + ' recipients' : message.to,
-      subject: message.subject
-    });
+    // Only log in non-production or when debug is enabled
+    if (process.env.NODE_ENV !== 'production' || process.env.EMAIL_DEBUG === 'true') {
+      logger.info('Email sent', {
+        success: result.success,
+        provider: result.provider,
+        messageId: result.messageId,
+        to: Array.isArray(message.to) ? message.to.length + ' recipients' : message.to,
+        subject: message.subject
+      });
+    }
 
     if (!result.success) {
       logger.error('Email sending failed', {
@@ -401,13 +454,16 @@ export class UnifiedEmailService {
   async sendBulkEmail(message: BulkEmailMessage): Promise<EmailResult> {
     const result = await this.primaryProvider.sendBulkEmail(message);
 
-    logger.info('Bulk email sent', {
-      success: result.success,
-      provider: result.provider,
-      messageId: result.messageId,
-      recipientCount: message.recipients.length,
-      subject: message.subject
-    });
+    // Only log in non-production or when debug is enabled
+    if (process.env.NODE_ENV !== 'production' || process.env.EMAIL_DEBUG === 'true') {
+      logger.info('Bulk email sent', {
+        success: result.success,
+        provider: result.provider,
+        messageId: result.messageId,
+        recipientCount: message.recipients.length,
+        subject: message.subject
+      });
+    }
 
     if (!result.success) {
       logger.error('Bulk email sending failed', {
