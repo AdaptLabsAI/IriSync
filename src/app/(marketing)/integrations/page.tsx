@@ -646,16 +646,16 @@ export default function IntegrationsPage() {
           ))}
           
           {/* Custom Integration Section */}
-          <Card className="mt-16 overflow-hidden bg-gradient-to-br from-blue-50 to-purple-50">
+          <Card className="mt-16 overflow-hidden bg-gradient-to-br from-green-50 to-[#00C853]/10">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               <div className="hidden lg:block relative">
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-lg"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-[#00C853]/20 to-[#003305]/20 rounded-lg"></div>
               </div>
               <div className="p-8 lg:p-12">
                 <div className="relative">
                   <Typography variant="h4" className="mb-6 font-bold relative">
                     Need a Custom Integration?
-                    <div className="absolute bottom-0 left-0 w-16 h-1 bg-green-500 rounded-full mt-2"></div>
+                    <div className="absolute bottom-0 left-0 w-16 h-1 bg-[#00C853] rounded-full mt-2"></div>
                   </Typography>
                 </div>
                 <Typography variant="body" className="mb-4">

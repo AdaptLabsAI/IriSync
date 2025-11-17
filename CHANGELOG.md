@@ -1,5 +1,14 @@
 # Changelog
 
+## 2025-11-17 06:45 EST
+- **ROUTE FIX**: Renamed /features-pricing to /features for proper URL structure
+- **DESIGN FIX**: Updated pricing page colors to match Figma design (#00C853 green, #003305 dark green)
+- Updated pricing banner gradient from blue-purple to green
+- Updated pricing card buttons and highlights to use green colors
+- **DESIGN FIX**: Updated integrations page colors to match Figma design
+- Changed custom integration section from blue-purple to green gradient
+- All pages now use consistent green color scheme matching Figma specifications
+
 ## 2025-11-17 06:30 EST
 - **CRITICAL FIX**: Replaced NextAuth with Firebase Auth for connections page
 - Connections page now uses Firebase Auth tokens for authentication

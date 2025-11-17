@@ -93,7 +93,7 @@ export default function PricingPage() {
         </section>
 
         {/* Early Registration Banner */}
-        <section className="py-8 bg-gradient-to-r from-blue-500 to-purple-600">
+        <section className="py-8 bg-gradient-to-r from-[#00C853] to-[#003305]">
           <Container className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center text-white">
               <Typography variant="h5" className="font-bold mb-2 text-white">
@@ -103,10 +103,10 @@ export default function PricingPage() {
                 Get 50% off our regular pricing when you sign up during our launch period
               </Typography>
               <div className="flex flex-wrap gap-4 justify-center">
-                <div className="bg-white/20 px-4 py-2 rounded-md">
+                <div className="bg-white/20 px-4 py-2 rounded-xl">
                   <span className="line-through text-gray-200">Creator: $80/mo</span> → <span className="font-bold">$40/mo</span>
                 </div>
-                <div className="bg-white/20 px-4 py-2 rounded-md">
+                <div className="bg-white/20 px-4 py-2 rounded-xl">
                   <span className="line-through text-gray-200">Influencer: $200/mo</span> → <span className="font-bold">$100/mo</span>
                 </div>
               </div>
@@ -124,13 +124,13 @@ export default function PricingPage() {
               {pricingPlans.map((plan) => (
                 <div
                   key={plan.name}
-                  className={`relative bg-white rounded-2xl shadow-lg p-8 ${
-                    plan.highlighted ? 'ring-2 ring-green-500 transform scale-105' : ''
+                  className={`relative bg-white rounded-2xl shadow-sm p-8 ${
+                    plan.highlighted ? 'ring-2 ring-[#00C853] transform scale-105' : 'shadow-sm border border-gray-200'
                   }`}
                 >
                   {plan.highlighted && (
                     <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                      <span className="bg-green-500 text-white px-4 py-1 rounded-full text-sm font-medium">
+                      <span className="bg-[#00C853] text-white px-4 py-1 rounded-full text-sm font-medium">
                         Most Popular
                       </span>
                     </div>
@@ -155,7 +155,7 @@ export default function PricingPage() {
                     {plan.features.map((feature, index) => (
                       <li key={index} className="flex items-start">
                         <svg
-                          className="w-5 h-5 text-green-500 mr-3 mt-0.5 flex-shrink-0"
+                          className="w-5 h-5 text-[#00C853] mr-3 mt-0.5 flex-shrink-0"
                           fill="none"
                           stroke="currentColor"
                           viewBox="0 0 24 24"
@@ -176,10 +176,10 @@ export default function PricingPage() {
 
                   <Link href={plan.buttonLink}>
                     <Button
-                      className={`w-full ${
+                      className={`w-full rounded-xl ${
                         plan.highlighted
-                          ? 'bg-green-600 hover:bg-green-700'
-                          : 'bg-gray-800 hover:bg-gray-900'
+                          ? 'bg-[#00C853] hover:bg-[#00A844] shadow-lg'
+                          : 'bg-[#003305] hover:bg-[#004408]'
                       }`}
                       size="lg"
                     >

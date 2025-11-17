@@ -2,7 +2,9 @@
   "permissions": {
     "allow": [
       "Bash(git commit:*)",
-      "Bash(git push)"
+      "Bash(git push)",
+      "Bash(copy \"src\\app\\(dashboard)\\dashboard\\settings\\connections\\page.tsx\" \"src\\app\\(dashboard)\\dashboard\\settings\\connections\\page-old-nextauth.tsx\")",
+      "Bash(ls:*)"
     ],
     "deny": [],
     "ask": []
