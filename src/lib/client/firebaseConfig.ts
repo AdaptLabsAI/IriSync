@@ -50,17 +50,50 @@ type FirebaseClientEnvKey =
 
 /**
  * Read environment variable and ensure it's returned as a string
- * 
+ *
  * IMPORTANT for messagingSenderId:
  * Firebase messaging sender IDs can be large numbers like 554117967400.
  * JavaScript may convert these to scientific notation (5.54118E+11) if not treated as strings.
  * Always ensure these are stored as strings in your environment variables: "554117967400"
+ *
+ * CRITICAL FIX: Access environment variables directly from process.env object
+ * This ensures compatibility with Next.js build-time inlining in standalone mode
  */
 function readClientEnv(key: FirebaseClientEnvKey): string | undefined {
-  // Read from process.env - Next.js will inline these at build time for NEXT_PUBLIC_ vars
-  const value = process.env[key];
+  // CRITICAL: Direct access to ensure proper inlining by Next.js webpack
+  let value: string | undefined;
 
-  if (!value || value.trim() === '') {
+  // Explicitly read each variable to force webpack replacement
+  switch (key) {
+    case 'NEXT_PUBLIC_FIREBASE_API_KEY':
+      value = process.env.NEXT_PUBLIC_FIREBASE_API_KEY;
+      break;
+    case 'NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN':
+      value = process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN;
+      break;
+    case 'NEXT_PUBLIC_FIREBASE_PROJECT_ID':
+      value = process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID;
+      break;
+    case 'NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET':
+      value = process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET;
+      break;
+    case 'NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID':
+      value = process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID;
+      break;
+    case 'NEXT_PUBLIC_FIREBASE_APP_ID':
+      value = process.env.NEXT_PUBLIC_FIREBASE_APP_ID;
+      break;
+    case 'NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID':
+      value = process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID;
+      break;
+    case 'NEXT_PUBLIC_FIREBASE_DATABASE_URL':
+      value = process.env.NEXT_PUBLIC_FIREBASE_DATABASE_URL;
+      break;
+    default:
+      value = undefined;
+  }
+
+  if (!value || (typeof value === 'string' && value.trim() === '')) {
     return undefined;
   }
 

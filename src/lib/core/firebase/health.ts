@@ -34,25 +34,41 @@ const REQUIRED_FIREBASE_ENV_VARS = [
 
 /**
  * Check if all required Firebase client environment variables are present and valid
- * 
+ *
  * Returns true only if ALL required env vars:
  * - Exist in process.env
  * - Are non-empty strings
  * - Have been trimmed of whitespace
- * 
+ *
+ * CRITICAL FIX: Explicitly access each variable to ensure webpack inlining
+ *
  * @returns {boolean} True if all required Firebase env vars are valid, false otherwise
  */
 export function hasValidFirebaseClientEnv(): boolean {
-  return REQUIRED_FIREBASE_ENV_VARS.every((key) => {
-    const value = process.env[key];
-    return typeof value === 'string' && value.trim().length > 0;
-  });
+  // CRITICAL: Explicitly access each variable to force webpack replacement
+  const apiKey = process.env.NEXT_PUBLIC_FIREBASE_API_KEY;
+  const authDomain = process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN;
+  const projectId = process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID;
+  const storageBucket = process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET;
+  const messagingSenderId = process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID;
+  const appId = process.env.NEXT_PUBLIC_FIREBASE_APP_ID;
+
+  return !!(
+    apiKey && typeof apiKey === 'string' && apiKey.trim().length > 0 &&
+    authDomain && typeof authDomain === 'string' && authDomain.trim().length > 0 &&
+    projectId && typeof projectId === 'string' && projectId.trim().length > 0 &&
+    storageBucket && typeof storageBucket === 'string' && storageBucket.trim().length > 0 &&
+    messagingSenderId && typeof messagingSenderId === 'string' && messagingSenderId.trim().length > 0 &&
+    appId && typeof appId === 'string' && appId.trim().length > 0
+  );
 }
 
 /**
  * Get detailed information about which Firebase env vars are missing
  * Useful for debugging configuration issues
- * 
+ *
+ * CRITICAL FIX: Explicitly access each variable to ensure webpack inlining
+ *
  * @returns {object} Object containing arrays of present and missing env vars
  */
 export function getFirebaseEnvStatus(): {
@@ -64,8 +80,17 @@ export function getFirebaseEnvStatus(): {
   const present: string[] = [];
   const missing: string[] = [];
 
-  REQUIRED_FIREBASE_ENV_VARS.forEach((key) => {
-    const value = process.env[key];
+  // CRITICAL: Explicitly access each variable to force webpack replacement
+  const vars = {
+    NEXT_PUBLIC_FIREBASE_API_KEY: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+    NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+    NEXT_PUBLIC_FIREBASE_PROJECT_ID: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+    NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+    NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+    NEXT_PUBLIC_FIREBASE_APP_ID: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+  };
+
+  Object.entries(vars).forEach(([key, value]) => {
     if (typeof value === 'string' && value.trim().length > 0) {
       present.push(key);
     } else {
