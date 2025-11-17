@@ -253,23 +253,63 @@ export async function loginWithEmail(
     // Try to update the user's last login time in Firestore (non-blocking)
     try {
       const userRef = doc(firestore, 'users', userCredential.user.uid);
-      // First check if the document exists
       const userDoc = await getDoc(userRef);
+
+      // Check if this is admin@irisync.com and set up admin role
+      const isAdminEmail = email.toLowerCase() === 'admin@irisync.com';
 
       if (userDoc.exists()) {
         // Update existing user document
-        await updateDoc(userRef, {
+        const updateData: any = {
           lastLogin: serverTimestamp()
-        });
+        };
+
+        // Add admin flag if this is the admin email
+        if (isAdminEmail && !userDoc.data().isAdmin) {
+          updateData.isAdmin = true;
+          updateData.adminRole = 'super_admin';
+        }
+
+        await updateDoc(userRef, updateData);
       } else {
         // Create user document if it doesn't exist
-        await setDoc(userRef, {
+        const userData: any = {
           email: userCredential.user.email,
           displayName: userCredential.user.displayName || email.split('@')[0],
           createdAt: serverTimestamp(),
           lastLogin: serverTimestamp(),
           emailVerified: userCredential.user.emailVerified
-        });
+        };
+
+        // Add admin flag if this is the admin email
+        if (isAdminEmail) {
+          userData.isAdmin = true;
+          userData.adminRole = 'super_admin';
+        }
+
+        await setDoc(userRef, userData);
+      }
+
+      // If this is admin email, also create/update admin document
+      if (isAdminEmail) {
+        const adminRef = doc(firestore, 'admins', userCredential.user.uid);
+        const adminDoc = await getDoc(adminRef);
+
+        if (!adminDoc.exists()) {
+          await setDoc(adminRef, {
+            id: userCredential.user.uid,
+            email: userCredential.user.email,
+            name: userCredential.user.displayName || 'Admin',
+            role: 'super_admin',
+            createdAt: serverTimestamp(),
+            lastLogin: serverTimestamp()
+          });
+          console.log('✓ Admin document created for', email);
+        } else {
+          await updateDoc(adminRef, {
+            lastLogin: serverTimestamp()
+          });
+        }
       }
     } catch (firestoreError) {
       // Don't fail login if Firestore update fails
