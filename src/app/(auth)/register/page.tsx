@@ -14,16 +14,13 @@ export default function RegisterPage() {
     userName: '',
     email: '',
     password: '',
-    confirmPassword: '',
-    acceptTerms: false,
-    acceptTrialTerms: false
+    confirmPassword: ''
   });
   const [errors, setErrors] = useState({
     userName: '',
     email: '',
     password: '',
     confirmPassword: '',
-    acceptTerms: '',
     general: ''
   });
 
@@ -36,10 +33,10 @@ export default function RegisterPage() {
 
     // Clear error when typing
     if (errors[name as keyof typeof errors]) {
-      setErrors({
-        ...errors,
+      setErrors(prev => ({
+        ...prev,
         [name]: ''
-      });
+      }));
     }
   };
 
@@ -49,7 +46,6 @@ export default function RegisterPage() {
       email: '',
       password: '',
       confirmPassword: '',
-      acceptTerms: '',
       general: ''
     };
 
@@ -59,24 +55,22 @@ export default function RegisterPage() {
 
     if (!formData.email) {
       newErrors.email = 'Email is required';
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = 'Email is invalid';
+    } else if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(formData.email)) {
+      newErrors.email = 'Please enter a valid email address';
     }
 
     if (!formData.password) {
       newErrors.password = 'Password is required';
     } else if (formData.password.length < 8) {
       newErrors.password = 'Password must be at least 8 characters';
+    } else if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/.test(formData.password)) {
+      newErrors.password = 'Password must contain uppercase, lowercase, and numbers';
     }
 
     if (!formData.confirmPassword) {
       newErrors.confirmPassword = 'Please confirm your password';
     } else if (formData.password !== formData.confirmPassword) {
       newErrors.confirmPassword = 'Passwords do not match';
-    }
-
-    if (!formData.acceptTerms) {
-      newErrors.acceptTerms = 'You must accept the terms and conditions';
     }
 
     setErrors(newErrors);
@@ -93,7 +87,7 @@ export default function RegisterPage() {
     setIsLoading(true);
 
     try {
-      // Step 1: Register the user with Firebase Auth
+      // Register the user with Firebase Auth
       const result = await registerUser(
         formData.email,
         formData.password,
@@ -101,54 +95,30 @@ export default function RegisterPage() {
         formData.userName.split(' ').slice(1).join(' ') || '',
         {
           businessType: 'individual',
-          subscriptionTier: 'trial',
-          acceptTerms: formData.acceptTerms,
-          acceptTrialTerms: formData.acceptTrialTerms
+          subscriptionTier: 'free'
         }
       );
 
       if (result.success && result.user) {
-        // Step 2: Create Stripe checkout session for trial with payment collection
-        const checkoutResponse = await fetch('/api/subscription/create-trial-checkout', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            userId: result.user.uid,
-            email: formData.email,
-            name: formData.userName,
-            tier: 'trial'
-          }),
-        });
-
-        if (!checkoutResponse.ok) {
-          const errorData = await checkoutResponse.json();
-          throw new Error(errorData.error || 'Failed to create trial checkout');
-        }
-
-        const { url } = await checkoutResponse.json();
-
-        // Step 3: Redirect to Stripe Checkout
-        if (url) {
-          window.location.href = url;
-        } else {
-          throw new Error('No checkout URL received');
-        }
+        // Redirect to dashboard after successful registration
+        router.push('/dashboard');
       } else {
         setErrors({
           ...errors,
           general: result.error || 'Registration failed'
         });
       }
-    } catch (error: any) {
+    } catch (error) {
+      const errorMessage = error instanceof Error
+        ? error.message
+        : getFirebaseErrorMessage(error);
       setErrors({
         ...errors,
-        general: error.message || getFirebaseErrorMessage(error)
+        general: errorMessage
       });
+    } finally {
       setIsLoading(false);
     }
-    // Note: Don't set isLoading to false here as we're redirecting to Stripe
   };
 
   return (
@@ -176,7 +146,11 @@ export default function RegisterPage() {
                 target.style.display = 'none';
                 const parent = target.parentElement;
                 if (parent) {
-                  parent.innerHTML = '<span class="text-white text-2xl font-bold">IriSync</span>';
+                  const span = document.createElement('span');
+                  span.className = 'text-white text-2xl font-bold';
+                  span.textContent = 'IriSync';
+                  parent.innerHTML = '';
+                  parent.appendChild(span);
                 }
               }}
             />
@@ -223,7 +197,11 @@ export default function RegisterPage() {
                   target.style.display = 'none';
                   const parent = target.parentElement;
                   if (parent) {
-                    parent.innerHTML = '<span class="text-gray-900 text-2xl font-bold">IriSync</span>';
+                    const span = document.createElement('span');
+                    span.className = 'text-gray-900 text-2xl font-bold';
+                    span.textContent = 'IriSync';
+                    parent.innerHTML = '';
+                    parent.appendChild(span);
                   }
                 }}
               />
@@ -260,6 +238,7 @@ export default function RegisterPage() {
                 <input
                   type="text"
                   name="userName"
+                  autoComplete="name"
                   value={formData.userName}
                   onChange={handleInputChange}
                   placeholder="User Name"
@@ -282,6 +261,7 @@ export default function RegisterPage() {
                 <input
                   type="email"
                   name="email"
+                  autoComplete="email"
                   value={formData.email}
                   onChange={handleInputChange}
                   placeholder="Email Address"
@@ -304,6 +284,7 @@ export default function RegisterPage() {
                 <input
                   type={showPassword ? 'text' : 'password'}
                   name="password"
+                  autoComplete="new-password"
                   value={formData.password}
                   onChange={handleInputChange}
                   placeholder="Enter Password"
@@ -312,6 +293,7 @@ export default function RegisterPage() {
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
+                  aria-label={showPassword ? "Hide password" : "Show password"}
                   className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
                 >
                   {showPassword ? (
@@ -342,6 +324,7 @@ export default function RegisterPage() {
                 <input
                   type={showPassword ? 'text' : 'password'}
                   name="confirmPassword"
+                  autoComplete="new-password"
                   value={formData.confirmPassword}
                   onChange={handleInputChange}
                   placeholder="Re-Enter Password"
@@ -350,6 +333,7 @@ export default function RegisterPage() {
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
+                  aria-label={showPassword ? "Hide password" : "Show password"}
                   className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
                 >
                   {showPassword ? (
@@ -369,54 +353,13 @@ export default function RegisterPage() {
               )}
             </div>
 
-            {/* Terms & Conditions Checkbox */}
-            <div className="space-y-3">
-              <div className="flex items-start">
-                <input
-                  type="checkbox"
-                  name="acceptTerms"
-                  checked={formData.acceptTerms}
-                  onChange={handleInputChange}
-                  className="mt-1 h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded"
-                />
-                <label htmlFor="acceptTerms" className="ml-3 text-sm text-gray-700">
-                  I accept the{' '}
-                  <a href="/terms" target="_blank" className="text-green-600 hover:text-green-700 underline">
-                    Terms and Conditions
-                  </a>
-                  {' '}and{' '}
-                  <a href="/privacy" target="_blank" className="text-green-600 hover:text-green-700 underline">
-                    Privacy Policy
-                  </a>
-                </label>
-              </div>
-              {errors.acceptTerms && (
-                <p className="text-sm text-red-600">{errors.acceptTerms}</p>
-              )}
-
-              <div className="flex items-start">
-                <input
-                  type="checkbox"
-                  name="acceptTrialTerms"
-                  checked={formData.acceptTrialTerms}
-                  onChange={handleInputChange}
-                  className="mt-1 h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded"
-                />
-                <label htmlFor="acceptTrialTerms" className="ml-3 text-sm text-gray-700">
-                  I understand that I'm starting a <strong>7-day free trial</strong> with influencer-level features.
-                  After the trial, I will be automatically charged <strong>$80/month</strong> for the Creator plan unless I cancel.
-                  Payment information is required to start the trial.
-                </label>
-              </div>
-            </div>
-
             {/* Submit Button */}
             <button
               type="submit"
               disabled={isLoading}
               className="w-full py-4 bg-gradient-to-r from-[#00C853] to-[#00A045] text-white rounded-xl font-medium text-lg hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {isLoading ? 'Starting Trial...' : 'Start 7-Day Free Trial'}
+              {isLoading ? 'Registering...' : 'Register'}
             </button>
           </form>
 

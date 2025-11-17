@@ -24,10 +24,11 @@ import { OrganizationSwitcher } from '../ui/OrganizationSwitcher';
 // Navigation links
 const navLinks = [
   { title: 'Home', path: '/' },
-  { title: 'Features', path: '/features-pricing' },
-  { title: 'Blog', path: '/blog' },
-  { title: 'Documentation', path: '/documentation' },
-  { title: 'Support', path: '/support' }
+  { title: 'Features', path: '/features' },
+  { title: 'Integrations', path: '/integrations' },
+  { title: 'Pricing', path: '/pricing' },
+  { title: 'Careers', path: '/careers' },
+  { title: 'Blog', path: '/blog' }
 ];
 
 export default function Navbar() {
