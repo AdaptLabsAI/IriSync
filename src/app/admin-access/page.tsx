@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '@/lib/core/firebase/config';
+import { getFirebaseClientAuth } from '@/lib/core/firebase/client';
 import Link from 'next/link';
 import { FirebaseError } from 'firebase/app';
 
@@ -21,17 +21,25 @@ export default function AdminAccessPage() {
     setError(null);
 
     try {
+      // Get Firebase auth instance safely
+      const auth = getFirebaseClientAuth();
+      if (!auth) {
+        setError('Firebase authentication is not configured. Please contact your system administrator.');
+        setLoading(false);
+        return;
+      }
+
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      
+
       // Get the user's ID token to check custom claims
       const idTokenResult = await userCredential.user.getIdTokenResult();
-      
+
       // Check if user has admin or super_admin role
       const isAdmin = idTokenResult.claims.admin === true || idTokenResult.claims.super_admin === true;
-      
+
       if (isAdmin) {
-        // Redirect to dashboard
-        router.push('/dashboard');
+        // Redirect to admin dashboard
+        router.push('/admin/dashboard');
       } else {
         setError('Access denied. Admin privileges required.');
         await auth.signOut();
@@ -54,7 +62,7 @@ export default function AdminAccessPage() {
   const handleDevBypass = () => {
     // In development, allow bypass to dashboard
     if (process.env.NODE_ENV === 'development' || process.env.NEXT_PUBLIC_ENABLE_DEV_BYPASS === 'true') {
-      router.push('/dashboard');
+      router.push('/admin/dashboard');
     } else {
       setError('Dev bypass is only available in development mode');
     }
@@ -94,7 +102,7 @@ export default function AdminAccessPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                placeholder="admin@example.com"
+                placeholder="admin@irisync.com"
               />
             </div>
 
