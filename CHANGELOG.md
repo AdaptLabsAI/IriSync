@@ -1,5 +1,13 @@
 # Changelog
 
+## 2025-11-16 21:30 EST
+- **NEW FEATURE**: Created User Management page at /dashboard/content/userM with full CRUD operations
+- **NEW FEATURE**: Created System Health monitoring page at /dashboard/content/system
+- **NEW FEATURE**: Created Support Ticket creation page at /support/new-ticket
+- **CRITICAL FIX**: Auto-setup admin@irisync.com as super_admin on login
+- Admin role is now automatically assigned to admin@irisync.com in Firestore
+- Created script for manual admin setup (scripts/setup-admin.js)
+
 ## 2025-11-16 21:00 EST
 - **CRITICAL FIX**: Made Firestore updates non-blocking in login flow to prevent "Missing or insufficient permissions" errors
 - Login now succeeds even if Firestore security rules aren't configured
