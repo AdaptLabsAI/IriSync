@@ -1,7 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useSession } from 'next-auth/react';
+import { getFirebaseClientAuth } from '@/lib/core/firebase/client';
+import { onAuthStateChanged, User as FirebaseUser } from 'firebase/auth';
 import { Box, Button, TextField, Typography, Alert, CircularProgress, Stack, IconButton, List, ListItem, ListItemText, MenuItem, Select, Divider, Dialog, DialogTitle, DialogContent, DialogActions, DialogContentText } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import TransferWithinAStationIcon from '@mui/icons-material/TransferWithinAStation';
@@ -32,7 +33,7 @@ interface Team {
 }
 
 export default function TeamManagementPage() {
-  const { data: session } = useSession();
+  const [user, setUser] = useState<FirebaseUser | null>(null);
   const [team, setTeam] = useState<Team | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -49,11 +50,38 @@ export default function TeamManagementPage() {
   }>({ open: false, targetMember: null });
   const [transferring, setTransferring] = useState(false);
 
-  const fetchTeam = async () => {
+  // Monitor Firebase Auth state
+  useEffect(() => {
+    const auth = getFirebaseClientAuth();
+    if (!auth) {
+      setLoading(false);
+      return;
+    }
+
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+      if (currentUser) {
+        fetchTeam(currentUser);
+      } else {
+        setLoading(false);
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  const fetchTeam = async (currentUser: FirebaseUser) => {
     setLoading(true);
     setError('');
     try {
-      const res = await fetch('/api/settings/team');
+      // Get Firebase ID token for authentication
+      const idToken = await currentUser.getIdToken();
+
+      const res = await fetch('/api/settings/team', {
+        headers: {
+          'Authorization': `Bearer ${idToken}`
+        }
+      });
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || data.error || 'Failed to load team');
       setTeam(data.team);
@@ -64,17 +92,26 @@ export default function TeamManagementPage() {
     }
   };
 
-  useEffect(() => { fetchTeam(); }, []);
-
   const handleInvite = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!user) {
+      setError('Please log in to invite team members');
+      return;
+    }
+
     setInviting(true);
     setError('');
     setSuccess('');
     try {
+      // Get Firebase ID token for authentication
+      const idToken = await user.getIdToken();
+
       const res = await fetch('/api/settings/team', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Authorization': `Bearer ${idToken}`,
+          'Content-Type': 'application/json'
+        },
         body: JSON.stringify({ email: inviteEmail, name: inviteName, role: inviteRole }),
       });
       const data = await res.json();
@@ -83,7 +120,7 @@ export default function TeamManagementPage() {
       setInviteEmail('');
       setInviteName('');
       setInviteRole('member');
-      fetchTeam();
+      if (user) fetchTeam(user);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to invite member');
     } finally {
@@ -92,19 +129,30 @@ export default function TeamManagementPage() {
   };
 
   const handleRemove = async (email: string) => {
+    if (!user) {
+      setError('Please log in to remove team members');
+      return;
+    }
+
     setRemoving(email);
     setError('');
     setSuccess('');
     try {
+      // Get Firebase ID token for authentication
+      const idToken = await user.getIdToken();
+
       const res = await fetch('/api/settings/team', {
         method: 'DELETE',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Authorization': `Bearer ${idToken}`,
+          'Content-Type': 'application/json'
+        },
         body: JSON.stringify({ email }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || data.error || 'Failed to remove member');
       setSuccess(data.message || 'Member removed!');
-      fetchTeam();
+      if (user) fetchTeam(user);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to remove member');
     } finally {
@@ -113,19 +161,30 @@ export default function TeamManagementPage() {
   };
 
   const handleRoleChange = async (email: string, newRole: string) => {
+    if (!user) {
+      setError('Please log in to update roles');
+      return;
+    }
+
     setUpdatingRole(email);
     setError('');
     setSuccess('');
     try {
+      // Get Firebase ID token for authentication
+      const idToken = await user.getIdToken();
+
       const res = await fetch('/api/settings/team/role', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Authorization': `Bearer ${idToken}`,
+          'Content-Type': 'application/json'
+        },
         body: JSON.stringify({ email, role: newRole }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || data.error || 'Failed to update role');
       setSuccess(data.message || 'Role updated!');
-      fetchTeam();
+      if (user) fetchTeam(user);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to update role');
     } finally {
@@ -134,12 +193,23 @@ export default function TeamManagementPage() {
   };
 
   const handleResendInvite = async (email: string) => {
+    if (!user) {
+      setError('Please log in to resend invites');
+      return;
+    }
+
     setError('');
     setSuccess('');
     try {
+      // Get Firebase ID token for authentication
+      const idToken = await user.getIdToken();
+
       const res = await fetch('/api/settings/team/invite', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Authorization': `Bearer ${idToken}`,
+          'Content-Type': 'application/json'
+        },
         body: JSON.stringify({ email, resend: true }),
       });
       const data = await res.json();
@@ -151,29 +221,39 @@ export default function TeamManagementPage() {
   };
 
   const handleTransferOwnership = async () => {
+    if (!user) {
+      setError('Please log in to transfer ownership');
+      return;
+    }
     if (!transferOwnershipDialog.targetMember?.userId || !team?.id) return;
-    
+
     setTransferring(true);
     setError('');
     setSuccess('');
-    
+
     try {
+      // Get Firebase ID token for authentication
+      const idToken = await user.getIdToken();
+
       const res = await fetch('/api/settings/team/transfer-ownership', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
+        headers: {
+          'Authorization': `Bearer ${idToken}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
           teamId: team.id,
           newOwnerId: transferOwnershipDialog.targetMember.userId,
           confirmed: true
         }),
       });
-      
+
       const data = await res.json();
       if (!res.ok) throw new Error(data.error?.message || data.message || 'Failed to transfer ownership');
-      
+
       setSuccess(`Ownership transferred to ${transferOwnershipDialog.targetMember.name || transferOwnershipDialog.targetMember.email}!`);
       setTransferOwnershipDialog({ open: false, targetMember: null });
-      fetchTeam();
+      if (user) fetchTeam(user);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to transfer ownership');
     } finally {
@@ -182,7 +262,7 @@ export default function TeamManagementPage() {
   };
 
   // Find current user's role
-  const currentUserMember = team?.members.find(m => m.email === session?.user?.email);
+  const currentUserMember = team?.members.find(m => m.email === user?.email);
   const isOwner = currentUserMember?.role === 'owner';
   const isOrgAdmin = currentUserMember?.role === 'org_admin' || isOwner;
 

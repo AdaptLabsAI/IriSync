@@ -1,5 +1,13 @@
 # Changelog
 
+## 2025-11-17 07:00 EST
+- **CRITICAL FIX**: Replaced NextAuth with Firebase Auth for team management page
+- Team management page now uses Firebase Auth tokens for authentication
+- Updated handleInvite, handleRemove, handleRoleChange, handleResendInvite, handleTransferOwnership to use Firebase Auth
+- All API requests now include Firebase ID token in Authorization header
+- Fixes "Authorization required" error on team management page
+- Team management now works with existing Firebase authentication system
+
 ## 2025-11-17 06:45 EST
 - **ROUTE FIX**: Renamed /features-pricing to /features for proper URL structure
 - **DESIGN FIX**: Updated pricing page colors to match Figma design (#00C853 green, #003305 dark green)
