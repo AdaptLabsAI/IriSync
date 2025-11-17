@@ -1,5 +1,12 @@
 # Changelog
 
+## 2025-11-16 21:45 EST
+- **MAJOR UPDATE**: Replaced hardcoded profile page with Firebase-integrated version
+- Profile data now loads from and saves to Firestore users collection
+- Added edit mode with inline editing for displayName, company, role, phone, location, bio
+- Profile data persists across sessions and recalls on login
+- Old hardcoded version backed up to page-old-hardcoded.tsx
+
 ## 2025-11-16 21:30 EST
 - **NEW FEATURE**: Created User Management page at /dashboard/content/userM with full CRUD operations
 - **NEW FEATURE**: Created System Health monitoring page at /dashboard/content/system
