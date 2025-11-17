@@ -231,7 +231,7 @@ const data = [
         Stay ahead of the competition with the power of AI
       </p>
       <div className="flex flex-col sm:flex-row justify-center gap-4">
-        <Link href="/features-pricing">
+        <Link href="/features">
           <button className="px-8 py-4 text-gray-700 border border-gray-300 rounded-xl hover:bg-gray-100 transition-all font-medium">
             Learn more
           </button>
@@ -629,7 +629,7 @@ const data = [
 
       {/* Call-to-Action Button */}
       <div className="mt-10 text-center md:text-left">
-        <Link href="/features-pricing">
+        <Link href="/features">
           <button className="px-8 py-4 text-white rounded-xl cursor-pointer bg-gradient-to-r from-[#00C853] to-[#003305] hover:shadow-lg transition-all font-medium">
             Explore our AI toolkit features
           </button>

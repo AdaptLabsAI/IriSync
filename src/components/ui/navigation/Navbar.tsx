@@ -11,7 +11,8 @@ import { useRouter, usePathname } from "next/navigation"
 // Define the navigation links
 const navItems = [
   { name: "Home", href: "/" },
-  { name: "Features", href: "/features-pricing" },
+  { name: "Features", href: "/features" },
+  { name: "Integrations", href: "/integrations" },
   { name: "Pricing", href: "/pricing" },
   { name: "Careers", href: "/careers" },
   { name: "Blog", href: "/blog" },
@@ -30,7 +31,8 @@ export default function Navbar() {
   const isMarketingPage =
     pathname === "/" ||
     pathname === "/home" ||
-    pathname === "/features-pricing" ||
+    pathname === "/features" ||
+    pathname === "/integrations" ||
     pathname === "/pricing" ||
     pathname === "/blog" ||
     pathname === "/careers"

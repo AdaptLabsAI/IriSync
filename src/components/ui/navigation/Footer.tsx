@@ -70,7 +70,7 @@ export default function Component() {
    
           <div className="md:col-span-4 space-y-4">
             <p className="text-gray-600 text-sm leading-relaxed">
-              Iris AI helps businesses leverage artificial intelligence to automate workflows, analyze data, and enhance
+              IriSync helps businesses leverage artificial intelligence to automate workflows, analyze data, and enhance
               user experiences with cutting-edge technology.
             </p>
           </div>
