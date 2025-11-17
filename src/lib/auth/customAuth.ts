@@ -249,17 +249,37 @@ export async function loginWithEmail(
     }
     
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
-    
-    // Update the user's last login time in Firestore
-    const userRef = doc(firestore, 'users', userCredential.user.uid);
-    await updateDoc(userRef, {
-      lastLogin: serverTimestamp()
-    });
-    
+
+    // Try to update the user's last login time in Firestore (non-blocking)
+    try {
+      const userRef = doc(firestore, 'users', userCredential.user.uid);
+      // First check if the document exists
+      const userDoc = await getDoc(userRef);
+
+      if (userDoc.exists()) {
+        // Update existing user document
+        await updateDoc(userRef, {
+          lastLogin: serverTimestamp()
+        });
+      } else {
+        // Create user document if it doesn't exist
+        await setDoc(userRef, {
+          email: userCredential.user.email,
+          displayName: userCredential.user.displayName || email.split('@')[0],
+          createdAt: serverTimestamp(),
+          lastLogin: serverTimestamp(),
+          emailVerified: userCredential.user.emailVerified
+        });
+      }
+    } catch (firestoreError) {
+      // Don't fail login if Firestore update fails
+      console.warn('Could not update user data in Firestore:', firestoreError);
+    }
+
     // Set a session cookie for middleware to detect
     const idToken = await userCredential.user.getIdToken();
     document.cookie = `firebase-session-token=${idToken}; path=/; max-age=86400; SameSite=Strict; Secure`;
-    
+
     return { success: true, user: userCredential.user };
   } catch (error: any) {
     console.error('Login error:', error);
