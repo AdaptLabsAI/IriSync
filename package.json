@@ -25,7 +25,7 @@
     "check-secrets": "bash scripts/check-secrets.sh"
   },
   "dependencies": {
-    "@auth/core": "^0.39.0",
+    "@auth/core": "^0.41.1",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
     "@ffmpeg-installer/ffmpeg": "^1.1.0",
