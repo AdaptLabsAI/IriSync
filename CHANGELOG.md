@@ -1,5 +1,47 @@
 # Changelog
 
+## 2025-11-17 14:00 EST
+- **MAJOR FEATURE**: Implemented complete OAuth integration for all social media platforms
+- Created unified OAuth connect endpoint: `/api/platforms/connect`
+- Supports Facebook, Instagram, Twitter/X, LinkedIn, TikTok, YouTube, and Pinterest
+- Implemented PKCE (Proof Key for Code Exchange) for Twitter and TikTok for enhanced security
+- Added comprehensive TokenRefreshService for automatic token refresh across all platforms
+- Created scheduled token refresh cron endpoint: `/api/cron/refresh-tokens`
+- Token refresh runs hourly and prevents connection failures
+- Added platform-specific refresh configurations for Facebook (60 days), Twitter (2 hours), LinkedIn (60 days), YouTube (1 hour), TikTok (24 hours), Pinterest (1 hour)
+- Updated env.example with all OAuth credentials (Facebook, Twitter, LinkedIn, TikTok, Pinterest, YouTube)
+- Added CRON_SECRET for secure cron job authentication
+- Created comprehensive OAuth setup documentation: `docs/OAUTH_SETUP.md`
+- Documentation includes step-by-step setup guides for all 6 platforms
+- Includes developer app creation, credential configuration, redirect URI setup, and troubleshooting
+- Integrates with existing PlatformAdapterFactory and callback handler
+- Implements secure OAuth request tracking with 10-minute expiration
+- All tokens stored securely in Firestore with automatic refresh
+
+## 2025-11-17 12:00 EST
+- **MAJOR FEATURE**: Implemented trial registration flow with Stripe billing integration
+- Registration page now collects payment info via Stripe Checkout before account activation
+- Added 7-day free trial with influencer-level features, auto-converts to Creator ($80/month)
+- Created trial checkout API endpoint: `/api/subscription/create-trial-checkout`
+- Updated registration form with Terms & Conditions and Trial Agreement checkboxes
+- Changed submit button to "Start 7-Day Free Trial" with clear pricing disclosure
+- Implemented three-step registration: 1) Create Firebase account, 2) Create Stripe checkout, 3) Redirect to payment
+- **FEATURE GATING SYSTEM**: Enhanced FeatureGate component with comprehensive tier hierarchy
+- Added 'trial' and 'admin' tiers to subscription system
+- Trial tier receives influencer-level features (tier level 2)
+- Created feature-to-tier mapping for all features (basic, influencer, enterprise, admin)
+- Implemented upgrade prompt UI with lock icon and "View Plans" CTA
+- **CLIENT-SIDE HOOKS**: Updated useFeatureAccess hook to use Firebase Auth instead of NextAuth
+- Hook checks organization-level subscription tier first, falls back to user-level tier
+- Returns comprehensive access info: hasAccess, currentTier, requiredTier, upgradeMessage
+- Added useHasTier hook for simple tier-level checks
+- **STRIPE WEBHOOKS**: Enhanced Stripe webhook handler to process trial events
+- checkout.session.completed: Sets organization to 'trial' tier with influencer features
+- customer.subscription.updated: Handles trial-to-paid conversion automatically
+- Proper tier assignment based on trial status (trial → creator after 7 days)
+- Tracks trial end date and automatic conversion tier
+- Feature access matrix includes: Basic (scheduling, analytics), Influencer (video scheduling, bulk ops, social listening), Enterprise (smart replies, team mgmt, SSO), Admin (system config, user mgmt)
+
 ## 2025-11-17 07:00 EST
 - **CRITICAL FIX**: Replaced NextAuth with Firebase Auth for team management page
 - Team management page now uses Firebase Auth tokens for authentication
