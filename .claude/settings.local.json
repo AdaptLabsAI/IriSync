@@ -15,7 +15,8 @@
       "Bash(tee:*)",
       "Bash(npx cross-env:*)",
       "Bash(npx next build:*)",
-      "Bash(npm install:*)"
+      "Bash(npm install:*)",
+      "Bash(git commit -m \"$(cat <<''EOF''\nfix: Resolve critical login issues - missing TypeScript imports\n\nCRITICAL FIX - This was preventing all logins from working:\n- Added missing Auth type import in customAuth.ts\n- Added missing Firestore type import in customAuth.ts\n- These missing types caused TypeScript compilation errors that broke login functionality\n\nAdditional Improvements:\n- Created /admin redirect route pointing to /admin-access\n- Created /firebase-test diagnostics page for troubleshooting\n- Added comprehensive TROUBLESHOOTING.md guide\n\nRoot Cause:\n- The getAuthSafely() function referenced Auth type without importing it\n- The getFirestoreSafely() function referenced Firestore type without importing it\n- This caused silent runtime failures in production\n\nImpact:\n- Login page submit button would fail silently\n- Admin login would not work\n- No clear error messages to users\n\nTesting:\n- Verify login works at /login\n- Verify admin login works at /admin-access and /admin\n- Check /firebase-test for configuration status\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")"
     ],
     "deny": [],
     "ask": []
