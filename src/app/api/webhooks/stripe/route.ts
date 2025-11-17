@@ -425,7 +425,58 @@ export async function POST(req: NextRequest) {
         
         case 'checkout.session.completed': {
           const session = event.data.object as Stripe.Checkout.Session;
-          
+
+          // Handle trial signup
+          if (session.mode === 'subscription' && session.metadata?.isTrial === 'true') {
+            const userId = session.metadata?.userId;
+
+            if (userId) {
+              try {
+                // Get the subscription to check trial status
+                const subscriptionId = typeof session.subscription === 'string' ?
+                  session.subscription : session.subscription?.id;
+
+                if (subscriptionId) {
+                  const subscription = await stripe.subscriptions.retrieve(subscriptionId);
+
+                  // Update user document with trial tier
+                  const userDoc = await firestore.collection('users').doc(userId).get();
+
+                  if (userDoc.exists) {
+                    const userData = userDoc.data();
+                    const orgId = userData?.currentOrganizationId || userData?.personalOrganizationId;
+
+                    if (orgId) {
+                      // Set organization to trial tier with influencer-level features
+                      await firestore.collection('organizations').doc(orgId).update({
+                        'billing.subscriptionTier': 'trial',
+                        'billing.subscriptionStatus': 'trialing',
+                        'billing.subscriptionId': subscriptionId,
+                        'billing.status': 'active',
+                        'billing.trialEnd': subscription.trial_end ? new Date(subscription.trial_end * 1000) : null,
+                        'billing.willConvertTo': 'creator', // Will convert to creator after trial
+                        updatedAt: serverTimestamp()
+                      });
+
+                      logger.info('Trial activated for user', {
+                        userId,
+                        organizationId: orgId,
+                        subscriptionId,
+                        trialEnd: subscription.trial_end
+                      });
+                    }
+                  }
+                }
+              } catch (error) {
+                logger.error('Error processing trial signup', {
+                  error: error instanceof Error ? error.message : String(error),
+                  userId,
+                  sessionId: session.id
+                });
+              }
+            }
+          }
+
           // Handle token purchases
           if (session.mode === 'payment' && session.metadata?.type === 'token_purchase') {
             const userId = session.metadata?.userId;
@@ -767,25 +818,47 @@ export async function POST(req: NextRequest) {
         
         case 'customer.subscription.updated': {
           const subscription = event.data.object as Stripe.Subscription;
-          
+
           // Get customer ID
           const customerId = typeof subscription.customer === 'string'
             ? subscription.customer
             : subscription.customer.id;
-          
+
           // Find user by Stripe customer ID
           const user = await getUserByCustomerId(firestore, customerId);
-          
+
           if (!user) {
-            logger.error('No user found for subscription update', { 
+            logger.error('No user found for subscription update', {
               customerId,
               subscriptionId: subscription.id
             });
             break;
           }
-          
+
+          // Check if trial just ended and subscription became active
+          const isTrial = subscription.status === 'trialing';
+          const trialJustEnded = subscription.status === 'active' &&
+                                subscription.trial_end &&
+                                new Date(subscription.trial_end * 1000) <= new Date();
+
           // Determine subscription tier
-          const subscriptionTier = await determineSubscriptionTier(stripe, subscription);
+          let subscriptionTier = await determineSubscriptionTier(stripe, subscription);
+
+          // If trial is active, set tier to 'trial'
+          if (isTrial) {
+            subscriptionTier = 'trial';
+          }
+
+          // If trial just ended, convert to creator tier
+          if (trialJustEnded && subscription.metadata?.isTrial === 'true') {
+            subscriptionTier = subscription.metadata?.subscriptionTier || 'creator';
+
+            logger.info('Trial converted to paid subscription', {
+              userId: user.id,
+              subscriptionId: subscription.id,
+              newTier: subscriptionTier
+            });
+          }
           
           // Get current period end date
           const currentPeriodEnd = new Date((subscription as any).current_period_end * 1000);
