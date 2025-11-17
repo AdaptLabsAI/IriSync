@@ -1,6 +1,6 @@
 'use client';
 
-import { 
+import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   sendPasswordResetEmail as firebaseResetPassword,
@@ -13,12 +13,13 @@ import {
   User,
   UserCredential,
   applyActionCode,
-  confirmPasswordReset
+  confirmPasswordReset,
+  Auth
 } from 'firebase/auth';
 import { getFirebaseClientAuth, FirebaseClientError } from '@/lib/core/firebase/client';
 import { getFirebaseFirestore } from '@/lib/core/firebase/client';
 import { isFirebaseConfigured as checkFirebaseConfigured } from '@/lib/client/firebaseConfig';
-import { doc, setDoc, serverTimestamp, updateDoc, getDoc } from 'firebase/firestore';
+import { doc, setDoc, serverTimestamp, updateDoc, getDoc, Firestore } from 'firebase/firestore';
 import { sendWelcomeEmail, sendPasswordResetEmail, sendEmail } from '@/lib/core/notifications/email';
 
 /**
