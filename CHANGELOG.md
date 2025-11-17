@@ -1,5 +1,14 @@
 # Changelog
 
+## 2025-11-17 06:30 EST
+- **CRITICAL FIX**: Replaced NextAuth with Firebase Auth for connections page
+- Connections page now uses Firebase Auth tokens for authentication
+- API route /api/settings/connections now verifies Firebase ID tokens instead of NextAuth sessions
+- Added verifyFirebaseToken() helper function for Firebase Admin auth verification
+- Updated GET, POST, PUT, DELETE handlers to use Firebase Auth
+- Made DELETE handler accept both 'provider' and 'type' parameters for backward compatibility
+- Connections now work properly with existing Firebase authentication system
+
 ## 2025-11-16 21:45 EST
 - **MAJOR UPDATE**: Replaced hardcoded profile page with Firebase-integrated version
 - Profile data now loads from and saves to Firestore users collection

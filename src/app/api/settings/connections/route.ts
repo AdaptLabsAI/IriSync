@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getServerSession } from 'next-auth/next';
-import { authOptions } from '@/lib/features/auth';
+import { firebaseAdmin } from '@/lib/core/firebase/admin';
 import { firestore } from '@/lib/core/firebase';
 import { doc, getDoc, setDoc, updateDoc, arrayUnion, arrayRemove, deleteDoc } from 'firebase/firestore';
 import { generateOAuthUrl } from '@/lib/features/platforms/auth/oauth';
@@ -49,6 +48,32 @@ type ProviderConfigs = {
  */
 function getGoogleClientIdSafe(): string {
   return getGoogleOAuthClientId() || '';
+}
+
+/**
+ * Verify Firebase ID token from Authorization header
+ * Returns userId if valid, null otherwise
+ */
+async function verifyFirebaseToken(req: NextRequest): Promise<string | null> {
+  try {
+    const authHeader = req.headers.get('Authorization');
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      return null;
+    }
+
+    const idToken = authHeader.substring(7);
+    const admin = await firebaseAdmin();
+    if (!admin) {
+      console.error('Firebase Admin not initialized');
+      return null;
+    }
+
+    const decodedToken = await admin.auth().verifyIdToken(idToken);
+    return decodedToken.uid;
+  } catch (error) {
+    console.error('Error verifying Firebase token:', error);
+    return null;
+  }
 }
 
 const PROVIDER_CONFIGS: ProviderConfigs = {
@@ -252,42 +277,34 @@ const PROVIDER_CONFIGS: ProviderConfigs = {
 
 export async function GET(req: NextRequest) {
   try {
-  const session = await getServerSession(authOptions);
-  if (!session || !session.user?.email) {
-      return NextResponse.json({ 
+    // Verify Firebase Auth token
+    const userId = await verifyFirebaseToken(req);
+    if (!userId) {
+      return NextResponse.json({
         error: 'Unauthorized',
         message: 'Authentication required to access account connections',
         endpoint: '/api/settings/connections'
       }, { status: 401 });
     }
-    
-    const user = session.user as SessionUser;
-    if (!user.id) {
-      return NextResponse.json({ 
-        error: 'Unauthorized',
-        message: 'User ID not found in session',
-        endpoint: '/api/settings/connections'
-      }, { status: 401 });
-    }
-    
-    const connRef = doc(firestore, 'connections', user.id);
-  const connSnap = await getDoc(connRef);
-    
-  if (!connSnap.exists()) {
-    await setDoc(connRef, { connections: [] });
-      return NextResponse.json({ 
+
+    const connRef = doc(firestore, 'connections', userId);
+    const connSnap = await getDoc(connRef);
+
+    if (!connSnap.exists()) {
+      await setDoc(connRef, { connections: [] });
+      return NextResponse.json({
         connections: [],
         availableProviders: Object.keys(PROVIDER_CONFIGS)
       });
     }
-    
-    return NextResponse.json({ 
+
+    return NextResponse.json({
       connections: connSnap.data().connections,
       availableProviders: Object.keys(PROVIDER_CONFIGS)
     });
   } catch (error) {
     console.error('Error fetching connections:', error);
-    return NextResponse.json({ 
+    return NextResponse.json({
       error: 'Error loading data',
       message: 'Failed to retrieve account connections',
       endpoint: '/api/settings/connections'
@@ -298,45 +315,37 @@ export async function GET(req: NextRequest) {
 // Initiate OAuth flow
 export async function POST(req: NextRequest) {
   try {
-  const session = await getServerSession(authOptions);
-  if (!session || !session.user?.email) {
-      return NextResponse.json({ 
+    // Verify Firebase Auth token
+    const userId = await verifyFirebaseToken(req);
+    if (!userId) {
+      return NextResponse.json({
         error: 'Unauthorized',
         message: 'Authentication required to connect accounts',
         endpoint: '/api/settings/connections'
       }, { status: 401 });
     }
-    
-    const user = session.user as SessionUser;
-    if (!user.id) {
-      return NextResponse.json({ 
-        error: 'Unauthorized',
-        message: 'User ID not found in session',
-        endpoint: '/api/settings/connections'
-      }, { status: 401 });
-    }
-    
+
     const body = await req.json();
     const provider = body.provider as string;
-    
-  if (!provider || !PROVIDER_CONFIGS[provider]) {
-      return NextResponse.json({ 
+
+    if (!provider || !PROVIDER_CONFIGS[provider]) {
+      return NextResponse.json({
         error: 'Invalid provider',
         message: 'The specified provider is not supported',
         endpoint: '/api/settings/connections'
       }, { status: 400 });
     }
-    
+
     // Generate a secure state parameter to prevent CSRF
     const state = Buffer.from(JSON.stringify({
-      userId: user.id,
+      userId: userId,
       timestamp: Date.now()
     })).toString('base64');
-    
+
     // Store the state in the database for verification during callback
     const stateRef = doc(firestore, 'oauth_states', state);
     await setDoc(stateRef, {
-      userId: user.id,
+      userId: userId,
       provider,
       timestamp: new Date().toISOString(),
       expires: new Date(Date.now() + 3600000).toISOString() // 1 hour expiration
@@ -369,43 +378,35 @@ export async function POST(req: NextRequest) {
 // OAuth callback handler
 export async function PUT(req: NextRequest) {
   try {
-  const session = await getServerSession(authOptions);
-  if (!session || !session.user?.email) {
-      return NextResponse.json({ 
+    // Verify Firebase Auth token
+    const userId = await verifyFirebaseToken(req);
+    if (!userId) {
+      return NextResponse.json({
         error: 'Unauthorized',
         message: 'Authentication required to complete account connection',
         endpoint: '/api/settings/connections'
       }, { status: 401 });
     }
-    
-    const user = session.user as SessionUser;
-    if (!user.id) {
-      return NextResponse.json({ 
-        error: 'Unauthorized',
-        message: 'User ID not found in session',
-        endpoint: '/api/settings/connections'
-      }, { status: 401 });
-    }
-    
+
     const body = await req.json();
     const provider = body.provider as string;
     const code = body.code as string;
     const state = body.state as string;
-    
+
     if (!provider || !code || !state || !PROVIDER_CONFIGS[provider]) {
-      return NextResponse.json({ 
+      return NextResponse.json({
         error: 'Invalid request',
         message: 'Missing required parameters: provider, code, or state',
         endpoint: '/api/settings/connections'
       }, { status: 400 });
     }
-    
+
     // Verify state parameter
     const stateRef = doc(firestore, 'oauth_states', state);
     const stateDoc = await getDoc(stateRef);
-    
-    if (!stateDoc.exists() || stateDoc.data().userId !== user.id) {
-      return NextResponse.json({ 
+
+    if (!stateDoc.exists() || stateDoc.data().userId !== userId) {
+      return NextResponse.json({
         error: 'Invalid state',
         message: 'The OAuth state is invalid or expired',
         endpoint: '/api/settings/connections'
@@ -555,38 +556,30 @@ export async function PUT(req: NextRequest) {
 
 export async function DELETE(req: NextRequest) {
   try {
-  const session = await getServerSession(authOptions);
-  if (!session || !session.user?.email) {
-      return NextResponse.json({ 
+    // Verify Firebase Auth token
+    const userId = await verifyFirebaseToken(req);
+    if (!userId) {
+      return NextResponse.json({
         error: 'Unauthorized',
         message: 'Authentication required to disconnect accounts',
         endpoint: '/api/settings/connections'
       }, { status: 401 });
     }
-    
-    const user = session.user as SessionUser;
-    if (!user.id) {
-      return NextResponse.json({ 
-        error: 'Unauthorized',
-        message: 'User ID not found in session',
-        endpoint: '/api/settings/connections'
-      }, { status: 401 });
-    }
-    
-  const body = await req.json();
-    const provider = body.provider as string;
+
+    const body = await req.json();
+    const provider = (body.provider || body.type) as string;
     const name = body.name as string;
     const accountId = body.accountId as string;
-    
-    if (!provider || !name) {
-      return NextResponse.json({ 
+
+    if (!provider) {
+      return NextResponse.json({
         error: 'Missing fields',
-        message: 'Provider and account name are required to disconnect an account',
+        message: 'Provider/type is required to disconnect an account',
         endpoint: '/api/settings/connections'
       }, { status: 400 });
     }
-    
-    const connRef = doc(firestore, 'connections', user.id);
+
+    const connRef = doc(firestore, 'connections', userId);
     const connSnap = await getDoc(connRef);
     
     if (!connSnap.exists()) {
@@ -597,28 +590,33 @@ export async function DELETE(req: NextRequest) {
       }, { status: 404 });
     }
     
-    // Filter the connection to remove based on provider and name
+    // Filter the connection to remove based on provider and optionally name
     const connections = connSnap.data().connections;
     const connectionToRemove = connections.find(
-      (conn: Connection) => conn.provider === provider && conn.name === name
+      (conn: Connection) => {
+        if (name) {
+          return conn.provider === provider && conn.name === name;
+        }
+        return conn.provider === provider;
+      }
     );
-    
+
     if (!connectionToRemove) {
-      return NextResponse.json({ 
+      return NextResponse.json({
         error: 'Not found',
         message: 'The specified connection was not found',
         endpoint: '/api/settings/connections'
       }, { status: 404 });
     }
-    
+
     // Remove the connection
-  await updateDoc(connRef, {
+    await updateDoc(connRef, {
       connections: arrayRemove(connectionToRemove)
     });
-    
+
     // Log the disconnection
     try {
-      const userRef = doc(firestore, 'users', user.id);
+      const userRef = doc(firestore, 'users', userId);
       await updateDoc(userRef, {
         'activity.connections': arrayUnion({
           action: 'removed',

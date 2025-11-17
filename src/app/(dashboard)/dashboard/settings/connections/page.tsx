@@ -1,7 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useSession } from 'next-auth/react';
+import { getFirebaseClientAuth } from '@/lib/core/firebase/client';
+import { onAuthStateChanged, User as FirebaseUser } from 'firebase/auth';
 import { Box, Button, Typography, Alert, CircularProgress, Stack, IconButton, List, ListItem, ListItemText, Divider } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 
@@ -48,7 +49,7 @@ const PROVIDERS = [
 ];
 
 export default function ConnectionsPage() {
-  const { data: session } = useSession();
+  const [user, setUser] = useState<FirebaseUser | null>(null);
   const [connections, setConnections] = useState<{ type: string; name: string; status: string; details?: any }[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -58,11 +59,38 @@ export default function ConnectionsPage() {
   // Active category for filtering providers
   const [activeCategory, setActiveCategory] = useState<string>('social');
 
-  const fetchConnections = async () => {
+  // Monitor Firebase Auth state
+  useEffect(() => {
+    const auth = getFirebaseClientAuth();
+    if (!auth) {
+      setLoading(false);
+      return;
+    }
+
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+      if (currentUser) {
+        fetchConnections(currentUser);
+      } else {
+        setLoading(false);
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  const fetchConnections = async (currentUser: FirebaseUser) => {
     setLoading(true);
     setError('');
     try {
-      const res = await fetch('/api/settings/connections');
+      // Get Firebase ID token for authentication
+      const idToken = await currentUser.getIdToken();
+
+      const res = await fetch('/api/settings/connections', {
+        headers: {
+          'Authorization': `Bearer ${idToken}`
+        }
+      });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Failed to load connections');
       setConnections(data.connections);
@@ -73,15 +101,21 @@ export default function ConnectionsPage() {
     }
   };
 
-  useEffect(() => { fetchConnections(); }, []);
-
   const handleConnect = async (type: string) => {
+    if (!user) {
+      setError('Please log in to connect platforms');
+      return;
+    }
+
     setConnecting(type);
     setError('');
     setSuccess('');
     try {
-      // Redirect to OAuth flow
-      window.location.href = `/api/settings/connections/oauth?provider=${type}`;
+      // Get Firebase ID token for authentication
+      const idToken = await user.getIdToken();
+
+      // Redirect to OAuth flow with Firebase token
+      window.location.href = `/api/settings/connections/oauth?provider=${type}&token=${idToken}`;
     } catch (err) {
       setError('Failed to start OAuth flow.');
     } finally {
@@ -90,19 +124,30 @@ export default function ConnectionsPage() {
   };
 
   const handleRemove = async (type: string) => {
+    if (!user) {
+      setError('Please log in to remove connections');
+      return;
+    }
+
     setRemoving(type);
     setError('');
     setSuccess('');
     try {
+      // Get Firebase ID token for authentication
+      const idToken = await user.getIdToken();
+
       const res = await fetch('/api/settings/connections', {
         method: 'DELETE',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Authorization': `Bearer ${idToken}`,
+          'Content-Type': 'application/json'
+        },
         body: JSON.stringify({ type }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Failed to disconnect');
       setSuccess('Connection removed!');
-      fetchConnections();
+      if (user) fetchConnections(user);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to disconnect');
     } finally {
