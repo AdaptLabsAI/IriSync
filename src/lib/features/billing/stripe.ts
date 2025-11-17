@@ -230,7 +230,7 @@ export async function cancelSubscription(
 ): Promise<void> {
   try {
     const stripe = getStripeClient();
-    
+
     if (cancelImmediately) {
       // Cancel immediately
       await stripe.subscriptions.cancel(subscriptionId);
@@ -240,17 +240,144 @@ export async function cancelSubscription(
         cancel_at_period_end: true,
       });
     }
-    
-    logger.info('Cancelled subscription', { 
-      subscriptionId, 
-      immediate: cancelImmediately 
+
+    logger.info('Cancelled subscription', {
+      subscriptionId,
+      immediate: cancelImmediately
     });
   } catch (error) {
-    logger.error('Failed to cancel subscription', { 
+    logger.error('Failed to cancel subscription', {
       error: error instanceof Error ? error.message : String(error),
       subscriptionId,
       cancelImmediately
     });
     throw new Error('Failed to cancel subscription');
+  }
+}
+
+/**
+ * Create a trial subscription with required billing information
+ * This creates a Checkout Session that collects billing info and starts a trial
+ */
+export async function createTrialCheckoutSession(
+  customerId: string,
+  priceId: string,
+  trialDays: number,
+  userId: string,
+  userEmail: string
+): Promise<{ sessionId: string; url: string }> {
+  try {
+    const stripe = getStripeClient();
+
+    const session = await stripe.checkout.sessions.create({
+      customer: customerId,
+      payment_method_types: ['card'],
+      line_items: [
+        {
+          price: priceId,
+          quantity: 1,
+        },
+      ],
+      mode: 'subscription',
+      success_url: `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/dashboard?trial=started`,
+      cancel_url: `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/register?trial=canceled`,
+      subscription_data: {
+        trial_period_days: trialDays,
+        metadata: {
+          userId,
+          userEmail,
+          tier: 'trial',
+        },
+      },
+      payment_method_collection: 'always', // Require payment method upfront
+      metadata: {
+        type: 'trial_subscription',
+        userId,
+        userEmail,
+      },
+    });
+
+    logger.info('Created trial checkout session', {
+      customerId,
+      sessionId: session.id,
+      trialDays,
+      userId
+    });
+
+    return {
+      sessionId: session.id,
+      url: session.url || '',
+    };
+  } catch (error) {
+    logger.error('Failed to create trial checkout session', {
+      error: error instanceof Error ? error.message : String(error),
+      customerId,
+      priceId,
+      trialDays
+    });
+    throw new Error('Failed to create trial checkout session');
+  }
+}
+
+/**
+ * Create a subscription upgrade checkout session (from trial to paid)
+ */
+export async function createUpgradeCheckoutSession(
+  customerId: string,
+  priceId: string,
+  userId: string,
+  currentSubscriptionId?: string
+): Promise<{ sessionId: string; url: string }> {
+  try {
+    const stripe = getStripeClient();
+
+    const sessionData: Stripe.Checkout.SessionCreateParams = {
+      customer: customerId,
+      payment_method_types: ['card'],
+      line_items: [
+        {
+          price: priceId,
+          quantity: 1,
+        },
+      ],
+      mode: 'subscription',
+      success_url: `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/dashboard?upgraded=true`,
+      cancel_url: `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/dashboard/settings/billing`,
+      metadata: {
+        type: 'upgrade_subscription',
+        userId,
+      },
+    };
+
+    // If there's an existing subscription, we'll cancel it after the new one is created
+    if (currentSubscriptionId) {
+      sessionData.subscription_data = {
+        metadata: {
+          previousSubscriptionId: currentSubscriptionId,
+          userId,
+        },
+      };
+    }
+
+    const session = await stripe.checkout.sessions.create(sessionData);
+
+    logger.info('Created upgrade checkout session', {
+      customerId,
+      sessionId: session.id,
+      userId,
+      currentSubscriptionId
+    });
+
+    return {
+      sessionId: session.id,
+      url: session.url || '',
+    };
+  } catch (error) {
+    logger.error('Failed to create upgrade checkout session', {
+      error: error instanceof Error ? error.message : String(error),
+      customerId,
+      priceId
+    });
+    throw new Error('Failed to create upgrade checkout session');
   }
 } 
