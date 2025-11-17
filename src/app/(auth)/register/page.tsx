@@ -33,10 +33,10 @@ export default function RegisterPage() {
 
     // Clear error when typing
     if (errors[name as keyof typeof errors]) {
-      setErrors({
-        ...errors,
+      setErrors(prev => ({
+        ...prev,
         [name]: ''
-      });
+      }));
     }
   };
 
@@ -55,14 +55,16 @@ export default function RegisterPage() {
 
     if (!formData.email) {
       newErrors.email = 'Email is required';
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = 'Email is invalid';
+    } else if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(formData.email)) {
+      newErrors.email = 'Please enter a valid email address';
     }
 
     if (!formData.password) {
       newErrors.password = 'Password is required';
     } else if (formData.password.length < 8) {
       newErrors.password = 'Password must be at least 8 characters';
+    } else if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/.test(formData.password)) {
+      newErrors.password = 'Password must contain uppercase, lowercase, and numbers';
     }
 
     if (!formData.confirmPassword) {
@@ -106,10 +108,13 @@ export default function RegisterPage() {
           general: result.error || 'Registration failed'
         });
       }
-    } catch (error: any) {
+    } catch (error) {
+      const errorMessage = error instanceof Error
+        ? error.message
+        : getFirebaseErrorMessage(error);
       setErrors({
         ...errors,
-        general: error.message || getFirebaseErrorMessage(error)
+        general: errorMessage
       });
     } finally {
       setIsLoading(false);
@@ -141,7 +146,11 @@ export default function RegisterPage() {
                 target.style.display = 'none';
                 const parent = target.parentElement;
                 if (parent) {
-                  parent.innerHTML = '<span class="text-white text-2xl font-bold">IriSync</span>';
+                  const span = document.createElement('span');
+                  span.className = 'text-white text-2xl font-bold';
+                  span.textContent = 'IriSync';
+                  parent.innerHTML = '';
+                  parent.appendChild(span);
                 }
               }}
             />
@@ -188,7 +197,11 @@ export default function RegisterPage() {
                   target.style.display = 'none';
                   const parent = target.parentElement;
                   if (parent) {
-                    parent.innerHTML = '<span class="text-gray-900 text-2xl font-bold">IriSync</span>';
+                    const span = document.createElement('span');
+                    span.className = 'text-gray-900 text-2xl font-bold';
+                    span.textContent = 'IriSync';
+                    parent.innerHTML = '';
+                    parent.appendChild(span);
                   }
                 }}
               />
@@ -225,6 +238,7 @@ export default function RegisterPage() {
                 <input
                   type="text"
                   name="userName"
+                  autoComplete="name"
                   value={formData.userName}
                   onChange={handleInputChange}
                   placeholder="User Name"
@@ -247,6 +261,7 @@ export default function RegisterPage() {
                 <input
                   type="email"
                   name="email"
+                  autoComplete="email"
                   value={formData.email}
                   onChange={handleInputChange}
                   placeholder="Email Address"
@@ -269,6 +284,7 @@ export default function RegisterPage() {
                 <input
                   type={showPassword ? 'text' : 'password'}
                   name="password"
+                  autoComplete="new-password"
                   value={formData.password}
                   onChange={handleInputChange}
                   placeholder="Enter Password"
@@ -277,6 +293,7 @@ export default function RegisterPage() {
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
+                  aria-label={showPassword ? "Hide password" : "Show password"}
                   className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
                 >
                   {showPassword ? (
@@ -307,6 +324,7 @@ export default function RegisterPage() {
                 <input
                   type={showPassword ? 'text' : 'password'}
                   name="confirmPassword"
+                  autoComplete="new-password"
                   value={formData.confirmPassword}
                   onChange={handleInputChange}
                   placeholder="Re-Enter Password"
@@ -315,6 +333,7 @@ export default function RegisterPage() {
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
+                  aria-label={showPassword ? "Hide password" : "Show password"}
                   className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
                 >
                   {showPassword ? (

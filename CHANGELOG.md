@@ -1,5 +1,42 @@
 # Changelog
 
+## 2025-11-17 21:15 EST
+- **SECURITY FIXES**: Addressed multiple security vulnerabilities in authentication pages
+  - **XSS Prevention**: Fixed XSS vulnerabilities in image error handlers (6 instances across login, register, reset-password)
+  - Changed from unsafe `innerHTML` to safe `createElement` + `textContent` approach
+  - Prevents potential XSS attacks through manipulated image error handling
+  - **Email Validation**: Strengthened email validation regex to prevent invalid addresses
+  - Updated from `/\S+@\S+\.\S+/` to `/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/`
+  - Rejects malformed emails like `a@b.c` or `test@domain..com`
+  - **Password Strength**: Enforced password complexity requirements in registration
+  - Passwords must now contain uppercase, lowercase, and numbers
+  - Added validation: `/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/`
+  - Prevents weak passwords like `12345678` or `aaaaaaaa`
+  - **Type Safety**: Removed unsafe `any` types, replaced with proper TypeScript types
+  - Added `AppRouterInstance` type for router parameter
+  - Proper error handling with `instanceof Error` checks
+  - Eliminates potential runtime type errors
+  - **Redirect Security**: Fixed open redirect vulnerability in login page
+  - Added whitelist of allowed redirect paths: `/dashboard`, `/onboarding`, `/settings`
+  - Validates all redirect URLs are internal and allowed
+  - Defaults to `/dashboard` if URL is external or disallowed
+  - Removed legacy redirect function with multiple timeouts and race conditions
+  - **Code Cleanup**: Removed console.log statements from production code
+  - Prevents information disclosure and performance issues
+- **UX IMPROVEMENTS**: Enhanced form usability and accessibility
+  - **Autocomplete**: Added proper `autoComplete` attributes to all form fields
+  - Email fields: `autoComplete="email"`
+  - Login password: `autoComplete="current-password"`
+  - Registration passwords: `autoComplete="new-password"`
+  - Name field: `autoComplete="name"`
+  - Enables browser autofill and password manager integration
+  - **Accessibility**: Added ARIA labels to password visibility toggle buttons
+  - `aria-label="Hide password"` / `aria-label="Show password"`
+  - Improves screen reader compatibility
+  - **State Management**: Fixed React state update race conditions
+  - Changed from direct state spread to functional updates: `setState(prev => ({...prev}))`
+  - Prevents bugs from rapid user interactions
+
 ## 2025-11-17 20:51 EST
 - **DESIGN REVIEW**: Completed comprehensive review of Figma designs against repository implementation
 - **AUTH PAGE FIXES**: Updated authentication pages to match Figma designs exactly

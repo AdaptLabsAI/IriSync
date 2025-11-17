@@ -2,27 +2,22 @@
 
 import { useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
+import type { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 import Link from 'next/link';
 import Image from 'next/image';
 import { loginWithEmail, getFirebaseErrorMessage } from '@/lib/features/auth/customAuth';
 
-const safeDashboardRedirect = (router: any, url: string) => {
-  console.log('Safely redirecting to:', url);
-  setTimeout(() => {
-    try {
-      router.push(url);
-      setTimeout(() => {
-        if (window.location.pathname !== url) {
-          console.log('Router push may have failed, using direct location change');
-          window.location.href = url;
-        }
-      }, 300);
-    } catch (err) {
-      console.error('Router redirect failed, falling back to location:', err);
-      window.location.href = url;
-    }
-  }, 100);
+const ALLOWED_REDIRECT_PATHS = ['/dashboard', '/onboarding', '/settings'];
+
+const safeDashboardRedirect = (router: AppRouterInstance, url: string) => {
+  // Validate URL is internal and allowed
+  if (!url.startsWith('/') || !ALLOWED_REDIRECT_PATHS.some(path => url.startsWith(path))) {
+    url = '/dashboard'; // Default safe redirect
+  }
+
+  router.push(url);
 };
+
 
 export default function LoginPage() {
   const router = useRouter();
@@ -52,10 +47,10 @@ export default function LoginPage() {
     });
 
     if (name in formErrors && formErrors[name as keyof typeof formErrors]) {
-      setFormErrors({
-        ...formErrors,
+      setFormErrors(prev => ({
+        ...prev,
         [name]: ''
-      });
+      }));
     }
   };
 
@@ -68,8 +63,8 @@ export default function LoginPage() {
 
     if (!formData.email) {
       newErrors.email = 'Email is required';
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = 'Email is invalid';
+    } else if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(formData.email)) {
+      newErrors.email = 'Please enter a valid email address';
     }
 
     if (!formData.password) {
@@ -108,10 +103,13 @@ export default function LoginPage() {
           });
         }
       }
-    } catch (error: any) {
+    } catch (error) {
+      const errorMessage = error instanceof Error
+        ? error.message
+        : getFirebaseErrorMessage(error);
       setFormErrors({
         ...formErrors,
-        general: getFirebaseErrorMessage(error)
+        general: errorMessage
       });
     } finally {
       setIsLoading(false);
@@ -143,7 +141,11 @@ export default function LoginPage() {
                 target.style.display = 'none';
                 const parent = target.parentElement;
                 if (parent) {
-                  parent.innerHTML = '<span class="text-white text-2xl font-bold">IriSync</span>';
+                  const span = document.createElement('span');
+                  span.className = 'text-white text-2xl font-bold';
+                  span.textContent = 'IriSync';
+                  parent.innerHTML = '';
+                  parent.appendChild(span);
                 }
               }}
             />
@@ -190,7 +192,11 @@ export default function LoginPage() {
                   target.style.display = 'none';
                   const parent = target.parentElement;
                   if (parent) {
-                    parent.innerHTML = '<span class="text-gray-900 text-2xl font-bold">IriSync</span>';
+                    const span = document.createElement('span');
+                    span.className = 'text-gray-900 text-2xl font-bold';
+                    span.textContent = 'IriSync';
+                    parent.innerHTML = '';
+                    parent.appendChild(span);
                   }
                 }}
               />
@@ -232,6 +238,7 @@ export default function LoginPage() {
                 <input
                   type="email"
                   name="email"
+                  autoComplete="email"
                   value={formData.email}
                   onChange={handleInputChange}
                   placeholder="Email Address"
@@ -254,6 +261,7 @@ export default function LoginPage() {
                 <input
                   type={showPassword ? 'text' : 'password'}
                   name="password"
+                  autoComplete="current-password"
                   value={formData.password}
                   onChange={handleInputChange}
                   placeholder="Enter Password"
@@ -262,6 +270,7 @@ export default function LoginPage() {
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
+                  aria-label={showPassword ? "Hide password" : "Show password"}
                   className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
                 >
                   {showPassword ? (

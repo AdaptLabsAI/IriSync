@@ -21,7 +21,7 @@ export default function ResetPasswordPage() {
       return;
     }
 
-    if (!/\S+@\S+\.\S+/.test(email)) {
+    if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)) {
       setError('Please enter a valid email address');
       return;
     }
@@ -37,8 +37,11 @@ export default function ResetPasswordPage() {
       } else {
         setError(result.error || 'Failed to send password reset email');
       }
-    } catch (error: any) {
-      setError(getFirebaseErrorMessage(error));
+    } catch (error) {
+      const errorMessage = error instanceof Error
+        ? error.message
+        : getFirebaseErrorMessage(error);
+      setError(errorMessage);
     } finally {
       setIsLoading(false);
     }
@@ -97,7 +100,11 @@ export default function ResetPasswordPage() {
                 target.style.display = 'none';
                 const parent = target.parentElement;
                 if (parent) {
-                  parent.innerHTML = '<span class="text-white text-2xl font-bold">IriSync</span>';
+                  const span = document.createElement('span');
+                  span.className = 'text-white text-2xl font-bold';
+                  span.textContent = 'IriSync';
+                  parent.innerHTML = '';
+                  parent.appendChild(span);
                 }
               }}
             />
@@ -145,7 +152,11 @@ export default function ResetPasswordPage() {
                   target.style.display = 'none';
                   const parent = target.parentElement;
                   if (parent) {
-                    parent.innerHTML = '<span class="text-gray-900 text-2xl font-bold">IriSync</span>';
+                    const span = document.createElement('span');
+                    span.className = 'text-gray-900 text-2xl font-bold';
+                    span.textContent = 'IriSync';
+                    parent.innerHTML = '';
+                    parent.appendChild(span);
                   }
                 }}
               />
@@ -191,6 +202,7 @@ export default function ResetPasswordPage() {
                 <input
                   type="email"
                   name="email"
+                  autoComplete="email"
                   value={email}
                   onChange={(e) => {
                     setEmail(e.target.value);
