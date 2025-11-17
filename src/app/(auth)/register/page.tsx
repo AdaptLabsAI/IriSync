@@ -14,16 +14,13 @@ export default function RegisterPage() {
     userName: '',
     email: '',
     password: '',
-    confirmPassword: '',
-    acceptTerms: false,
-    acceptTrialTerms: false
+    confirmPassword: ''
   });
   const [errors, setErrors] = useState({
     userName: '',
     email: '',
     password: '',
     confirmPassword: '',
-    acceptTerms: '',
     general: ''
   });
 
@@ -49,7 +46,6 @@ export default function RegisterPage() {
       email: '',
       password: '',
       confirmPassword: '',
-      acceptTerms: '',
       general: ''
     };
 
@@ -75,10 +71,6 @@ export default function RegisterPage() {
       newErrors.confirmPassword = 'Passwords do not match';
     }
 
-    if (!formData.acceptTerms) {
-      newErrors.acceptTerms = 'You must accept the terms and conditions';
-    }
-
     setErrors(newErrors);
     return !Object.values(newErrors).some(error => error !== '');
   };
@@ -93,7 +85,7 @@ export default function RegisterPage() {
     setIsLoading(true);
 
     try {
-      // Step 1: Register the user with Firebase Auth
+      // Register the user with Firebase Auth
       const result = await registerUser(
         formData.email,
         formData.password,
@@ -101,40 +93,13 @@ export default function RegisterPage() {
         formData.userName.split(' ').slice(1).join(' ') || '',
         {
           businessType: 'individual',
-          subscriptionTier: 'trial',
-          acceptTerms: formData.acceptTerms,
-          acceptTrialTerms: formData.acceptTrialTerms
+          subscriptionTier: 'free'
         }
       );
 
       if (result.success && result.user) {
-        // Step 2: Create Stripe checkout session for trial with payment collection
-        const checkoutResponse = await fetch('/api/subscription/create-trial-checkout', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            userId: result.user.uid,
-            email: formData.email,
-            name: formData.userName,
-            tier: 'trial'
-          }),
-        });
-
-        if (!checkoutResponse.ok) {
-          const errorData = await checkoutResponse.json();
-          throw new Error(errorData.error || 'Failed to create trial checkout');
-        }
-
-        const { url } = await checkoutResponse.json();
-
-        // Step 3: Redirect to Stripe Checkout
-        if (url) {
-          window.location.href = url;
-        } else {
-          throw new Error('No checkout URL received');
-        }
+        // Redirect to dashboard after successful registration
+        router.push('/dashboard');
       } else {
         setErrors({
           ...errors,
@@ -146,9 +111,9 @@ export default function RegisterPage() {
         ...errors,
         general: error.message || getFirebaseErrorMessage(error)
       });
+    } finally {
       setIsLoading(false);
     }
-    // Note: Don't set isLoading to false here as we're redirecting to Stripe
   };
 
   return (
@@ -369,54 +334,13 @@ export default function RegisterPage() {
               )}
             </div>
 
-            {/* Terms & Conditions Checkbox */}
-            <div className="space-y-3">
-              <div className="flex items-start">
-                <input
-                  type="checkbox"
-                  name="acceptTerms"
-                  checked={formData.acceptTerms}
-                  onChange={handleInputChange}
-                  className="mt-1 h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded"
-                />
-                <label htmlFor="acceptTerms" className="ml-3 text-sm text-gray-700">
-                  I accept the{' '}
-                  <a href="/terms" target="_blank" className="text-green-600 hover:text-green-700 underline">
-                    Terms and Conditions
-                  </a>
-                  {' '}and{' '}
-                  <a href="/privacy" target="_blank" className="text-green-600 hover:text-green-700 underline">
-                    Privacy Policy
-                  </a>
-                </label>
-              </div>
-              {errors.acceptTerms && (
-                <p className="text-sm text-red-600">{errors.acceptTerms}</p>
-              )}
-
-              <div className="flex items-start">
-                <input
-                  type="checkbox"
-                  name="acceptTrialTerms"
-                  checked={formData.acceptTrialTerms}
-                  onChange={handleInputChange}
-                  className="mt-1 h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded"
-                />
-                <label htmlFor="acceptTrialTerms" className="ml-3 text-sm text-gray-700">
-                  I understand that I'm starting a <strong>7-day free trial</strong> with influencer-level features.
-                  After the trial, I will be automatically charged <strong>$80/month</strong> for the Creator plan unless I cancel.
-                  Payment information is required to start the trial.
-                </label>
-              </div>
-            </div>
-
             {/* Submit Button */}
             <button
               type="submit"
               disabled={isLoading}
               className="w-full py-4 bg-gradient-to-r from-[#00C853] to-[#00A045] text-white rounded-xl font-medium text-lg hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {isLoading ? 'Starting Trial...' : 'Start 7-Day Free Trial'}
+              {isLoading ? 'Registering...' : 'Register'}
             </button>
           </form>
 
