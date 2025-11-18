@@ -136,7 +136,7 @@ export default function AdminRoadmapPage() {
   };
 
   const handleDeleteItem = async () => {
-    if (!editItem) return;
+    if (!editItem || !firestore) return;
 
     try {
       // Delete from Firestore using the correct collection name
@@ -177,6 +177,9 @@ export default function AdminRoadmapPage() {
     try {
       if (editItem) {
         // Update existing item using the correct collection name
+        if (!firestore) {
+          throw new Error('Firestore not initialized');
+        }
         await updateDoc(doc(firestore, 'roadmapItems', editItem.id), {
           ...formData,
           updatedAt: serverTimestamp()
