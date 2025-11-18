@@ -69,7 +69,7 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className="w-[80%] mx-auto bg-white border-b border-gray-100  top-0 z-50">
+      <nav className="w-full lg:w-[90%] xl:w-[80%] mx-auto bg-white border-b border-gray-100 top-0 z-50">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
@@ -192,7 +192,7 @@ export default function Navbar() {
       {mobileOpen && (
         <div className="fixed inset-0 z-50 md:hidden">
           <div className="fixed inset-0 bg-black bg-opacity-50" onClick={handleDrawerToggle} />
-          <div className="fixed right-0 top-0 h-full w-80 bg-white shadow-xl">
+          <div className="fixed right-0 top-0 h-full w-full sm:w-80 bg-white shadow-xl">
             <div className="container mx-auto px-4">
               <div className="flex items-center justify-between py-6 border-b">
                 <Link href="/" className="flex items-center gap-2" onClick={handleDrawerToggle}>

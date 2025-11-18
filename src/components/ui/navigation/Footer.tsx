@@ -110,9 +110,9 @@ export default function Component() {
           </div>
         </div>
 
-    
-        <div className=" ">
-          <h1 className="text-[100px] sm:text-[10px] md:text-[270px] font-bold text-black tracking-tight">irisync</h1>
+
+        <div className="text-center">
+          <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-bold text-black tracking-tight">irisync</h1>
         </div>
 
     

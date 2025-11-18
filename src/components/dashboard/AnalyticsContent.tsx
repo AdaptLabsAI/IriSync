@@ -85,14 +85,14 @@ export default function AnalyticsPage() {
   return (
     <div className="min-h-screen bg-[#F5F5F7] font-['Inter']">
       {/* Header Section */}
-      <div className="bg-white border-b border-gray-200 px-8 py-6">
-        <div className="flex items-center justify-between">
+      <div className="bg-white border-b border-gray-200 px-4 sm:px-6 lg:px-8 py-6">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <h1 className="text-2xl font-medium text-[#131A13]">Analytics</h1>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-4 w-full sm:w-auto">
             <input
               type="text"
               placeholder="Search"
-              className="px-4 py-2 bg-[#F5F5F7] border-0 rounded-2xl text-sm text-gray-500 focus:outline-none focus:ring-2 focus:ring-green-500 w-80"
+              className="px-4 py-2 bg-[#F5F5F7] border-0 rounded-2xl text-sm text-gray-500 focus:outline-none focus:ring-2 focus:ring-green-500 w-full sm:w-64 md:w-80"
             />
             <button className="p-2 bg-[#F5F5F7] rounded-2xl">
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -104,8 +104,8 @@ export default function AnalyticsPage() {
       </div>
 
       {/* Platform Filter Pills */}
-      <div className="bg-white border-b border-gray-200 px-8 py-4">
-        <div className="flex items-center gap-3 overflow-x-auto">
+      <div className="bg-white border-b border-gray-200 px-4 sm:px-6 lg:px-8 py-4">
+        <div className="flex items-center gap-3 overflow-x-auto pb-2 sm:pb-0">
           {platforms.map((platform) => (
             <button
               key={platform.name}
