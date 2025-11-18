@@ -337,8 +337,8 @@ export const PublishButton: React.FC<PublishButtonProps> = ({
           {hasPublishablePlatforms && showResults && (
             <div className="space-y-4">
               {getPublishingResults().successful > 0 && (
-                <div className="bg-green-50 p-3 rounded-md">
-                  <p className="text-sm font-medium flex items-center text-green-700">
+                <div className="bg-[#00FF6A]/5 p-3 rounded-md">
+                  <p className="text-sm font-medium flex items-center text-[#00CC44]">
                     <CheckCircle className="h-4 w-4 mr-2" />
                     Published successfully to {getPublishingResults().successful} platform(s)
                   </p>
@@ -363,19 +363,19 @@ export const PublishButton: React.FC<PublishButtonProps> = ({
                     <div 
                       key={platformId} 
                       className={`flex items-start p-3 rounded-md ${
-                        status.success ? 'bg-green-50' : 'bg-red-50'
+                        status.success ? 'bg-[#00FF6A]/5' : 'bg-red-50'
                       }`}
                     >
                       <div className="flex-shrink-0 mr-3">
                         {status.success ? (
-                          <CheckCircle className="h-5 w-5 text-green-500" />
+                          <CheckCircle className="h-5 w-5 text-[#00FF6A]" />
                         ) : (
                           <AlertCircle className="h-5 w-5 text-red-500" />
                         )}
                       </div>
                       <div>
                         <p className={`text-sm font-medium ${
-                          status.success ? 'text-green-700' : 'text-red-700'
+                          status.success ? 'text-[#00CC44]' : 'text-red-700'
                         }`}>
                           {platform.name}
                         </p>

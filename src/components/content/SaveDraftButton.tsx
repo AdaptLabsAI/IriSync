@@ -180,7 +180,7 @@ export const SaveDraftButton: React.FC<SaveDraftButtonProps> = ({
             className="text-xs text-blue-500 hover:text-blue-700 flex items-center"
             type="button"
           >
-            <span className={`w-3 h-3 rounded-full mr-1 ${autoSaveEnabled ? 'bg-green-500' : 'bg-gray-400'}`}></span>
+            <span className={`w-3 h-3 rounded-full mr-1 ${autoSaveEnabled ? 'bg-[#00FF6A]' : 'bg-gray-400'}`}></span>
             Auto-save {autoSaveEnabled ? 'on' : 'off'}
           </button>
         </div>
