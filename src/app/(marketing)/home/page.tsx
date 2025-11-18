@@ -114,7 +114,7 @@ const features: Feature[] = [
     description: 'Create engaging content automatically with our advanced AI tools',
     icon: (
       <div className="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center">
-        <div className="w-8 h-8 bg-green-500 rounded-lg"></div>
+        <div className="w-8 h-8 bg-[#00FF6A] rounded-lg"></div>
       </div>
     )
   },
@@ -123,7 +123,7 @@ const features: Feature[] = [
     description: 'Manage all your social accounts from one unified dashboard',
     icon: (
       <div className="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center">
-        <div className="w-8 h-8 bg-green-500 rounded-lg"></div>
+        <div className="w-8 h-8 bg-[#00FF6A] rounded-lg"></div>
       </div>
     )
   },
@@ -132,7 +132,7 @@ const features: Feature[] = [
     description: 'Track performance with detailed analytics and custom reports',
     icon: (
       <div className="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center">
-        <div className="w-8 h-8 bg-green-500 rounded-lg"></div>
+        <div className="w-8 h-8 bg-[#00FF6A] rounded-lg"></div>
       </div>
     )
   },
@@ -141,7 +141,7 @@ const features: Feature[] = [
     description: 'Schedule posts at optimal times for maximum engagement',
     icon: (
       <div className="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center">
-        <div className="w-8 h-8 bg-green-500 rounded-lg"></div>
+        <div className="w-8 h-8 bg-[#00FF6A] rounded-lg"></div>
       </div>
     )
   }
@@ -256,7 +256,7 @@ const data = [
         <Card>
           <CardContent>
             <div className="flex items-center">
-              <div className="bg-green-500 text-white text-xs font-bold px-2 py-1 rounded-full">+21%</div>
+              <div className="bg-[#00FF6A] text-white text-xs font-bold px-2 py-1 rounded-full">+21%</div>
             </div>
             <div className="overflow-x-auto">
               <LineChart width={200} height={70} data={data}>
@@ -288,7 +288,7 @@ const data = [
               </div>
             </div>
             <div className="w-full">
-              <div className="h-4 bg-green-400 rounded-full w-4/5 text-xs text-gray-600">
+              <div className="h-4 bg-[#00FF6A] rounded-full w-4/5 text-xs text-gray-600">
                 <span className="ml-3">29%</span>
               </div>
             </div>
@@ -370,7 +370,7 @@ const data = [
   </Container>
 
   {/* Decorative BG Blur */}
-  <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-green-500 rounded-full opacity-10 blur-3xl"></div>
+  <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-[#00FF6A] rounded-full opacity-10 blur-3xl"></div>
 </section>
 
 
@@ -386,7 +386,7 @@ const data = [
         <Container>
           <div className="text-center mb-16">
             <Typography variant="h2" className="mb-4">
-              A <span className="text-green-500">smarter</span> way to market
+              A <span className="text-[#00FF6A]">smarter</span> way to market
             </Typography>
             <Typography variant="body" color="secondary" className="max-w-2xl mx-auto">
               Take control of your marketing with our three-pillar approach to success.
@@ -493,7 +493,7 @@ const data = [
             <li className="flex items-center group">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5 text-green-600 mr-3 flex-shrink-0"
+                className="h-5 w-5 text-[#00CC44] mr-3 flex-shrink-0"
                 viewBox="0 0 20 20"
                 fill="currentColor"
               >
@@ -510,7 +510,7 @@ const data = [
             <li className="flex items-center group">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5 text-green-600 mr-3 flex-shrink-0"
+                className="h-5 w-5 text-[#00CC44] mr-3 flex-shrink-0"
                 viewBox="0 0 20 20"
                 fill="currentColor"
               >
@@ -520,14 +520,14 @@ const data = [
                   clipRule="evenodd"
                 />
               </svg>
-              <span className="text-lg font-medium text-gray-800 group-hover:text-green-600 transition">
+              <span className="text-lg font-medium text-gray-800 group-hover:text-[#00CC44] transition">
                 Smart scheduling
               </span>
             </li>
             <li className="flex items-center group">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5 text-green-600 mr-3 flex-shrink-0"
+                className="h-5 w-5 text-[#00CC44] mr-3 flex-shrink-0"
                 viewBox="0 0 20 20"
                 fill="currentColor"
               >
@@ -537,14 +537,14 @@ const data = [
                   clipRule="evenodd"
                 />
               </svg>
-              <span className="text-lg font-medium text-gray-800 group-hover:text-green-600 transition">
+              <span className="text-lg font-medium text-gray-800 group-hover:text-[#00CC44] transition">
                 Platform and tool integration
               </span>
             </li>
             <li className="flex items-center group">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5 text-green-600 mr-3 flex-shrink-0"
+                className="h-5 w-5 text-[#00CC44] mr-3 flex-shrink-0"
                 viewBox="0 0 20 20"
                 fill="currentColor"
               >
@@ -554,14 +554,14 @@ const data = [
                   clipRule="evenodd"
                 />
               </svg>
-              <span className="text-lg font-medium text-gray-800 group-hover:text-green-600 transition">
+              <span className="text-lg font-medium text-gray-800 group-hover:text-[#00CC44] transition">
                 Custom integration
               </span>
             </li>
             <li className="flex items-center group">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5 text-green-600 mr-3 flex-shrink-0"
+                className="h-5 w-5 text-[#00CC44] mr-3 flex-shrink-0"
                 viewBox="0 0 20 20"
                 fill="currentColor"
               >
@@ -571,7 +571,7 @@ const data = [
                   clipRule="evenodd"
                 />
               </svg>
-              <span className="text-lg font-medium text-gray-800 group-hover:text-green-600 transition">
+              <span className="text-lg font-medium text-gray-800 group-hover:text-[#00CC44] transition">
                 Tracking tools
               </span>
             </li>
@@ -643,7 +643,7 @@ const data = [
         <Container>
           <div className="text-center mb-16">
             <Typography variant="h2" className="text-white mb-4">
-              Simple transparent <span className="text-green-500">Pricing</span>
+              Simple transparent <span className="text-[#00FF6A]">Pricing</span>
             </Typography>
           </div>
 
@@ -651,11 +651,11 @@ const data = [
             {pricingPlans.map((plan, index) => (
               <Card 
                 key={index} 
-                className={`relative ${plan.highlighted ? 'ring-2 ring-green-500' : ''}`}
+                className={`relative ${plan.highlighted ? 'ring-2 ring-[#00FF6A]' : ''}`}
               >
                 {plan.highlighted && (
                   <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                    <span className="bg-green-500 text-white px-4 py-2 rounded-full text-sm font-medium">
+                    <span className="bg-[#00FF6A] text-white px-4 py-2 rounded-full text-sm font-medium">
                       Most Popular
                     </span>
                   </div>
@@ -677,7 +677,7 @@ const data = [
                 <ul className="space-y-4 mb-8">
                   {plan.features.map((feature, featureIndex) => (
                     <li key={featureIndex} className="flex items-start">
-                      <div className="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center mr-3 mt-0.5">
+                      <div className="w-5 h-5 bg-[#00FF6A] rounded-full flex items-center justify-center mr-3 mt-0.5">
                         <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
                           <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                         </svg>
@@ -712,7 +712,7 @@ const data = [
         <Container>
           <div className="text-center mb-16">
             <Typography variant="h2" className="mb-4">
-              What our <span className="text-green-500">clients</span> are saying
+              What our <span className="text-[#00FF6A]">clients</span> are saying
             </Typography>
             <Typography variant="body" color="secondary">
               The success of our users speaks louder than words
@@ -721,7 +721,7 @@ const data = [
 
           {loading && (
             <div className="text-center">
-              <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-green-500"></div>
+              <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-[#00FF6A]"></div>
             </div>
           )}
 
