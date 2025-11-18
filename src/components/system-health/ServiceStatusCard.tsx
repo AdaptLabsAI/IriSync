@@ -66,7 +66,7 @@ const ServiceStatusCard: React.FC<ServiceStatusCardProps> = ({ name, health, ico
         <Box display="flex" justifyContent="space-between" alignItems="flex-start" mb={2}>
           <Box display="flex" alignItems="center" gap={1.5}>
             {icon && <Box sx={{ color: tokens.colors.text.secondary }}>{icon}</Box>}
-            <Typography variant="h6" fontWeight={600} sx={{ fontSize: '16px' }}>
+            <Typography variant="h6" fontWeight={tokens.typography.fontWeight.semibold} sx={{ fontSize: tokens.typography.fontSize.body }}>
               {name}
             </Typography>
           </Box>
@@ -78,7 +78,7 @@ const ServiceStatusCard: React.FC<ServiceStatusCardProps> = ({ name, health, ico
             sx={{
               bgcolor: statusConfig.bgcolor,
               color: statusConfig.color,
-              fontWeight: 600,
+              fontWeight: tokens.typography.fontWeight.semibold,
               border: `1px solid ${statusConfig.color}30`,
             }}
           />

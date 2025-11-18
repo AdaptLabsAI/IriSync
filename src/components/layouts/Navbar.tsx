@@ -20,6 +20,7 @@ import {
 } from '@mui/material';
 import { Menu as MenuIcon, Notifications, Search } from '@mui/icons-material';
 import { OrganizationSwitcher } from '../ui/OrganizationSwitcher';
+import { tokens } from '@/styles/tokens';
 
 // Navigation links
 const navLinks = [
@@ -65,7 +66,7 @@ export default function Navbar() {
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
-              fontWeight: 700,
+              fontWeight: tokens.typography.fontWeight.semibold,
               color: 'primary.main',
               textDecoration: 'none'
             }}
@@ -126,7 +127,7 @@ export default function Navbar() {
             sx={{
               display: { xs: 'flex', md: 'none' },
               flexGrow: 1,
-              fontWeight: 700,
+              fontWeight: tokens.typography.fontWeight.semibold,
               color: 'primary.main',
               textDecoration: 'none',
             }}
