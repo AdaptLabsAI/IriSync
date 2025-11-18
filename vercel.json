@@ -18,6 +18,10 @@
     {
       "path": "/api/cron/fetch-metrics",
       "schedule": "0 * * * *"
+    },
+    {
+      "path": "/api/cron/fetch-social-listening",
+      "schedule": "*/30 * * * *"
     }
   ]
 }
