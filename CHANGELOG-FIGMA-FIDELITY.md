@@ -6,6 +6,20 @@
 
 ---
 
+## Commit: `afccd53` - Fix firestore null checks to resolve TypeScript build error
+
+**Date:** 2025-11-18
+
+### Changes
+- **Admin Roadmap Page** (`src/app/(admin)/admin/roadmap/page.tsx`)
+  - Added firestore null check in `handleDeleteItem` function (line 139)
+  - Added firestore null check with error throw in `handleSubmit` function (line 180-182)
+
+### Impact
+**CRITICAL FIX:** Resolved TypeScript build error blocking Vercel deployment. Fixed null safety violations where `firestore` (type `Firestore | null`) was used without proper null checks in two locations. This unblocked production deployment.
+
+---
+
 ## Commit: `cc0564a` - Update integrations page Analytics section background gradient
 
 **Date:** 2025-11-18
