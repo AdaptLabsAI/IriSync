@@ -46,77 +46,51 @@ interface NavItemProps {
 
 // Navigation items
 import { ReactElement } from 'react';
-import { MdWindow, MdArticle, MdCalendarToday, MdAnalytics, MdBuild, MdPeople, MdStorage, MdSettings, MdHelpOutline } from 'react-icons/md';
+import { MdWindow, MdArticle, MdCalendarToday, MdAnalytics, MdBuild, MdPeople, MdStorage, MdSettings, MdHelpOutline, MdHome } from 'react-icons/md';
 import { TiMessages } from 'react-icons/ti';
 import { BsMagic } from 'react-icons/bs';
-import { TbUsersGroup } from "react-icons/tb";
+import { TbUsersGroup, TbEar } from "react-icons/tb";
 import { RiComputerLine } from "react-icons/ri";
 import { CiSettings } from "react-icons/ci";
+import { HiOutlineCalendar } from "react-icons/hi";
+
+// Navigation items matching Figma design and Hootsuite-style dashboard
 const baseNavItems: Array<Omit<NavItemProps, 'isActive' | 'children'>> = [
   {
-    name: 'Dashboard',
-    icon: MdOutlineWindow ,
+    name: 'Home',
+    icon: MdHome,
     path: '/dashboard'
   },
-   {
-    name: 'Analytics',
-    icon: MdOutlineAnalytics ,
-    path: '/dashboard/analytics'
+  {
+    name: 'Planner',
+    icon: HiOutlineCalendar,
+    path: '/dashboard/planner'
   },
-    {
+  {
     name: 'Inbox',
     icon: TiMessages,
     path: '/dashboard/inbox'
   },
-   {
-    name: 'AI Tools',
-    icon: BsMagic ,
+  {
+    name: 'Analytics',
+    icon: MdOutlineAnalytics,
+    path: '/dashboard/analytics'
+  },
+  {
+    name: 'Listening',
+    icon: TbEar,
+    path: '/dashboard/listening'
+  },
+  {
+    name: 'AI Toolkit',
+    icon: BsMagic,
     path: '/dashboard/ai'
   },
-  // {
-  //   name: 'Content',
-  //   icon: MdArticle,
-  //   path: '/dashboard/content'
-  // },
- {
-  name: 'User Management',
-  icon: TbUsersGroup ,
-  path: '/dashboard/content/userM',
-  lockIcon: true 
-},
-{
-  name: 'System Health',
-  icon: RiComputerLine  ,
-  path: '/dashboard/content/system',
-  lockIcon: true 
-},
-  // {
-  //   name: 'Calendar',
-  //   icon: MdCalendarToday,
-  //   path: '/dashboard/content/calendar'
-  // },
- 
- 
-  // {
-  //   name: 'CRM',
-  //   icon: MdPeople,
-  //   path: '/dashboard/crm'
-  // },
-  // {
-  //   name: 'Storage',
-  //   icon: MdStorage,
-  //   path: '/dashboard/storage'
-  // },
   {
     name: 'Settings',
     icon: CiSettings,
     path: '/dashboard/settings'
   },
-  // {
-  //   name: 'Support',
-  //   icon: MdHelpOutline,
-  //   path: '/support'
-  // },
 ];
 
 
