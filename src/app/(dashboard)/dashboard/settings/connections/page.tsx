@@ -5,6 +5,7 @@ import { getFirebaseClientAuth } from '@/lib/core/firebase/client';
 import { onAuthStateChanged, User as FirebaseUser } from 'firebase/auth';
 import { Box, Button, Typography, Alert, CircularProgress, Stack, IconButton, List, ListItem, ListItemText, Divider } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { tokens } from '@/styles/tokens';
 
 // Group providers by category
 const PROVIDERS = [
@@ -163,8 +164,26 @@ export default function ConnectionsPage() {
 
   return (
     <Box className="container mx-auto py-6 max-w-xl">
-      <Typography variant="h4" fontWeight={700} mb={2}>Connections</Typography>
-      <Typography color="text.secondary" mb={4}>Manage your social media and third-party integrations.</Typography>
+      <Typography
+        variant="h4"
+        mb={2}
+        sx={{
+          fontWeight: 600,
+          fontSize: tokens.typography.fontSize.h1,
+          color: tokens.colors.text.primary,
+        }}
+      >
+        Connections
+      </Typography>
+      <Typography
+        mb={4}
+        sx={{
+          color: tokens.colors.text.secondary,
+          fontSize: tokens.typography.fontSize.body,
+        }}
+      >
+        Manage your social media and third-party integrations.
+      </Typography>
       {loading ? (
         <Box display="flex" justifyContent="center" alignItems="center" minHeight={200}>
           <CircularProgress />
@@ -177,11 +196,22 @@ export default function ConnectionsPage() {
           {/* Category tabs */}
           <Box sx={{ mb: 3, display: 'flex', gap: 1, overflowX: 'auto', pb: 1 }}>
             {categories.map(category => (
-              <Button 
+              <Button
                 key={category}
                 variant={activeCategory === category ? "contained" : "outlined"}
                 onClick={() => setActiveCategory(category)}
-                sx={{ textTransform: 'capitalize' }}
+                sx={{
+                  textTransform: 'capitalize',
+                  ...(activeCategory === category && {
+                    bgcolor: tokens.colors.primary.main,
+                    '&:hover': { bgcolor: tokens.colors.primary.dark },
+                    borderRadius: tokens.borderRadius.md,
+                  }),
+                  ...activeCategory !== category && {
+                    borderColor: tokens.colors.primary.main,
+                    color: tokens.colors.primary.main,
+                  }
+                }}
               >
                 {category}
               </Button>
@@ -213,9 +243,14 @@ export default function ConnectionsPage() {
                   ) : (
                     <Button
                       variant="contained"
-                      color="primary"
                       onClick={() => handleConnect(provider.type)}
                       disabled={connecting === provider.type}
+                      sx={{
+                        bgcolor: tokens.colors.primary.main,
+                        '&:hover': { bgcolor: tokens.colors.primary.dark },
+                        borderRadius: tokens.borderRadius.md,
+                        boxShadow: tokens.shadows.md,
+                      }}
                     >
                       Connect
                     </Button>

@@ -6,6 +6,7 @@ import { onAuthStateChanged, User as FirebaseUser } from 'firebase/auth';
 import { Box, Button, TextField, Typography, Alert, CircularProgress, Stack, IconButton, List, ListItem, ListItemText, MenuItem, Select, Divider, Dialog, DialogTitle, DialogContent, DialogActions, DialogContentText } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import TransferWithinAStationIcon from '@mui/icons-material/TransferWithinAStation';
+import { tokens } from '@/styles/tokens';
 
 interface TeamMember {
   userId: string;
@@ -268,8 +269,24 @@ export default function TeamManagementPage() {
 
   return (
     <Box className="container mx-auto py-6 max-w-xl">
-      <Typography variant="h4" fontWeight={700} mb={2}>Team Management</Typography>
-      <Typography color="text.secondary" mb={4}>
+      <Typography
+        variant="h4"
+        mb={2}
+        sx={{
+          fontWeight: 600,
+          fontSize: tokens.typography.fontSize.h1,
+          color: tokens.colors.text.primary,
+        }}
+      >
+        Team Management
+      </Typography>
+      <Typography
+        mb={4}
+        sx={{
+          color: tokens.colors.text.secondary,
+          fontSize: tokens.typography.fontSize.body,
+        }}
+      >
         Manage your team members, invites, and their access levels.
         {team && (
           <span className="block mt-1 text-sm">
@@ -320,12 +337,17 @@ export default function TeamManagementPage() {
                       <MenuItem value="org_admin">Admin</MenuItem>
                       {isOwner && <MenuItem value="owner">Owner</MenuItem>}
                     </Select>
-                    <Button 
-                      type="submit" 
-                      variant="contained" 
-                      color="primary" 
+                    <Button
+                      type="submit"
+                      variant="contained"
                       disabled={inviting || !inviteEmail}
-                      sx={{ minWidth: 120 }}
+                      sx={{
+                        minWidth: 120,
+                        bgcolor: tokens.colors.primary.main,
+                        '&:hover': { bgcolor: tokens.colors.primary.dark },
+                        borderRadius: tokens.borderRadius.md,
+                        boxShadow: tokens.shadows.md,
+                      }}
                     >
                       {inviting ? 'Inviting...' : 'Invite'}
                     </Button>
@@ -463,11 +485,16 @@ export default function TeamManagementPage() {
               >
                 Cancel
               </Button>
-              <Button 
+              <Button
                 onClick={handleTransferOwnership}
-                color="warning"
                 variant="contained"
                 disabled={transferring}
+                sx={{
+                  bgcolor: tokens.colors.accent.orange,
+                  '&:hover': { bgcolor: tokens.colors.accent.red },
+                  borderRadius: tokens.borderRadius.md,
+                  boxShadow: tokens.shadows.md,
+                }}
               >
                 {transferring ? 'Transferring...' : 'Transfer Ownership'}
               </Button>
