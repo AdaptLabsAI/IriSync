@@ -482,7 +482,7 @@ export async function PUT(req: NextRequest) {
       }
       
       // Store the connection in Firestore
-      const connRef = doc(firestore, 'connections', user.id);
+      const connRef = doc(firestore, 'connections', userId);
       const connSnap = await getDoc(connRef);
       
       const newConnection: Connection = {
@@ -509,7 +509,7 @@ export async function PUT(req: NextRequest) {
       
       // Log the connection in user activity
       try {
-        const userRef = doc(firestore, 'users', user.id);
+        const userRef = doc(firestore, 'users', userId);
         await updateDoc(userRef, {
           'activity.connections': arrayUnion({
             action: 'added',
@@ -853,7 +853,7 @@ async function getPinterestProfile(accessToken: string) {
 }
 
 async function exchangeGoogleToken(code: string, redirectUri: string) {
-  const clientId = GOOGLE_OAUTH_CLIENT_ID;
+  const clientId = getGoogleClientIdSafe();
   const clientSecret = process.env.GOOGLE_CLIENT_SECRET!;
   const tokenUrl = 'https://oauth2.googleapis.com/token';
   
