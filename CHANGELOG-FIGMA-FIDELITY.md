@@ -6,6 +6,72 @@
 
 ---
 
+## Commit: `5037ce1` - Comprehensive brand green color updates across platform components
+
+**Date:** 2025-11-18
+
+### Changes
+- **Platform Components**
+  - PlatformCard.tsx: Updated reconnect button (`text-green-600 hover:text-green-800` → `text-[#00FF6A] hover:text-[#00CC44]`)
+
+### Impact
+Part of ongoing Figma visual fidelity implementation ensuring brand consistency across all UI elements.
+
+---
+
+## Commit: `4066b9c` - Update campaigns page with brand green colors
+
+**Date:** 2025-11-18
+
+### Changes
+- **Campaigns Page** (`src/app/(dashboard)/dashboard/campaigns/page.tsx`)
+  - Create Campaign buttons: `bg-green-600 hover:bg-green-700` → `bg-[#00FF6A] hover:bg-[#00CC44]` (2 instances)
+  - Search input focus ring: `focus:ring-green-500` → `focus:ring-[#00FF6A]`
+  - Stats card growth indicators: `text-green-600` → `text-[#00CC44]` (3 instances)
+  - Loading spinner: `border-t-green-600` → `border-t-[#00FF6A]`
+  - Status badge: `bg-green-100 text-green-700` → `bg-[#00FF6A]/10 text-[#00CC44]`
+
+**Total changes:** 8 instances
+
+### Impact
+Complete brand color consistency across the campaigns dashboard page.
+
+---
+
+## Commit: `dafb770` - Update UI components and auth pages with brand green colors
+
+**Date:** 2025-11-18
+
+### Changes
+- **UI Component Library**
+  - Button.tsx: Updated primary variant gradient (`from-green-500 to-green-900` → `from-[#00FF6A] to-[#00CC44]`)
+  - Button.tsx: Updated outline variant (`border-green-500 text-green-600 hover:bg-green-50` → `border-[#00FF6A] text-[#00CC44] hover:bg-[#00FF6A]/5`)
+  - Typography.tsx: Updated accent color (`text-green-500` → `text-[#00FF6A]`)
+
+- **Auth Pages**
+  - verify-email/page.tsx: Success icon (`bg-green-100 text-green-600` → `bg-[#00FF6A]/10 text-[#00CC44]`)
+  - resend-verification/page.tsx: Success icon, input focus rings, and link colors (4 instances)
+  - reset-password/confirm/page.tsx: Success icon, input focus rings (2 instances), and link colors (3 instances)
+
+**Total changes:** 14 instances across 5 files
+
+### Impact
+Core UI component library now uses brand colors by default, affecting all pages that use Button and Typography components. All authentication flows now have brand-consistent visual feedback.
+
+---
+
+## Commit: `a13ebd9` - Update changelog with firestore null safety fix
+
+**Date:** 2025-11-18
+
+### Changes
+- Updated CHANGELOG-FIGMA-FIDELITY.md with firestore null safety fix documentation
+
+### Impact
+Comprehensive documentation update for deployment blocker resolution.
+
+---
+
 ## Commit: `afccd53` - Fix firestore null checks to resolve TypeScript build error
 
 **Date:** 2025-11-18
