@@ -6,6 +6,53 @@
 
 ---
 
+## Commit: `cc0564a` - Update integrations page Analytics section background gradient
+
+**Date:** 2025-11-18
+
+### Changes
+- **Integrations Page** (`src/app/(marketing)/integrations/page.tsx`)
+  - Updated Analytics & Tracking section gradient: `to-green-50` → `to-[#00FF6A]/5`
+
+### Impact
+Brand-consistent gradient backgrounds using opacity-based color system for subtle visual effects.
+
+---
+
+## Commit: `fe5efd5` - Update remaining light green backgrounds to brand color with opacity
+
+**Date:** 2025-11-18
+
+### Changes
+
+#### Home Page (`src/app/(marketing)/home/page.tsx`)
+- Feature icon backgrounds: `bg-green-100` → `bg-[#00FF6A]/10` (4 instances)
+- Connector lines: `bg-green-200` → `bg-[#00FF6A]/20` (3 instances)
+- Card shadow: `shadow-green-200` → `shadow-[#00FF6A]/20`
+
+#### Pricing Page (`src/app/pricing/page.tsx`)
+- Table backgrounds: `bg-green-50` → `bg-[#00FF6A]/5` (2 instances)
+- Button hover state: `hover:bg-green-50` → `hover:bg-[#00FF6A]/5`
+
+### Impact
+Complete elimination of Tailwind light green shades, replaced with brand primary green using opacity modifiers (/5, /10, /20) for appropriate visual hierarchy and subtle brand-consistent effects.
+
+---
+
+## Commit: `c1384d0` - Add comprehensive Figma visual fidelity implementation changelog
+
+**Date:** 2025-11-18
+
+### Changes
+- Created `CHANGELOG-FIGMA-FIDELITY.md` documenting all implementation work
+- Tracks 25+ files modified across all sessions
+- Documents complete color migration and design token adoption
+
+### Impact
+Comprehensive documentation for future reference and team knowledge sharing.
+
+---
+
 ## Commit: `a9b0511` - Improve design token consistency across components
 
 **Date:** 2025-11-18
