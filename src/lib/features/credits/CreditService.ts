@@ -10,6 +10,10 @@
  * - Growth: 500 credits - $40 ($0.08/credit)
  * - Pro: 1,000 credits - $70 ($0.07/credit)
  * - Enterprise: 5,000 credits - $300 ($0.06/credit)
+ *
+ * STATUS: INACTIVE - Awaiting Stripe Price IDs configuration
+ * The credit system is implemented but not active until Stripe Price IDs are provided.
+ * Set CREDIT_SYSTEM_ACTIVE=true in environment variables to enable.
  */
 
 import { firestore } from '@/lib/core/firebase';
@@ -154,6 +158,19 @@ class CreditService {
   private readonly TRANSACTIONS_COLLECTION = 'creditTransactions';
 
   /**
+   * Credit system active status
+   * Set to true once Stripe Price IDs are configured
+   */
+  private readonly ACTIVE = process.env.CREDIT_SYSTEM_ACTIVE === 'true' || false;
+
+  /**
+   * Check if credit system is active
+   */
+  isActive(): boolean {
+    return this.ACTIVE;
+  }
+
+  /**
    * Get user's credit balance
    */
   async getBalance(userId: string, organizationId: string): Promise<CreditBalance> {
@@ -239,6 +256,11 @@ class CreditService {
     operation: AIOperation,
     quantity: number = 1
   ): Promise<{ hasCredits: boolean; balance: number; required: number }> {
+    // If credit system is not active, allow all operations
+    if (!this.ACTIVE) {
+      return { hasCredits: true, balance: Infinity, required: 0 };
+    }
+
     const balance = await this.getBalance(userId, organizationId);
 
     // Admin always has credits
@@ -281,6 +303,11 @@ class CreditService {
     metadata?: Record<string, any>
   ): Promise<{ success: boolean; newBalance: number; error?: string }> {
     try {
+      // If credit system is not active, skip deduction
+      if (!this.ACTIVE) {
+        return { success: true, newBalance: Infinity };
+      }
+
       const balance = await this.getBalance(userId, organizationId);
 
       // Admin has unlimited credits
