@@ -147,7 +147,7 @@ export default function IntegrationsPage() {
             </div>
 
             {/* Analytics & Tracking */}
-            <div className="bg-gradient-to-b from-gray-50 to-green-50 rounded-3xl p-8 md:p-12">
+            <div className="bg-gradient-to-b from-gray-50 to-[#00FF6A]/5 rounded-3xl p-8 md:p-12">
               <div className="text-center mb-8">
                 <Typography variant="h2" className="text-gray-900 font-semibold mb-4">
                   Analytics & Tracking
