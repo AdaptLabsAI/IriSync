@@ -51,6 +51,7 @@ import {
   Bar,
   Cell,
 } from 'recharts';
+import { tokens } from '@/styles/tokens';
 
 // Sample data for Growth Trends
 const growthData = [
@@ -169,10 +170,25 @@ export default function AnalyticsContent() {
       <Box sx={{ mb: 4 }}>
         <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 2 }}>
           <Box>
-            <Typography variant="h4" component="h1" gutterBottom fontWeight="bold">
-              📊 Analytics
+            <Typography
+              variant="h4"
+              component="h1"
+              gutterBottom
+              sx={{
+                fontWeight: 600,
+                fontSize: tokens.typography.fontSize.h1,
+                color: tokens.colors.text.primary
+              }}
+            >
+              Analytics
             </Typography>
-            <Typography variant="body2" color="text.secondary">
+            <Typography
+              variant="body2"
+              sx={{
+                color: tokens.colors.text.secondary,
+                fontSize: tokens.typography.fontSize.body
+              }}
+            >
               Track your social media performance and insights
             </Typography>
           </Box>
@@ -182,11 +198,11 @@ export default function AnalyticsContent() {
               startIcon={<AIIcon />}
               sx={{
                 textTransform: 'none',
-                borderColor: '#00C853',
-                color: '#00C853',
+                borderColor: tokens.colors.primary.main,
+                color: tokens.colors.primary.main,
                 '&:hover': {
-                  borderColor: '#00A046',
-                  bgcolor: 'rgba(0, 200, 83, 0.04)'
+                  borderColor: tokens.colors.primary.dark,
+                  bgcolor: tokens.colors.primary.fade10
                 }
               }}
             >
@@ -196,10 +212,12 @@ export default function AnalyticsContent() {
               variant="contained"
               startIcon={<DownloadIcon />}
               sx={{
-                bgcolor: '#00C853',
-                '&:hover': { bgcolor: '#00A046' },
+                bgcolor: tokens.colors.primary.main,
+                '&:hover': { bgcolor: tokens.colors.primary.dark },
                 textTransform: 'none',
-                fontWeight: 600
+                fontWeight: 600,
+                borderRadius: tokens.borderRadius.md,
+                boxShadow: tokens.shadows.md,
               }}
             >
               Export Data
@@ -216,10 +234,10 @@ export default function AnalyticsContent() {
               onClick={() => setSelectedPlatform(platform)}
               color={selectedPlatform === platform ? 'primary' : 'default'}
               sx={{
-                bgcolor: selectedPlatform === platform ? '#00C853' : 'default',
+                bgcolor: selectedPlatform === platform ? tokens.colors.primary.main : 'default',
                 color: selectedPlatform === platform ? 'white' : 'default',
                 '&:hover': {
-                  bgcolor: selectedPlatform === platform ? '#00A046' : 'default',
+                  bgcolor: selectedPlatform === platform ? tokens.colors.primary.dark : 'default',
                 }
               }}
             />
@@ -231,7 +249,16 @@ export default function AnalyticsContent() {
       <Grid container spacing={3} sx={{ mb: 4 }}>
         {kpis.map((kpi, index) => (
           <Grid item xs={12} sm={6} md={2.4} key={index}>
-            <Card sx={{ height: '100%' }}>
+            <Card sx={{
+              height: '100%',
+              borderRadius: tokens.borderRadius.md,
+              boxShadow: tokens.shadows.md,
+              transition: 'transform 0.2s, box-shadow 0.2s',
+              '&:hover': {
+                transform: 'translateY(-2px)',
+                boxShadow: tokens.shadows.lg,
+              },
+            }}>
               <CardContent>
                 <Stack direction="row" justifyContent="space-between" alignItems="flex-start" sx={{ mb: 2 }}>
                   <Avatar
@@ -272,7 +299,12 @@ export default function AnalyticsContent() {
       </Grid>
 
       {/* Growth Trends Chart */}
-      <Paper sx={{ p: 3, mb: 4 }}>
+      <Paper sx={{
+        p: 3,
+        mb: 4,
+        borderRadius: tokens.borderRadius.md,
+        boxShadow: tokens.shadows.md,
+      }}>
         <Typography variant="h6" fontWeight="bold" gutterBottom>
           Growth Trends
         </Typography>
@@ -315,7 +347,12 @@ export default function AnalyticsContent() {
       <Grid container spacing={3} sx={{ mb: 4 }}>
         {/* Performance Overview */}
         <Grid item xs={12} lg={6}>
-          <Paper sx={{ p: 3, height: '100%' }}>
+          <Paper sx={{
+            p: 3,
+            height: '100%',
+            borderRadius: tokens.borderRadius.md,
+            boxShadow: tokens.shadows.md,
+          }}>
             <Typography variant="h6" fontWeight="bold" gutterBottom>
               Instagram Performance Overview
             </Typography>
@@ -329,10 +366,10 @@ export default function AnalyticsContent() {
                   onClick={() => setSelectedDateRange(range)}
                   size="small"
                   sx={{
-                    bgcolor: selectedDateRange === range ? '#00C853' : 'default',
+                    bgcolor: selectedDateRange === range ? tokens.colors.primary.main : 'default',
                     color: selectedDateRange === range ? 'white' : 'default',
                     '&:hover': {
-                      bgcolor: selectedDateRange === range ? '#00A046' : 'default',
+                      bgcolor: selectedDateRange === range ? tokens.colors.primary.dark : 'default',
                     }
                   }}
                 />
@@ -376,7 +413,12 @@ export default function AnalyticsContent() {
 
         {/* Content Type Performance */}
         <Grid item xs={12} lg={6}>
-          <Paper sx={{ p: 3, height: '100%' }}>
+          <Paper sx={{
+            p: 3,
+            height: '100%',
+            borderRadius: tokens.borderRadius.md,
+            boxShadow: tokens.shadows.md,
+          }}>
             <Typography variant="h6" fontWeight="bold" gutterBottom>
               Content Type Performance
             </Typography>
@@ -389,9 +431,9 @@ export default function AnalyticsContent() {
                   onClick={() => setSelectedContentTab(tab)}
                   sx={{
                     textTransform: 'none',
-                    color: selectedContentTab === tab ? '#00C853' : 'text.secondary',
+                    color: selectedContentTab === tab ? tokens.colors.primary.main : 'text.secondary',
                     borderBottom: selectedContentTab === tab ? 2 : 0,
-                    borderColor: '#00C853',
+                    borderColor: tokens.colors.primary.main,
                     borderRadius: 0,
                     pb: 1,
                     fontWeight: selectedContentTab === tab ? 600 : 400
@@ -421,7 +463,12 @@ export default function AnalyticsContent() {
       </Grid>
 
       {/* Competitive Benchmarking */}
-      <Paper sx={{ p: 3, mb: 4 }}>
+      <Paper sx={{
+        p: 3,
+        mb: 4,
+        borderRadius: tokens.borderRadius.md,
+        boxShadow: tokens.shadows.md,
+      }}>
         <Typography variant="h6" fontWeight="bold" gutterBottom>
           Competitive Benchmarking
         </Typography>
@@ -488,7 +535,12 @@ export default function AnalyticsContent() {
       </Paper>
 
       {/* Audience Demographics */}
-      <Paper sx={{ p: 3, mb: 4 }}>
+      <Paper sx={{
+        p: 3,
+        mb: 4,
+        borderRadius: tokens.borderRadius.md,
+        boxShadow: tokens.shadows.md,
+      }}>
         <Typography variant="h6" fontWeight="bold" gutterBottom>
           Audience Demographics
         </Typography>

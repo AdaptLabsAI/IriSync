@@ -43,6 +43,7 @@ import {
   TrendingUp as TrendingUpIcon
 } from '@mui/icons-material';
 import { useSession } from 'next-auth/react';
+import { tokens } from '@/styles/tokens';
 
 // Define interfaces
 interface Message {
@@ -277,10 +278,25 @@ export default function InboxPage() {
       <Box sx={{ mb: 4 }}>
         <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 2 }}>
           <Box>
-            <Typography variant="h4" component="h1" gutterBottom fontWeight="bold">
-              💬 Inbox
+            <Typography
+              variant="h4"
+              component="h1"
+              gutterBottom
+              sx={{
+                fontWeight: 600,
+                fontSize: tokens.typography.fontSize.h1,
+                color: tokens.colors.text.primary
+              }}
+            >
+              Inbox
             </Typography>
-            <Typography variant="body2" color="text.secondary">
+            <Typography
+              variant="body2"
+              sx={{
+                color: tokens.colors.text.secondary,
+                fontSize: tokens.typography.fontSize.body
+              }}
+            >
               Manage all your social media conversations in one place
             </Typography>
           </Box>
@@ -296,10 +312,12 @@ export default function InboxPage() {
               variant="contained"
               startIcon={<AddIcon />}
               sx={{
-                bgcolor: '#00C853',
-                '&:hover': { bgcolor: '#00A046' },
+                bgcolor: tokens.colors.primary.main,
+                '&:hover': { bgcolor: tokens.colors.primary.dark },
                 textTransform: 'none',
-                fontWeight: 600
+                fontWeight: 600,
+                borderRadius: tokens.borderRadius.md,
+                boxShadow: tokens.shadows.md,
               }}
             >
               New Message
@@ -310,7 +328,15 @@ export default function InboxPage() {
         {/* Stats Cards */}
         <Grid container spacing={2} sx={{ mb: 3 }}>
           <Grid item xs={12} sm={6} md={3}>
-            <Card>
+            <Card sx={{
+              borderRadius: tokens.borderRadius.md,
+              boxShadow: tokens.shadows.md,
+              transition: 'transform 0.2s, box-shadow 0.2s',
+              '&:hover': {
+                transform: 'translateY(-2px)',
+                boxShadow: tokens.shadows.lg,
+              },
+            }}>
               <CardContent>
                 <Stack direction="row" justifyContent="space-between" alignItems="flex-start">
                   <Box>
@@ -329,7 +355,15 @@ export default function InboxPage() {
             </Card>
           </Grid>
           <Grid item xs={12} sm={6} md={3}>
-            <Card>
+            <Card sx={{
+              borderRadius: tokens.borderRadius.md,
+              boxShadow: tokens.shadows.md,
+              transition: 'transform 0.2s, box-shadow 0.2s',
+              '&:hover': {
+                transform: 'translateY(-2px)',
+                boxShadow: tokens.shadows.lg,
+              },
+            }}>
               <CardContent>
                 <Stack direction="row" justifyContent="space-between" alignItems="flex-start">
                   <Box>
@@ -350,7 +384,15 @@ export default function InboxPage() {
             </Card>
           </Grid>
           <Grid item xs={12} sm={6} md={3}>
-            <Card>
+            <Card sx={{
+              borderRadius: tokens.borderRadius.md,
+              boxShadow: tokens.shadows.md,
+              transition: 'transform 0.2s, box-shadow 0.2s',
+              '&:hover': {
+                transform: 'translateY(-2px)',
+                boxShadow: tokens.shadows.lg,
+              },
+            }}>
               <CardContent>
                 <Stack direction="row" justifyContent="space-between" alignItems="flex-start">
                   <Box>
@@ -369,7 +411,15 @@ export default function InboxPage() {
             </Card>
           </Grid>
           <Grid item xs={12} sm={6} md={3}>
-            <Card>
+            <Card sx={{
+              borderRadius: tokens.borderRadius.md,
+              boxShadow: tokens.shadows.md,
+              transition: 'transform 0.2s, box-shadow 0.2s',
+              '&:hover': {
+                transform: 'translateY(-2px)',
+                boxShadow: tokens.shadows.lg,
+              },
+            }}>
               <CardContent>
                 <Stack direction="row" justifyContent="space-between" alignItems="flex-start">
                   <Box>
@@ -403,10 +453,10 @@ export default function InboxPage() {
               onClick={() => setPlatformFilter(filter.value)}
               color={platformFilter === filter.value ? 'primary' : 'default'}
               sx={{
-                bgcolor: platformFilter === filter.value ? '#00C853' : 'default',
+                bgcolor: platformFilter === filter.value ? tokens.colors.primary.main : 'default',
                 color: platformFilter === filter.value ? 'white' : 'default',
                 '&:hover': {
-                  bgcolor: platformFilter === filter.value ? '#00A046' : 'default',
+                  bgcolor: platformFilter === filter.value ? tokens.colors.primary.dark : 'default',
                 }
               }}
             />
@@ -418,7 +468,13 @@ export default function InboxPage() {
       <Grid container spacing={2}>
         {/* Conversations List */}
         <Grid item xs={12} md={4}>
-          <Paper sx={{ height: '600px', display: 'flex', flexDirection: 'column' }}>
+          <Paper sx={{
+            height: '600px',
+            display: 'flex',
+            flexDirection: 'column',
+            borderRadius: tokens.borderRadius.md,
+            boxShadow: tokens.shadows.md,
+          }}>
             {/* Search */}
             <Box sx={{ p: 2, borderBottom: 1, borderColor: 'divider' }}>
               <TextField
@@ -471,7 +527,7 @@ export default function InboxPage() {
                             alt={conversation.name}
                             sx={{
                               border: conversation.isActive ? 2 : 0,
-                              borderColor: '#00C853'
+                              borderColor: tokens.colors.primary.main
                             }}
                           >
                             {conversation.name.charAt(0)}
@@ -522,7 +578,13 @@ export default function InboxPage() {
 
         {/* Chat View */}
         <Grid item xs={12} md={8}>
-          <Paper sx={{ height: '600px', display: 'flex', flexDirection: 'column' }}>
+          <Paper sx={{
+            height: '600px',
+            display: 'flex',
+            flexDirection: 'column',
+            borderRadius: tokens.borderRadius.md,
+            boxShadow: tokens.shadows.md,
+          }}>
             {selectedConversation ? (
               <>
                 {/* Chat Header */}
@@ -580,7 +642,7 @@ export default function InboxPage() {
                           <Paper
                             sx={{
                               p: 2,
-                              bgcolor: message.sender === 'user' ? '#00C853' : 'white',
+                              bgcolor: message.sender === 'user' ? tokens.colors.primary.main : 'white',
                               color: message.sender === 'user' ? 'white' : 'text.primary',
                               borderRadius: 2,
                               borderBottomRightRadius: message.sender === 'user' ? 0 : 2,
@@ -639,9 +701,9 @@ export default function InboxPage() {
                       onClick={handleSendMessage}
                       disabled={!messageInput.trim()}
                       sx={{
-                        bgcolor: '#00C853',
+                        bgcolor: tokens.colors.primary.main,
                         color: 'white',
-                        '&:hover': { bgcolor: '#00A046' },
+                        '&:hover': { bgcolor: tokens.colors.primary.dark },
                         '&.Mui-disabled': {
                           bgcolor: 'grey.300',
                           color: 'grey.500'
@@ -669,7 +731,12 @@ export default function InboxPage() {
       </Grid>
 
       {/* Quick Response Templates */}
-      <Paper sx={{ p: 3, mt: 3 }}>
+      <Paper sx={{
+        p: 3,
+        mt: 3,
+        borderRadius: tokens.borderRadius.md,
+        boxShadow: tokens.shadows.md,
+      }}>
         <Typography variant="h6" fontWeight="bold" gutterBottom>
           Quick Response Templates
         </Typography>
