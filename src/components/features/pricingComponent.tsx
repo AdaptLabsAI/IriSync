@@ -74,7 +74,7 @@ const PricingComponent = () => {
   onClick={() => setIsAnnual(false)}
   className={`px-4 py-2 rounded-lg transition-all font-semibold ${
     !isAnnual
-      ? 'bg-gradient-to-r from-[#00C853] to-[#003305] text-white'
+      ? 'bg-gradient-to-r from-[#00FF6A] to-[#00CC44] text-white'
       : 'text-gray-400'
   }`}
 >
@@ -84,8 +84,8 @@ const PricingComponent = () => {
               <button
                 onClick={() => setIsAnnual(true)}
                 className={`px-6 py-2 rounded-lg transition-all  ${
-                  isAnnual 
-                    ? 'bg-gradient-to-r from-[#00C853] to-[#003305] text-white' 
+                  isAnnual
+                    ? 'bg-gradient-to-r from-[#00FF6A] to-[#00CC44] text-white'
                     : 'text-gray-400 '
                 }`}
               >
@@ -130,7 +130,7 @@ const PricingComponent = () => {
             >
               {/* Popular Badge */}
               {plan.isPopular && (
-              <div className="absolute top-6 left-1/2 -translate-x-1/2 bg-white rounded-2xl bg-gradient-to-r from-[#00C853] to-[#003305] bg-clip-text text-transparent">
+              <div className="absolute top-6 left-1/2 -translate-x-1/2 bg-white rounded-2xl bg-gradient-to-r from-[#00FF6A] to-[#00CC44] bg-clip-text text-transparent">
   <button className="bg-green-500 text-white font-bold text-xs px-3 py-1 rounded-full">
     MOST POPULAR
   </button>

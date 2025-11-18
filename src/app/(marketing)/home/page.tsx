@@ -223,7 +223,7 @@ const data = [
       <h1 className="text-4xl sm:text-5xl md:text-6xl font-normal mb-4 text-gray-900">
         AI-Powered
       </h1>
-      <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-[#00C853] to-[#003305] bg-clip-text text-transparent">
+      <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-[#00FF6A] to-[#00CC44] bg-clip-text text-transparent">
         Marketing Mastery
       </h2>
       <p className="text-gray-600 mb-10 text-lg md:text-xl max-w-3xl mx-auto leading-relaxed">
@@ -237,7 +237,7 @@ const data = [
           </button>
         </Link>
         <Link href="/register">
-          <button className="px-8 py-4 bg-gradient-to-r from-[#00C853] to-[#003305] text-white rounded-xl hover:shadow-lg transition-all font-medium">
+          <button className="px-8 py-4 bg-gradient-to-r from-[#00FF6A] to-[#00CC44] text-white rounded-xl hover:shadow-lg transition-all font-medium">
             Start free trial
           </button>
         </Link>
@@ -416,7 +416,7 @@ const data = [
     {/* Section Header */}
     <div className="text-center mb-12">
       <h2 className="text-3xl sm:text-4xl md:text-5xl font-semibold leading-tight mb-4">
-        A <span className="bg-gradient-to-r from-[#00C853] to-[#003305] bg-clip-text text-transparent">
+        A <span className="bg-gradient-to-r from-[#00FF6A] to-[#00CC44] bg-clip-text text-transparent">
           smarter
         </span> way to market
       </h2>
@@ -432,7 +432,7 @@ const data = [
         {/* Automate */}
         <div className="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
           <div className="mb-4">
-            <div className="w-14 h-14 bg-gradient-to-br from-[#00C853] to-[#00C853]/20 flex items-center justify-center rounded-xl">
+            <div className="w-14 h-14 bg-gradient-to-br from-[#00FF6A] to-[#00FF6A]/20 flex items-center justify-center rounded-xl">
               <Zap className='text-white w-7 h-7' />
             </div>
           </div>
@@ -445,7 +445,7 @@ const data = [
         {/* Dominate */}
         <div className="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
           <div className="mb-4">
-            <div className="w-14 h-14 bg-gradient-to-br from-[#00C853] to-[#00C853]/20 flex items-center justify-center rounded-xl">
+            <div className="w-14 h-14 bg-gradient-to-br from-[#00FF6A] to-[#00FF6A]/20 flex items-center justify-center rounded-xl">
               <ChartPie className='text-white w-7 h-7' />
             </div>
           </div>
@@ -458,7 +458,7 @@ const data = [
         {/* Elevate */}
         <div className="col-span-1 sm:col-span-2 bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
           <div className="mb-4">
-            <div className="w-14 h-14 bg-gradient-to-br from-[#00C853] to-[#00C853]/20 flex items-center justify-center rounded-xl">
+            <div className="w-14 h-14 bg-gradient-to-br from-[#00FF6A] to-[#00FF6A]/20 flex items-center justify-center rounded-xl">
               <ChartColumn className='text-white w-7 h-7' />
             </div>
           </div>
@@ -479,7 +479,7 @@ const data = [
       {/* Header Section */}
       <div className="mb-12 text-center md:text-left">
         <h2 className="text-3xl sm:text-4xl md:text-5xl font-semibold mb-4 leading-tight">
-          Everything you need to <span className="bg-gradient-to-r from-[#00C853] to-[#003305] bg-clip-text text-transparent">succeed</span>
+          Everything you need to <span className="bg-gradient-to-r from-[#00FF6A] to-[#00CC44] bg-clip-text text-transparent">succeed</span>
         </h2>
         <p className="text-gray-600 text-lg md:text-xl">
           Our comprehensive platform delivers tools for every aspect of modern marketing.
@@ -503,7 +503,7 @@ const data = [
                   clipRule="evenodd"
                 />
               </svg>
-              <span className="text-lg font-medium bg-gradient-to-r from-[#00C853] to-[#003305] bg-clip-text text-transparent group-hover:opacity-80 transition">
+              <span className="text-lg font-medium bg-gradient-to-r from-[#00FF6A] to-[#00CC44] bg-clip-text text-transparent group-hover:opacity-80 transition">
                 AI content creation
               </span>
             </li>
@@ -630,7 +630,7 @@ const data = [
       {/* Call-to-Action Button */}
       <div className="mt-10 text-center md:text-left">
         <Link href="/features-pricing">
-          <button className="px-8 py-4 text-white rounded-xl cursor-pointer bg-gradient-to-r from-[#00C853] to-[#003305] hover:shadow-lg transition-all font-medium">
+          <button className="px-8 py-4 text-white rounded-xl cursor-pointer bg-gradient-to-r from-[#00FF6A] to-[#00CC44] hover:shadow-lg transition-all font-medium">
             Explore our AI toolkit features
           </button>
         </Link>
@@ -783,7 +783,7 @@ const data = [
 
           <div className="flex-1 text-center lg:text-left">
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-gray-900 leading-tight mb-6">
-              Ready to <span className="bg-gradient-to-r from-[#00C853] to-[#003305] bg-clip-text text-transparent">transform</span> your marketing strategy...?
+              Ready to <span className="bg-gradient-to-r from-[#00FF6A] to-[#00CC44] bg-clip-text text-transparent">transform</span> your marketing strategy...?
             </h2>
             <p className="text-xl text-gray-600 max-w-2xl leading-relaxed">
               Join the future of marketing, using IriSync to automate, dominate, and elevate your marketing.
@@ -796,7 +796,7 @@ const data = [
               </button>
             </Link>
             <Link href="/register">
-              <button className="px-8 py-4 cursor-pointer bg-gradient-to-r from-[#00C853] to-[#003305] rounded-xl text-white font-medium hover:shadow-lg transition-all">
+              <button className="px-8 py-4 cursor-pointer bg-gradient-to-r from-[#00FF6A] to-[#00CC44] rounded-xl text-white font-medium hover:shadow-lg transition-all">
                 Start free trial
               </button>
             </Link>

@@ -159,7 +159,7 @@ export default function PricingPage() {
           <Container className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center">
               <h1 className="text-4xl md:text-5xl font-semibold mb-4 text-gray-900">
-                Simple transparent <span className="bg-gradient-to-r from-[#00C853] to-[#003305] bg-clip-text text-transparent">Pricing</span>
+                Simple transparent <span className="bg-gradient-to-r from-[#00FF6A] to-[#00CC44] bg-clip-text text-transparent">Pricing</span>
               </h1>
             </div>
 
@@ -169,7 +169,7 @@ export default function PricingPage() {
                 onClick={() => setBillingPeriod('monthly')}
                 className={`px-6 py-2 rounded-lg font-medium transition-all ${
                   billingPeriod === 'monthly'
-                    ? 'bg-[#00C853] text-white shadow-md'
+                    ? 'bg-[#00FF6A] text-white shadow-md'
                     : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                 }`}
               >
@@ -179,7 +179,7 @@ export default function PricingPage() {
                 onClick={() => setBillingPeriod('annually')}
                 className={`px-6 py-2 rounded-lg font-medium transition-all ${
                   billingPeriod === 'annually'
-                    ? 'bg-[#00C853] text-white shadow-md'
+                    ? 'bg-[#00FF6A] text-white shadow-md'
                     : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                 }`}
               >
@@ -197,7 +197,7 @@ export default function PricingPage() {
                 <div
                   key={plan.name}
                   className={`relative bg-white rounded-2xl p-8 ${
-                    plan.highlighted ? 'ring-2 ring-[#00C853] shadow-xl transform scale-105' : 'shadow-md border border-gray-200'
+                    plan.highlighted ? 'ring-2 ring-[#00FF6A] shadow-xl transform scale-105' : 'shadow-md border border-gray-200'
                   }`}
                 >
                   {plan.highlighted && (
@@ -232,8 +232,8 @@ export default function PricingPage() {
                     <Button
                       className={`w-full rounded-lg mb-6 ${
                         plan.highlighted
-                          ? 'bg-[#00C853] hover:bg-[#00A844] text-white'
-                          : 'bg-white border-2 border-[#00C853] text-[#00C853] hover:bg-green-50'
+                          ? 'bg-[#00FF6A] hover:bg-[#00CC44] text-white'
+                          : 'bg-white border-2 border-[#00FF6A] text-[#00FF6A] hover:bg-green-50'
                       }`}
                       size="lg"
                     >
@@ -245,7 +245,7 @@ export default function PricingPage() {
                     {plan.features.map((feature, index) => (
                       <li key={index} className="flex items-start gap-2">
                         <svg
-                          className="w-5 h-5 text-[#00C853] mt-0.5 flex-shrink-0"
+                          className="w-5 h-5 text-[#00FF6A] mt-0.5 flex-shrink-0"
                           fill="none"
                           stroke="currentColor"
                           viewBox="0 0 24 24"
@@ -289,7 +289,7 @@ export default function PricingPage() {
                       <td className="p-4 text-center">
                         {typeof feature.creator === 'boolean' ? (
                           feature.creator ? (
-                            <span className="text-[#00C853]">✓</span>
+                            <span className="text-[#00FF6A]">✓</span>
                           ) : (
                             <span className="text-gray-300">—</span>
                           )
@@ -300,7 +300,7 @@ export default function PricingPage() {
                       <td className="p-4 text-center bg-green-50">
                         {typeof feature.influencer === 'boolean' ? (
                           feature.influencer ? (
-                            <span className="text-[#00C853]">✓</span>
+                            <span className="text-[#00FF6A]">✓</span>
                           ) : (
                             <span className="text-gray-300">—</span>
                           )
@@ -311,7 +311,7 @@ export default function PricingPage() {
                       <td className="p-4 text-center">
                         {typeof feature.enterprise === 'boolean' ? (
                           feature.enterprise ? (
-                            <span className="text-[#00C853]">✓</span>
+                            <span className="text-[#00FF6A]">✓</span>
                           ) : (
                             <span className="text-gray-300">—</span>
                           )
@@ -332,7 +332,7 @@ export default function PricingPage() {
           <Container className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="mb-12">
               <h2 className="text-3xl md:text-4xl font-semibold text-gray-900 mb-4">
-                Pricing <span className="bg-gradient-to-r from-[#00C853] to-[#003305] bg-clip-text text-transparent">FAQ's</span>
+                Pricing <span className="bg-gradient-to-r from-[#00FF6A] to-[#00CC44] bg-clip-text text-transparent">FAQ's</span>
               </h2>
               <Typography variant="body" className="text-gray-600">
                 Got questions? We're here to help you find the plan that works best for your goals.

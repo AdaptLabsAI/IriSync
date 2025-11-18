@@ -13,7 +13,7 @@ export default function WorkflowHeroSection() {
       <div className="justify-center items-center flex flex-col text-center mb-10 py-15 px-4">
         <h2 className="text-2xl sm:text-3xl md:text-4xl">
           Simplify your workflow. Amplify your{' '}
-          <span className="bg-gradient-to-r from-[#00C853] to-[#003305] bg-clip-text text-transparent">
+          <span className="bg-gradient-to-r from-[#00FF6A] to-[#00CC44] bg-clip-text text-transparent">
             growth
           </span>
         </h2>

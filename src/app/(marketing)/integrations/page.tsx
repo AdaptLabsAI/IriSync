@@ -253,7 +253,7 @@ export default function IntegrationsPage() {
                   <div className="bg-white px-4 py-2 rounded-full text-sm border border-gray-200">ClickUp</div>
                 </div>
                 <div className="flex flex-wrap gap-3 justify-center">
-                  <div className="bg-[#00C853] text-white px-5 py-2 rounded-full text-sm font-medium shadow-md">Microsoft Teams</div>
+                  <div className="bg-[#00FF6A] text-white px-5 py-2 rounded-full text-sm font-medium shadow-md">Microsoft Teams</div>
                   <div className="bg-white px-4 py-2 rounded-full text-sm border border-gray-200">Basecamp</div>
                   <div className="bg-white px-4 py-2 rounded-full text-sm border border-gray-200">Asana</div>
                 </div>
