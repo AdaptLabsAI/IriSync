@@ -254,7 +254,7 @@ export const AddPaymentButton: React.FC<AddPaymentButtonProps> = ({
         
         {isSuccess ? (
           <div className="flex flex-col items-center justify-center py-6">
-            <CheckCircle className="h-16 w-16 text-green-500 mb-4" />
+            <CheckCircle className="h-16 w-16 text-[#00FF6A] mb-4" />
             <h3 className="text-xl font-medium">Payment Method Added</h3>
             <p className="text-sm text-gray-500 mt-2">
               Your payment method has been added successfully.
