@@ -8,7 +8,7 @@
  * {
  *   "crons": [{
  *     "path": "/api/cron/publish-posts",
- *     "schedule": "*/5 * * * *"
+ *     "schedule": "*\/5 * * * *"
  *   }]
  * }
  *
@@ -107,7 +107,7 @@ export async function GET(request: NextRequest) {
     endpoint: 'publish-posts',
     status: 'ready',
     description: 'Processes and publishes scheduled social media posts',
-    schedule: 'Every 5 minutes (*/5 * * * *)',
+    schedule: 'Every 5 minutes (*\/5 * * * *)',
     security: process.env.CRON_SECRET ? 'Protected with CRON_SECRET' : 'UNPROTECTED - Set CRON_SECRET!',
     maxDuration: '300 seconds'
   });
