@@ -59,8 +59,8 @@ export default function ResendVerificationPage() {
           <Card className="p-8">
             {emailSent ? (
               <div className="text-center space-y-6">
-                <div className="w-16 h-16 mx-auto bg-green-100 rounded-full flex items-center justify-center">
-                  <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="w-16 h-16 mx-auto bg-[#00FF6A]/10 rounded-full flex items-center justify-center">
+                  <svg className="w-8 h-8 text-[#00CC44]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
                   </svg>
                 </div>
@@ -105,7 +105,7 @@ export default function ResendVerificationPage() {
                     required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors ${
+                    className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-[#00FF6A] focus:border-[#00FF6A] transition-colors ${
                       error ? 'border-red-300' : 'border-gray-300'
                     }`}
                     placeholder="your@email.com"
@@ -124,7 +124,7 @@ export default function ResendVerificationPage() {
                 <div className="text-center">
                   <Typography variant="body" color="secondary">
                     Remember your password?{' '}
-                    <Link href="/login" className="text-green-600 hover:text-green-800 font-medium">
+                    <Link href="/login" className="text-[#00FF6A] hover:text-[#00CC44] font-medium">
                       Sign in
                     </Link>
                   </Typography>
