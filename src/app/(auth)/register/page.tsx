@@ -14,13 +14,15 @@ export default function RegisterPage() {
     userName: '',
     email: '',
     password: '',
-    confirmPassword: ''
+    confirmPassword: '',
+    acceptTerms: false
   });
   const [errors, setErrors] = useState({
     userName: '',
     email: '',
     password: '',
     confirmPassword: '',
+    acceptTerms: '',
     general: ''
   });
 
@@ -46,6 +48,7 @@ export default function RegisterPage() {
       email: '',
       password: '',
       confirmPassword: '',
+      acceptTerms: '',
       general: ''
     };
 
@@ -73,6 +76,10 @@ export default function RegisterPage() {
       newErrors.confirmPassword = 'Passwords do not match';
     }
 
+    if (!formData.acceptTerms) {
+      newErrors.acceptTerms = 'You must accept the terms and conditions';
+    }
+
     setErrors(newErrors);
     return !Object.values(newErrors).some(error => error !== '');
   };
@@ -87,31 +94,39 @@ export default function RegisterPage() {
     setIsLoading(true);
 
     try {
-      // Register the user with Firebase Auth
-      const result = await registerUser(
-        formData.email,
-        formData.password,
-        formData.userName.split(' ')[0] || formData.userName,
-        formData.userName.split(' ').slice(1).join(' ') || '',
-        {
+      // Call the API route for server-side registration
+      const response = await fetch('/api/auth/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          firstName: formData.userName.split(' ')[0] || formData.userName,
+          lastName: formData.userName.split(' ').slice(1).join(' ') || '',
+          email: formData.email,
+          password: formData.password,
+          confirmPassword: formData.confirmPassword,
+          subscriptionTier: 'creator',
           businessType: 'individual',
-          subscriptionTier: 'free'
-        }
-      );
+          acceptTerms: formData.acceptTerms
+        }),
+      });
 
-      if (result.success && result.user) {
-        // Redirect to dashboard after successful registration
-        router.push('/dashboard');
+      const result = await response.json();
+
+      if (response.ok && result.success) {
+        // Redirect to login page after successful registration
+        router.push('/login?registered=true');
       } else {
         setErrors({
           ...errors,
-          general: result.error || 'Registration failed'
+          general: result.error || 'Registration failed. Please try again.'
         });
       }
     } catch (error) {
       const errorMessage = error instanceof Error
         ? error.message
-        : getFirebaseErrorMessage(error);
+        : 'An unexpected error occurred. Please try again.';
       setErrors({
         ...errors,
         general: errorMessage
@@ -352,6 +367,31 @@ export default function RegisterPage() {
                 <p className="mt-1 text-sm text-red-600">{errors.confirmPassword}</p>
               )}
             </div>
+
+            {/* Terms and Conditions */}
+            <div className="flex items-start">
+              <input
+                type="checkbox"
+                id="acceptTerms"
+                name="acceptTerms"
+                checked={formData.acceptTerms}
+                onChange={handleInputChange}
+                className="mt-1 w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500"
+              />
+              <label htmlFor="acceptTerms" className="ml-2 text-sm text-gray-600">
+                I agree to the{' '}
+                <Link href="/legal/terms" className="text-green-600 hover:text-green-700 underline" target="_blank">
+                  Terms and Conditions
+                </Link>{' '}
+                and{' '}
+                <Link href="/legal/privacy" className="text-green-600 hover:text-green-700 underline" target="_blank">
+                  Privacy Policy
+                </Link>
+              </label>
+            </div>
+            {errors.acceptTerms && (
+              <p className="text-sm text-red-600 -mt-3">{errors.acceptTerms}</p>
+            )}
 
             {/* Submit Button */}
             <button

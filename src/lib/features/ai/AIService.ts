@@ -589,4 +589,7 @@ export class AIService {
       default: return 5000;
     }
   }
-} 
+}
+
+// Export singleton instance
+export const aiService = new AIService(); 

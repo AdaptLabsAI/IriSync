@@ -2,8 +2,23 @@
 User-agent: *
 Allow: /
 
-# Disallow access to API routes
+# Disallow access to API routes and admin areas
 Disallow: /api/
+Disallow: /admin/
+Disallow: /dashboard/
 
-# Sitemap location
+# Block aggressive crawlers and bots
+User-agent: MJ12bot
+User-agent: AhrefsBot
+User-agent: SemrushBot
+User-agent: DotBot
+User-agent: MauiBot
+User-agent: RSiteAuditor
+Crawl-delay: 10
+
+# Block screenshot and scraping bots
+User-agent: vercel-screenshot
+Disallow: /
+
+# Sitemap location (update to actual domain)
 Sitemap: https://irisync.app/sitemap.xml 

@@ -5,7 +5,7 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import { authOptions } from '@/lib/features/auth';
 import { firestore } from '@/lib/core/firebase';
 import { getDoc, doc } from 'firebase/firestore';
 import { campaignService } from '@/lib/features/campaigns/CampaignService';

@@ -23,52 +23,88 @@ export default function IntegrationsPage() {
               </Typography>
             </div>
 
-            {/* Circular Platform Layout */}
-            <div className="relative max-w-xl mx-auto h-96 flex items-center justify-center">
-              {/* Center Circle */}
-              <div className="absolute w-20 h-20 bg-white rounded-full shadow-lg flex items-center justify-center z-10">
-                <Image src="/IriSync Figma Photos/Frame.png" alt="X" width={32} height={32} className="opacity-80" />
+            {/* Mobile Grid Layout */}
+            <div className="grid grid-cols-5 gap-4 md:hidden max-w-md mx-auto">
+              <div className="w-12 h-12 bg-white rounded-full shadow-md flex items-center justify-center">
+                <Image src="/IriSync Figma Photos/Frame.png" alt="X" width={24} height={24} />
               </div>
-
-              {/* Concentric Circles */}
-              <div className="absolute w-48 h-48 border-2 border-dashed border-gray-300 rounded-full"></div>
-              <div className="absolute w-80 h-80 border-2 border-dashed border-gray-200 rounded-full"></div>
-
-              {/* Platform Icons - Positioned in circular pattern */}
-              <div className="absolute top-8 left-1/2 transform -translate-x-1/2 w-14 h-14 bg-white rounded-full shadow-md flex items-center justify-center">
-                <Image src="/IriSync Figma Photos/Frame-8.png" alt="YouTube" width={28} height={28} />
+              <div className="w-12 h-12 bg-white rounded-full shadow-md flex items-center justify-center">
+                <Image src="/IriSync Figma Photos/Frame-8.png" alt="YouTube" width={24} height={24} />
               </div>
-
-              <div className="absolute top-16 right-12 w-14 h-14 bg-white rounded-full shadow-md flex items-center justify-center">
-                <Image src="/IriSync Figma Photos/Frame-6.svg" alt="LinkedIn" width={28} height={28} />
+              <div className="w-12 h-12 bg-white rounded-full shadow-md flex items-center justify-center">
+                <Image src="/IriSync Figma Photos/Frame-6.svg" alt="LinkedIn" width={24} height={24} />
               </div>
-
-              <div className="absolute right-8 top-1/2 transform -translate-y-1/2 w-14 h-14 bg-white rounded-full shadow-md flex items-center justify-center">
-                <Image src="/IriSync Figma Photos/Frame-2.svg" alt="Facebook" width={28} height={28} />
+              <div className="w-12 h-12 bg-white rounded-full shadow-md flex items-center justify-center">
+                <Image src="/IriSync Figma Photos/Frame-2.svg" alt="Facebook" width={24} height={24} />
               </div>
-
-              <div className="absolute bottom-16 right-16 w-14 h-14 bg-white rounded-full shadow-md flex items-center justify-center">
-                <Image src="/IriSync Figma Photos/Frame-7.svg" alt="Mastodon" width={28} height={28} />
+              <div className="w-12 h-12 bg-white rounded-full shadow-md flex items-center justify-center">
+                <Image src="/IriSync Figma Photos/Frame-7.svg" alt="Mastodon" width={24} height={24} />
               </div>
-
-              <div className="absolute top-20 left-12 w-14 h-14 bg-white rounded-full shadow-md flex items-center justify-center">
-                <Image src="/IriSync Figma Photos/Frame-1.svg" alt="Reddit" width={28} height={28} />
+              <div className="w-12 h-12 bg-white rounded-full shadow-md flex items-center justify-center">
+                <Image src="/IriSync Figma Photos/Frame-1.svg" alt="Reddit" width={24} height={24} />
               </div>
-
-              <div className="absolute left-8 top-1/2 transform -translate-y-1/2 w-14 h-14 bg-white rounded-full shadow-md flex items-center justify-center">
-                <Image src="/IriSync Figma Photos/Frame-3.svg" alt="Threads" width={28} height={28} />
+              <div className="w-12 h-12 bg-white rounded-full shadow-md flex items-center justify-center">
+                <Image src="/IriSync Figma Photos/Frame-3.svg" alt="Threads" width={24} height={24} />
               </div>
-
-              <div className="absolute bottom-16 left-16 w-14 h-14 bg-white rounded-full shadow-md flex items-center justify-center">
-                <Image src="/IriSync Figma Photos/fi_3536505.png" alt="TikTok" width={28} height={28} />
+              <div className="w-12 h-12 bg-white rounded-full shadow-md flex items-center justify-center">
+                <Image src="/IriSync Figma Photos/fi_3536505.png" alt="TikTok" width={24} height={24} />
               </div>
-
-              <div className="absolute top-1/3 left-24 w-14 h-14 bg-white rounded-full shadow-md flex items-center justify-center">
-                <Image src="/IriSync Figma Photos/fi_15713434.png" alt="Pinterest" width={28} height={28} />
+              <div className="w-12 h-12 bg-white rounded-full shadow-md flex items-center justify-center">
+                <Image src="/IriSync Figma Photos/fi_15713434.png" alt="Pinterest" width={24} height={24} />
               </div>
+              <div className="w-12 h-12 bg-white rounded-full shadow-md flex items-center justify-center">
+                <Image src="/IriSync Figma Photos/fi_252851.svg" alt="Instagram" width={24} height={24} />
+              </div>
+            </div>
 
-              <div className="absolute top-1/3 right-24 w-14 h-14 bg-white rounded-full shadow-md flex items-center justify-center">
-                <Image src="/IriSync Figma Photos/fi_252851.svg" alt="Instagram" width={28} height={28} />
+            {/* Desktop Circular Platform Layout */}
+            <div className="hidden md:block relative max-w-xl mx-auto h-96">
+              <div className="relative h-full flex items-center justify-center">
+                {/* Center Circle */}
+                <div className="absolute w-20 h-20 bg-white rounded-full shadow-lg flex items-center justify-center z-10">
+                  <Image src="/IriSync Figma Photos/Frame.png" alt="X" width={32} height={32} className="opacity-80" />
+                </div>
+
+                {/* Concentric Circles */}
+                <div className="absolute w-48 h-48 border-2 border-dashed border-gray-300 rounded-full"></div>
+                <div className="absolute w-80 h-80 border-2 border-dashed border-gray-200 rounded-full"></div>
+
+                {/* Platform Icons - Positioned in circular pattern */}
+                <div className="absolute top-8 left-1/2 transform -translate-x-1/2 w-14 h-14 bg-white rounded-full shadow-md flex items-center justify-center">
+                  <Image src="/IriSync Figma Photos/Frame-8.png" alt="YouTube" width={28} height={28} />
+                </div>
+
+                <div className="absolute top-16 right-12 w-14 h-14 bg-white rounded-full shadow-md flex items-center justify-center">
+                  <Image src="/IriSync Figma Photos/Frame-6.svg" alt="LinkedIn" width={28} height={28} />
+                </div>
+
+                <div className="absolute right-8 top-1/2 transform -translate-y-1/2 w-14 h-14 bg-white rounded-full shadow-md flex items-center justify-center">
+                  <Image src="/IriSync Figma Photos/Frame-2.svg" alt="Facebook" width={28} height={28} />
+                </div>
+
+                <div className="absolute bottom-16 right-16 w-14 h-14 bg-white rounded-full shadow-md flex items-center justify-center">
+                  <Image src="/IriSync Figma Photos/Frame-7.svg" alt="Mastodon" width={28} height={28} />
+                </div>
+
+                <div className="absolute top-20 left-12 w-14 h-14 bg-white rounded-full shadow-md flex items-center justify-center">
+                  <Image src="/IriSync Figma Photos/Frame-1.svg" alt="Reddit" width={28} height={28} />
+                </div>
+
+                <div className="absolute left-8 top-1/2 transform -translate-y-1/2 w-14 h-14 bg-white rounded-full shadow-md flex items-center justify-center">
+                  <Image src="/IriSync Figma Photos/Frame-3.svg" alt="Threads" width={28} height={28} />
+                </div>
+
+                <div className="absolute bottom-16 left-16 w-14 h-14 bg-white rounded-full shadow-md flex items-center justify-center">
+                  <Image src="/IriSync Figma Photos/fi_3536505.png" alt="TikTok" width={28} height={28} />
+                </div>
+
+                <div className="absolute top-1/3 left-24 w-14 h-14 bg-white rounded-full shadow-md flex items-center justify-center">
+                  <Image src="/IriSync Figma Photos/fi_15713434.png" alt="Pinterest" width={28} height={28} />
+                </div>
+
+                <div className="absolute top-1/3 right-24 w-14 h-14 bg-white rounded-full shadow-md flex items-center justify-center">
+                  <Image src="/IriSync Figma Photos/fi_252851.svg" alt="Instagram" width={28} height={28} />
+                </div>
               </div>
             </div>
           </div>
