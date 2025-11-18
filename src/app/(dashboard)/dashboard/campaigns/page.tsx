@@ -99,7 +99,7 @@ export default function CampaignsPage() {
             </p>
           </div>
           <div className="flex items-center gap-4">
-            <button className="px-6 py-2.5 bg-green-600 text-white rounded-full font-medium hover:bg-green-700 transition-colors inline-flex items-center gap-2">
+            <button className="px-6 py-2.5 bg-[#00FF6A] text-white rounded-full font-medium hover:bg-[#00CC44] transition-colors inline-flex items-center gap-2">
               <Plus className="w-5 h-5" />
               Create Campaign
             </button>
@@ -116,7 +116,7 @@ export default function CampaignsPage() {
               <input
                 type="text"
                 placeholder="Search campaigns..."
-                className="pl-10 pr-4 py-2 bg-[#F5F5F7] border-0 rounded-2xl text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-500 w-80"
+                className="pl-10 pr-4 py-2 bg-[#F5F5F7] border-0 rounded-2xl text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#00FF6A] w-80"
               />
             </div>
             <button className="px-4 py-2 bg-[#F5F5F7] rounded-2xl text-sm font-medium text-gray-700 hover:bg-gray-200 transition-colors inline-flex items-center gap-2">
@@ -134,7 +134,7 @@ export default function CampaignsPage() {
           <div className="bg-white rounded-2xl p-6 shadow-sm">
             <div className="flex items-center justify-between mb-4">
               <Target className="w-6 h-6 text-gray-400" />
-              <div className="flex items-center gap-1 text-sm font-medium text-green-600">
+              <div className="flex items-center gap-1 text-sm font-medium text-[#00CC44]">
                 <TrendingUp className="w-4 h-4" />
                 +12%
               </div>
@@ -148,7 +148,7 @@ export default function CampaignsPage() {
           <div className="bg-white rounded-2xl p-6 shadow-sm">
             <div className="flex items-center justify-between mb-4">
               <Users className="w-6 h-6 text-gray-400" />
-              <div className="flex items-center gap-1 text-sm font-medium text-green-600">
+              <div className="flex items-center gap-1 text-sm font-medium text-[#00CC44]">
                 <TrendingUp className="w-4 h-4" />
                 +18%
               </div>
@@ -160,7 +160,7 @@ export default function CampaignsPage() {
           <div className="bg-white rounded-2xl p-6 shadow-sm">
             <div className="flex items-center justify-between mb-4">
               <BarChart3 className="w-6 h-6 text-gray-400" />
-              <div className="flex items-center gap-1 text-sm font-medium text-green-600">
+              <div className="flex items-center gap-1 text-sm font-medium text-[#00CC44]">
                 <TrendingUp className="w-4 h-4" />
                 +8%
               </div>
@@ -190,7 +190,7 @@ export default function CampaignsPage() {
 
           {loadingCampaigns ? (
             <div className="p-12 text-center">
-              <div className="w-8 h-8 border-4 border-gray-200 border-t-green-600 rounded-full animate-spin mx-auto mb-3"></div>
+              <div className="w-8 h-8 border-4 border-gray-200 border-t-[#00FF6A] rounded-full animate-spin mx-auto mb-3"></div>
               <p className="text-gray-500 text-sm">Loading campaigns...</p>
             </div>
           ) : campaigns.length === 0 ? (
@@ -204,7 +204,7 @@ export default function CampaignsPage() {
               <p className="text-gray-500 mb-6">
                 Create your first campaign to start tracking multi-post performance
               </p>
-              <button className="px-6 py-2.5 bg-green-600 text-white rounded-full font-medium hover:bg-green-700 transition-colors inline-flex items-center gap-2">
+              <button className="px-6 py-2.5 bg-[#00FF6A] text-white rounded-full font-medium hover:bg-[#00CC44] transition-colors inline-flex items-center gap-2">
                 <Plus className="w-5 h-5" />
                 Create Your First Campaign
               </button>
@@ -222,7 +222,7 @@ export default function CampaignsPage() {
                         <h3 className="text-base font-semibold text-gray-900">
                           {campaign.name}
                         </h3>
-                        <span className="px-3 py-1 bg-green-100 text-green-700 text-xs font-medium rounded-full">
+                        <span className="px-3 py-1 bg-[#00FF6A]/10 text-[#00CC44] text-xs font-medium rounded-full">
                           {campaign.status}
                         </span>
                       </div>
