@@ -98,16 +98,17 @@ const nextConfig = {
   
   // ESLint configuration for builds
   eslint: {
-    // Don't fail the build on ESLint errors during production builds
-    // These should be fixed but shouldn't block deployment
+    // TODO: Re-enable ESLint checking in builds after fixing all lint errors
+    // Run 'npm run lint' locally to check before committing
     ignoreDuringBuilds: true,
   },
-  
+
   // TypeScript configuration for builds
   typescript: {
-    // Warning: Temporarily disabled due to memory constraints with large codebase
+    // TODO: Re-enable TypeScript checking in builds after fixing all type errors
     // Run 'tsc --noEmit' locally to check types before committing
-    ignoreBuildErrors: true,
+    // NOTE: This should be set to false for production to catch type errors
+    ignoreBuildErrors: process.env.SKIP_TYPE_CHECK === 'true',
   },
   
   images: {
@@ -127,13 +128,18 @@ const nextConfig = {
 
   // Add headers for CORS
   async headers() {
+    // Use specific origins in production, wildcard only in development
+    const allowedOrigin = process.env.NODE_ENV === 'production'
+      ? (process.env.NEXT_PUBLIC_APP_URL || 'https://irisync.com')
+      : '*';
+
     return [
       {
         // Apply these headers to API routes
         source: "/api/:path*",
         headers: [
           { key: "Access-Control-Allow-Credentials", value: "true" },
-          { key: "Access-Control-Allow-Origin", value: "*" }, // Production would need specific domains
+          { key: "Access-Control-Allow-Origin", value: allowedOrigin },
           { key: "Access-Control-Allow-Methods", value: "GET,DELETE,PATCH,POST,PUT,OPTIONS" },
           { key: "Access-Control-Allow-Headers", value: "Content-Type,Authorization,X-Requested-With" },
         ]

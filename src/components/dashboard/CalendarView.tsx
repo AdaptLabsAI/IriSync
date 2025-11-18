@@ -2,16 +2,27 @@
 
 import React from 'react';
 import { Box, Typography, Paper } from '@mui/material';
-import { 
-  Calendar, 
-  momentLocalizer,
-  Views 
+import {
+  Calendar,
+  dateFnsLocalizer,
+  Views
 } from 'react-big-calendar';
-import moment from 'moment';
+import { format, parse, startOfWeek, getDay, addHours } from 'date-fns';
+import enUS from 'date-fns/locale/en-US';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 
-// Setup localizer for calendar
-const localizer = momentLocalizer(moment);
+// Setup localizer for calendar using date-fns
+const locales = {
+  'en-US': enUS,
+};
+
+const localizer = dateFnsLocalizer({
+  format,
+  parse,
+  startOfWeek,
+  getDay,
+  locales,
+});
 
 interface CalendarPost {
   id: string;
@@ -42,7 +53,7 @@ export default function CalendarView({ posts }: CalendarViewProps) {
     id: post.id,
     title: post.title,
     start: post.scheduledFor,
-    end: moment(post.scheduledFor).add(1, 'hours').toDate(), // Default 1 hour duration
+    end: addHours(post.scheduledFor, 1), // Default 1 hour duration
     platform: post.platform,
     status: post.status,
     content: post.content,

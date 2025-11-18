@@ -24,7 +24,6 @@ import { OrganizationSwitcher } from '../ui/OrganizationSwitcher';
 // Navigation links
 const navLinks = [
   { title: 'Home', path: '/' },
-  { title: 'Features', path: '/features' },
   { title: 'Integrations', path: '/integrations' },
   { title: 'Pricing', path: '/pricing' },
   { title: 'Careers', path: '/careers' },

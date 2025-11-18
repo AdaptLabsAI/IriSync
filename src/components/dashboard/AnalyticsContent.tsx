@@ -1,6 +1,44 @@
-"use client";
+'use client';
 
 import React, { useState } from 'react';
+import {
+  Box,
+  Container,
+  Typography,
+  Paper,
+  Button,
+  Stack,
+  Chip,
+  Grid,
+  Card,
+  CardContent,
+  Avatar,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  ToggleButtonGroup,
+  ToggleButton,
+  Divider,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel
+} from '@mui/material';
+import {
+  TrendingUp as TrendingUpIcon,
+  TrendingDown as TrendingDownIcon,
+  People as PeopleIcon,
+  Favorite as FavoriteIcon,
+  Comment as CommentIcon,
+  Visibility as VisibilityIcon,
+  Bookmark as BookmarkIcon,
+  GetApp as DownloadIcon,
+  Psychology as AIIcon,
+  BarChart as BarChartIcon
+} from '@mui/icons-material';
 import {
   LineChart,
   Line,
@@ -11,237 +49,364 @@ import {
   ResponsiveContainer,
   BarChart,
   Bar,
-  PieChart,
-  Pie,
   Cell,
-} from "recharts";
-import {
-  TrendingUp,
-  TrendingDown,
-  Users,
-  Heart,
-  MessageCircle,
-  Eye,
-  Bookmark,
-} from "lucide-react";
+} from 'recharts';
 
 // Sample data for Growth Trends
 const growthData = [
-  { date: "01-04-2025", followers: 21600, engagement: 11800, reach: 36500 },
-  { date: "08-04-2025", followers: 22100, engagement: 12200, reach: 38200 },
-  { date: "15-04-2025", followers: 22800, engagement: 13500, reach: 41800 },
-  { date: "22-04-2025", followers: 23200, engagement: 14200, reach: 43200 },
-  { date: "29-04-2025", followers: 23600, engagement: 14800, reach: 44800 },
-  { date: "05-05-2025", followers: 23800, engagement: 15400, reach: 45600 },
+  { date: '01-04', followers: 21600, engagement: 11800, reach: 36500 },
+  { date: '08-04', followers: 22100, engagement: 12200, reach: 38200 },
+  { date: '15-04', followers: 22800, engagement: 13500, reach: 41800 },
+  { date: '22-04', followers: 23200, engagement: 14200, reach: 43200 },
+  { date: '29-04', followers: 23600, engagement: 14800, reach: 44800 },
+  { date: '05-05', followers: 23800, engagement: 15400, reach: 45600 },
 ];
 
 // Sample data for Content Type Performance
 const contentTypeData = [
-  { name: "Link", value: 9.5, color: "#F7B731" },
-  { name: "Carousels", value: 5.8, color: "#3867D6" },
-  { name: "Images", value: 4.6, color: "#0FB9B1" },
-  { name: "Videos", value: 3.2, color: "#FA8231" },
-  { name: "Text", value: 2.7, color: "#8854D0" },
+  { name: 'Link', value: 9.5, color: '#F7B731' },
+  { name: 'Carousels', value: 5.8, color: '#3867D6' },
+  { name: 'Images', value: 4.6, color: '#0FB9B1' },
+  { name: 'Videos', value: 3.2, color: '#FA8231' },
+  { name: 'Text', value: 2.7, color: '#8854D0' },
 ];
 
 // Sample data for Audience Demographics
 const ageData = [
-  { age: "18–24", value: 21, color: "#8854D0" },
-  { age: "25–34", value: 12, color: "#FA8231" },
-  { age: "35–44", value: 17, color: "#0FB9B1" },
-  { age: "45–54", value: 35, color: "#3867D6" },
-  { age: "55–64", value: 6, color: "#F7B731" },
-  { age: "65+", value: 2, color: "#FC427B" },
+  { age: '18-24', value: 21, color: '#8854D0' },
+  { age: '25-34', value: 12, color: '#FA8231' },
+  { age: '35-44', value: 17, color: '#0FB9B1' },
+  { age: '45-54', value: 35, color: '#3867D6' },
+  { age: '55-64', value: 6, color: '#F7B731' },
+  { age: '65+', value: 2, color: '#FC427B' },
 ];
 
 // Sample data for Competitive Benchmarking
 const competitorData = [
-  { name: "My Account", followers: "23,800", engagement: "15,400", engagementRate: "3.2%" },
-  { name: "Competitor A", followers: "35,200", engagement: "18,500", engagementRate: "2.8%" },
-  { name: "Competitor B", followers: "19,600", engagement: "12,800", engagementRate: "3.4%" },
-  { name: "Competitor C", followers: "28,400", engagement: "16,200", engagementRate: "3.0%" },
-  { name: "Competitor D", followers: "25,700", engagement: "13,700", engagementRate: "2.9%" },
+  { name: 'My Account', followers: '23,800', engagement: '15,400', engagementRate: '3.2%', isYou: true },
+  { name: 'Competitor A', followers: '35,200', engagement: '18,500', engagementRate: '2.8%', isYou: false },
+  { name: 'Competitor B', followers: '19,600', engagement: '12,800', engagementRate: '3.4%', isYou: false },
+  { name: 'Competitor C', followers: '28,400', engagement: '16,200', engagementRate: '3.0%', isYou: false },
+  { name: 'Competitor D', followers: '25,700', engagement: '13,700', engagementRate: '2.9%', isYou: false },
 ];
 
-export default function AnalyticsPage() {
-  const [selectedPlatform, setSelectedPlatform] = useState("Instagram");
-  const [selectedContentTab, setSelectedContentTab] = useState("Engagement");
-  const [selectedDateRange, setSelectedDateRange] = useState("Last 30 days");
+/**
+ * Analytics Content Component
+ *
+ * Comprehensive analytics dashboard showing:
+ * - Key performance indicators (KPIs)
+ * - Growth trends over time
+ * - Content type performance
+ * - Competitive benchmarking
+ * - Audience demographics
+ * - Platform-specific metrics
+ */
+export default function AnalyticsContent() {
+  const [selectedPlatform, setSelectedPlatform] = useState<string>('All');
+  const [selectedContentTab, setSelectedContentTab] = useState<string>('Engagement');
+  const [selectedDateRange, setSelectedDateRange] = useState<string>('Last 30 days');
 
   const platforms = [
-    { name: "All", icon: null },
-    { name: "WhatsApp", icon: null },
-    { name: "Telegram", icon: null },
-    { name: "Instagram", icon: null },
-    { name: "Messenger", icon: null },
-    { name: "LinkedIn", icon: null },
-    { name: "Email", icon: null },
-    { name: "SMS", icon: null },
+    'All',
+    'Instagram',
+    'Facebook',
+    'Twitter',
+    'LinkedIn',
+    'TikTok',
+    'YouTube'
   ];
 
-  const contentTabs = ["Engagement", "Clicks", "Shares"];
-  const dateRanges = ["Last 7 days", "Last 30 days", "Last 90 days", "Custom"];
+  const contentTabs = ['Engagement', 'Clicks', 'Shares'];
+  const dateRanges = ['Last 7 days', 'Last 30 days', 'Last 90 days', 'Custom'];
+
+  // KPI data
+  const kpis = [
+    {
+      label: 'Followers',
+      value: '23.8k',
+      change: '+12%',
+      trend: 'up',
+      icon: PeopleIcon,
+      color: 'primary'
+    },
+    {
+      label: 'Likes',
+      value: '45.2k',
+      change: '+8%',
+      trend: 'up',
+      icon: FavoriteIcon,
+      color: 'error'
+    },
+    {
+      label: 'Comments',
+      value: '3.4k',
+      change: '-3%',
+      trend: 'down',
+      icon: CommentIcon,
+      color: 'info'
+    },
+    {
+      label: 'Reach',
+      value: '67.5k',
+      change: '+15%',
+      trend: 'up',
+      icon: VisibilityIcon,
+      color: 'warning'
+    },
+    {
+      label: 'Saves',
+      value: '5.2k',
+      change: '+20%',
+      trend: 'up',
+      icon: BookmarkIcon,
+      color: 'success'
+    },
+  ];
 
   return (
-    <div className="min-h-screen bg-[#F5F5F7] font-['Inter']">
-      {/* Header Section */}
-      <div className="bg-white border-b border-gray-200 px-4 sm:px-6 lg:px-8 py-6">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <h1 className="text-2xl font-medium text-[#131A13]">Analytics</h1>
-          <div className="flex items-center gap-4 w-full sm:w-auto">
-            <input
-              type="text"
-              placeholder="Search"
-              className="px-4 py-2 bg-[#F5F5F7] border-0 rounded-2xl text-sm text-gray-500 focus:outline-none focus:ring-2 focus:ring-green-500 w-full sm:w-64 md:w-80"
-            />
-            <button className="p-2 bg-[#F5F5F7] rounded-2xl">
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-              </svg>
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Platform Filter Pills */}
-      <div className="bg-white border-b border-gray-200 px-4 sm:px-6 lg:px-8 py-4">
-        <div className="flex items-center gap-3 overflow-x-auto pb-2 sm:pb-0">
-          {platforms.map((platform) => (
-            <button
-              key={platform.name}
-              onClick={() => setSelectedPlatform(platform.name)}
-              className={`px-6 py-2 rounded-full text-sm font-medium transition-all whitespace-nowrap ${
-                selectedPlatform === platform.name
-                  ? "bg-green-100 text-green-600"
-                  : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-              }`}
+    <Container maxWidth="xl" sx={{ py: 4 }}>
+      {/* Page Header */}
+      <Box sx={{ mb: 4 }}>
+        <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 2 }}>
+          <Box>
+            <Typography variant="h4" component="h1" gutterBottom fontWeight="bold">
+              📊 Analytics
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              Track your social media performance and insights
+            </Typography>
+          </Box>
+          <Stack direction="row" spacing={2}>
+            <Button
+              variant="outlined"
+              startIcon={<AIIcon />}
+              sx={{
+                textTransform: 'none',
+                borderColor: '#00C853',
+                color: '#00C853',
+                '&:hover': {
+                  borderColor: '#00A046',
+                  bgcolor: 'rgba(0, 200, 83, 0.04)'
+                }
+              }}
             >
-              {platform.name}
-            </button>
+              Get AI Summary
+            </Button>
+            <Button
+              variant="contained"
+              startIcon={<DownloadIcon />}
+              sx={{
+                bgcolor: '#00C853',
+                '&:hover': { bgcolor: '#00A046' },
+                textTransform: 'none',
+                fontWeight: 600
+              }}
+            >
+              Export Data
+            </Button>
+          </Stack>
+        </Stack>
+
+        {/* Platform Filters */}
+        <Stack direction="row" spacing={1} sx={{ mb: 2, flexWrap: 'wrap', gap: 1 }}>
+          {platforms.map((platform) => (
+            <Chip
+              key={platform}
+              label={platform}
+              onClick={() => setSelectedPlatform(platform)}
+              color={selectedPlatform === platform ? 'primary' : 'default'}
+              sx={{
+                bgcolor: selectedPlatform === platform ? '#00C853' : 'default',
+                color: selectedPlatform === platform ? 'white' : 'default',
+                '&:hover': {
+                  bgcolor: selectedPlatform === platform ? '#00A046' : 'default',
+                }
+              }}
+            />
           ))}
-        </div>
-      </div>
+        </Stack>
+      </Box>
 
-      {/* Main Content */}
-      <div className="p-8 space-y-8">
-        {/* KPI Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
-          {[
-            { label: "Followers", value: "23.8k", change: "+12%", trend: "up", icon: Users },
-            { label: "Likes", value: "45.2k", change: "+8%", trend: "up", icon: Heart },
-            { label: "Comments", value: "3.4k", change: "-3%", trend: "down", icon: MessageCircle },
-            { label: "Reach", value: "67.5k", change: "+15%", trend: "up", icon: Eye },
-            { label: "Saves", value: "5.2k", change: "+20%", trend: "up", icon: Bookmark },
-          ].map((kpi, index) => (
-            <div key={index} className="bg-white rounded-2xl p-6 shadow-sm">
-              <div className="flex items-center justify-between mb-4">
-                <kpi.icon className="w-6 h-6 text-gray-400" />
-                <div className={`flex items-center gap-1 text-sm font-medium ${
-                  kpi.trend === "up" ? "text-green-600" : "text-red-600"
-                }`}>
-                  {kpi.trend === "up" ? <TrendingUp className="w-4 h-4" /> : <TrendingDown className="w-4 h-4" />}
-                  {kpi.change}
-                </div>
-              </div>
-              <div className="text-3xl font-semibold text-[#131A13] mb-1">{kpi.value}</div>
-              <div className="text-sm text-gray-500">{kpi.label}</div>
-            </div>
-          ))}
-        </div>
+      {/* KPI Cards */}
+      <Grid container spacing={3} sx={{ mb: 4 }}>
+        {kpis.map((kpi, index) => (
+          <Grid item xs={12} sm={6} md={2.4} key={index}>
+            <Card sx={{ height: '100%' }}>
+              <CardContent>
+                <Stack direction="row" justifyContent="space-between" alignItems="flex-start" sx={{ mb: 2 }}>
+                  <Avatar
+                    sx={{
+                      bgcolor: `${kpi.color}.light`,
+                      color: `${kpi.color}.dark`,
+                      width: 40,
+                      height: 40
+                    }}
+                  >
+                    <kpi.icon fontSize="small" />
+                  </Avatar>
+                  <Stack direction="row" alignItems="center" spacing={0.5}>
+                    {kpi.trend === 'up' ? (
+                      <TrendingUpIcon fontSize="small" color="success" />
+                    ) : (
+                      <TrendingDownIcon fontSize="small" color="error" />
+                    )}
+                    <Typography
+                      variant="caption"
+                      color={kpi.trend === 'up' ? 'success.main' : 'error.main'}
+                      fontWeight="medium"
+                    >
+                      {kpi.change}
+                    </Typography>
+                  </Stack>
+                </Stack>
+                <Typography variant="h4" fontWeight="bold" gutterBottom>
+                  {kpi.value}
+                </Typography>
+                <Typography color="text.secondary" variant="body2">
+                  {kpi.label}
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+        ))}
+      </Grid>
 
-        {/* Growth Trends Chart */}
-        <div className="bg-white rounded-2xl p-8 shadow-sm">
-          <h2 className="text-2xl font-medium text-[#131A13] mb-6">Growth Trends</h2>
-          <div className="h-96">
-            <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={growthData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
-                <XAxis dataKey="date" stroke="#6B7280" />
-                <YAxis stroke="#6B7280" />
-                <Tooltip />
-                <Line type="monotone" dataKey="followers" stroke="#3867D6" strokeWidth={2} />
-                <Line type="monotone" dataKey="engagement" stroke="#FA8231" strokeWidth={2} />
-                <Line type="monotone" dataKey="reach" stroke="#0FB9B1" strokeWidth={2} />
-              </LineChart>
-            </ResponsiveContainer>
-          </div>
-          <div className="flex items-center justify-end gap-6 mt-4">
-            <div className="flex items-center gap-2">
-              <div className="w-4 h-0.5 bg-[#3867D6]"></div>
-              <span className="text-xs text-gray-600">Followers</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="w-4 h-0.5 bg-[#FA8231]"></div>
-              <span className="text-xs text-gray-600">Engagement</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="w-4 h-0.5 bg-[#0FB9B1]"></div>
-              <span className="text-xs text-gray-600">Reach</span>
-            </div>
-          </div>
-        </div>
+      {/* Growth Trends Chart */}
+      <Paper sx={{ p: 3, mb: 4 }}>
+        <Typography variant="h6" fontWeight="bold" gutterBottom>
+          Growth Trends
+        </Typography>
+        <Box sx={{ height: 400, mt: 3 }}>
+          <ResponsiveContainer width="100%" height="100%">
+            <LineChart data={growthData}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
+              <XAxis dataKey="date" stroke="#6B7280" />
+              <YAxis stroke="#6B7280" />
+              <Tooltip />
+              <Line type="monotone" dataKey="followers" stroke="#3867D6" strokeWidth={2} />
+              <Line type="monotone" dataKey="engagement" stroke="#FA8231" strokeWidth={2} />
+              <Line type="monotone" dataKey="reach" stroke="#0FB9B1" strokeWidth={2} />
+            </LineChart>
+          </ResponsiveContainer>
+        </Box>
+        <Stack direction="row" justifyContent="flex-end" spacing={3} sx={{ mt: 2 }}>
+          <Stack direction="row" alignItems="center" spacing={1}>
+            <Box sx={{ width: 16, height: 3, bgcolor: '#3867D6', borderRadius: 1 }} />
+            <Typography variant="caption" color="text.secondary">
+              Followers
+            </Typography>
+          </Stack>
+          <Stack direction="row" alignItems="center" spacing={1}>
+            <Box sx={{ width: 16, height: 3, bgcolor: '#FA8231', borderRadius: 1 }} />
+            <Typography variant="caption" color="text.secondary">
+              Engagement
+            </Typography>
+          </Stack>
+          <Stack direction="row" alignItems="center" spacing={1}>
+            <Box sx={{ width: 16, height: 3, bgcolor: '#0FB9B1', borderRadius: 1 }} />
+            <Typography variant="caption" color="text.secondary">
+              Reach
+            </Typography>
+          </Stack>
+        </Stack>
+      </Paper>
 
-        {/* Instagram Performance Overview & Content Type Performance */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* Instagram Performance Overview */}
-          <div className="bg-white rounded-2xl p-8 shadow-sm">
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-2xl font-medium text-[#131A13]">Instagram Performance Overview</h2>
-            </div>
-            <div className="flex items-center gap-3 mb-6">
+      {/* Performance Overview & Content Type Performance */}
+      <Grid container spacing={3} sx={{ mb: 4 }}>
+        {/* Performance Overview */}
+        <Grid item xs={12} lg={6}>
+          <Paper sx={{ p: 3, height: '100%' }}>
+            <Typography variant="h6" fontWeight="bold" gutterBottom>
+              Instagram Performance Overview
+            </Typography>
+
+            {/* Date Range Selector */}
+            <Stack direction="row" spacing={1} sx={{ mb: 3, flexWrap: 'wrap', gap: 1 }}>
               {dateRanges.map((range) => (
-                <button
+                <Chip
                   key={range}
+                  label={range}
                   onClick={() => setSelectedDateRange(range)}
-                  className={`px-4 py-2 rounded-full text-sm transition-all ${
-                    selectedDateRange === range
-                      ? "bg-[#00C853] text-white"
-                      : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-                  }`}
-                >
-                  {range}
-                </button>
+                  size="small"
+                  sx={{
+                    bgcolor: selectedDateRange === range ? '#00C853' : 'default',
+                    color: selectedDateRange === range ? 'white' : 'default',
+                    '&:hover': {
+                      bgcolor: selectedDateRange === range ? '#00A046' : 'default',
+                    }
+                  }}
+                />
               ))}
-            </div>
-            <div className="space-y-4">
-              <div className="flex items-center justify-between p-4 bg-gray-50 rounded-xl">
-                <span className="text-sm text-gray-600">Total Posts</span>
-                <span className="text-lg font-semibold text-[#131A13]">127</span>
-              </div>
-              <div className="flex items-center justify-between p-4 bg-gray-50 rounded-xl">
-                <span className="text-sm text-gray-600">Total Engagement</span>
-                <span className="text-lg font-semibold text-[#131A13]">48.6k</span>
-              </div>
-              <div className="flex items-center justify-between p-4 bg-gray-50 rounded-xl">
-                <span className="text-sm text-gray-600">Avg. Engagement Rate</span>
-                <span className="text-lg font-semibold text-[#131A13]">5.2%</span>
-              </div>
-            </div>
-          </div>
+            </Stack>
 
-          {/* Content Type Performance */}
-          <div className="bg-white rounded-2xl p-8 shadow-sm">
-            <h2 className="text-2xl font-medium text-[#131A13] mb-6">Content Type Performance</h2>
-            <div className="flex items-center gap-3 mb-6">
+            <Stack spacing={2}>
+              <Box sx={{ p: 2, bgcolor: 'grey.50', borderRadius: 2 }}>
+                <Stack direction="row" justifyContent="space-between" alignItems="center">
+                  <Typography variant="body2" color="text.secondary">
+                    Total Posts
+                  </Typography>
+                  <Typography variant="h6" fontWeight="bold">
+                    127
+                  </Typography>
+                </Stack>
+              </Box>
+              <Box sx={{ p: 2, bgcolor: 'grey.50', borderRadius: 2 }}>
+                <Stack direction="row" justifyContent="space-between" alignItems="center">
+                  <Typography variant="body2" color="text.secondary">
+                    Total Engagement
+                  </Typography>
+                  <Typography variant="h6" fontWeight="bold">
+                    48.6k
+                  </Typography>
+                </Stack>
+              </Box>
+              <Box sx={{ p: 2, bgcolor: 'grey.50', borderRadius: 2 }}>
+                <Stack direction="row" justifyContent="space-between" alignItems="center">
+                  <Typography variant="body2" color="text.secondary">
+                    Avg. Engagement Rate
+                  </Typography>
+                  <Typography variant="h6" fontWeight="bold">
+                    5.2%
+                  </Typography>
+                </Stack>
+              </Box>
+            </Stack>
+          </Paper>
+        </Grid>
+
+        {/* Content Type Performance */}
+        <Grid item xs={12} lg={6}>
+          <Paper sx={{ p: 3, height: '100%' }}>
+            <Typography variant="h6" fontWeight="bold" gutterBottom>
+              Content Type Performance
+            </Typography>
+
+            {/* Content Type Tabs */}
+            <Stack direction="row" spacing={2} sx={{ mb: 3 }}>
               {contentTabs.map((tab) => (
-                <button
+                <Button
                   key={tab}
                   onClick={() => setSelectedContentTab(tab)}
-                  className={`px-4 py-2 text-sm font-medium transition-all ${
-                    selectedContentTab === tab
-                      ? "text-[#00C853] border-b-2 border-[#00C853]"
-                      : "text-gray-600"
-                  }`}
+                  sx={{
+                    textTransform: 'none',
+                    color: selectedContentTab === tab ? '#00C853' : 'text.secondary',
+                    borderBottom: selectedContentTab === tab ? 2 : 0,
+                    borderColor: '#00C853',
+                    borderRadius: 0,
+                    pb: 1,
+                    fontWeight: selectedContentTab === tab ? 600 : 400
+                  }}
                 >
                   {tab}
-                </button>
+                </Button>
               ))}
-            </div>
-            <div className="h-64">
+            </Stack>
+
+            <Box sx={{ height: 250 }}>
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={contentTypeData} layout="vertical">
                   <XAxis type="number" />
-                  <YAxis dataKey="name" type="category" />
+                  <YAxis dataKey="name" type="category" width={80} />
                   <Tooltip />
                   <Bar dataKey="value" radius={[0, 8, 8, 0]}>
                     {contentTypeData.map((entry, index) => (
@@ -250,44 +415,90 @@ export default function AnalyticsPage() {
                   </Bar>
                 </BarChart>
               </ResponsiveContainer>
-            </div>
-          </div>
-        </div>
+            </Box>
+          </Paper>
+        </Grid>
+      </Grid>
 
-        {/* Competitive Benchmarking */}
-        <div className="bg-white rounded-2xl p-8 shadow-sm">
-          <h2 className="text-2xl font-medium text-[#131A13] mb-6">Competitive Benchmarking</h2>
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead>
-                <tr className="border-b border-gray-200">
-                  <th className="text-left py-4 px-4 text-sm font-medium text-gray-500 uppercase">Competitor</th>
-                  <th className="text-left py-4 px-4 text-sm font-medium text-gray-500 uppercase">Followers</th>
-                  <th className="text-left py-4 px-4 text-sm font-medium text-gray-500 uppercase">Engagement</th>
-                  <th className="text-left py-4 px-4 text-sm font-medium text-gray-500 uppercase">Engagement Rate</th>
-                </tr>
-              </thead>
-              <tbody>
-                {competitorData.map((competitor, index) => (
-                  <tr key={index} className={`border-b border-gray-100 ${index === 0 ? 'bg-green-50' : ''}`}>
-                    <td className="py-4 px-4 text-sm font-semibold text-[#131A13]">{competitor.name}</td>
-                    <td className="py-4 px-4 text-sm text-[#131A13]">{competitor.followers}</td>
-                    <td className="py-4 px-4 text-sm text-[#131A13]">{competitor.engagement}</td>
-                    <td className="py-4 px-4 text-sm text-[#131A13]">{competitor.engagementRate}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
+      {/* Competitive Benchmarking */}
+      <Paper sx={{ p: 3, mb: 4 }}>
+        <Typography variant="h6" fontWeight="bold" gutterBottom>
+          Competitive Benchmarking
+        </Typography>
+        <Divider sx={{ my: 2 }} />
+        <TableContainer>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>
+                  <Typography variant="caption" fontWeight="bold" color="text.secondary">
+                    COMPETITOR
+                  </Typography>
+                </TableCell>
+                <TableCell>
+                  <Typography variant="caption" fontWeight="bold" color="text.secondary">
+                    FOLLOWERS
+                  </Typography>
+                </TableCell>
+                <TableCell>
+                  <Typography variant="caption" fontWeight="bold" color="text.secondary">
+                    ENGAGEMENT
+                  </Typography>
+                </TableCell>
+                <TableCell>
+                  <Typography variant="caption" fontWeight="bold" color="text.secondary">
+                    ENGAGEMENT RATE
+                  </Typography>
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {competitorData.map((competitor, index) => (
+                <TableRow
+                  key={index}
+                  sx={{
+                    bgcolor: competitor.isYou ? 'success.lighter' : 'transparent',
+                    '&:hover': { bgcolor: competitor.isYou ? 'success.lighter' : 'action.hover' }
+                  }}
+                >
+                  <TableCell>
+                    <Typography variant="body2" fontWeight={competitor.isYou ? 'bold' : 'regular'}>
+                      {competitor.name}
+                      {competitor.isYou && (
+                        <Chip label="You" size="small" color="success" sx={{ ml: 1, height: 20 }} />
+                      )}
+                    </Typography>
+                  </TableCell>
+                  <TableCell>
+                    <Typography variant="body2">{competitor.followers}</Typography>
+                  </TableCell>
+                  <TableCell>
+                    <Typography variant="body2">{competitor.engagement}</Typography>
+                  </TableCell>
+                  <TableCell>
+                    <Typography variant="body2" fontWeight="medium">
+                      {competitor.engagementRate}
+                    </Typography>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Paper>
 
-        {/* Audience Demographics */}
-        <div className="bg-white rounded-2xl p-8 shadow-sm">
-          <h2 className="text-2xl font-medium text-[#131A13] mb-6">Audience Demographics</h2>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <div className="h-64">
+      {/* Audience Demographics */}
+      <Paper sx={{ p: 3, mb: 4 }}>
+        <Typography variant="h6" fontWeight="bold" gutterBottom>
+          Audience Demographics
+        </Typography>
+        <Divider sx={{ my: 2 }} />
+        <Grid container spacing={4}>
+          <Grid item xs={12} md={7}>
+            <Box sx={{ height: 300 }}>
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={ageData}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
                   <XAxis dataKey="age" />
                   <YAxis />
                   <Tooltip />
@@ -298,29 +509,32 @@ export default function AnalyticsPage() {
                   </Bar>
                 </BarChart>
               </ResponsiveContainer>
-            </div>
-            <div className="flex flex-col justify-center gap-4">
+            </Box>
+          </Grid>
+          <Grid item xs={12} md={5}>
+            <Stack spacing={2} sx={{ pt: 2 }}>
               {ageData.map((item, index) => (
-                <div key={index} className="flex items-center gap-3">
-                  <div className="w-4 h-4 rounded" style={{ backgroundColor: item.color }}></div>
-                  <span className="text-sm text-gray-600 flex-1">{item.age}</span>
-                  <span className="text-sm font-semibold text-[#131A13]">{item.value}%</span>
-                </div>
+                <Stack key={index} direction="row" alignItems="center" spacing={2}>
+                  <Box
+                    sx={{
+                      width: 16,
+                      height: 16,
+                      borderRadius: 1,
+                      bgcolor: item.color
+                    }}
+                  />
+                  <Typography variant="body2" color="text.secondary" sx={{ flex: 1 }}>
+                    {item.age}
+                  </Typography>
+                  <Typography variant="body2" fontWeight="bold">
+                    {item.value}%
+                  </Typography>
+                </Stack>
               ))}
-            </div>
-          </div>
-        </div>
-
-        {/* Action Buttons */}
-        <div className="flex items-center justify-between gap-4">
-          <button className="px-8 py-3 bg-[#00C853] text-white rounded-xl font-medium hover:bg-green-700 transition-colors">
-            Get AI Summary
-          </button>
-          <button className="px-8 py-3 bg-gray-100 text-[#131A13] rounded-xl font-medium hover:bg-gray-200 transition-colors">
-            Export Data
-          </button>
-        </div>
-      </div>
-    </div>
+            </Stack>
+          </Grid>
+        </Grid>
+      </Paper>
+    </Container>
   );
 }
