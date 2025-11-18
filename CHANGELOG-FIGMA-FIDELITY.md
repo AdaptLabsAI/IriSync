@@ -6,6 +6,82 @@
 
 ---
 
+## Commit: `b6b41a0` - Update navigation and marketing components with brand colors
+
+**Date:** 2025-11-18
+
+### Changes
+- **Navigation Components**
+  - Footer.tsx: Updated gradient background (`from-emerald-0 via-emerald-100 to-green-100` → `from-white via-[#00FF6A]/5 to-[#00FF6A]/10`)
+  - Navbar.tsx: Updated all green instances:
+    - Logo background, CTA buttons, active state borders
+    - Mobile menu items, hover states
+    - Total: 18 replacements across logo, navigation links, mobile menu
+
+- **Marketing Components**
+  - testimonialsSection.tsx: Updated carousel dots and text highlight (2 instances)
+
+**Total changes:** 27 instances across 3 high-visibility files
+
+### Impact
+Complete brand color consistency across the entire site navigation (desktop and mobile) and footer. These are the most visible components affecting every page of the application.
+
+---
+
+## Commit: `5ffe99b` - Fix deployment blocker: Remove unsupported asChild prop from Button components
+
+**Date:** 2025-11-18
+
+### Changes
+- **verify-email/page.tsx**
+  - Removed `asChild` prop from Button components (not supported by custom Button component)
+  - Wrapped Link components around Button instead of using asChild pattern
+  - Fixed 3 Button instances
+
+### Impact
+**CRITICAL FIX:** Resolved TypeScript build error blocking Vercel deployment. The custom Button component doesn't support the `asChild` prop (unlike shadcn/ui Button). This unblocked production deployment.
+
+---
+
+## Commit: `8b77a71` - Update content management components with brand colors
+
+**Date:** 2025-11-18
+
+### Changes
+- **Content Management Components**
+  - PublishButton.tsx: Success states and feedback (5 instances)
+    - `bg-green-50` → `bg-[#00FF6A]/5`
+    - `text-green-700` → `text-[#00CC44]`
+    - `text-green-500` → `text-[#00FF6A]`
+  - SaveDraftButton.tsx: Auto-save indicator
+  - QueueButton.tsx: Success feedback (2 instances)
+
+**Total changes:** 8 instances across 3 files
+
+### Impact
+Consistent brand colors for all publish, save, and queue operations across the content management system.
+
+---
+
+## Commit: `49fbd96` - Update subscription components with brand green colors
+
+**Date:** 2025-11-18
+
+### Changes
+- **Subscription & Billing Components**
+  - PlanCard.tsx: Discount text and feature checkmarks (2 instances)
+  - SubscriptionButton.tsx: Success checkmark icon
+  - FeatureGate.tsx: View Plans button and focus rings (3 instances)
+  - BillingHistoryItem.tsx: Paid status badge colors (2 instances)
+  - AddPaymentButton.tsx: Success checkmark icon
+
+**Total changes:** 9 instances across 5 files
+
+### Impact
+Complete brand consistency across all subscription, billing, and payment flows.
+
+---
+
 ## Commit: `5037ce1` - Comprehensive brand green color updates across platform components
 
 **Date:** 2025-11-18
