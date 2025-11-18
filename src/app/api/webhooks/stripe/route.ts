@@ -553,7 +553,73 @@ export async function POST(req: NextRequest) {
             
             break;
           }
-          
+
+          // Handle credit purchases
+          if (session.mode === 'payment' && session.metadata?.type === 'credit_purchase') {
+            const userId = session.metadata?.userId;
+            const organizationId = session.metadata?.organizationId;
+            const credits = session.metadata?.credits;
+            const bundle = session.metadata?.bundle;
+
+            if (!userId || !organizationId || !credits) {
+              logger.error('Missing metadata in credit purchase session', {
+                sessionId: session.id,
+                userId: userId || 'missing',
+                organizationId: organizationId || 'missing',
+                credits: credits || 'missing'
+              });
+              break;
+            }
+
+            try {
+              const creditsNum = parseInt(credits);
+
+              // Import credit service (dynamic import to avoid circular dependencies)
+              const { creditService } = await import('@/lib/features/credits/CreditService');
+
+              // Add credits to user account
+              const result = await creditService.addCredits(
+                userId,
+                organizationId,
+                creditsNum,
+                'purchase',
+                bundle as any,
+                {
+                  sessionId: session.id,
+                  amountPaid: (session.amount_total || 0) / 100,
+                  currency: session.currency || 'usd',
+                }
+              );
+
+              if (result.success) {
+                logger.info('Credit purchase processed successfully', {
+                  userId,
+                  organizationId,
+                  sessionId: session.id,
+                  credits: creditsNum,
+                  bundle,
+                  newBalance: result.newBalance
+                });
+              } else {
+                logger.error('Failed to process credit purchase', {
+                  userId,
+                  organizationId,
+                  sessionId: session.id
+                });
+              }
+
+            } catch (error) {
+              logger.error('Error processing credit purchase', {
+                error: error instanceof Error ? error.message : String(error),
+                sessionId: session.id,
+                userId,
+                organizationId
+              });
+            }
+
+            break;
+          }
+
           // Handle subscription checkouts
           // Extract metadata
           const userId = session.metadata?.userId;
