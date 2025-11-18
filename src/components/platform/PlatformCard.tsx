@@ -211,9 +211,9 @@ export const PlatformCard: React.FC<PlatformCardProps> = ({
               </button>
               <div className="flex space-x-2">
                 {actualStatus === 'expired' && (
-                  <button 
+                  <button
                     onClick={() => onRefresh?.(platform)}
-                    className="text-xs text-green-600 hover:text-green-800 font-medium"
+                    className="text-xs text-[#00FF6A] hover:text-[#00CC44] font-medium"
                   >
                     Reconnect
                   </button>
