@@ -113,7 +113,7 @@ const features: Feature[] = [
     title: 'AI Content Generation',
     description: 'Create engaging content automatically with our advanced AI tools',
     icon: (
-      <div className="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center">
+      <div className="w-16 h-16 bg-[#00FF6A]/10 rounded-2xl flex items-center justify-center">
         <div className="w-8 h-8 bg-[#00FF6A] rounded-lg"></div>
       </div>
     )
@@ -122,7 +122,7 @@ const features: Feature[] = [
     title: 'Multi-Platform Management',
     description: 'Manage all your social accounts from one unified dashboard',
     icon: (
-      <div className="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center">
+      <div className="w-16 h-16 bg-[#00FF6A]/10 rounded-2xl flex items-center justify-center">
         <div className="w-8 h-8 bg-[#00FF6A] rounded-lg"></div>
       </div>
     )
@@ -131,7 +131,7 @@ const features: Feature[] = [
     title: 'Engagement Analytics',
     description: 'Track performance with detailed analytics and custom reports',
     icon: (
-      <div className="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center">
+      <div className="w-16 h-16 bg-[#00FF6A]/10 rounded-2xl flex items-center justify-center">
         <div className="w-8 h-8 bg-[#00FF6A] rounded-lg"></div>
       </div>
     )
@@ -140,7 +140,7 @@ const features: Feature[] = [
     title: 'Smart Scheduling',
     description: 'Schedule posts at optimal times for maximum engagement',
     icon: (
-      <div className="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center">
+      <div className="w-16 h-16 bg-[#00FF6A]/10 rounded-2xl flex items-center justify-center">
         <div className="w-8 h-8 bg-[#00FF6A] rounded-lg"></div>
       </div>
     )
@@ -247,9 +247,9 @@ const data = [
     {/* Grid Section */}
     <div className="relative grid grid-cols-1 md:grid-cols-3 gap-6 px-2 sm:px-4">
       {/* Connector Lines - Hidden on mobile, visible on md+ */}
-      <div className="hidden md:block absolute top-1/2 left-1/4 right-1/4 h-0.5 bg-green-200 z-0"></div>
-      <div className="hidden md:block absolute top-1/3 left-1/4 h-[calc(50%-4rem)] w-0.5 bg-green-200 z-0"></div>
-      <div className="hidden md:block absolute top-1/3 right-1/4 h-[calc(50%-4rem)] w-0.5 bg-green-200 z-0"></div>
+      <div className="hidden md:block absolute top-1/2 left-1/4 right-1/4 h-0.5 bg-[#00FF6A]/20 z-0"></div>
+      <div className="hidden md:block absolute top-1/3 left-1/4 h-[calc(50%-4rem)] w-0.5 bg-[#00FF6A]/20 z-0"></div>
+      <div className="hidden md:block absolute top-1/3 right-1/4 h-[calc(50%-4rem)] w-0.5 bg-[#00FF6A]/20 z-0"></div>
 
       {/* Left Side */}
       <div className="flex flex-col gap-6 relative z-10 w-full max-w-[340px] mx-auto">
@@ -297,7 +297,7 @@ const data = [
       </div>
 
       {/* Center - Top Integrations */}
-      <Card className="relative z-10 w-full md:mt-0 max-w-[280px] h-[280px] rounded-3xl mx-auto shadow-2xl shadow-green-200 flex flex-col items-center justify-center">
+      <Card className="relative z-10 w-full md:mt-0 max-w-[280px] h-[280px] rounded-3xl mx-auto shadow-2xl shadow-[#00FF6A]/20 flex flex-col items-center justify-center">
      
         <div className="absolute w-16 h-16 rounded-full bg-white border border-gray-300 flex items-center justify-center z-20">
           <SendHorizonal className="w-6 h-6 text-gray-700" />

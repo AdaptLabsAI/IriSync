@@ -233,7 +233,7 @@ export default function PricingPage() {
                       className={`w-full rounded-lg mb-6 ${
                         plan.highlighted
                           ? 'bg-[#00FF6A] hover:bg-[#00CC44] text-white'
-                          : 'bg-white border-2 border-[#00FF6A] text-[#00FF6A] hover:bg-green-50'
+                          : 'bg-white border-2 border-[#00FF6A] text-[#00FF6A] hover:bg-[#00FF6A]/5'
                       }`}
                       size="lg"
                     >
@@ -278,7 +278,7 @@ export default function PricingPage() {
                   <tr className="border-b border-gray-200">
                     <th className="text-left p-4 font-semibold text-gray-900">Features</th>
                     <th className="text-center p-4 font-semibold text-gray-900">Creator<br/><span className="text-sm font-normal text-gray-600">$80 / user / month</span></th>
-                    <th className="text-center p-4 font-semibold text-gray-900 bg-green-50">Influencer<br/><span className="text-sm font-normal text-gray-600">$200 / user / month</span></th>
+                    <th className="text-center p-4 font-semibold text-gray-900 bg-[#00FF6A]/5">Influencer<br/><span className="text-sm font-normal text-gray-600">$200 / user / month</span></th>
                     <th className="text-center p-4 font-semibold text-gray-900">Enterprise<br/><span className="text-sm font-normal text-gray-600">Custom</span></th>
                   </tr>
                 </thead>
@@ -297,7 +297,7 @@ export default function PricingPage() {
                           <span className="text-gray-700 text-sm">{feature.creator}</span>
                         )}
                       </td>
-                      <td className="p-4 text-center bg-green-50">
+                      <td className="p-4 text-center bg-[#00FF6A]/5">
                         {typeof feature.influencer === 'boolean' ? (
                           feature.influencer ? (
                             <span className="text-[#00FF6A]">✓</span>
