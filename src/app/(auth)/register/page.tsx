@@ -226,7 +226,7 @@ export default function RegisterPage() {
           {/* Header */}
           <div className="text-center mb-8">
             <h1 className="text-4xl font-semibold text-gray-900 mb-2">
-              Get Started with <span className="text-[#00C853]">IriSync</span>
+              Get Started with <span className="text-[#00FF6A]">IriSync</span>
             </h1>
             <p className="text-gray-600 text-lg">
               Register now to begin your experience
@@ -397,7 +397,7 @@ export default function RegisterPage() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full py-4 bg-gradient-to-r from-[#00C853] to-[#00A045] text-white rounded-xl font-medium text-lg hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full py-4 bg-gradient-to-r from-[#00FF6A] to-[#00CC44] text-white rounded-xl font-medium text-lg hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isLoading ? 'Registering...' : 'Register'}
             </button>

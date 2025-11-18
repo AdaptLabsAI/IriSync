@@ -67,7 +67,7 @@ export default function ResetPasswordPage() {
 
           <Link
             href="/login"
-            className="inline-block w-full py-4 bg-gradient-to-r from-[#00C853] to-[#00A045] text-white rounded-xl font-medium text-lg hover:shadow-lg transition-all"
+            className="inline-block w-full py-4 bg-gradient-to-r from-[#00FF6A] to-[#00CC44] text-white rounded-xl font-medium text-lg hover:shadow-lg transition-all"
           >
             Return to Login
           </Link>
@@ -218,7 +218,7 @@ export default function ResetPasswordPage() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full py-4 bg-gradient-to-r from-[#00C853] to-[#00A045] text-white rounded-xl font-medium text-lg hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full py-4 bg-gradient-to-r from-[#00FF6A] to-[#00CC44] text-white rounded-xl font-medium text-lg hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isLoading ? 'Sending...' : 'Send OTP'}
             </button>
