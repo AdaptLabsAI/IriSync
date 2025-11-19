@@ -11,7 +11,6 @@ import {
   Chip,
   IconButton,
   Tooltip,
-  Grid,
   Card,
   CardContent,
   CircularProgress,
@@ -28,6 +27,7 @@ import {
   ToggleButton,
   InputAdornment
 } from '@mui/material';
+import Grid from '@/components/ui/grid';
 import {
   Add as AddIcon,
   Message as MessageIcon,
