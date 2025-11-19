@@ -74,7 +74,7 @@ export default function TokenUsageWidget() {
   const getStatusColor = () => {
     if (usagePercentage >= 90) return 'text-red-500';
     if (usagePercentage >= 75) return 'text-yellow-500';
-    return 'text-green-500';
+    return 'text-[#00CC44]';
   };
   
   if (loading) {
@@ -112,7 +112,7 @@ export default function TokenUsageWidget() {
         <h3 className="text-lg font-semibold text-gray-800">Token Usage</h3>
         <button
           onClick={() => setShowPurchaseModal(true)}
-          className="px-3 py-1 bg-blue-500 text-white text-sm rounded hover:bg-blue-600 transition-colors"
+          className="px-3 py-1 bg-[#00CC44] text-white text-sm rounded hover:bg-[#00CC44] transition-colors"
         >
           Purchase Tokens
         </button>
@@ -128,11 +128,11 @@ export default function TokenUsageWidget() {
           </span>
         </div>
         <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
-          <div 
+          <div
             className={`h-full ${
-              usagePercentage >= 90 ? 'bg-red-500' : 
-              usagePercentage >= 75 ? 'bg-yellow-500' : 
-              'bg-green-500'
+              usagePercentage >= 90 ? 'bg-red-500' :
+              usagePercentage >= 75 ? 'bg-yellow-500' :
+              'bg-[#00CC44]'
             }`}
             style={{ width: `${usagePercentage}%` }}
           ></div>
@@ -207,7 +207,7 @@ export default function TokenUsageWidget() {
                   </button>
                   <button
                     onClick={handlePurchase}
-                    className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:bg-blue-300"
+                    className="px-4 py-2 bg-[#00CC44] text-white rounded hover:bg-[#00CC44] disabled:bg-[#00CC44]/50"
                     disabled={purchaseLoading}
                   >
                     {purchaseLoading ? 'Processing...' : 'Purchase'}

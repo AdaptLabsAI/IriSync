@@ -1031,7 +1031,7 @@ export default function InboxPage() {
               onChange={(_, value) => setSelectedLabels(value)}
               renderTags={(value: string[], getTagProps) =>
                 value.map((option: string, index: number) => (
-                  <Chip key={index} variant="outlined" label={option} {...getTagProps({ index })} />
+                  <Chip variant="outlined" label={option} {...getTagProps({ index })} />
                 ))
               }
               renderInput={(params) => (

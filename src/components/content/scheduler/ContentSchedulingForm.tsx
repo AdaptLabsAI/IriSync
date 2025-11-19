@@ -257,10 +257,10 @@ export function ContentSchedulingForm({
     <div className={`space-y-6 ${className}`}>
       {/* Success/Error Messages */}
       {success && (
-        <Card className="p-4 border-green-200 bg-green-50">
+        <Card className="p-4 border-[#00FF6A]/20 bg-[#00FF6A]/5">
           <div className="flex items-center space-x-2">
-            <CheckCircle className="w-5 h-5 text-green-500" />
-            <p className="text-green-700 font-medium">{success}</p>
+            <CheckCircle className="w-5 h-5 text-[#00CC44]" />
+            <p className="text-[#00CC44] font-medium">{success}</p>
           </div>
         </Card>
       )}
@@ -287,7 +287,7 @@ export function ContentSchedulingForm({
               value={content}
               onChange={(e) => setContent(e.target.value)}
               placeholder="What would you like to share?"
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-vertical min-h-[120px]"
+              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#00CC44] focus:border-transparent resize-vertical min-h-[120px]"
               disabled={loading}
             />
             <div className="text-sm text-gray-500 mt-1">
@@ -303,7 +303,7 @@ export function ContentSchedulingForm({
                 value={selectedPlatform}
                 onChange={(e) => setSelectedPlatform(e.target.value as SocialPlatform)}
                 disabled={loading}
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#00CC44] focus:border-transparent"
               >
                 {platforms.map((platform) => (
                   <option key={platform} value={platform}>
@@ -319,7 +319,7 @@ export function ContentSchedulingForm({
                 value={selectedContentType}
                 onChange={(e) => setSelectedContentType(e.target.value)}
                 disabled={loading}
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#00CC44] focus:border-transparent"
               >
                 {contentTypes.map((type) => (
                   <option key={type.value} value={type.value}>
@@ -335,7 +335,7 @@ export function ContentSchedulingForm({
       {/* AI Optimal Times Integration */}
       <Card className="p-6">
         <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
-          <Lightbulb className="w-5 h-5 text-blue-500 mr-2" />
+          <Lightbulb className="w-5 h-5 text-[#00CC44] mr-2" />
           AI-Powered Scheduling
         </h3>
         
@@ -430,12 +430,12 @@ export function ContentSchedulingForm({
                       <Label htmlFor="frequency">Frequency</Label>
                       <select
                         value={recurrence.frequency}
-                        onChange={(e) => setRecurrence({ 
-                          ...recurrence, 
-                          frequency: e.target.value as 'daily' | 'weekly' | 'monthly' 
+                        onChange={(e) => setRecurrence({
+                          ...recurrence,
+                          frequency: e.target.value as 'daily' | 'weekly' | 'monthly'
                         })}
                         disabled={loading}
-                        className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#00CC44] focus:border-transparent"
                       >
                         <option value="daily">Daily</option>
                         <option value="weekly">Weekly</option>
@@ -482,13 +482,13 @@ export function ContentSchedulingForm({
 
       {/* AI Insights Display */}
       {aiOptimalData && (
-        <Card className="p-4 border-blue-200 bg-blue-50">
-          <h4 className="font-medium text-blue-800 mb-2 flex items-center">
+        <Card className="p-4 border-[#00FF6A]/20 bg-[#00FF6A]/5">
+          <h4 className="font-medium text-[#00CC44] mb-2 flex items-center">
             <Lightbulb className="w-4 h-4 mr-2" />
             AI Scheduling Insights
           </h4>
           
-          <div className="text-sm text-blue-700 space-y-1">
+          <div className="text-sm text-[#00CC44] space-y-1">
             <p><strong>Confidence:</strong> {Math.round(aiOptimalData.score * 100)}%</p>
             <p><strong>Expected Engagement:</strong> ~{
               aiOptimalData.engagementPrediction.expectedLikes + 
@@ -506,7 +506,7 @@ export function ContentSchedulingForm({
         <Button
           onClick={handleSchedule}
           disabled={loading || !content.trim() || !selectedDate}
-          className="flex-1 bg-blue-600 hover:bg-blue-700"
+          className="flex-1 bg-[#00CC44] hover:bg-[#00CC44]"
         >
           {loading ? (
             <>
@@ -554,7 +554,7 @@ export function ContentSchedulingForm({
             <p><strong>Date & Time:</strong> {selectedDate.toLocaleDateString()} at {selectedTime} ({userTimezone})</p>
             <p><strong>Content Type:</strong> {contentTypes.find(t => t.value === selectedContentType)?.label}</p>
             {aiRecommendationUsed && (
-              <p className="text-blue-600"><strong>AI Optimized:</strong> Yes ({Math.round((aiOptimalData?.score || 0) * 100)}% confidence)</p>
+              <p className="text-[#00CC44]"><strong>AI Optimized:</strong> Yes ({Math.round((aiOptimalData?.score || 0) * 100)}% confidence)</p>
             )}
             {recurrence.enabled && (
               <p><strong>Recurrence:</strong> Every {recurrence.interval} {recurrence.frequency}(s)</p>

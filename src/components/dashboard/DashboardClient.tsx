@@ -62,8 +62,8 @@ export function DashboardClient({ data, permissionError, errorMessage }: Dashboa
                 <div className="text-right">
                   <div className="text-sm font-medium">{platform.engagement}% engagement</div>
                   <div className="w-20 bg-gray-200 rounded-full h-2 mt-1">
-                    <div 
-                      className="bg-blue-600 h-2 rounded-full" 
+                    <div
+                      className="bg-[#00CC44] h-2 rounded-full"
                       style={{ width: `${platform.progress}%` }}
                     />
                   </div>
@@ -110,8 +110,8 @@ export function DashboardClient({ data, permissionError, errorMessage }: Dashboa
           <div className="space-y-3">
             {data.recentActivities.map((activity) => (
               <div key={activity.id} className="flex items-center space-x-3 p-2">
-                <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
-                  <span className="text-xs font-medium text-blue-600">
+                <div className="w-8 h-8 bg-[#00FF6A]/10 rounded-full flex items-center justify-center">
+                  <span className="text-xs font-medium text-[#00CC44]">
                     {activity.user.name.charAt(0)}
                   </span>
                 </div>
@@ -122,7 +122,7 @@ export function DashboardClient({ data, permissionError, errorMessage }: Dashboa
                   </p>
                 </div>
                 {activity.isNew && (
-                  <span className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">
+                  <span className="bg-[#00FF6A]/10 text-[#00CC44] text-xs px-2 py-1 rounded-full">
                     New
                   </span>
                 )}
@@ -146,8 +146,8 @@ export function DashboardClient({ data, permissionError, errorMessage }: Dashboa
                 <div className="text-right">
                   <p className="text-sm">{new Date(post.scheduledFor).toLocaleDateString()}</p>
                   <span className={`text-xs px-2 py-1 rounded-full ${
-                    post.status === 'ready' 
-                      ? 'bg-green-100 text-green-800' 
+                    post.status === 'ready'
+                      ? 'bg-[#00FF6A]/10 text-[#00CC44]'
                       : 'bg-yellow-100 text-yellow-800'
                   }`}>
                     {post.status}

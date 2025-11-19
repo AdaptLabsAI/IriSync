@@ -6,6 +6,22 @@
 
 ---
 
+## Commit: `d928a42` - Fix auth and firestore null checks in content editor page
+
+**Date:** 2025-11-18
+
+### Changes
+- **Content Editor Page** (`src/app/(dashboard)/dashboard/content/editor/page.tsx`)
+  - Added auth null check before accessing `auth.currentUser` in fetchData function (line 47-49)
+  - Added firestore null check before using `doc()` in fetchData function (line 51-53)
+  - Added auth null check before accessing `auth.currentUser` in handleSave function (line 128-130)
+  - Added firestore null check before using `doc()` in handleSave function (line 132-134)
+
+### Impact
+**CRITICAL FIX:** Resolved sixth TypeScript build error blocking Vercel deployment. Fixed null safety violations where `auth` and `firestore` were accessed without proper null checks in both the data fetching and save operations.
+
+---
+
 ## Commit: `cd82930` - Fix auth and firestore null checks in content create page
 
 **Date:** 2025-11-18

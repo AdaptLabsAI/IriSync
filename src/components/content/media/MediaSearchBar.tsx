@@ -180,8 +180,8 @@ export const MediaSearchBar: React.FC<MediaSearchBarProps> = ({
     <div className={`relative ${className}`}>
       <div className="relative flex items-center">
         <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-          <svg 
-            className={`w-4 h-4 ${isSearching ? 'text-blue-500' : 'text-gray-500'}`}
+          <svg
+            className={`w-4 h-4 ${isSearching ? 'text-[#00CC44]' : 'text-gray-500'}`}
             xmlns="http://www.w3.org/2000/svg" 
             viewBox="0 0 24 24" 
             fill="none" 
@@ -205,8 +205,8 @@ export const MediaSearchBar: React.FC<MediaSearchBarProps> = ({
           className={`
             block w-full py-2 pl-10 pr-12 rounded-md border
             ${isDisabled ? 'bg-gray-100 text-gray-400' : 'bg-white text-gray-900'}
-            ${isFiltered ? 'border-blue-300' : 'border-gray-300'}
-            focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent
+            ${isFiltered ? 'border-[#00FF6A]/20' : 'border-gray-300'}
+            focus:outline-none focus:ring-2 focus:ring-[#00CC44] focus:border-transparent
           `}
           aria-label="Search media"
         />
@@ -240,8 +240,8 @@ export const MediaSearchBar: React.FC<MediaSearchBarProps> = ({
             type="button"
             onClick={() => setShowFilters(!showFilters)}
             className={`
-              absolute inset-y-0 right-0 flex items-center px-3 
-              ${isFiltered ? 'text-blue-500' : 'text-gray-400 hover:text-gray-600'}
+              absolute inset-y-0 right-0 flex items-center px-3
+              ${isFiltered ? 'text-[#00CC44]' : 'text-gray-400 hover:text-gray-600'}
             `}
             aria-label="Toggle filters"
             aria-expanded={showFilters}
@@ -260,7 +260,7 @@ export const MediaSearchBar: React.FC<MediaSearchBarProps> = ({
               <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" />
             </svg>
             {isFiltered && (
-              <span className="absolute top-1 right-1 w-2 h-2 bg-blue-500 rounded-full"></span>
+              <span className="absolute top-1 right-1 w-2 h-2 bg-[#00CC44] rounded-full"></span>
             )}
           </button>
         )}
@@ -279,8 +279,8 @@ export const MediaSearchBar: React.FC<MediaSearchBarProps> = ({
                       onClick={() => toggleType(type)}
                       className={`
                         px-3 py-1 text-xs rounded-full capitalize
-                        ${selectedTypes.includes(type) 
-                          ? 'bg-blue-100 text-blue-800 border-blue-300' 
+                        ${selectedTypes.includes(type)
+                          ? 'bg-[#00FF6A]/10 text-[#00CC44] border-[#00FF6A]/20'
                           : 'bg-gray-100 text-gray-700 border-gray-300'}
                         border hover:bg-opacity-80
                       `}
@@ -328,8 +328,8 @@ export const MediaSearchBar: React.FC<MediaSearchBarProps> = ({
                       onClick={() => toggleTag(tag)}
                       className={`
                         px-2 py-1 text-xs rounded-full capitalize
-                        ${selectedTags.includes(tag) 
-                          ? 'bg-blue-100 text-blue-800 border-blue-300' 
+                        ${selectedTags.includes(tag)
+                          ? 'bg-[#00FF6A]/10 text-[#00CC44] border-[#00FF6A]/20'
                           : 'bg-gray-100 text-gray-700 border-gray-300'}
                         border hover:bg-opacity-80
                       `}
@@ -379,7 +379,7 @@ export const MediaSearchBar: React.FC<MediaSearchBarProps> = ({
             </button>
             <button
               onClick={() => setShowFilters(false)}
-              className="text-sm text-blue-600 hover:text-blue-800 font-medium"
+              className="text-sm text-[#00CC44] hover:text-[#00CC44] font-medium"
             >
               Apply
             </button>

@@ -75,14 +75,14 @@ export const AnalyticsCard: React.FC<AnalyticsCardProps> = ({
   const getColorClasses = () => {
     const colors = {
       blue: {
-        bg: 'bg-blue-50',
-        text: 'text-blue-700',
-        border: 'border-blue-200'
+        bg: 'bg-[#00FF6A]/5',
+        text: 'text-[#00CC44]',
+        border: 'border-[#00FF6A]/20'
       },
       green: {
-        bg: 'bg-green-50',
-        text: 'text-green-700',
-        border: 'border-green-200'
+        bg: 'bg-[#00FF6A]/5',
+        text: 'text-[#00CC44]',
+        border: 'border-[#00FF6A]/20'
       },
       purple: {
         bg: 'bg-purple-50',
@@ -123,7 +123,7 @@ export const AnalyticsCard: React.FC<AnalyticsCardProps> = ({
       ? "text-red-600"
       : change === 0
       ? "text-gray-500"
-      : "text-green-600";
+      : "text-[#00CC44]";
     
     return (
       <div className={`flex items-center gap-1 ${colorClass}`}>

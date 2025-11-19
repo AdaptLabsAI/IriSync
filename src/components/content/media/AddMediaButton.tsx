@@ -499,13 +499,13 @@ export const AddMediaButton: React.FC<AddMediaButtonProps> = ({
               <div className="flex border-b">
                 <button
                   onClick={() => setActiveTab('upload')}
-                  className={`px-4 py-2 ${activeTab === 'upload' ? 'border-b-2 border-blue-500 font-medium' : ''}`}
+                  className={`px-4 py-2 ${activeTab === 'upload' ? 'border-b-2 border-[#00CC44] font-medium' : ''}`}
                 >
                   Upload
                 </button>
                 <button
                   onClick={() => setActiveTab('library')}
-                  className={`px-4 py-2 ${activeTab === 'library' ? 'border-b-2 border-blue-500 font-medium' : ''}`}
+                  className={`px-4 py-2 ${activeTab === 'library' ? 'border-b-2 border-[#00CC44] font-medium' : ''}`}
                 >
                   Media Library
                 </button>
@@ -598,8 +598,8 @@ export const AddMediaButton: React.FC<AddMediaButtonProps> = ({
                             <div className="w-20">
                               {uploadProgress[file.name] > 0 && (
                                 <div className="w-full h-1.5 bg-gray-200 rounded-full overflow-hidden">
-                                  <div 
-                                    className="h-full bg-blue-500 rounded-full"
+                                  <div
+                                    className="h-full bg-[#00CC44] rounded-full"
                                     style={{ width: `${uploadProgress[file.name]}%` }}
                                   ></div>
                                 </div>
@@ -651,11 +651,11 @@ export const AddMediaButton: React.FC<AddMediaButtonProps> = ({
                   ) : (
                     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
                       {(smartSearchResults !== null ? smartSearchResults : filteredLibraryItems).map((item) => (
-                        <div 
+                        <div
                           key={item.id}
                           className={`
                             relative border rounded-md overflow-hidden cursor-pointer group
-                            ${selectedLibraryItems.some(selected => selected.id === item.id) ? 'ring-2 ring-blue-500' : ''}
+                            ${selectedLibraryItems.some(selected => selected.id === item.id) ? 'ring-2 ring-[#00CC44]' : ''}
                           `}
                           onClick={() => toggleLibraryItemSelection(item)}
                         >
@@ -698,7 +698,7 @@ export const AddMediaButton: React.FC<AddMediaButtonProps> = ({
                                 strokeWidth="2" 
                                 strokeLinecap="round" 
                                 strokeLinejoin="round"
-                                className="text-blue-500"
+                                className="text-[#00CC44]"
                               >
                                 <polyline points="20 6 9 17 4 12"></polyline>
                               </svg>
@@ -720,7 +720,7 @@ export const AddMediaButton: React.FC<AddMediaButtonProps> = ({
                             )}
                           </div>
                           <button
-                            className="absolute bottom-2 right-2 bg-white bg-opacity-80 rounded shadow px-2 py-1 text-xs text-blue-600 hover:underline"
+                            className="absolute bottom-2 right-2 bg-white bg-opacity-80 rounded shadow px-2 py-1 text-xs text-[#00CC44] hover:underline"
                             onClick={e => { e.stopPropagation(); openVersionDialog(item); }}
                           >
                             Version History
@@ -811,7 +811,7 @@ export const AddMediaButton: React.FC<AddMediaButtonProps> = ({
               <div className="mb-2 font-medium">Suggested Tags:</div>
               <div className="flex flex-wrap gap-2 mb-2">
                 {suggestedTags.length > 0 ? suggestedTags.map(tag => (
-                  <span key={tag} className="px-2 py-1 bg-blue-100 text-blue-700 rounded-full text-xs">{tag}</span>
+                  <span key={tag} className="px-2 py-1 bg-[#00FF6A]/10 text-[#00CC44] rounded-full text-xs">{tag}</span>
                 )) : <span className="text-gray-500">No tags suggested</span>}
               </div>
               <input

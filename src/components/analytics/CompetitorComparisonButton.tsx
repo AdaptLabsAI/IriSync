@@ -236,7 +236,7 @@ const CompetitorComparisonButton: React.FC<CompetitorComparisonButtonProps> = ({
             <>
               <div className="space-y-4">
                 <div className="flex items-center gap-2 text-sm">
-                  <Users className="h-4 w-4 text-blue-600" />
+                  <Users className="h-4 w-4 text-[#00CC44]" />
                   <span>
                     {selectedCompetitors.length} of {maxCompetitors} competitors selected
                   </span>
@@ -247,7 +247,7 @@ const CompetitorComparisonButton: React.FC<CompetitorComparisonButtonProps> = ({
                     {selectedCompetitors.map(competitor => (
                       <div
                         key={competitor.id}
-                        className="flex items-center gap-2 bg-blue-50 px-3 py-1 rounded-full text-sm"
+                        className="flex items-center gap-2 bg-[#00FF6A]/5 px-3 py-1 rounded-full text-sm"
                       >
                         <span>{competitor.name}</span>
                         <button
@@ -382,7 +382,7 @@ const CompetitorComparisonButton: React.FC<CompetitorComparisonButtonProps> = ({
                               <Button
                                 variant="ghost"
                                 size="sm"
-                                className="text-gray-500 hover:text-blue-600"
+                                className="text-gray-500 hover:text-[#00CC44]"
                                 onClick={() => handleSaveCompetitor(competitor)}
                               >
                                 <PlusCircle className="h-4 w-4" />

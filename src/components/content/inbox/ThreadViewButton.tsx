@@ -98,7 +98,7 @@ export const ThreadViewButton: React.FC<ThreadViewButtonProps> = ({
       <DropdownMenuContent align="end" className="w-56">
         <DropdownMenuItem
           onClick={() => handleChangeMode('conversation')}
-          className={`flex items-center py-2 ${viewMode === 'conversation' ? 'bg-blue-50' : ''}`}
+          className={`flex items-center py-2 ${viewMode === 'conversation' ? 'bg-[#00FF6A]/5' : ''}`}
         >
           <div className="flex items-center">
             <MessageSquare className="h-4 w-4 mr-2" />
@@ -109,14 +109,14 @@ export const ThreadViewButton: React.FC<ThreadViewButtonProps> = ({
           </div>
           {viewMode === 'conversation' && (
             <div className="ml-auto">
-              <div className="h-2 w-2 rounded-full bg-blue-500"></div>
+              <div className="h-2 w-2 rounded-full bg-[#00CC44]"></div>
             </div>
           )}
         </DropdownMenuItem>
         
         <DropdownMenuItem
           onClick={() => handleChangeMode('flat')}
-          className={`flex items-center py-2 ${viewMode === 'flat' ? 'bg-blue-50' : ''}`}
+          className={`flex items-center py-2 ${viewMode === 'flat' ? 'bg-[#00FF6A]/5' : ''}`}
         >
           <div className="flex items-center">
             <Eye className="h-4 w-4 mr-2" />
@@ -127,14 +127,14 @@ export const ThreadViewButton: React.FC<ThreadViewButtonProps> = ({
           </div>
           {viewMode === 'flat' && (
             <div className="ml-auto">
-              <div className="h-2 w-2 rounded-full bg-blue-500"></div>
+              <div className="h-2 w-2 rounded-full bg-[#00CC44]"></div>
             </div>
           )}
         </DropdownMenuItem>
         
         <DropdownMenuItem
           onClick={() => handleChangeMode('grouped')}
-          className={`flex items-center py-2 ${viewMode === 'grouped' ? 'bg-blue-50' : ''}`}
+          className={`flex items-center py-2 ${viewMode === 'grouped' ? 'bg-[#00FF6A]/5' : ''}`}
         >
           <div className="flex items-center">
             <User className="h-4 w-4 mr-2" />
@@ -145,7 +145,7 @@ export const ThreadViewButton: React.FC<ThreadViewButtonProps> = ({
           </div>
           {viewMode === 'grouped' && (
             <div className="ml-auto">
-              <div className="h-2 w-2 rounded-full bg-blue-500"></div>
+              <div className="h-2 w-2 rounded-full bg-[#00CC44]"></div>
             </div>
           )}
         </DropdownMenuItem>
