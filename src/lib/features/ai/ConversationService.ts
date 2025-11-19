@@ -12,7 +12,7 @@
  * - Privacy controls
  */
 
-import { firestore } from '../../core/firebase';
+import { getFirebaseFirestore } from '../../core/firebase';
 import {
   collection,
   doc,
@@ -26,7 +26,8 @@ import {
   Timestamp,
   serverTimestamp,
   runTransaction,
-  DocumentReference
+  DocumentReference,
+  Firestore
 } from 'firebase/firestore';
 import { logger } from '../../core/logging/logger';
 
@@ -105,6 +106,17 @@ export class ConversationService {
   private readonly summaryThreshold = 20; // Messages before triggering summary
 
   /**
+   * Get Firestore instance with null check
+   */
+  private getFirestore(): Firestore {
+    const firestore = getFirebaseFirestore();
+    if (!firestore) {
+      throw new Error('Firestore not configured');
+    }
+    return firestore;
+  }
+
+  /**
    * Create a new conversation
    */
   async createConversation(
@@ -125,6 +137,7 @@ export class ConversationService {
         tags: []
       };
 
+      const firestore = this.getFirestore();
       const docRef = await addDoc(
         collection(firestore, this.conversationsCollection),
         {
@@ -159,6 +172,7 @@ export class ConversationService {
     message: Omit<ConversationMessage, 'id' | 'timestamp'>
   ): Promise<string> {
     try {
+      const firestore = this.getFirestore();
       const messageData = {
         ...message,
         timestamp: serverTimestamp()
@@ -200,6 +214,7 @@ export class ConversationService {
     message: Omit<ConversationMessage, 'id' | 'timestamp'>
   ): Promise<void> {
     try {
+      const firestore = this.getFirestore();
       const conversationRef = doc(
         firestore,
         this.conversationsCollection,
@@ -245,6 +260,7 @@ export class ConversationService {
     maxMessages: number = 20
   ): Promise<ConversationMessage[]> {
     try {
+      const firestore = this.getFirestore();
       const messagesRef = collection(
         firestore,
         this.conversationsCollection,
@@ -293,6 +309,7 @@ export class ConversationService {
     maxConversations: number = 10
   ): Promise<Conversation[]> {
     try {
+      const firestore = this.getFirestore();
       const conversationsRef = collection(
         firestore,
         this.conversationsCollection
@@ -434,6 +451,7 @@ export class ConversationService {
    */
   async archiveConversation(conversationId: string): Promise<void> {
     try {
+      const firestore = this.getFirestore();
       const conversationRef = doc(
         firestore,
         this.conversationsCollection,
@@ -462,6 +480,7 @@ export class ConversationService {
    */
   async deleteConversation(conversationId: string): Promise<void> {
     try {
+      const firestore = this.getFirestore();
       // First delete all messages in the conversation
       const messagesRef = collection(
         firestore,
@@ -508,6 +527,7 @@ export class ConversationService {
     title: string
   ): Promise<void> {
     try {
+      const firestore = this.getFirestore();
       const conversationRef = doc(
         firestore,
         this.conversationsCollection,
@@ -536,6 +556,7 @@ export class ConversationService {
    */
   async getConversation(conversationId: string): Promise<Conversation | null> {
     try {
+      const firestore = this.getFirestore();
       const conversationRef = doc(
         firestore,
         this.conversationsCollection,

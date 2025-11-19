@@ -189,6 +189,13 @@ export default function CreateDocumentPage() {
     setSubmitError('');
     
     try {
+      // Check Firestore availability
+      if (!firestore) {
+        setSubmitError('Database not configured. Please contact support.');
+        setIsSubmitting(false);
+        return;
+      }
+
       const user = session.user as any;
       const docData = {
         title: data.title,
@@ -209,7 +216,7 @@ export default function CreateDocumentPage() {
         publishedAt: Timestamp.now(),
         path: `/documentation/${data.categoryId}/${data.slug}`
       };
-      
+
       const docRef = await addDoc(collection(firestore, 'documentation'), docData);
       
       // Success!
