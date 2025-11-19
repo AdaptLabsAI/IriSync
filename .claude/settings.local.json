@@ -8,7 +8,10 @@
       "Bash(git add:*)",
       "Bash(npm run build:*)",
       "Bash(npx next build:*)",
-      "Bash(npx tsc:*)"
+      "Bash(npx tsc:*)",
+      "Bash(npx jest --listTests)",
+      "Bash(npm outdated)",
+      "Bash(npm install:*)"
     ],
     "deny": [],
     "ask": []
