@@ -58,8 +58,11 @@ export default function PlatformCallback() {
         
         // Format the platform name for display
         setPlatformName(platform.charAt(0).toUpperCase() + platform.slice(1));
-        
-        // Get current user
+
+        // Get current user with null check
+        if (!auth) {
+          throw new Error('Authentication not configured');
+        }
         const currentUser = auth.currentUser;
         if (!currentUser || !currentUser.uid) {
           throw new Error('You must be logged in to connect platforms');
@@ -87,7 +90,12 @@ export default function PlatformCallback() {
           }
           
           const tokenData = await response.json();
-          
+
+          // Check firestore availability
+          if (!firestore) {
+            throw new Error('Firestore not configured');
+          }
+
           // Now use Firebase to store the connection
           const userPlatformsRef = collection(firestore, 'users', currentUser.uid, 'platforms');
           const platformDocRef = doc(userPlatformsRef, platform);

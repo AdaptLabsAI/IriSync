@@ -404,7 +404,7 @@ export default function TeamManagementPage() {
                     <Typography variant="body2" color="primary" fontWeight="bold">
                       Owner
                     </Typography>
-                  ) : isOrgAdmin && member.email !== session?.user?.email ? (
+                  ) : isOrgAdmin && member.email !== user?.email ? (
                     <>
                       <Select
                         value={member.role}
@@ -448,7 +448,7 @@ export default function TeamManagementPage() {
                   secondary={
                     <span>
                       {member.email}
-                      {member.email === session?.user?.email && ' (You)'}
+                      {member.email === user?.email && ' (You)'}
                     </span>
                   }
                 />

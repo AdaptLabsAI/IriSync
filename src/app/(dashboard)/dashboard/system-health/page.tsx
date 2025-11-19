@@ -10,7 +10,6 @@ import React, { useState, useEffect } from 'react';
 import {
   Box,
   Typography,
-  Grid,
   Card,
   CardContent,
   Alert,
@@ -19,6 +18,7 @@ import {
   CircularProgress,
   Chip,
 } from '@mui/material';
+import Grid from '@/components/ui/grid';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import CloudIcon from '@mui/icons-material/Cloud';
 import PaymentIcon from '@mui/icons-material/Payment';
