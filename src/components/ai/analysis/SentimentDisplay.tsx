@@ -30,7 +30,7 @@ const SentimentDisplay: React.FC<SentimentDisplayProps> = ({
     const prefix = isBg ? 'bg-' : 'text-';
     switch (sentiment) {
       case 'positive':
-        return `${prefix}green-500`;
+        return isBg ? 'bg-[#00CC44]' : 'text-[#00CC44]';
       case 'negative':
         return `${prefix}red-500`;
       case 'neutral':

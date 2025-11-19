@@ -289,7 +289,7 @@ const MediaCard: React.FC<MediaCardProps> = ({
         
         {/* In-Use Indicator */}
         {media.inUse && (
-          <div className="absolute top-2 left-10 bg-blue-500 text-white text-xs px-1.5 py-0.5 rounded-md">
+          <div className="absolute top-2 left-10 bg-[#00CC44] text-white text-xs px-1.5 py-0.5 rounded-md">
             In Use
           </div>
         )}

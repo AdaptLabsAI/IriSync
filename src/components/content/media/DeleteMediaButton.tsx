@@ -160,10 +160,10 @@ export const DeleteMediaButton: React.FC<DeleteMediaButtonProps> = ({
         
         <DialogContent>
           {result ? (
-            <div className={`text-center ${result.success ? 'text-green-600' : 'text-red-600'}`}>
+            <div className={`text-center ${result.success ? 'text-[#00CC44]' : 'text-red-600'}`}>
               <div className="mx-auto w-12 h-12 rounded-full flex items-center justify-center mb-4 bg-gray-100">
                 {result.success ? (
-                  <Trash2 className="h-6 w-6 text-green-600" />
+                  <Trash2 className="h-6 w-6 text-[#00CC44]" />
                 ) : (
                   <X className="h-6 w-6 text-red-600" />
                 )}

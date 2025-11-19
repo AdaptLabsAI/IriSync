@@ -193,7 +193,7 @@ export const SubscriptionButton: React.FC<SubscriptionButtonProps> = ({
         <div className="py-4">
           {success ? (
             <div className="flex flex-col items-center justify-center space-y-3 py-6">
-              <CheckCircle className="h-12 w-12 text-green-500" />
+              <CheckCircle className="h-12 w-12 text-[#00FF6A]" />
               <p className="text-center font-medium">
                 {actionType === 'upgrade' 
                   ? 'Upgrade Successful!' 

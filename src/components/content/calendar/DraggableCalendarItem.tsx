@@ -101,7 +101,7 @@ const DraggableCalendarItem: React.FC<DraggableCalendarItemProps> = ({
       case 'draft':
         return 'border-dashed';
       case 'published':
-        return 'border-green-400';
+        return 'border-[#00FF6A]/40';
       case 'failed':
         return 'border-red-400';
       case 'scheduled':
@@ -172,7 +172,7 @@ const DraggableCalendarItem: React.FC<DraggableCalendarItemProps> = ({
     >
       <div className="flex justify-between items-start">
         <span className="font-medium truncate text-sm">{title}</span>
-        {status === 'published' && <CheckIcon className="w-4 h-4 text-green-500" />}
+        {status === 'published' && <CheckIcon className="w-4 h-4 text-[#00CC44]" />}
         {status === 'failed' && <AlertIcon className="w-4 h-4 text-red-500" />}
       </div>
       

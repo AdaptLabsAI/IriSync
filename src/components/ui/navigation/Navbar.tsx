@@ -75,7 +75,7 @@ export default function Navbar() {
             {/* Logo */}
             <div className="flex-shrink-0">
               <Link href="/" className="flex items-center gap-2">
-                <div className="w-8 h-8 bg-green-500 rounded-lg flex items-center justify-center">
+                <div className="w-8 h-8 bg-[#00FF6A] rounded-lg flex items-center justify-center">
                   <MessageSquare className="w-5 h-5 text-white" />
                 </div>
                 <span className="text-xl font-semibold text-gray-900">IriSync</span>
@@ -92,7 +92,7 @@ export default function Navbar() {
                       href={item.href}
                       className={`px-3 py-2 text-sm font-medium transition-colors ${
                         pathname === item.href
-                          ? "text-gray-900 border-b-2 border-green-500"
+                          ? "text-gray-900 border-b-2 border-[#00FF6A]"
                           : "text-gray-500 hover:text-gray-900 hover:border-b-2 hover:border-gray-300"
                       }`}
                     >
@@ -104,7 +104,7 @@ export default function Navbar() {
                   href="/support"
                   className={`px-3 py-2 text-sm font-medium transition-colors ${
                     pathname === "/support" || pathname?.startsWith("/support/")
-                      ? "text-gray-900 border-b-2 border-green-500"
+                      ? "text-gray-900 border-b-2 border-[#00FF6A]"
                       : "text-gray-500 hover:text-gray-900 hover:border-b-2 hover:border-gray-300"
                   }`}
                 >
@@ -134,7 +134,7 @@ export default function Navbar() {
                       href="/dashboard"
                       className={`flex items-center gap-2 px-4 py-2 rounded-lg border text-sm font-medium transition-colors ${
                         pathname?.startsWith("/dashboard")
-                          ? "border-green-500 text-green-600 bg-green-50"
+                          ? "border-[#00FF6A] text-[#00CC44] bg-[#00FF6A]/5"
                           : "border-gray-300 text-gray-700 hover:border-gray-400 hover:bg-gray-50"
                       }`}
                     >
@@ -166,7 +166,7 @@ export default function Navbar() {
                     </Link>
                     <Link
                       href="/register"
-                      className="bg-green-500 hover:bg-green-600 text-white font-medium px-6 py-2 rounded-lg text-sm transition-colors"
+                      className="bg-[#00FF6A] hover:bg-[#00CC44] text-white font-medium px-6 py-2 rounded-lg text-sm transition-colors"
                     >
                       Sign Up Free
                     </Link>
@@ -196,7 +196,7 @@ export default function Navbar() {
             <div className="container mx-auto px-4">
               <div className="flex items-center justify-between py-6 border-b">
                 <Link href="/" className="flex items-center gap-2" onClick={handleDrawerToggle}>
-                  <div className="w-8 h-8 bg-green-500 rounded-lg flex items-center justify-center">
+                  <div className="w-8 h-8 bg-[#00FF6A] rounded-lg flex items-center justify-center">
                     <MessageSquare className="w-5 h-5 text-white" />
                   </div>
                   <span className="text-xl font-semibold text-gray-900">IriSync</span>
@@ -217,7 +217,7 @@ export default function Navbar() {
                     onClick={handleDrawerToggle}
                     className={`block px-3 py-3 text-base font-medium rounded-md transition-colors ${
                       pathname === item.href
-                        ? "text-green-600 bg-green-50"
+                        ? "text-[#00CC44] bg-[#00FF6A]/5"
                         : "text-gray-700 hover:text-gray-900 hover:bg-gray-50"
                     }`}
                   >
@@ -230,7 +230,7 @@ export default function Navbar() {
                   onClick={handleDrawerToggle}
                   className={`block px-3 py-3 text-base font-medium rounded-md transition-colors ${
                     pathname === "/support" || pathname?.startsWith("/support/")
-                      ? "text-green-600 bg-green-50"
+                      ? "text-[#00CC44] bg-[#00FF6A]/5"
                       : "text-gray-700 hover:text-gray-900 hover:bg-gray-50"
                   }`}
                 >
@@ -243,7 +243,7 @@ export default function Navbar() {
                       <Link
                         href="/dashboard"
                         onClick={handleDrawerToggle}
-                        className="flex items-center gap-3 px-3 py-3 text-base font-medium text-green-600 bg-green-50 rounded-md"
+                        className="flex items-center gap-3 px-3 py-3 text-base font-medium text-[#00CC44] bg-[#00FF6A]/5 rounded-md"
                       >
                         <User className="w-5 h-5" />
                         Dashboard
@@ -264,14 +264,14 @@ export default function Navbar() {
                       <Link
                         href="/login"
                         onClick={handleDrawerToggle}
-                        className="block w-full px-3 py-3 text-base font-medium text-green-600 bg-green-50 rounded-md text-center"
+                        className="block w-full px-3 py-3 text-base font-medium text-[#00CC44] bg-[#00FF6A]/5 rounded-md text-center"
                       >
                         Log In
                       </Link>
                       <Link
                         href="/register"
                         onClick={handleDrawerToggle}
-                        className="block w-full bg-green-500 hover:bg-green-600 text-white font-medium py-3 rounded-lg text-center transition-colors"
+                        className="block w-full bg-[#00FF6A] hover:bg-[#00CC44] text-white font-medium py-3 rounded-lg text-center transition-colors"
                       >
                         Sign Up Free
                       </Link>

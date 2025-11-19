@@ -6,6 +6,7 @@ import { Box, Typography, Container, Paper, CircularProgress, Divider } from '@m
 import ProfileForm from '@/components/settings/ProfileForm';
 import AccountSettings from '@/components/settings/AccountSettings';
 import ProfileRoleInfo from '@/components/settings/ProfileRoleInfo';
+import { tokens } from '@/styles/tokens';
 
 export default function ProfileSettingsPage() {
   const { data: session } = useSession();
@@ -38,20 +39,24 @@ export default function ProfileSettingsPage() {
         <Box sx={{ mb: 5, textAlign: { xs: 'center', md: 'left' } }}>
           <Typography
             variant="h4"
-            fontWeight={700}
             gutterBottom
             sx={{
-    background: 'linear-gradient(90deg, #22c55e, #16a34a)',
-
-
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              display: 'inline-block',
+              fontWeight: 600,
+              fontSize: tokens.typography.fontSize.h1,
+              color: tokens.colors.text.primary,
             }}
           >
             Profile Settings
           </Typography>
-          <Typography variant="body1" color="text.secondary" maxWidth="sm" mx={{ xs: 'auto', md: 0 }}>
+          <Typography
+            variant="body1"
+            maxWidth="sm"
+            mx={{ xs: 'auto', md: 0 }}
+            sx={{
+              color: tokens.colors.text.secondary,
+              fontSize: tokens.typography.fontSize.body,
+            }}
+          >
             Manage your personal information, account preferences, and system access in one place.
           </Typography>
         </Box>
@@ -65,11 +70,11 @@ export default function ProfileSettingsPage() {
         >
           {/* Personal Information */}
           <Paper
-            elevation={3}
             sx={{
               flex: { md: '1 1 60%' },
               p: { xs: 3, md: 4 },
-              borderRadius: 4,
+              borderRadius: tokens.borderRadius.md,
+              boxShadow: tokens.shadows.md,
               bgcolor: 'background.paper',
             }}
           >
@@ -90,10 +95,10 @@ export default function ProfileSettingsPage() {
             }}
           >
             <Paper
-              elevation={3}
               sx={{
                 p: { xs: 3, md: 4 },
-                borderRadius: 4,
+                borderRadius: tokens.borderRadius.md,
+                boxShadow: tokens.shadows.md,
                 bgcolor: 'background.paper',
               }}
             >
@@ -105,10 +110,10 @@ export default function ProfileSettingsPage() {
             </Paper>
 
             <Paper
-              elevation={3}
               sx={{
                 p: { xs: 3, md: 4 },
-                borderRadius: 4,
+                borderRadius: tokens.borderRadius.md,
+                boxShadow: tokens.shadows.md,
                 bgcolor: 'background.paper',
               }}
             >

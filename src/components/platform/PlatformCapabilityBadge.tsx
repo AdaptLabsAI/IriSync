@@ -109,9 +109,9 @@ export const PlatformCapabilityBadge: React.FC<PlatformCapabilityBadgeProps> = (
     switch (status) {
       case 'available':
         return {
-          bgColor: 'bg-green-100',
-          textColor: 'text-green-800',
-          borderColor: 'border-green-200',
+          bgColor: 'bg-[#00FF6A]/10',
+          textColor: 'text-[#00CC44]',
+          borderColor: 'border-[#00FF6A]/20',
           description: 'This feature is available and fully functional.'
         };
       case 'limited':

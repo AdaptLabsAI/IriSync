@@ -168,7 +168,7 @@ const MediaAnalysisViewer: React.FC<MediaAnalysisViewerProps> = ({
                     <td className={`py-2 ${
                       warning.severity === 'high' ? 'text-red-600' :
                       warning.severity === 'medium' ? 'text-amber-600' :
-                      warning.severity === 'low' ? 'text-yellow-600' : 'text-green-600'
+                      warning.severity === 'low' ? 'text-yellow-600' : 'text-[#00CC44]'
                     }`}>
                       {warning.severity}
                     </td>

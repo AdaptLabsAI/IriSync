@@ -216,7 +216,7 @@ export const MessageCard: React.FC<MessageCardProps> = ({
     if (!message.sentiment || message.sentiment === 'neutral') return null;
     
     const sentimentMap = {
-      positive: { color: 'text-green-500', label: 'Positive Sentiment' },
+      positive: { color: 'text-[#00CC44]', label: 'Positive Sentiment' },
       negative: { color: 'text-red-500', label: 'Negative Sentiment' }
     };
     
@@ -227,7 +227,7 @@ export const MessageCard: React.FC<MessageCardProps> = ({
         <Tooltip>
           <TooltipTrigger asChild>
             <div className={`h-2 w-2 rounded-full ${
-              message.sentiment === 'positive' ? 'bg-green-500' : 'bg-red-500'
+              message.sentiment === 'positive' ? 'bg-[#00CC44]' : 'bg-red-500'
             } ml-2`} />
           </TooltipTrigger>
           <TooltipContent>

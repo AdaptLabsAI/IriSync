@@ -37,6 +37,7 @@ import {
   SentimentDissatisfied as NegativeIcon,
   MoreVert as MoreIcon
 } from '@mui/icons-material';
+import { tokens } from '@/styles/tokens';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -138,10 +139,25 @@ export default function ListeningPage() {
       <Box sx={{ mb: 4 }}>
         <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 2 }}>
           <Box>
-            <Typography variant="h4" component="h1" gutterBottom fontWeight="bold">
-              👂 Social Listening
+            <Typography
+              variant="h4"
+              component="h1"
+              gutterBottom
+              sx={{
+                fontWeight: 600,
+                fontSize: tokens.typography.fontSize.h1,
+                color: tokens.colors.text.primary
+              }}
+            >
+              Social Listening
             </Typography>
-            <Typography variant="body2" color="text.secondary">
+            <Typography
+              variant="body2"
+              sx={{
+                color: tokens.colors.text.secondary,
+                fontSize: tokens.typography.fontSize.body
+              }}
+            >
               Monitor brand mentions, keywords, and conversations across social media
             </Typography>
           </Box>
@@ -149,10 +165,12 @@ export default function ListeningPage() {
             variant="contained"
             startIcon={<AddIcon />}
             sx={{
-              bgcolor: '#00C853',
-              '&:hover': { bgcolor: '#00A046' },
+              bgcolor: tokens.colors.primary.main,
+              '&:hover': { bgcolor: tokens.colors.primary.dark },
               textTransform: 'none',
-              fontWeight: 600
+              fontWeight: 600,
+              borderRadius: tokens.borderRadius.md,
+              boxShadow: tokens.shadows.md,
             }}
           >
             Add Keyword

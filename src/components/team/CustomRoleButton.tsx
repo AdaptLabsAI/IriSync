@@ -311,7 +311,7 @@ const CustomRoleButton: React.FC<CustomRoleButtonProps> = ({
                   </div>
                 )}
                 {selectedRole.isDefault && (
-                  <div className="px-2 py-0.5 bg-green-100 text-green-800 text-xs rounded-md flex items-center">
+                  <div className="px-2 py-0.5 bg-[#00FF6A]/10 text-[#00CC44] text-xs rounded-md flex items-center">
                     <Check className="h-3 w-3 mr-1" />
                     Default
                   </div>
@@ -341,7 +341,7 @@ const CustomRoleButton: React.FC<CustomRoleButtonProps> = ({
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-y-3">
                         {categoryPermissions.map(permission => (
                           <div key={permission.id} className="flex items-center gap-2">
-                            <Check className="h-4 w-4 text-green-500" />
+                            <Check className="h-4 w-4 text-[#00CC44]" />
                             <div>
                               <div className="text-sm font-medium">{permission.name}</div>
                               <div className="text-xs text-gray-500">{permission.description}</div>
@@ -516,7 +516,7 @@ const CustomRoleButton: React.FC<CustomRoleButtonProps> = ({
                                 </div>
                               )}
                               {role.isDefault && (
-                                <div className="px-2 py-0.5 bg-green-100 text-green-800 text-xs rounded-md flex items-center">
+                                <div className="px-2 py-0.5 bg-[#00FF6A]/10 text-[#00CC44] text-xs rounded-md flex items-center">
                                   <Check className="h-3 w-3 mr-1" />
                                   Default
                                 </div>

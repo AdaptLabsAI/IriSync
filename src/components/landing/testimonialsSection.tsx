@@ -168,7 +168,7 @@ const NavigationDots = ({
           key={index}
           onClick={() => onChange(index)}
           className={`w-2 h-2 rounded-full transition-colors duration-200 cursor-pointer hover:scale-110 ${
-            index === current ? "bg-green-500" : "bg-gray-300 hover:bg-gray-400"
+            index === current ? "bg-[#00FF6A]" : "bg-gray-300 hover:bg-gray-400"
           }`}
           aria-label={`Go to slide ${index + 1}`}
         />
@@ -197,7 +197,7 @@ export default function TestimonialsSection() {
         {/* Header */}
         <div className="text-center mb-12">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-3">
-            What our <span className="text-green-500">client</span> are saying
+            What our <span className="text-[#00FF6A]">client</span> are saying
           </h2>
           <p className="text-gray-500 text-lg">The success of our users speaks louder than words</p>
         </div>

@@ -9,7 +9,6 @@ import {
   Button,
   Stack,
   Chip,
-  Grid,
   Card,
   CardContent,
   TextField,
@@ -22,6 +21,7 @@ import {
   InputAdornment,
   Alert
 } from '@mui/material';
+import Grid from '@/components/ui/grid';
 import {
   Psychology as AIIcon,
   Send as SendIcon,
@@ -34,6 +34,7 @@ import {
   CompareArrows as CompareIcon,
   AutoAwesome as SparkleIcon
 } from '@mui/icons-material';
+import { tokens } from '@/styles/tokens';
 
 /**
  * AI Toolkit Page
@@ -173,7 +174,7 @@ export default function AIToolkitPage() {
             <Stack direction="row" alignItems="center" spacing={2}>
               <Avatar
                 sx={{
-                  bgcolor: '#00C853',
+                  bgcolor: tokens.colors.primary.main,
                   width: 48,
                   height: 48
                 }}
@@ -181,10 +182,24 @@ export default function AIToolkitPage() {
                 <AIIcon sx={{ fontSize: 28 }} />
               </Avatar>
               <Box>
-                <Typography variant="h4" component="h1" fontWeight="bold">
+                <Typography
+                  variant="h4"
+                  component="h1"
+                  sx={{
+                    fontWeight: 600,
+                    fontSize: tokens.typography.fontSize.h1,
+                    color: tokens.colors.text.primary
+                  }}
+                >
                   AI Toolkit
                 </Typography>
-                <Typography variant="body2" color="text.secondary">
+                <Typography
+                  variant="body2"
+                  sx={{
+                    color: tokens.colors.text.secondary,
+                    fontSize: tokens.typography.fontSize.body
+                  }}
+                >
                   Your intelligent social media assistant
                 </Typography>
               </Box>
@@ -203,7 +218,14 @@ export default function AIToolkitPage() {
         {/* Left Column - AI Chat Interface */}
         <Grid item xs={12} lg={8}>
           {/* Chat Interface */}
-          <Paper sx={{ height: '600px', display: 'flex', flexDirection: 'column', mb: 3 }}>
+          <Paper sx={{
+            height: '600px',
+            display: 'flex',
+            flexDirection: 'column',
+            mb: 3,
+            borderRadius: tokens.borderRadius.md,
+            boxShadow: tokens.shadows.md,
+          }}>
             {/* Chat Header */}
             <Box sx={{ p: 3, borderBottom: 1, borderColor: 'divider', bgcolor: 'primary.main', color: 'white' }}>
               <Stack direction="row" alignItems="center" spacing={2}>
@@ -229,7 +251,7 @@ export default function AIToolkitPage() {
                     sx={{
                       width: 80,
                       height: 80,
-                      bgcolor: '#00C853',
+                      bgcolor: tokens.colors.primary.main,
                       mx: 'auto',
                       mb: 3
                     }}
@@ -240,7 +262,7 @@ export default function AIToolkitPage() {
                     Hello! 👋
                   </Typography>
                   <Typography variant="h6" color="text.secondary" gutterBottom>
-                    How may <span style={{ color: '#00C853' }}>I assist you today?</span>
+                    How may <span style={{ color: tokens.colors.primary.main }}>I assist you today?</span>
                   </Typography>
                   <Typography variant="body2" color="text.secondary" sx={{ mt: 2 }}>
                     Try asking about your analytics, content ideas, or best posting times
@@ -260,7 +282,7 @@ export default function AIToolkitPage() {
                         sx={{
                           p: 2,
                           maxWidth: '75%',
-                          bgcolor: message.role === 'user' ? '#00C853' : 'white',
+                          bgcolor: message.role === 'user' ? tokens.colors.primary.main : 'white',
                           color: message.role === 'user' ? 'white' : 'text.primary',
                         }}
                       >
@@ -314,9 +336,9 @@ export default function AIToolkitPage() {
                   onClick={() => handleSendMessage()}
                   disabled={!inputMessage.trim() || isLoading}
                   sx={{
-                    bgcolor: '#00C853',
+                    bgcolor: tokens.colors.primary.main,
                     color: 'white',
-                    '&:hover': { bgcolor: '#00A046' },
+                    '&:hover': { bgcolor: tokens.colors.primary.dark },
                     '&.Mui-disabled': {
                       bgcolor: 'grey.300',
                       color: 'grey.500'
@@ -330,7 +352,11 @@ export default function AIToolkitPage() {
           </Paper>
 
           {/* Quick Prompts */}
-          <Paper sx={{ p: 3 }}>
+          <Paper sx={{
+            p: 3,
+            borderRadius: tokens.borderRadius.md,
+            boxShadow: tokens.shadows.md,
+          }}>
             <Typography variant="h6" fontWeight="bold" gutterBottom>
               Quick Prompts
             </Typography>
@@ -344,7 +370,7 @@ export default function AIToolkitPage() {
                   sx={{
                     cursor: 'pointer',
                     '&:hover': {
-                      bgcolor: '#00C853',
+                      bgcolor: tokens.colors.primary.main,
                       color: 'white',
                       '& .MuiChip-icon': {
                         color: 'white'
@@ -360,7 +386,12 @@ export default function AIToolkitPage() {
         {/* Right Column - Insights & Recommendations */}
         <Grid item xs={12} lg={4}>
           {/* Best Time to Post */}
-          <Paper sx={{ p: 3, mb: 3 }}>
+          <Paper sx={{
+            p: 3,
+            mb: 3,
+            borderRadius: tokens.borderRadius.md,
+            boxShadow: tokens.shadows.md,
+          }}>
             <Typography variant="h6" fontWeight="bold" gutterBottom>
               <Stack direction="row" alignItems="center" spacing={1}>
                 <ScheduleIcon color="primary" />
@@ -403,7 +434,11 @@ export default function AIToolkitPage() {
           </Paper>
 
           {/* AI Features */}
-          <Paper sx={{ p: 3 }}>
+          <Paper sx={{
+            p: 3,
+            borderRadius: tokens.borderRadius.md,
+            boxShadow: tokens.shadows.md,
+          }}>
             <Typography variant="h6" fontWeight="bold" gutterBottom>
               AI-Powered Features
             </Typography>

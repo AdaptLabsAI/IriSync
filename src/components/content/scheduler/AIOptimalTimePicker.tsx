@@ -113,14 +113,14 @@ export function AIOptimalTimePicker({
 
   // Get confidence color
   const getConfidenceColor = (score: number): string => {
-    if (score >= 0.8) return 'text-green-600 bg-green-50';
+    if (score >= 0.8) return 'text-[#00CC44] bg-[#00FF6A]/5';
     if (score >= 0.6) return 'text-yellow-600 bg-yellow-50';
     return 'text-red-600 bg-red-50';
   };
 
   // Get engagement icon
   const getEngagementIcon = (expectedTotal: number) => {
-    if (expectedTotal > 100) return <TrendingUp className="w-4 h-4 text-green-500" />;
+    if (expectedTotal > 100) return <TrendingUp className="w-4 h-4 text-[#00CC44]" />;
     if (expectedTotal > 50) return <Users className="w-4 h-4 text-yellow-500" />;
     return <Target className="w-4 h-4 text-gray-500" />;
   };
@@ -130,7 +130,7 @@ export function AIOptimalTimePicker({
       {/* AI Optimization Toggle */}
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-2">
-          <Lightbulb className="w-5 h-5 text-blue-500" />
+          <Lightbulb className="w-5 h-5 text-[#00CC44]" />
           <span className="font-medium text-gray-700">AI Optimal Times</span>
           {shouldChargeForOptimalTimes && (
             <Badge variant="outline" className="text-xs">
@@ -188,26 +188,26 @@ export function AIOptimalTimePicker({
 
       {/* AI Recommendations */}
       {showRecommendations && (
-        <Card className="p-4 border-blue-200 bg-blue-50">
+        <Card className="p-4 border-[#00FF6A]/20 bg-[#00FF6A]/5">
           <div className="space-y-4">
             {/* Primary Recommendation */}
             {bestOverallTime && (
               <div>
                 <div className="flex items-center space-x-2 mb-3">
-                  <Star className="w-5 h-5 text-blue-500" />
+                  <Star className="w-5 h-5 text-[#00CC44]" />
                   <h3 className="font-semibold text-gray-800">Best Time to Post</h3>
                   <Badge className={`text-xs ${getConfidenceColor(bestOverallTime.score)}`}>
                     {getConfidenceLevel(bestOverallTime.score)} Confidence
                   </Badge>
                 </div>
                 
-                <div 
-                  className="bg-white rounded-lg p-4 border border-blue-200 cursor-pointer hover:bg-blue-25 transition-colors"
+                <div
+                  className="bg-white rounded-lg p-4 border border-[#00FF6A]/20 cursor-pointer hover:bg-[#00FF6A]/5 transition-colors"
                   onClick={() => handleOptimalTimeSelect(bestOverallTime)}
                 >
                   <div className="flex items-center justify-between mb-2">
                     <div className="flex items-center space-x-2">
-                      <Calendar className="w-4 h-4 text-blue-500" />
+                      <Calendar className="w-4 h-4 text-[#00CC44]" />
                       <span className="font-medium text-gray-800">
                         {formatOptimalTime(bestOverallTime)}
                       </span>
@@ -321,7 +321,7 @@ export function AIOptimalTimePicker({
                 {optimalDayTimes && (
                   <div className="mt-3 space-y-2">
                     <div
-                      className="bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg p-3 cursor-pointer hover:from-blue-600 hover:to-purple-700 transition-colors"
+                      className="bg-gradient-to-r from-[#00CC44] to-purple-600 text-white rounded-lg p-3 cursor-pointer hover:from-[#00CC44] hover:to-purple-700 transition-colors"
                       onClick={() => handleOptimalTimeSelect(optimalDayTimes.bestOverall)}
                     >
                       <div className="font-semibold">
@@ -338,7 +338,7 @@ export function AIOptimalTimePicker({
                         <ul className="text-sm text-gray-600 space-y-1">
                           {optimalDayTimes.insights.slice(0, 3).map((insight, index) => (
                             <li key={index} className="flex items-start">
-                              <span className="text-blue-500 mr-2">•</span>
+                              <span className="text-[#00CC44] mr-2">•</span>
                               {insight}
                             </li>
                           ))}
@@ -396,7 +396,7 @@ export function AIOptimalTimePicker({
           <Button
             onClick={() => handleOptimalTimeSelect(bestOverallTime)}
             size="sm"
-            className="flex-1 bg-blue-500 hover:bg-blue-600"
+            className="flex-1 bg-[#00CC44] hover:bg-[#00CC44]"
           >
             Use Best Time
           </Button>

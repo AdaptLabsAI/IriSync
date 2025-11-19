@@ -164,7 +164,7 @@ const TeamActivityButton: React.FC<TeamActivityButtonProps> = ({
   const renderActivityContent = (item: TeamActivityItem) => {
     const actionColor = {
       content: 'text-blue-600',
-      platform: 'text-green-600',
+      platform: 'text-[#00CC44]',
       team: 'text-purple-600',
       subscription: 'text-amber-600',
       system: 'text-gray-600'
@@ -363,7 +363,7 @@ const TeamActivityButton: React.FC<TeamActivityButtonProps> = ({
                       .filter(item => item.actionType === 'platform')
                       .map(item => (
                         <div key={item.id} className="pl-10 py-2 relative hover:bg-gray-50 rounded-md">
-                          <div className="absolute left-[10px] top-[14px] w-2 h-2 rounded-full bg-green-500" />
+                          <div className="absolute left-[10px] top-[14px] w-2 h-2 rounded-full bg-[#00CC44]" />
                           {renderActivityContent(item)}
                         </div>
                       ))}

@@ -191,7 +191,7 @@ const RevisionHistoryButton: React.FC<RevisionHistoryButtonProps> = ({
                   {change.newValue !== undefined && (
                     <div>
                       <p className="text-xs text-gray-500 mb-1">New:</p>
-                      <div className="p-2 bg-green-50 text-sm rounded">{change.newValue || '(empty)'}</div>
+                      <div className="p-2 bg-[#00FF6A]/5 text-sm rounded">{change.newValue || '(empty)'}</div>
                     </div>
                   )}
                 </div>

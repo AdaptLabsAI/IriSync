@@ -212,7 +212,7 @@ export const ResponseTemplateButton: React.FC<ResponseTemplateButtonProps> = ({
                 {canCreateTemplates && (
                   <button
                     onClick={() => setShowCreateForm(true)}
-                    className="mt-2 text-blue-500 hover:text-blue-700"
+                    className="mt-2 text-[#00CC44] hover:text-[#00CC44]"
                   >
                     Create a new template
                   </button>
@@ -359,7 +359,7 @@ export const ResponseTemplateButton: React.FC<ResponseTemplateButtonProps> = ({
                               favoriteAction.loading ? (
                                 <Loader2 className="h-4 w-4 animate-spin" />
                               ) : favoriteAction.success ? (
-                                <Check className="h-4 w-4 text-green-500" />
+                                <Check className="h-4 w-4 text-[#00CC44]" />
                               ) : (
                                 <Star className="h-4 w-4" />
                               )
@@ -378,7 +378,7 @@ export const ResponseTemplateButton: React.FC<ResponseTemplateButtonProps> = ({
                     <Button
                       variant="ghost"
                       size="sm"
-                      className="w-full justify-start text-blue-500"
+                      className="w-full justify-start text-[#00CC44]"
                       onClick={() => setShowCreateForm(true)}
                     >
                       <Plus className="h-4 w-4 mr-2" />

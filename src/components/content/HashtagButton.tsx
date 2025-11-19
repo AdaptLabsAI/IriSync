@@ -239,7 +239,7 @@ export const HashtagButton: React.FC<HashtagButtonProps> = ({
     
     switch (trend) {
       case 'up':
-        return <span className="text-green-500 text-xs">↑</span>;
+        return <span className="text-[#00CC44] text-xs">↑</span>;
       case 'down':
         return <span className="text-red-500 text-xs">↓</span>;
       case 'stable':

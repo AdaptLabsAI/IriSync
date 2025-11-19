@@ -223,7 +223,7 @@ const FeedbackSubmitButton: React.FC<FeedbackSubmitButtonProps> = ({
           
           {submitted ? (
             <div className="py-6 flex flex-col items-center text-center">
-              <ThumbsUp className="h-16 w-16 text-green-500 mb-4" />
+              <ThumbsUp className="h-16 w-16 text-[#00CC44] mb-4" />
               <h3 className="text-xl font-medium mb-2">Feedback Received</h3>
               <p className="text-gray-600 mb-6">
                 Thank you for taking the time to share your thoughts with us. 

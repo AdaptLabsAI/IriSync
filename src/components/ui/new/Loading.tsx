@@ -19,7 +19,7 @@ export const Loading: React.FC<LoadingProps> = ({
   return (
     <div className={cn('flex items-center justify-center', className)}>
       <div className={cn(
-        'animate-spin rounded-full border-2 border-gray-300 border-t-green-500',
+        'animate-spin rounded-full border-2 border-gray-300 border-t-[#00CC44]',
         sizeClasses[size]
       )}>
       </div>

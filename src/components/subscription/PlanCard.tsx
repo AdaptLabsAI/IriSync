@@ -135,7 +135,7 @@ export const PlanCard: React.FC<PlanCardProps> = ({
         )}
         
         {yearlyDiscount > 0 && showYearly && (
-          <p className="mt-1 text-sm text-green-600">
+          <p className="mt-1 text-sm text-[#00CC44]">
             Save {yearlyDiscount}% with annual billing
           </p>
         )}
@@ -146,7 +146,7 @@ export const PlanCard: React.FC<PlanCardProps> = ({
           <li key={index} className="flex items-start">
             <div className="mr-2 mt-0.5">
               {feature.included ? (
-                <Check className="h-4 w-4 text-green-500" />
+                <Check className="h-4 w-4 text-[#00FF6A]" />
               ) : (
                 <X className="h-4 w-4 text-gray-300" />
               )}

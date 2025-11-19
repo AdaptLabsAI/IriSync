@@ -152,7 +152,7 @@ export default function TwitterContentGenerator({
   const getCharacterLimitClass = (count: number) => {
     if (count > 280) return 'text-red-500';
     if (count > 240) return 'text-amber-500';
-    return 'text-green-600';
+    return 'text-[#00CC44]';
   };
   
   return (

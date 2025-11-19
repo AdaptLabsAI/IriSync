@@ -33,7 +33,7 @@ const EngagementPredictionChart: React.FC<EngagementPredictionChartProps> = ({
   // Helper to get color class based on score
   const getScoreColorClass = (score: number, isBg = false) => {
     const prefix = isBg ? 'bg-' : 'text-';
-    if (score >= 8) return `${prefix}green-500`;
+    if (score >= 8) return isBg ? 'bg-[#00CC44]' : 'text-[#00CC44]';
     if (score >= 6) return `${prefix}blue-500`;
     if (score >= 4) return `${prefix}amber-500`;
     return `${prefix}red-500`;
@@ -62,13 +62,13 @@ const EngagementPredictionChart: React.FC<EngagementPredictionChartProps> = ({
               />
               
               {/* Score circle */}
-              <circle 
-                cx="50" 
-                cy="50" 
-                r="45" 
-                fill="none" 
-                stroke={result.engagementScore >= 80 ? "#22c55e" : 
-                        result.engagementScore >= 60 ? "#3b82f6" : 
+              <circle
+                cx="50"
+                cy="50"
+                r="45"
+                fill="none"
+                stroke={result.engagementScore >= 80 ? "#00CC44" :
+                        result.engagementScore >= 60 ? "#3b82f6" :
                         result.engagementScore >= 40 ? "#f59e0b" : "#ef4444"} 
                 strokeWidth="8" 
                 strokeDasharray={`${(result.engagementScore / 100) * 283} 283`}
@@ -172,11 +172,11 @@ const EngagementPredictionChart: React.FC<EngagementPredictionChartProps> = ({
           {/* Strengths */}
           {result.strengths && result.strengths.length > 0 && (
             <div className="p-3 border rounded-md">
-              <h4 className="font-medium mb-2 text-green-600">Strengths</h4>
+              <h4 className="font-medium mb-2 text-[#00CC44]">Strengths</h4>
               <ul className="space-y-1 text-sm">
                 {result.strengths.map((strength, idx) => (
                   <li key={idx} className="flex items-start">
-                    <span className="text-green-500 mr-2">✓</span>
+                    <span className="text-[#00CC44] mr-2">✓</span>
                     <span>{strength}</span>
                   </li>
                 ))}

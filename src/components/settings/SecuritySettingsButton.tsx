@@ -509,7 +509,7 @@ const SecuritySettingsButton: React.FC<SecuritySettingsButtonProps> = ({
                               {item.device} / {item.browser}
                             </td>
                             <td className="px-4 py-2 whitespace-nowrap text-xs">
-                              <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${item.successful ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+                              <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${item.successful ? 'bg-[#00FF6A]/10 text-[#00CC44]' : 'bg-red-100 text-red-800'}`}>
                                 {item.successful ? 'Success' : 'Failed'}
                               </span>
                             </td>

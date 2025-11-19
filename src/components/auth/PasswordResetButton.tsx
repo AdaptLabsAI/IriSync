@@ -169,8 +169,8 @@ export const PasswordResetButton: React.FC<PasswordResetButtonProps> = ({
           ) : (
             <>
               <div className="flex items-center justify-center my-4">
-                <div className="bg-green-100 rounded-full p-3">
-                  <CheckIcon className="w-6 h-6 text-green-600" />
+                <div className="bg-[#00FF6A]/10 rounded-full p-3">
+                  <CheckIcon className="w-6 h-6 text-[#00CC44]" />
                 </div>
               </div>
               <p className="text-center text-sm text-gray-600 mb-4">

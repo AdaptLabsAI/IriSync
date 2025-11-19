@@ -206,7 +206,7 @@ export default function LoginPage() {
           {/* Header */}
           <div className="text-center mb-8">
             <h1 className="text-4xl font-semibold text-gray-900 mb-2">
-              Welcome to <span className="text-[#00C853]">IriSync</span>
+              Welcome to <span className="text-[#00FF6A]">IriSync</span>
             </h1>
             <p className="text-gray-600 text-lg">
               Access your journey by logging in
@@ -218,7 +218,7 @@ export default function LoginPage() {
             <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-xl">
               <p className="text-red-700 text-sm">{formErrors.general}</p>
               {emailVerificationNeeded && (
-                <Link href="/resend-verification" className="text-green-600 underline text-sm mt-2 block">
+                <Link href="/resend-verification" className="text-[#00CC44] underline text-sm mt-2 block">
                   Resend verification email
                 </Link>
               )}
@@ -242,7 +242,7 @@ export default function LoginPage() {
                   value={formData.email}
                   onChange={handleInputChange}
                   placeholder="Email Address"
-                  className={`w-full pl-12 pr-4 py-4 border ${formErrors.email ? 'border-red-300' : 'border-gray-200'} rounded-xl bg-gray-50 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all text-gray-900 placeholder-gray-400`}
+                  className={`w-full pl-12 pr-4 py-4 border ${formErrors.email ? 'border-red-300' : 'border-gray-200'} rounded-xl bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#00FF6A] focus:border-transparent transition-all text-gray-900 placeholder-gray-400`}
                 />
               </div>
               {formErrors.email && (
@@ -265,7 +265,7 @@ export default function LoginPage() {
                   value={formData.password}
                   onChange={handleInputChange}
                   placeholder="Enter Password"
-                  className={`w-full pl-12 pr-12 py-4 border ${formErrors.password ? 'border-red-300' : 'border-gray-200'} rounded-xl bg-gray-50 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all text-gray-900 placeholder-gray-400`}
+                  className={`w-full pl-12 pr-12 py-4 border ${formErrors.password ? 'border-red-300' : 'border-gray-200'} rounded-xl bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#00FF6A] focus:border-transparent transition-all text-gray-900 placeholder-gray-400`}
                 />
                 <button
                   type="button"
@@ -292,7 +292,7 @@ export default function LoginPage() {
 
             {/* Forgot Password Link */}
             <div className="text-right">
-              <Link href="/reset-password" className="text-sm text-gray-900 font-medium underline hover:text-green-600 transition-colors">
+              <Link href="/reset-password" className="text-sm text-gray-900 font-medium underline hover:text-[#00CC44] transition-colors">
                 FORGOT PASSWORD?
               </Link>
             </div>
@@ -301,7 +301,7 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full py-4 bg-gradient-to-r from-[#00C853] to-[#00A045] text-white rounded-xl font-medium text-lg hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full py-4 bg-gradient-to-r from-[#00FF6A] to-[#00CC44] text-white rounded-xl font-medium text-lg hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isLoading ? 'Logging in...' : 'Login'}
             </button>
@@ -311,7 +311,7 @@ export default function LoginPage() {
           <div className="mt-6 text-center">
             <p className="text-gray-600">
               Don't have an account?{' '}
-              <Link href="/register" className="text-gray-900 font-medium underline hover:text-green-600 transition-colors">
+              <Link href="/register" className="text-gray-900 font-medium underline hover:text-[#00CC44] transition-colors">
                 CREATE NEW
               </Link>
             </p>

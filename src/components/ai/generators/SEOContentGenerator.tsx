@@ -463,9 +463,9 @@ export default function SEOContentGenerator({
                     <div className="flex items-center mb-3">
                       <span className="text-gray-700 mr-2">Overall SEO Score:</span>
                       <div className="bg-gray-200 h-2 rounded flex-grow">
-                        <div 
+                        <div
                           className={`h-2 rounded ${
-                            keywordAnalysis.score >= 80 ? 'bg-green-500' : 
+                            keywordAnalysis.score >= 80 ? 'bg-[#00CC44]' :
                             keywordAnalysis.score >= 60 ? 'bg-yellow-500' : 'bg-red-500'
                           }`}
                           style={{ width: `${keywordAnalysis.score}%` }}
@@ -483,8 +483,8 @@ export default function SEOContentGenerator({
                           <div key={keyword} className="bg-white p-2 rounded border text-sm">
                             <div className="font-medium truncate">{keyword}</div>
                             <div className={`text-xs ${
-                              parseFloat(density) > 0.5 && parseFloat(density) < 3 
-                                ? 'text-green-600' 
+                              parseFloat(density) > 0.5 && parseFloat(density) < 3
+                                ? 'text-[#00CC44]'
                                 : 'text-amber-600'
                             }`}>
                               {density}%

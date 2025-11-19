@@ -57,7 +57,7 @@ import { HiOutlineCalendar } from "react-icons/hi";
 // Navigation items matching Figma design and Hootsuite-style dashboard
 const baseNavItems: Array<Omit<NavItemProps, 'isActive' | 'children'>> = [
   {
-    name: 'Home',
+    name: 'Dashboard',
     icon: MdHome,
     path: '/dashboard'
   },
@@ -77,14 +77,14 @@ const baseNavItems: Array<Omit<NavItemProps, 'isActive' | 'children'>> = [
     path: '/dashboard/analytics'
   },
   {
-    name: 'Listening',
-    icon: TbEar,
-    path: '/dashboard/listening'
-  },
-  {
     name: 'AI Toolkit',
     icon: BsMagic,
     path: '/dashboard/ai'
+  },
+  {
+    name: 'System Health',
+    icon: MdHealthAndSafety,
+    path: '/dashboard/system-health'
   },
   {
     name: 'Settings',
@@ -329,7 +329,7 @@ const SidebarContent = ({ onClose, collapsed, onToggleCollapse }: SidebarProps) 
   return (
     <>
     <div className="h-screen "  style={{
-    background: 'linear-gradient(to bottom, #224B33, #252525)',
+    background: '#131A13',
   }}>
       <Toolbar sx={{ 
         display: 'flex', 

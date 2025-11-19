@@ -60,8 +60,8 @@ export default function VerifyEmailPage() {
                 </>
               ) : verified ? (
                 <>
-                  <div className="w-16 h-16 mx-auto bg-green-100 rounded-full flex items-center justify-center">
-                    <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div className="w-16 h-16 mx-auto bg-[#00FF6A]/10 rounded-full flex items-center justify-center">
+                    <svg className="w-8 h-8 text-[#00CC44]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
                     </svg>
                   </div>
@@ -69,15 +69,13 @@ export default function VerifyEmailPage() {
                   <Typography variant="body" color="secondary">
                     Thank you for verifying your email address. Your account has been fully activated.
                   </Typography>
-                  <Button 
-                    asChild
-                    size="lg"
-                    className="mt-4"
-                  >
-                    <Link href="/dashboard">
+                  <Link href="/dashboard" className="inline-block mt-4">
+                    <Button
+                      size="lg"
+                    >
                       Go to Dashboard
-                    </Link>
-                  </Button>
+                    </Button>
+                  </Link>
                 </>
               ) : (
                 <>
@@ -98,21 +96,18 @@ export default function VerifyEmailPage() {
                     The verification link may have expired or already been used.
                   </Typography>
                   <div className="flex flex-col sm:flex-row gap-4 justify-center mt-6">
-                    <Button 
-                      asChild
-                      variant="outline"
-                    >
-                      <Link href="/login">
+                    <Link href="/login">
+                      <Button
+                        variant="outline"
+                      >
                         Go to Login
-                      </Link>
-                    </Button>
-                    <Button 
-                      asChild
-                    >
-                      <Link href="/resend-verification">
+                      </Button>
+                    </Link>
+                    <Link href="/resend-verification">
+                      <Button>
                         Resend Verification
-                      </Link>
-                    </Button>
+                      </Button>
+                    </Link>
                   </div>
                 </>
               )}

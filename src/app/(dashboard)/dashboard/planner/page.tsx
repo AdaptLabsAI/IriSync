@@ -30,6 +30,7 @@ import {
 import CalendarView from '@/components/dashboard/CalendarView';
 import UpcomingPostsList from '@/components/dashboard/UpcomingPostsList';
 import { useSession } from 'next-auth/react';
+import { tokens } from '@/styles/tokens';
 
 // Define interface for scheduled posts
 interface ScheduledPost {
@@ -157,10 +158,25 @@ export default function PlannerPage() {
       <Box sx={{ mb: 4 }}>
         <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 2 }}>
           <Box>
-            <Typography variant="h4" component="h1" gutterBottom fontWeight="bold">
-              📅 Planner
+            <Typography
+              variant="h4"
+              component="h1"
+              gutterBottom
+              sx={{
+                fontWeight: 600,
+                fontSize: tokens.typography.fontSize.h1,
+                color: tokens.colors.text.primary
+              }}
+            >
+              Planner
             </Typography>
-            <Typography variant="body2" color="text.secondary">
+            <Typography
+              variant="body2"
+              sx={{
+                color: tokens.colors.text.secondary,
+                fontSize: tokens.typography.fontSize.body
+              }}
+            >
               Schedule and manage your social media content calendar
             </Typography>
           </Box>
@@ -168,10 +184,12 @@ export default function PlannerPage() {
             variant="contained"
             startIcon={<AddIcon />}
             sx={{
-              bgcolor: '#00C853',
-              '&:hover': { bgcolor: '#00A046' },
+              bgcolor: tokens.colors.primary.main,
+              '&:hover': { bgcolor: tokens.colors.primary.dark },
               textTransform: 'none',
-              fontWeight: 600
+              fontWeight: 600,
+              borderRadius: tokens.borderRadius.md,
+              boxShadow: tokens.shadows.md,
             }}
           >
             Create Post
@@ -181,7 +199,15 @@ export default function PlannerPage() {
         {/* Stats Cards */}
         <Grid container spacing={2} sx={{ mb: 3 }}>
           <Grid item xs={12} sm={4}>
-            <Card>
+            <Card sx={{
+              borderRadius: tokens.borderRadius.md,
+              boxShadow: tokens.shadows.md,
+              transition: 'transform 0.2s, box-shadow 0.2s',
+              '&:hover': {
+                transform: 'translateY(-2px)',
+                boxShadow: tokens.shadows.lg,
+              },
+            }}>
               <CardContent>
                 <Typography color="text.secondary" gutterBottom variant="body2">
                   Total Scheduled
@@ -193,7 +219,15 @@ export default function PlannerPage() {
             </Card>
           </Grid>
           <Grid item xs={12} sm={4}>
-            <Card>
+            <Card sx={{
+              borderRadius: tokens.borderRadius.md,
+              boxShadow: tokens.shadows.md,
+              transition: 'transform 0.2s, box-shadow 0.2s',
+              '&:hover': {
+                transform: 'translateY(-2px)',
+                boxShadow: tokens.shadows.lg,
+              },
+            }}>
               <CardContent>
                 <Typography color="text.secondary" gutterBottom variant="body2">
                   Ready to Publish
@@ -205,7 +239,15 @@ export default function PlannerPage() {
             </Card>
           </Grid>
           <Grid item xs={12} sm={4}>
-            <Card>
+            <Card sx={{
+              borderRadius: tokens.borderRadius.md,
+              boxShadow: tokens.shadows.md,
+              transition: 'transform 0.2s, box-shadow 0.2s',
+              '&:hover': {
+                transform: 'translateY(-2px)',
+                boxShadow: tokens.shadows.lg,
+              },
+            }}>
               <CardContent>
                 <Typography color="text.secondary" gutterBottom variant="body2">
                   Drafts
@@ -254,12 +296,21 @@ export default function PlannerPage() {
       </Box>
 
       {/* Calendar View */}
-      <Paper sx={{ p: 3, mb: 3 }}>
+      <Paper sx={{
+        p: 3,
+        mb: 3,
+        borderRadius: tokens.borderRadius.md,
+        boxShadow: tokens.shadows.md,
+      }}>
         <CalendarView posts={posts} />
       </Paper>
 
       {/* Upcoming Posts List */}
-      <Paper sx={{ p: 3 }}>
+      <Paper sx={{
+        p: 3,
+        borderRadius: tokens.borderRadius.md,
+        boxShadow: tokens.shadows.md,
+      }}>
         <Typography variant="h6" gutterBottom fontWeight="bold">
           Upcoming Posts
         </Typography>

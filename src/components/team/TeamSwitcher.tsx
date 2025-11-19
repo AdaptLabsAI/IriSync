@@ -32,12 +32,12 @@ export const TeamSwitcher: React.FC<TeamSwitcherProps> = ({
     if (orgRole === OrganizationRole.OWNER) return 'bg-purple-100 text-purple-800';
     if (orgRole === OrganizationRole.ORG_ADMIN) return 'bg-red-100 text-red-800';
     if (orgRole === OrganizationRole.VIEWER) return 'bg-gray-100 text-gray-800';
-    
+
     if (teamRole === TeamRole.TEAM_ADMIN) return 'bg-blue-100 text-blue-800';
-    if (teamRole === TeamRole.EDITOR) return 'bg-green-100 text-green-800';
+    if (teamRole === TeamRole.EDITOR) return 'bg-[#00FF6A]/10 text-[#00CC44]';
     if (teamRole === TeamRole.CONTRIBUTOR) return 'bg-yellow-100 text-yellow-800';
     if (teamRole === TeamRole.OBSERVER) return 'bg-gray-100 text-gray-600';
-    
+
     return 'bg-gray-100 text-gray-600';
   };
 

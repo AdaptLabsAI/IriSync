@@ -85,7 +85,7 @@ const BillingHistoryItem: React.FC<BillingHistoryItemProps> = ({
   const getStatusDetails = () => {
     switch (status) {
       case 'paid':
-        return { color: 'text-green-600', bg: 'bg-green-50', icon: <CheckCircle className="h-4 w-4" /> };
+        return { color: 'text-[#00CC44]', bg: 'bg-[#00FF6A]/5', icon: <CheckCircle className="h-4 w-4" /> };
       case 'failed':
         return { color: 'text-red-600', bg: 'bg-red-50', icon: <XCircle className="h-4 w-4" /> };
       case 'pending':

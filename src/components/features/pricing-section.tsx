@@ -138,13 +138,13 @@ export default function PricingSection() {
     sx={{
       fontSize: { xs: "1.75rem", sm: "2.5rem", lg: "3rem" },
       fontWeight: 600,
-      background: "linear-gradient(45deg, #00C853, #003305)",
+      background: "linear-gradient(45deg, #00FF6A, #00CC44)",
       backgroundClip: "text",
       WebkitBackgroundClip: "text",
       WebkitTextFillColor: "transparent",
     }}
   >
-    Simple transparent <span style={{ color: "#00C853" }}>Pricing</span>
+    Simple transparent <span style={{ color: "#00FF6A" }}>Pricing</span>
   </Typography>
 
   {/* Toggle Switch */}
@@ -163,10 +163,10 @@ export default function PricingSection() {
         px: { xs: 2, sm: 4 },
         py: { xs: 1, sm: 1.5 },
         borderRadius: 1.5,
-        background: !isAnnual ? "linear-gradient(45deg, #00C853, #003305)" : "transparent",
+        background: !isAnnual ? "linear-gradient(45deg, #00FF6A, #00CC44)" : "transparent",
         color: !isAnnual ? "white" : "grey.600",
         "&:hover": {
-          background: !isAnnual ? "linear-gradient(45deg, #00C853, #003305)" : "grey.200",
+          background: !isAnnual ? "linear-gradient(45deg, #00FF6A, #00CC44)" : "grey.200",
         },
       }}
     >
@@ -179,16 +179,16 @@ export default function PricingSection() {
         px: { xs: 2, sm: 4 },
         py: { xs: 1, sm: 1.5 },
         borderRadius: 1.5,
-        background: isAnnual ? "linear-gradient(45deg, #00C853, #003305)" : "transparent",
+        background: isAnnual ? "linear-gradient(45deg, #00FF6A, #00CC44)" : "transparent",
         color: isAnnual ? "white" : "grey.600",
         "&:hover": {
-          background: isAnnual ? "linear-gradient(45deg, #00C853, #003305)" : "grey.200",
+          background: isAnnual ? "linear-gradient(45deg, #00FF6A, #00CC44)" : "grey.200",
         },
         flexDirection: "column",
       }}
     >
       <Typography variant="body2">Annually</Typography>
-      <Typography variant="caption" sx={{ color: isAnnual ? "white" : "#00C853" }}>
+      <Typography variant="caption" sx={{ color: isAnnual ? "white" : "#00FF6A" }}>
         (20% off)
       </Typography>
     </Button>
@@ -276,11 +276,11 @@ export default function PricingSection() {
                     sx={{
                       py: 1.5,
                       whiteSpace: "nowrap",
-                      borderColor: "#00C853",
-                      color: "#00C853",
+                      borderColor: "#00FF6A",
+                      color: "#00FF6A",
                       "&:hover": {
-                        borderColor: "#00C853",
-                        bgcolor: "rgba(0, 200, 83, 0.04)",
+                        borderColor: "#00FF6A",
+                        bgcolor: "rgba(0, 255, 106, 0.04)",
                       },
                     }}
                   >
@@ -295,11 +295,11 @@ export default function PricingSection() {
                   size="large"
                   sx={{
                     py: 1.5,
-                    background: plan.highlight ? "linear-gradient(45deg, #00C853, #003305)" : "transparent",
-                    borderColor: plan.highlight ? "#00C853" : "#e0e0e0",
+                    background: plan.highlight ? "linear-gradient(45deg, #00FF6A, #00CC44)" : "transparent",
+                    borderColor: plan.highlight ? "#00FF6A" : "#e0e0e0",
                     "&:hover": {
                       background: plan.highlight
-                        ? "linear-gradient(45deg, #00C853, #003305)"
+                        ? "linear-gradient(45deg, #00FF6A, #00CC44)"
                         : "rgba(0, 0, 0, 0.04)",
                     },
                   }}
@@ -318,7 +318,7 @@ export default function PricingSection() {
                       sx={{
                         fontSize: 20,
                         color: "white",
-                        bgcolor: "#00C853",
+                        bgcolor: "#00FF6A",
                         borderRadius: "50%",
                         p: 0.25,
                       }}
@@ -363,7 +363,7 @@ export default function PricingSection() {
     <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 3 }}>
       <Typography variant="h4" component="h2" sx={{ fontWeight: "bold" }}>
         Plan{" "}
-        <Box component="span" sx={{ color: "#00C853" }}>
+        <Box component="span" sx={{ color: "#00FF6A" }}>
           Summary
         </Box>
       </Typography>
@@ -376,7 +376,7 @@ export default function PricingSection() {
       <Box>
         <Typography variant="body2" color="text.secondary" sx={{ mb: 4 }}>
           Great choice. You've selected the{" "}
-          <Box component="span" sx={{ fontWeight: 600, color: "#00C853" }}>
+          <Box component="span" sx={{ fontWeight: 600, color: "#00FF6A" }}>
             {selectedPlan.name} Plan
           </Box>{" "}
           designed to elevate your brand with powerful tools.
@@ -411,7 +411,7 @@ export default function PricingSection() {
               <Typography variant="body2" color="text.secondary">
                 Your plan
               </Typography>
-              <Typography variant="body2" sx={{ fontWeight: 600, color: "#00C853" }}>
+              <Typography variant="body2" sx={{ fontWeight: 600, color: "#00FF6A" }}>
                 {selectedPlan.name}
               </Typography>
             </Box>
@@ -456,7 +456,7 @@ export default function PricingSection() {
               <Typography variant="body1" sx={{ fontWeight: "bold" }}>
                 Total Payable
               </Typography>
-              <Typography variant="body1" sx={{ fontWeight: "bold", color: "#00C853" }}>
+              <Typography variant="body1" sx={{ fontWeight: "bold", color: "#00FF6A" }}>
                 $
                 {(
                   calculatePrice(selectedPlan.price, billingCycle === "annually") +
@@ -484,9 +484,9 @@ export default function PricingSection() {
             fullWidth
             sx={{
               py: 1.5,
-              background: "linear-gradient(45deg, #00C853, #003305)",
+              background: "linear-gradient(45deg, #00FF6A, #00CC44)",
               "&:hover": {
-                background: "linear-gradient(45deg, #00C853, #003305)",
+                background: "linear-gradient(45deg, #00FF6A, #00CC44)",
               },
             }}
           >

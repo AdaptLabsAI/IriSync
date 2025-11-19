@@ -113,8 +113,8 @@ const features: Feature[] = [
     title: 'AI Content Generation',
     description: 'Create engaging content automatically with our advanced AI tools',
     icon: (
-      <div className="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center">
-        <div className="w-8 h-8 bg-green-500 rounded-lg"></div>
+      <div className="w-16 h-16 bg-[#00FF6A]/10 rounded-2xl flex items-center justify-center">
+        <div className="w-8 h-8 bg-[#00FF6A] rounded-lg"></div>
       </div>
     )
   },
@@ -122,8 +122,8 @@ const features: Feature[] = [
     title: 'Multi-Platform Management',
     description: 'Manage all your social accounts from one unified dashboard',
     icon: (
-      <div className="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center">
-        <div className="w-8 h-8 bg-green-500 rounded-lg"></div>
+      <div className="w-16 h-16 bg-[#00FF6A]/10 rounded-2xl flex items-center justify-center">
+        <div className="w-8 h-8 bg-[#00FF6A] rounded-lg"></div>
       </div>
     )
   },
@@ -131,8 +131,8 @@ const features: Feature[] = [
     title: 'Engagement Analytics',
     description: 'Track performance with detailed analytics and custom reports',
     icon: (
-      <div className="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center">
-        <div className="w-8 h-8 bg-green-500 rounded-lg"></div>
+      <div className="w-16 h-16 bg-[#00FF6A]/10 rounded-2xl flex items-center justify-center">
+        <div className="w-8 h-8 bg-[#00FF6A] rounded-lg"></div>
       </div>
     )
   },
@@ -140,8 +140,8 @@ const features: Feature[] = [
     title: 'Smart Scheduling',
     description: 'Schedule posts at optimal times for maximum engagement',
     icon: (
-      <div className="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center">
-        <div className="w-8 h-8 bg-green-500 rounded-lg"></div>
+      <div className="w-16 h-16 bg-[#00FF6A]/10 rounded-2xl flex items-center justify-center">
+        <div className="w-8 h-8 bg-[#00FF6A] rounded-lg"></div>
       </div>
     )
   }
@@ -223,7 +223,7 @@ const data = [
       <h1 className="text-4xl sm:text-5xl md:text-6xl font-normal mb-4 text-gray-900">
         AI-Powered
       </h1>
-      <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-[#00C853] to-[#003305] bg-clip-text text-transparent">
+      <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-[#00FF6A] to-[#00CC44] bg-clip-text text-transparent">
         Marketing Mastery
       </h2>
       <p className="text-gray-600 mb-10 text-lg md:text-xl max-w-3xl mx-auto leading-relaxed">
@@ -237,7 +237,7 @@ const data = [
           </button>
         </Link>
         <Link href="/register">
-          <button className="px-8 py-4 bg-gradient-to-r from-[#00C853] to-[#003305] text-white rounded-xl hover:shadow-lg transition-all font-medium">
+          <button className="px-8 py-4 bg-gradient-to-r from-[#00FF6A] to-[#00CC44] text-white rounded-xl hover:shadow-lg transition-all font-medium">
             Start free trial
           </button>
         </Link>
@@ -247,16 +247,16 @@ const data = [
     {/* Grid Section */}
     <div className="relative grid grid-cols-1 md:grid-cols-3 gap-6 px-2 sm:px-4">
       {/* Connector Lines - Hidden on mobile, visible on md+ */}
-      <div className="hidden md:block absolute top-1/2 left-1/4 right-1/4 h-0.5 bg-green-200 z-0"></div>
-      <div className="hidden md:block absolute top-1/3 left-1/4 h-[calc(50%-4rem)] w-0.5 bg-green-200 z-0"></div>
-      <div className="hidden md:block absolute top-1/3 right-1/4 h-[calc(50%-4rem)] w-0.5 bg-green-200 z-0"></div>
+      <div className="hidden md:block absolute top-1/2 left-1/4 right-1/4 h-0.5 bg-[#00FF6A]/20 z-0"></div>
+      <div className="hidden md:block absolute top-1/3 left-1/4 h-[calc(50%-4rem)] w-0.5 bg-[#00FF6A]/20 z-0"></div>
+      <div className="hidden md:block absolute top-1/3 right-1/4 h-[calc(50%-4rem)] w-0.5 bg-[#00FF6A]/20 z-0"></div>
 
       {/* Left Side */}
       <div className="flex flex-col gap-6 relative z-10 w-full max-w-[340px] mx-auto">
         <Card>
           <CardContent>
             <div className="flex items-center">
-              <div className="bg-green-500 text-white text-xs font-bold px-2 py-1 rounded-full">+21%</div>
+              <div className="bg-[#00FF6A] text-white text-xs font-bold px-2 py-1 rounded-full">+21%</div>
             </div>
             <div className="overflow-x-auto">
               <LineChart width={200} height={70} data={data}>
@@ -288,7 +288,7 @@ const data = [
               </div>
             </div>
             <div className="w-full">
-              <div className="h-4 bg-green-400 rounded-full w-4/5 text-xs text-gray-600">
+              <div className="h-4 bg-[#00FF6A] rounded-full w-4/5 text-xs text-gray-600">
                 <span className="ml-3">29%</span>
               </div>
             </div>
@@ -297,7 +297,7 @@ const data = [
       </div>
 
       {/* Center - Top Integrations */}
-      <Card className="relative z-10 w-full md:mt-0 max-w-[280px] h-[280px] rounded-3xl mx-auto shadow-2xl shadow-green-200 flex flex-col items-center justify-center">
+      <Card className="relative z-10 w-full md:mt-0 max-w-[280px] h-[280px] rounded-3xl mx-auto shadow-2xl shadow-[#00FF6A]/20 flex flex-col items-center justify-center">
      
         <div className="absolute w-16 h-16 rounded-full bg-white border border-gray-300 flex items-center justify-center z-20">
           <SendHorizonal className="w-6 h-6 text-gray-700" />
@@ -370,7 +370,7 @@ const data = [
   </Container>
 
   {/* Decorative BG Blur */}
-  <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-green-500 rounded-full opacity-10 blur-3xl"></div>
+  <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-[#00FF6A] rounded-full opacity-10 blur-3xl"></div>
 </section>
 
 
@@ -386,7 +386,7 @@ const data = [
         <Container>
           <div className="text-center mb-16">
             <Typography variant="h2" className="mb-4">
-              A <span className="text-green-500">smarter</span> way to market
+              A <span className="text-[#00FF6A]">smarter</span> way to market
             </Typography>
             <Typography variant="body" color="secondary" className="max-w-2xl mx-auto">
               Take control of your marketing with our three-pillar approach to success.
@@ -416,7 +416,7 @@ const data = [
     {/* Section Header */}
     <div className="text-center mb-12">
       <h2 className="text-3xl sm:text-4xl md:text-5xl font-semibold leading-tight mb-4">
-        A <span className="bg-gradient-to-r from-[#00C853] to-[#003305] bg-clip-text text-transparent">
+        A <span className="bg-gradient-to-r from-[#00FF6A] to-[#00CC44] bg-clip-text text-transparent">
           smarter
         </span> way to market
       </h2>
@@ -432,7 +432,7 @@ const data = [
         {/* Automate */}
         <div className="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
           <div className="mb-4">
-            <div className="w-14 h-14 bg-gradient-to-br from-[#00C853] to-[#00C853]/20 flex items-center justify-center rounded-xl">
+            <div className="w-14 h-14 bg-gradient-to-br from-[#00FF6A] to-[#00FF6A]/20 flex items-center justify-center rounded-xl">
               <Zap className='text-white w-7 h-7' />
             </div>
           </div>
@@ -445,7 +445,7 @@ const data = [
         {/* Dominate */}
         <div className="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
           <div className="mb-4">
-            <div className="w-14 h-14 bg-gradient-to-br from-[#00C853] to-[#00C853]/20 flex items-center justify-center rounded-xl">
+            <div className="w-14 h-14 bg-gradient-to-br from-[#00FF6A] to-[#00FF6A]/20 flex items-center justify-center rounded-xl">
               <ChartPie className='text-white w-7 h-7' />
             </div>
           </div>
@@ -458,7 +458,7 @@ const data = [
         {/* Elevate */}
         <div className="col-span-1 sm:col-span-2 bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
           <div className="mb-4">
-            <div className="w-14 h-14 bg-gradient-to-br from-[#00C853] to-[#00C853]/20 flex items-center justify-center rounded-xl">
+            <div className="w-14 h-14 bg-gradient-to-br from-[#00FF6A] to-[#00FF6A]/20 flex items-center justify-center rounded-xl">
               <ChartColumn className='text-white w-7 h-7' />
             </div>
           </div>
@@ -479,7 +479,7 @@ const data = [
       {/* Header Section */}
       <div className="mb-12 text-center md:text-left">
         <h2 className="text-3xl sm:text-4xl md:text-5xl font-semibold mb-4 leading-tight">
-          Everything you need to <span className="bg-gradient-to-r from-[#00C853] to-[#003305] bg-clip-text text-transparent">succeed</span>
+          Everything you need to <span className="bg-gradient-to-r from-[#00FF6A] to-[#00CC44] bg-clip-text text-transparent">succeed</span>
         </h2>
         <p className="text-gray-600 text-lg md:text-xl">
           Our comprehensive platform delivers tools for every aspect of modern marketing.
@@ -493,7 +493,7 @@ const data = [
             <li className="flex items-center group">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5 text-green-600 mr-3 flex-shrink-0"
+                className="h-5 w-5 text-[#00CC44] mr-3 flex-shrink-0"
                 viewBox="0 0 20 20"
                 fill="currentColor"
               >
@@ -503,14 +503,14 @@ const data = [
                   clipRule="evenodd"
                 />
               </svg>
-              <span className="text-lg font-medium bg-gradient-to-r from-[#00C853] to-[#003305] bg-clip-text text-transparent group-hover:opacity-80 transition">
+              <span className="text-lg font-medium bg-gradient-to-r from-[#00FF6A] to-[#00CC44] bg-clip-text text-transparent group-hover:opacity-80 transition">
                 AI content creation
               </span>
             </li>
             <li className="flex items-center group">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5 text-green-600 mr-3 flex-shrink-0"
+                className="h-5 w-5 text-[#00CC44] mr-3 flex-shrink-0"
                 viewBox="0 0 20 20"
                 fill="currentColor"
               >
@@ -520,14 +520,14 @@ const data = [
                   clipRule="evenodd"
                 />
               </svg>
-              <span className="text-lg font-medium text-gray-800 group-hover:text-green-600 transition">
+              <span className="text-lg font-medium text-gray-800 group-hover:text-[#00CC44] transition">
                 Smart scheduling
               </span>
             </li>
             <li className="flex items-center group">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5 text-green-600 mr-3 flex-shrink-0"
+                className="h-5 w-5 text-[#00CC44] mr-3 flex-shrink-0"
                 viewBox="0 0 20 20"
                 fill="currentColor"
               >
@@ -537,14 +537,14 @@ const data = [
                   clipRule="evenodd"
                 />
               </svg>
-              <span className="text-lg font-medium text-gray-800 group-hover:text-green-600 transition">
+              <span className="text-lg font-medium text-gray-800 group-hover:text-[#00CC44] transition">
                 Platform and tool integration
               </span>
             </li>
             <li className="flex items-center group">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5 text-green-600 mr-3 flex-shrink-0"
+                className="h-5 w-5 text-[#00CC44] mr-3 flex-shrink-0"
                 viewBox="0 0 20 20"
                 fill="currentColor"
               >
@@ -554,14 +554,14 @@ const data = [
                   clipRule="evenodd"
                 />
               </svg>
-              <span className="text-lg font-medium text-gray-800 group-hover:text-green-600 transition">
+              <span className="text-lg font-medium text-gray-800 group-hover:text-[#00CC44] transition">
                 Custom integration
               </span>
             </li>
             <li className="flex items-center group">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5 text-green-600 mr-3 flex-shrink-0"
+                className="h-5 w-5 text-[#00CC44] mr-3 flex-shrink-0"
                 viewBox="0 0 20 20"
                 fill="currentColor"
               >
@@ -571,7 +571,7 @@ const data = [
                   clipRule="evenodd"
                 />
               </svg>
-              <span className="text-lg font-medium text-gray-800 group-hover:text-green-600 transition">
+              <span className="text-lg font-medium text-gray-800 group-hover:text-[#00CC44] transition">
                 Tracking tools
               </span>
             </li>
@@ -630,7 +630,7 @@ const data = [
       {/* Call-to-Action Button */}
       <div className="mt-10 text-center md:text-left">
         <Link href="/features-pricing">
-          <button className="px-8 py-4 text-white rounded-xl cursor-pointer bg-gradient-to-r from-[#00C853] to-[#003305] hover:shadow-lg transition-all font-medium">
+          <button className="px-8 py-4 text-white rounded-xl cursor-pointer bg-gradient-to-r from-[#00FF6A] to-[#00CC44] hover:shadow-lg transition-all font-medium">
             Explore our AI toolkit features
           </button>
         </Link>
@@ -643,7 +643,7 @@ const data = [
         <Container>
           <div className="text-center mb-16">
             <Typography variant="h2" className="text-white mb-4">
-              Simple transparent <span className="text-green-500">Pricing</span>
+              Simple transparent <span className="text-[#00FF6A]">Pricing</span>
             </Typography>
           </div>
 
@@ -651,11 +651,11 @@ const data = [
             {pricingPlans.map((plan, index) => (
               <Card 
                 key={index} 
-                className={`relative ${plan.highlighted ? 'ring-2 ring-green-500' : ''}`}
+                className={`relative ${plan.highlighted ? 'ring-2 ring-[#00FF6A]' : ''}`}
               >
                 {plan.highlighted && (
                   <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                    <span className="bg-green-500 text-white px-4 py-2 rounded-full text-sm font-medium">
+                    <span className="bg-[#00FF6A] text-white px-4 py-2 rounded-full text-sm font-medium">
                       Most Popular
                     </span>
                   </div>
@@ -677,7 +677,7 @@ const data = [
                 <ul className="space-y-4 mb-8">
                   {plan.features.map((feature, featureIndex) => (
                     <li key={featureIndex} className="flex items-start">
-                      <div className="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center mr-3 mt-0.5">
+                      <div className="w-5 h-5 bg-[#00FF6A] rounded-full flex items-center justify-center mr-3 mt-0.5">
                         <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
                           <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                         </svg>
@@ -712,7 +712,7 @@ const data = [
         <Container>
           <div className="text-center mb-16">
             <Typography variant="h2" className="mb-4">
-              What our <span className="text-green-500">clients</span> are saying
+              What our <span className="text-[#00FF6A]">clients</span> are saying
             </Typography>
             <Typography variant="body" color="secondary">
               The success of our users speaks louder than words
@@ -721,7 +721,7 @@ const data = [
 
           {loading && (
             <div className="text-center">
-              <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-green-500"></div>
+              <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-[#00FF6A]"></div>
             </div>
           )}
 
@@ -783,7 +783,7 @@ const data = [
 
           <div className="flex-1 text-center lg:text-left">
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-gray-900 leading-tight mb-6">
-              Ready to <span className="bg-gradient-to-r from-[#00C853] to-[#003305] bg-clip-text text-transparent">transform</span> your marketing strategy...?
+              Ready to <span className="bg-gradient-to-r from-[#00FF6A] to-[#00CC44] bg-clip-text text-transparent">transform</span> your marketing strategy...?
             </h2>
             <p className="text-xl text-gray-600 max-w-2xl leading-relaxed">
               Join the future of marketing, using IriSync to automate, dominate, and elevate your marketing.
@@ -796,7 +796,7 @@ const data = [
               </button>
             </Link>
             <Link href="/register">
-              <button className="px-8 py-4 cursor-pointer bg-gradient-to-r from-[#00C853] to-[#003305] rounded-xl text-white font-medium hover:shadow-lg transition-all">
+              <button className="px-8 py-4 cursor-pointer bg-gradient-to-r from-[#00FF6A] to-[#00CC44] rounded-xl text-white font-medium hover:shadow-lg transition-all">
                 Start free trial
               </button>
             </Link>

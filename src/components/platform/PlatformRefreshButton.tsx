@@ -186,7 +186,7 @@ export const PlatformRefreshButton: React.FC<PlatformRefreshButtonProps> = ({
             {isRefreshing ? (
               <Loader2 className={`h-4 w-4 animate-spin ${!iconOnly ? 'mr-2' : ''}`} />
             ) : refreshState === 'success' ? (
-              <CheckCircle className={`h-4 w-4 text-green-500 ${!iconOnly ? 'mr-2' : ''}`} />
+              <CheckCircle className={`h-4 w-4 text-[#00CC44] ${!iconOnly ? 'mr-2' : ''}`} />
             ) : refreshState === 'error' ? (
               <AlertCircle className={`h-4 w-4 text-red-500 ${!iconOnly ? 'mr-2' : ''}`} />
             ) : (

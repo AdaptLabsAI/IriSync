@@ -129,7 +129,7 @@ export default function MastodonContentGenerator({
   const getCharacterLimitClass = (count: number) => {
     if (count > 500) return 'text-red-500';
     if (count > 400) return 'text-amber-500';
-    return 'text-green-600';
+    return 'text-[#00CC44]';
   };
   
   // Get community description

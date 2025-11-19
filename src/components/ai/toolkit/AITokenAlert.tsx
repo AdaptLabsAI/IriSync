@@ -151,7 +151,7 @@ export default function AITokenAlert({ taskType, onTokenValidation }: AITokenAle
             <h3 className="text-xl font-semibold mb-4">Purchase Tokens</h3>
             
             {purchaseSuccess ? (
-              <div className="text-green-500 mb-4">
+              <div className="text-[#00CC44] mb-4">
                 Purchase successful! Your tokens have been added to your account.
               </div>
             ) : (

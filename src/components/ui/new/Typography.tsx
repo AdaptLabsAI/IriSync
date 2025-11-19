@@ -32,7 +32,7 @@ export const Typography: React.FC<TypographyProps> = ({
   const colorStyles = {
     primary: 'text-gray-900',
     secondary: 'text-gray-600',
-    accent: 'text-green-500',
+    accent: 'text-[#00FF6A]',
     muted: 'text-gray-500'
   };
 

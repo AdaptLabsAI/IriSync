@@ -64,7 +64,7 @@ const PricingComponent = () => {
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-5xl font-bold mb-8">
             Simple transparent{' '}
-            <span className="text-green-400">Pricing</span>
+            <span className="text-[#00CC44]">Pricing</span>
           </h1>
           
           {/* Billing Toggle */}
@@ -74,7 +74,7 @@ const PricingComponent = () => {
   onClick={() => setIsAnnual(false)}
   className={`px-4 py-2 rounded-lg transition-all font-semibold ${
     !isAnnual
-      ? 'bg-gradient-to-r from-[#00C853] to-[#003305] text-white'
+      ? 'bg-gradient-to-r from-[#00FF6A] to-[#00CC44] text-white'
       : 'text-gray-400'
   }`}
 >
@@ -84,8 +84,8 @@ const PricingComponent = () => {
               <button
                 onClick={() => setIsAnnual(true)}
                 className={`px-6 py-2 rounded-lg transition-all  ${
-                  isAnnual 
-                    ? 'bg-gradient-to-r from-[#00C853] to-[#003305] text-white' 
+                  isAnnual
+                    ? 'bg-gradient-to-r from-[#00FF6A] to-[#00CC44] text-white'
                     : 'text-gray-400 '
                 }`}
               >
@@ -130,8 +130,8 @@ const PricingComponent = () => {
             >
               {/* Popular Badge */}
               {plan.isPopular && (
-              <div className="absolute top-6 left-1/2 -translate-x-1/2 bg-white rounded-2xl bg-gradient-to-r from-[#00C853] to-[#003305] bg-clip-text text-transparent">
-  <button className="bg-green-500 text-white font-bold text-xs px-3 py-1 rounded-full">
+              <div className="absolute top-6 left-1/2 -translate-x-1/2 bg-white rounded-2xl bg-gradient-to-r from-[#00FF6A] to-[#00CC44] bg-clip-text text-transparent">
+  <button className="bg-[#00CC44] text-white font-bold text-xs px-3 py-1 rounded-full">
     MOST POPULAR
   </button>
 </div>
@@ -170,7 +170,7 @@ const PricingComponent = () => {
               <div className="space-y-4">
                 {plan.features.map((feature, featureIndex) => (
                   <div key={featureIndex} className="flex items-start gap-3">
-                    <Check className="text-green-500 mt-0.5 flex-shrink-0" fontSize="small" />
+                    <Check className="text-[#00CC44] mt-0.5 flex-shrink-0" fontSize="small" />
                     <span className="text-gray-300 text-sm leading-relaxed">
                       {feature}
                     </span>

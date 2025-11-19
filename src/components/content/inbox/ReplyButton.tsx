@@ -328,7 +328,7 @@ export const ReplyButton: React.FC<ReplyButtonProps> = ({
             
             {/* Result message */}
             {result && (
-              <div className={`p-3 rounded-md ${result.success ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-700'}`}>
+              <div className={`p-3 rounded-md ${result.success ? 'bg-[#00FF6A]/5 text-[#00CC44]' : 'bg-red-50 text-red-700'}`}>
                 <p className="text-sm">
                   {result.success ? 'Reply sent successfully!' : result.message}
                 </p>

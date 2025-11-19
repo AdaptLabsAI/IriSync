@@ -183,9 +183,9 @@ export const MarkReadButton: React.FC<MarkReadButtonProps> = ({
       
       {/* Simple toast notification */}
       {toastState.show && showToast && (
-        <div 
+        <div
           className={`fixed bottom-4 right-4 px-4 py-3 rounded-md shadow-md text-white flex items-center space-x-2 ${
-            toastState.success ? 'bg-green-600' : 'bg-red-600'
+            toastState.success ? 'bg-[#00CC44]' : 'bg-red-600'
           }`}
         >
           {toastState.success ? (

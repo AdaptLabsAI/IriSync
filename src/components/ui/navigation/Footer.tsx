@@ -3,7 +3,7 @@ import { Github, Linkedin, Youtube } from "lucide-react"
 
 export default function Component() {
   return (
-<footer className="w-full bg-gradient-to-b from-emerald-0  via-emerald-100 to-green-100 px-6 py-12">
+<footer className="w-full bg-gradient-to-b from-white via-[#00FF6A]/5 to-[#00FF6A]/10 px-6 py-12">
       <div className="container mx-auto max-w-7xl">
         {/* Main Footer Content */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8">

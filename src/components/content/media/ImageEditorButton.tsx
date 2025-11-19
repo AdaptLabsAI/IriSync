@@ -176,7 +176,7 @@ export const ImageEditorButton: React.FC<ImageEditorButtonProps> = ({
           )}
           
           {isProcessing && (
-            <div className="m-2 p-3 bg-blue-50 border border-blue-200 text-blue-700 rounded text-sm">
+            <div className="m-2 p-3 bg-[#00FF6A]/5 border border-[#00FF6A]/20 text-[#00CC44] rounded text-sm">
               <div className="flex items-center">
                 <div className="animate-spin mr-2">⟳</div>
                 Processing and saving your edited image...

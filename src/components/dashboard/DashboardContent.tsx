@@ -36,11 +36,15 @@ import {
 } from '@mui/icons-material';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { getAuth } from 'firebase/auth';
+import { doc, getDoc } from 'firebase/firestore';
+import { firestore } from '@/lib/core/firebase';
+import { tokens } from '@/styles/tokens';
 
 /**
  * Dashboard Home Page (Overview)
  *
- * Hootsuite-inspired dashboard showing:
+ * Hootsuite-inspired dashboard matching Figma "4 Dashboard - List" frame
  * - Key metrics (posts, engagement, reach, growth)
  * - Upcoming scheduled posts
  * - Recent activity
@@ -57,12 +61,35 @@ export default function DashboardContent() {
     growth: 0
   });
   const [upcomingPosts, setUpcomingPosts] = useState<any[]>([]);
+  const [userName, setUserName] = useState('User');
 
-  // Load dashboard data
+  // Load dashboard data and user name
   useEffect(() => {
     async function loadDashboardData() {
       try {
         setLoading(true);
+
+        // Get user name from Firebase Auth/Firestore
+        const auth = getAuth();
+        const currentUser = auth.currentUser;
+        if (currentUser && firestore) {
+          try {
+            const userRef = doc(firestore, 'users', currentUser.uid);
+            const userSnap = await getDoc(userRef);
+            if (userSnap.exists()) {
+              const userData = userSnap.data();
+              const displayName = userData.name ||
+                                 `${userData.firstName || ''} ${userData.lastName || ''}`.trim() ||
+                                 currentUser.displayName ||
+                                 'User';
+              setUserName(displayName);
+            } else if (currentUser.displayName) {
+              setUserName(currentUser.displayName);
+            }
+          } catch (error) {
+            console.error('Error fetching user name:', error);
+          }
+        }
 
         // Fetch dashboard stats and upcoming posts
         const [statsRes, postsRes] = await Promise.all([
@@ -164,15 +191,30 @@ export default function DashboardContent() {
 
   return (
     <Container maxWidth="xl" sx={{ py: 4 }}>
-      {/* Page Header */}
+      {/* Page Header - Matching Figma "4 Dashboard - List" frame */}
       <Box sx={{ mb: 4 }}>
         <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 2 }}>
           <Box>
-            <Typography variant="h4" component="h1" gutterBottom fontWeight="bold">
-              🏠 Home
+            <Typography
+              variant="h4"
+              component="h1"
+              gutterBottom
+              sx={{
+                fontWeight: 400,
+                fontSize: tokens.typography.fontSize.h1,
+                color: tokens.colors.text.primary
+              }}
+            >
+              Welcome back, <Box component="span" sx={{ fontWeight: 500 }}>{userName}</Box>
             </Typography>
-            <Typography variant="body2" color="text.secondary">
-              Welcome back! Here's your social media performance overview
+            <Typography
+              variant="body2"
+              sx={{
+                color: tokens.colors.text.secondary,
+                fontSize: tokens.typography.fontSize.body
+              }}
+            >
+              Here's your social media performance overview
             </Typography>
           </Box>
           <Stack direction="row" spacing={2}>
@@ -186,10 +228,12 @@ export default function DashboardContent() {
               startIcon={<AddIcon />}
               onClick={() => router.push('/dashboard/planner')}
               sx={{
-                bgcolor: '#00C853',
-                '&:hover': { bgcolor: '#00A046' },
+                bgcolor: tokens.colors.primary.main,
+                '&:hover': { bgcolor: tokens.colors.primary.dark },
                 textTransform: 'none',
-                fontWeight: 600
+                fontWeight: 600,
+                borderRadius: tokens.borderRadius.md,
+                boxShadow: tokens.shadows.md,
               }}
             >
               Create Post
@@ -202,7 +246,16 @@ export default function DashboardContent() {
       <Grid container spacing={3} sx={{ mb: 4 }}>
         {mockStats.map((stat, index) => (
           <Grid item xs={12} sm={6} md={3} key={index}>
-            <Card sx={{ height: '100%' }}>
+            <Card sx={{
+              height: '100%',
+              borderRadius: tokens.borderRadius.md,
+              boxShadow: tokens.shadows.md,
+              transition: 'transform 0.2s, box-shadow 0.2s',
+              '&:hover': {
+                transform: 'translateY(-2px)',
+                boxShadow: tokens.shadows.lg,
+              },
+            }}>
               <CardContent>
                 <Stack direction="row" justifyContent="space-between" alignItems="flex-start" sx={{ mb: 2 }}>
                   <Box>
@@ -250,7 +303,12 @@ export default function DashboardContent() {
       <Grid container spacing={3}>
         {/* Upcoming Posts */}
         <Grid item xs={12} md={8}>
-          <Paper sx={{ p: 3, height: '100%' }}>
+          <Paper sx={{
+            p: 3,
+            height: '100%',
+            borderRadius: tokens.borderRadius.md,
+            boxShadow: tokens.shadows.md,
+          }}>
             <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 2 }}>
               <Typography variant="h6" fontWeight="bold">
                 Upcoming Posts
@@ -278,7 +336,13 @@ export default function DashboardContent() {
                   variant="contained"
                   startIcon={<AddIcon />}
                   onClick={() => router.push('/dashboard/planner')}
-                  sx={{ bgcolor: '#00C853', '&:hover': { bgcolor: '#00A046' } }}
+                  sx={{
+                    bgcolor: tokens.colors.primary.main,
+                    '&:hover': { bgcolor: tokens.colors.primary.dark },
+                    borderRadius: tokens.borderRadius.md,
+                    textTransform: 'none',
+                    fontWeight: 600,
+                  }}
                 >
                   Schedule Post
                 </Button>
@@ -325,7 +389,12 @@ export default function DashboardContent() {
 
         {/* Recent Activity */}
         <Grid item xs={12} md={4}>
-          <Paper sx={{ p: 3, height: '100%' }}>
+          <Paper sx={{
+            p: 3,
+            height: '100%',
+            borderRadius: tokens.borderRadius.md,
+            boxShadow: tokens.shadows.md,
+          }}>
             <Typography variant="h6" fontWeight="bold" gutterBottom>
               Recent Activity
             </Typography>
@@ -388,7 +457,12 @@ export default function DashboardContent() {
       </Grid>
 
       {/* Quick Actions */}
-      <Paper sx={{ p: 3, mt: 3 }}>
+      <Paper sx={{
+        p: 3,
+        mt: 3,
+        borderRadius: tokens.borderRadius.md,
+        boxShadow: tokens.shadows.md,
+      }}>
         <Typography variant="h6" fontWeight="bold" gutterBottom>
           Quick Actions
         </Typography>

@@ -262,10 +262,10 @@ export const QueueButton: React.FC<QueueButtonProps> = ({
               </p>
             </div>
           ) : queueResult ? (
-            <div className={`py-4 ${queueResult.success ? 'text-green-700' : 'text-red-700'}`}>
+            <div className={`py-4 ${queueResult.success ? 'text-[#00CC44]' : 'text-red-700'}`}>
               <div className="flex items-center justify-center mb-4">
                 {queueResult.success ? (
-                  <div className="h-12 w-12 rounded-full bg-green-100 flex items-center justify-center">
+                  <div className="h-12 w-12 rounded-full bg-[#00FF6A]/10 flex items-center justify-center">
                     <Check className="h-6 w-6" />
                   </div>
                 ) : (

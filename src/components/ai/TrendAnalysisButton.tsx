@@ -208,8 +208,8 @@ const TrendAnalysisButton: React.FC<TrendAnalysisButtonProps> = ({
   
   // Helper to render growth indicator
   const renderGrowthIndicator = (growth: number) => {
-    const color = growth > 20 ? 'text-green-500' 
-      : growth > 0 ? 'text-green-400'
+    const color = growth > 20 ? 'text-[#00CC44]'
+      : growth > 0 ? 'text-[#00FF6A]'
       : growth === 0 ? 'text-gray-400'
       : 'text-red-500';
     

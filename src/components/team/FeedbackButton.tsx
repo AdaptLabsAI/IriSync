@@ -185,7 +185,7 @@ const FeedbackButton: React.FC<FeedbackButtonProps> = ({
                   </p>
                   
                   {item.resolved && (
-                    <div className="mt-1 text-xs text-green-600">Resolved</div>
+                    <div className="mt-1 text-xs text-[#00CC44]">Resolved</div>
                   )}
                 </div>
               ))}

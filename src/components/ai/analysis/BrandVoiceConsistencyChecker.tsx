@@ -61,7 +61,7 @@ const BrandVoiceConsistencyChecker: React.FC<BrandVoiceConsistencyCheckerProps> 
   // Helper to determine color class based on score
   const getScoreColorClass = (score: number, isBg = false) => {
     const prefix = isBg ? 'bg-' : 'text-';
-    if (score >= 85) return `${prefix}green-500`;
+    if (score >= 85) return isBg ? 'bg-[#00CC44]' : 'text-[#00CC44]';
     if (score >= 70) return `${prefix}blue-500`;
     if (score >= 50) return `${prefix}amber-500`;
     return `${prefix}red-500`;
@@ -124,12 +124,12 @@ const BrandVoiceConsistencyChecker: React.FC<BrandVoiceConsistencyCheckerProps> 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
         {/* Matching attributes */}
         <div className="p-3 border rounded-md">
-          <h4 className="font-medium mb-2 text-green-600">Present Attributes</h4>
+          <h4 className="font-medium mb-2 text-[#00CC44]">Present Attributes</h4>
           {matchingAttributes.length > 0 ? (
             <ul className="space-y-1 text-sm">
               {matchingAttributes.map((attr, idx) => (
                 <li key={idx} className="flex items-start">
-                  <span className="text-green-500 mr-2">✓</span>
+                  <span className="text-[#00CC44] mr-2">✓</span>
                   <span>{attr}</span>
                 </li>
               ))}
@@ -196,12 +196,12 @@ const BrandVoiceConsistencyChecker: React.FC<BrandVoiceConsistencyCheckerProps> 
             {/* Correct phrase usage */}
             {detailed.phraseUsage.correctUsage.length > 0 && (
               <div className="p-3 border rounded-md">
-                <h5 className="text-sm font-medium text-green-600 mb-2">Correct Phrase Usage</h5>
+                <h5 className="text-sm font-medium text-[#00CC44] mb-2">Correct Phrase Usage</h5>
                 <div className="flex flex-wrap gap-2">
                   {detailed.phraseUsage.correctUsage.map((phrase, idx) => (
-                    <span 
+                    <span
                       key={idx}
-                      className="px-2 py-0.5 bg-green-100 text-green-800 rounded text-xs"
+                      className="px-2 py-0.5 bg-[#00FF6A]/10 text-[#00CC44] rounded text-xs"
                     >
                       {phrase}
                     </span>

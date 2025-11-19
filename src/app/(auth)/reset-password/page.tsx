@@ -52,8 +52,8 @@ export default function ResetPasswordPage() {
       <div className="min-h-screen flex items-center justify-center bg-white p-8">
         <div className="w-full max-w-md text-center">
           <div className="mb-8">
-            <div className="mx-auto w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mb-6">
-              <svg className="w-10 h-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="mx-auto w-20 h-20 bg-[#00FF6A]/10 rounded-full flex items-center justify-center mb-6">
+              <svg className="w-10 h-10 text-[#00CC44]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
               </svg>
             </div>
@@ -67,7 +67,7 @@ export default function ResetPasswordPage() {
 
           <Link
             href="/login"
-            className="inline-block w-full py-4 bg-gradient-to-r from-[#00C853] to-[#00A045] text-white rounded-xl font-medium text-lg hover:shadow-lg transition-all"
+            className="inline-block w-full py-4 bg-gradient-to-r from-[#00FF6A] to-[#00CC44] text-white rounded-xl font-medium text-lg hover:shadow-lg transition-all"
           >
             Return to Login
           </Link>
@@ -165,8 +165,8 @@ export default function ResetPasswordPage() {
 
           {/* Icon */}
           <div className="flex justify-center mb-8">
-            <div className="w-20 h-20 bg-gradient-to-br from-green-100 to-green-200 rounded-2xl flex items-center justify-center transform rotate-12">
-              <svg className="w-10 h-10 text-green-600 transform -rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="w-20 h-20 bg-gradient-to-br from-[#00FF6A]/20 to-[#00FF6A]/10 rounded-2xl flex items-center justify-center transform rotate-12">
+              <svg className="w-10 h-10 text-[#00CC44] transform -rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
               </svg>
             </div>
@@ -209,7 +209,7 @@ export default function ResetPasswordPage() {
                     if (error) setError('');
                   }}
                   placeholder="Email Address"
-                  className={`w-full pl-12 pr-4 py-4 border ${error ? 'border-red-300' : 'border-gray-200'} rounded-xl bg-gray-50 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all text-gray-900 placeholder-gray-400`}
+                  className={`w-full pl-12 pr-4 py-4 border ${error ? 'border-red-300' : 'border-gray-200'} rounded-xl bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#00CC44] focus:border-transparent transition-all text-gray-900 placeholder-gray-400`}
                 />
               </div>
             </div>
@@ -218,7 +218,7 @@ export default function ResetPasswordPage() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full py-4 bg-gradient-to-r from-[#00C853] to-[#00A045] text-white rounded-xl font-medium text-lg hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full py-4 bg-gradient-to-r from-[#00FF6A] to-[#00CC44] text-white rounded-xl font-medium text-lg hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isLoading ? 'Sending...' : 'Send OTP'}
             </button>

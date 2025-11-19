@@ -6,6 +6,7 @@ import { Box, Button, Typography, Alert, CircularProgress, Stack, MenuItem, Sele
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
 import PaymentForm from '@/components/ui/billing/PaymentForm';
+import { tokens } from '@/styles/tokens';
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
 
@@ -71,8 +72,26 @@ export default function BillingPage() {
 
   return (
     <Box className="container mx-auto py-6 max-w-xl">
-      <Typography variant="h4" fontWeight={700} mb={2}>Billing & Subscription</Typography>
-      <Typography color="text.secondary" mb={4}>Manage your subscription plan and payment methods.</Typography>
+      <Typography
+        variant="h4"
+        mb={2}
+        sx={{
+          fontWeight: 600,
+          fontSize: tokens.typography.fontSize.h1,
+          color: tokens.colors.text.primary,
+        }}
+      >
+        Billing & Subscription
+      </Typography>
+      <Typography
+        mb={4}
+        sx={{
+          color: tokens.colors.text.secondary,
+          fontSize: tokens.typography.fontSize.body,
+        }}
+      >
+        Manage your subscription plan and payment methods.
+      </Typography>
       {loading ? (
         <Box display="flex" justifyContent="center" alignItems="center" minHeight={200}>
           <CircularProgress />
@@ -96,7 +115,17 @@ export default function BillingPage() {
                   <MenuItem value="enterprise">Enterprise (Starting at $1,250/mo)</MenuItem>
                 </Select>
               </FormControl>
-              <Button type="submit" variant="contained" color="primary" disabled={saving}>
+              <Button
+                type="submit"
+                variant="contained"
+                disabled={saving}
+                sx={{
+                  bgcolor: tokens.colors.primary.main,
+                  '&:hover': { bgcolor: tokens.colors.primary.dark },
+                  borderRadius: tokens.borderRadius.md,
+                  boxShadow: tokens.shadows.md,
+                }}
+              >
                 {saving ? 'Saving...' : 'Save Changes'}
               </Button>
             </Stack>
@@ -113,7 +142,19 @@ export default function BillingPage() {
               </ListItem>
             ))}
           </List>
-          <Button variant="outlined" onClick={handleAddPaymentMethod} sx={{ mt: 2 }}>
+          <Button
+            variant="outlined"
+            onClick={handleAddPaymentMethod}
+            sx={{
+              mt: 2,
+              borderColor: tokens.colors.primary.main,
+              color: tokens.colors.primary.main,
+              '&:hover': {
+                borderColor: tokens.colors.primary.dark,
+                bgcolor: tokens.colors.primary.fade10,
+              }
+            }}
+          >
             Add Payment Method
           </Button>
           {showPaymentForm && (

@@ -170,7 +170,7 @@ export const PlatformDisconnectButton: React.FC<PlatformDisconnectButtonProps> =
           )}
 
           {result && (
-            <div className={`p-3 rounded-md text-sm ${result.success ? 'bg-green-50 text-green-800' : 'bg-red-50 text-red-800'}`}>
+            <div className={`p-3 rounded-md text-sm ${result.success ? 'bg-[#00FF6A]/5 text-[#00CC44]' : 'bg-red-50 text-red-800'}`}>
               {result.message || (result.success ? 'Successfully disconnected.' : 'Failed to disconnect.')}
             </div>
           )}

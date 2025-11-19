@@ -226,7 +226,7 @@ export default function RegisterPage() {
           {/* Header */}
           <div className="text-center mb-8">
             <h1 className="text-4xl font-semibold text-gray-900 mb-2">
-              Get Started with <span className="text-[#00C853]">IriSync</span>
+              Get Started with <span className="text-[#00FF6A]">IriSync</span>
             </h1>
             <p className="text-gray-600 text-lg">
               Register now to begin your experience
@@ -257,7 +257,7 @@ export default function RegisterPage() {
                   value={formData.userName}
                   onChange={handleInputChange}
                   placeholder="User Name"
-                  className={`w-full pl-12 pr-4 py-4 border ${errors.userName ? 'border-red-300' : 'border-gray-200'} rounded-xl bg-gray-50 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all text-gray-900 placeholder-gray-400`}
+                  className={`w-full pl-12 pr-4 py-4 border ${errors.userName ? 'border-red-300' : 'border-gray-200'} rounded-xl bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#00CC44] focus:border-transparent transition-all text-gray-900 placeholder-gray-400`}
                 />
               </div>
               {errors.userName && (
@@ -280,7 +280,7 @@ export default function RegisterPage() {
                   value={formData.email}
                   onChange={handleInputChange}
                   placeholder="Email Address"
-                  className={`w-full pl-12 pr-4 py-4 border ${errors.email ? 'border-red-300' : 'border-gray-200'} rounded-xl bg-gray-50 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all text-gray-900 placeholder-gray-400`}
+                  className={`w-full pl-12 pr-4 py-4 border ${errors.email ? 'border-red-300' : 'border-gray-200'} rounded-xl bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#00CC44] focus:border-transparent transition-all text-gray-900 placeholder-gray-400`}
                 />
               </div>
               {errors.email && (
@@ -303,7 +303,7 @@ export default function RegisterPage() {
                   value={formData.password}
                   onChange={handleInputChange}
                   placeholder="Enter Password"
-                  className={`w-full pl-12 pr-12 py-4 border ${errors.password ? 'border-red-300' : 'border-gray-200'} rounded-xl bg-gray-50 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all text-gray-900 placeholder-gray-400`}
+                  className={`w-full pl-12 pr-12 py-4 border ${errors.password ? 'border-red-300' : 'border-gray-200'} rounded-xl bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#00CC44] focus:border-transparent transition-all text-gray-900 placeholder-gray-400`}
                 />
                 <button
                   type="button"
@@ -343,7 +343,7 @@ export default function RegisterPage() {
                   value={formData.confirmPassword}
                   onChange={handleInputChange}
                   placeholder="Re-Enter Password"
-                  className={`w-full pl-12 pr-12 py-4 border ${errors.confirmPassword ? 'border-red-300' : 'border-gray-200'} rounded-xl bg-gray-50 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all text-gray-900 placeholder-gray-400`}
+                  className={`w-full pl-12 pr-12 py-4 border ${errors.confirmPassword ? 'border-red-300' : 'border-gray-200'} rounded-xl bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#00CC44] focus:border-transparent transition-all text-gray-900 placeholder-gray-400`}
                 />
                 <button
                   type="button"
@@ -376,15 +376,15 @@ export default function RegisterPage() {
                 name="acceptTerms"
                 checked={formData.acceptTerms}
                 onChange={handleInputChange}
-                className="mt-1 w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500"
+                className="mt-1 w-4 h-4 text-[#00CC44] border-gray-300 rounded focus:ring-[#00FF6A]"
               />
               <label htmlFor="acceptTerms" className="ml-2 text-sm text-gray-600">
                 I agree to the{' '}
-                <Link href="/legal/terms" className="text-green-600 hover:text-green-700 underline" target="_blank">
+                <Link href="/legal/terms" className="text-[#00CC44] hover:text-[#00FF6A] underline" target="_blank">
                   Terms and Conditions
                 </Link>{' '}
                 and{' '}
-                <Link href="/legal/privacy" className="text-green-600 hover:text-green-700 underline" target="_blank">
+                <Link href="/legal/privacy" className="text-[#00CC44] hover:text-[#00FF6A] underline" target="_blank">
                   Privacy Policy
                 </Link>
               </label>
@@ -397,7 +397,7 @@ export default function RegisterPage() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full py-4 bg-gradient-to-r from-[#00C853] to-[#00A045] text-white rounded-xl font-medium text-lg hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full py-4 bg-gradient-to-r from-[#00FF6A] to-[#00CC44] text-white rounded-xl font-medium text-lg hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isLoading ? 'Registering...' : 'Register'}
             </button>
@@ -407,7 +407,7 @@ export default function RegisterPage() {
           <div className="mt-6 text-center">
             <p className="text-gray-600">
               Have an account?{' '}
-              <Link href="/login" className="text-gray-900 font-medium underline hover:text-green-600 transition-colors">
+              <Link href="/login" className="text-gray-900 font-medium underline hover:text-[#00CC44] transition-colors">
                 LOGIN
               </Link>
             </p>

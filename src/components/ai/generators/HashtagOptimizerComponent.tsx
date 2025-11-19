@@ -269,10 +269,10 @@ export default function HashtagOptimizerComponent({
       case 'growing-niche': return 'bg-fuchsia-100 text-fuchsia-800';
       case 'popular': return 'bg-blue-100 text-blue-800';
       case 'trending': return 'bg-pink-100 text-pink-800';
-      case 'evergreen': return 'bg-green-100 text-green-800';
+      case 'evergreen': return 'bg-[#00FF6A]/10 text-[#00CC44]';
       case 'branded': return 'bg-amber-100 text-amber-800';
       case 'specific': return 'bg-indigo-100 text-indigo-800';
-      case 'location': return 'bg-green-100 text-green-800';
+      case 'location': return 'bg-[#00FF6A]/10 text-[#00CC44]';
       case 'seasonal': return 'bg-red-100 text-red-800';
       default: return 'bg-gray-100 text-gray-800';
     }

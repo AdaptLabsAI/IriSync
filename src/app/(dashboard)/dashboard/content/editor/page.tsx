@@ -42,13 +42,21 @@ export default function EditorPage() {
         if (!postId) {
           throw new Error('No post ID provided');
         }
-        
+
         // Get current user
+        if (!auth) {
+          throw new Error('Authentication not initialized');
+        }
+
+        if (!firestore) {
+          throw new Error('Firestore not initialized');
+        }
+
         const currentUser = auth.currentUser;
         if (!currentUser) {
           throw new Error('You must be logged in to edit content');
         }
-        
+
         // Get post from Firestore
         const postRef = doc(firestore, 'contentPosts', postId);
         const postSnapshot = await getDoc(postRef);
@@ -115,13 +123,21 @@ export default function EditorPage() {
       if (!postId || !post) {
         throw new Error('No post data available');
       }
-      
+
       // Get current user
+      if (!auth) {
+        throw new Error('Authentication not initialized');
+      }
+
+      if (!firestore) {
+        throw new Error('Firestore not initialized');
+      }
+
       const currentUser = auth.currentUser;
       if (!currentUser) {
         throw new Error('You must be logged in to save changes');
       }
-      
+
       // Update post in Firestore
       const postRef = doc(firestore, 'contentPosts', postId);
       await updateDoc(postRef, {

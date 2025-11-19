@@ -107,8 +107,8 @@ export const MetricFilterToggle: React.FC<MetricFilterToggleProps> = ({
         onClick={() => setIsOpen(!isOpen)}
         disabled={isDisabled}
         className={`
-          flex items-center gap-2 px-3 py-2 rounded-md border 
-          ${isOpen ? 'border-blue-500 bg-blue-50' : 'border-gray-300 hover:bg-gray-50'}
+          flex items-center gap-2 px-3 py-2 rounded-md border
+          ${isOpen ? 'border-[#00CC44] bg-[#00FF6A]/5' : 'border-gray-300 hover:bg-gray-50'}
           ${isDisabled ? 'opacity-50 cursor-not-allowed' : ''}
         `}
         aria-expanded={isOpen}
@@ -128,7 +128,7 @@ export const MetricFilterToggle: React.FC<MetricFilterToggleProps> = ({
         </svg>
         <span>Metrics</span>
         {selectedMetrics.length > 0 && (
-          <span className="bg-blue-100 text-blue-800 text-xs font-medium px-2 py-0.5 rounded-full">
+          <span className="bg-[#00FF6A]/10 text-[#00CC44] text-xs font-medium px-2 py-0.5 rounded-full">
             {selectedMetrics.length}
           </span>
         )}
@@ -177,7 +177,7 @@ export const MetricFilterToggle: React.FC<MetricFilterToggleProps> = ({
                           checked={selectedMetrics.includes(metric.id)}
                           onChange={() => toggleMetric(metric.id)}
                           disabled={!isAvailable || isDisabled}
-                          className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                          className="h-4 w-4 rounded border-gray-300 text-[#00CC44] focus:ring-[#00CC44]"
                         />
                         <div className="ml-2 flex-1">
                           <div className="text-sm font-medium flex items-center gap-1">
@@ -208,7 +208,7 @@ export const MetricFilterToggle: React.FC<MetricFilterToggleProps> = ({
             </button>
             <button
               onClick={() => setIsOpen(false)}
-              className="px-3 py-1 text-sm bg-blue-600 text-white rounded-md hover:bg-blue-700"
+              className="px-3 py-1 text-sm bg-[#00CC44] text-white rounded-md hover:bg-[#00CC44]"
             >
               Done
             </button>
