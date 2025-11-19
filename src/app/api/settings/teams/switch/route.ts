@@ -95,8 +95,7 @@ export async function POST(request: NextRequest) {
     }
     
     // Log the team switch activity
-    logger.info({
-      type: 'team_switch',
+    logger.info('Info', { type: 'team_switch',
       userId,
       teamId,
       organizationId,
@@ -112,8 +111,7 @@ export async function POST(request: NextRequest) {
     
   } catch (error) {
     console.error('Error switching teams:', error);
-    logger.error({
-      type: 'team_switch_error',
+    logger.error('Error', { type: 'team_switch_error',
       error: error instanceof Error ? error.message : 'Unknown error'
     }, 'Failed to switch teams');
     

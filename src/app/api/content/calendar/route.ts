@@ -107,8 +107,7 @@ export async function GET(request: NextRequest) {
     
   } catch (error) {
     console.error('Error fetching calendar data:', error);
-    logger.error({
-      type: 'calendar_api_error',
+    logger.error('Error', { type: 'calendar_api_error',
       error: error instanceof Error ? error.message : 'Unknown error',
       userId: session?.user?.id
     });
@@ -125,7 +124,7 @@ export async function POST(req: NextRequest) {
   try {
     const userId = await verifyAuthentication(req);
     if (!userId) {
-      logger.warn({ type: 'request', method: 'POST', url: req.url, statusCode: 401 }, 'Unauthorized');
+      logger.warn('Warn', { type: 'request', method: 'POST', url: req.url, statusCode: 401 }, 'Unauthorized');
       return NextResponse.json({ error: 'Unauthorized', message: 'Authentication required' }, { status: 401 });
     }
     const body = await req.json();
@@ -146,11 +145,11 @@ export async function POST(req: NextRequest) {
       updatedAt: new Date()
     };
     const eventRef = await firestore.collection('users').doc(userId).collection('calendarEvents').add(eventData);
-    logger.info({ type: 'request', method: 'POST', url: req.url, statusCode: 201 }, 'Calendar POST success');
+    logger.info('Info', { type: 'request', method: 'POST', url: req.url, statusCode: 201 }, 'Calendar POST success');
     logRequestDuration(req, 201, startTime);
     return NextResponse.json({ id: eventRef.id, message: 'Calendar event created successfully', ...eventData }, { status: 201 });
   } catch (error: any) {
-    logger.error({ type: 'request', method: 'POST', url: req.url, error }, 'Calendar POST error');
+    logger.error('Error', { type: 'request', method: 'POST', url: req.url, error }, 'Calendar POST error');
     logRequestDuration(req, 500, startTime);
     return NextResponse.json({ error: 'An error occurred while processing your request', message: process.env.NODE_ENV === 'development' ? (error instanceof Error ? error.message : String(error)) : 'Internal server error' }, { status: 500 });
   }
@@ -229,5 +228,5 @@ function getDefaultTimeSuggestionForPlatform(platform: string): Record<string, a
 function logRequestDuration(req: NextRequest, statusCode: number, startTime: [number, number]) {
   const duration = process.hrtime(startTime);
   const durationMs = Math.round((duration[0] * 1e9 + duration[1]) / 1e6);
-  logger.info({ method: req.method, url: req.url, statusCode, durationMs }, `Request duration: ${durationMs}ms`);
+  logger.info('Info', { method: req.method, url: req.url, statusCode, durationMs }, `Request duration: ${durationMs}ms`);
 } 

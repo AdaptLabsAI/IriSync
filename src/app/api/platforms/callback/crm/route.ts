@@ -168,8 +168,7 @@ export async function POST(req: NextRequest) {
     const { platform, code, state } = await req.json();
     
     // Log inbound request
-    logger.info({ 
-      type: 'crm_oauth_callback',
+    logger.info('Info', { type: 'crm_oauth_callback',
       platform,
       has_code: !!code,
       has_state: !!state 
@@ -205,7 +204,7 @@ export async function POST(req: NextRequest) {
         userData = { userId: sessionData.user.id, requestId: null };
       }
     } catch (e) {
-      logger.error({ type: 'crm_oauth_callback', error: e }, 'Failed to parse state parameter');
+      logger.error('Error', { type: 'crm_oauth_callback', error: e }, 'Failed to parse state parameter');
       return NextResponse.json({ 
         success: false, 
         error: 'Invalid state parameter', 
@@ -260,8 +259,7 @@ export async function POST(req: NextRequest) {
       });
       
       // Log successful connection
-      logger.info({ 
-        type: 'crm_oauth_callback',
+      logger.info('Info', { type: 'crm_oauth_callback',
         platform,
         userId,
         status: 'success' 
@@ -275,8 +273,7 @@ export async function POST(req: NextRequest) {
       
     } catch (error: any) {
       // Log the error
-      logger.error({ 
-        type: 'crm_oauth_callback',
+      logger.error('Error', { type: 'crm_oauth_callback',
         error: error.message || 'Unknown error'
       }, 'CRM platform OAuth code exchange failed');
       
@@ -288,8 +285,7 @@ export async function POST(req: NextRequest) {
     }
   } catch (error: any) {
     // Log any unexpected errors
-    logger.error({ 
-      type: 'crm_oauth_callback',
+    logger.error('Error', { type: 'crm_oauth_callback',
       error: error.message || 'Unknown error'
     }, 'CRM platform POST handler error');
     

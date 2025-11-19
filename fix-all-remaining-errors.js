@@ -79,7 +79,7 @@ for (const [relativeFilePath, fileErrors] of Object.entries(errors)) {
         line.includes('query(getFirebaseFirestore()')) {
 
       // Check if firestore variable is declared in this function
-      let hasFire storeDecl = false;
+      let hasFirestoreDecl = false;
       for (let j = Math.max(0, i - 20); j < i; j++) {
         if (lines[j].includes('const firestore = getFirebaseFirestore()') ||
             lines[j].includes('const firestore: Firestore')) {

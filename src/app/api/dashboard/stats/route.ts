@@ -113,8 +113,7 @@ export async function GET(req: NextRequest) {
       });
       
     } catch (error: any) {
-      logger.error({ 
-        type: 'dashboard_stats_db_error', 
+      logger.error('Error', { type: 'dashboard_stats_db_error', 
         error: error.message, 
         userId 
       }, 'Error fetching dashboard stats from database');
@@ -131,8 +130,7 @@ export async function GET(req: NextRequest) {
     }
     
   } catch (error: any) {
-    logger.error({ 
-      type: 'dashboard_stats_error', 
+    logger.error('Error', { type: 'dashboard_stats_error', 
       error: error.message 
     }, 'Dashboard stats api error');
     

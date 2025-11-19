@@ -52,7 +52,7 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
     const mediaDoc = await mediaRef.get();
     
     if (!mediaDoc.exists) {
-      logger.warn({ userId, mediaId: id }, 'Media not found when trying to revert');
+      logger.warn('Warn operation', { userId, mediaId: id }, 'Media not found when trying to revert');
       return NextResponse.json({ error: 'Media not found' }, { status: 404 });
     }
     
@@ -64,7 +64,7 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
     const versionsSnapshot = await versionsRef.get();
     
     if (versionsSnapshot.empty) {
-      logger.warn({ userId, mediaId: id }, 'No version history found');
+      logger.warn('Warn operation', { userId, mediaId: id }, 'No version history found');
       return NextResponse.json({ error: 'No version history found' }, { status: 404 });
     }
     
@@ -85,7 +85,7 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
     const targetVersion = versions.find(v => v.version === version);
     
     if (!targetVersion) {
-      logger.warn({ userId, mediaId: id, version }, 'Requested version not found');
+      logger.warn('Warn operation', { userId, mediaId: id, version }, 'Requested version not found');
       return NextResponse.json({ error: 'Requested version not found' }, { status: 404 });
     }
     
@@ -125,7 +125,7 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
       }
     });
     
-    logger.info({ userId, mediaId: id, fromVersion: highestVersion + 1, toVersion: version }, 'Media version reverted');
+    logger.info('Info operation', { userId, mediaId: id, fromVersion: highestVersion + 1, toVersion: version }, 'Media version reverted');
     
     return NextResponse.json({ 
       success: true, 
@@ -137,7 +137,7 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
     });
   } catch (error) {
     const errorMsg = error instanceof Error ? error.message : 'An unknown error occurred';
-    logger.error({ error: errorMsg }, 'Error reverting media version');
+    logger.error('Error occurred', { error: errorMsg }, 'Error reverting media version');
     
     return NextResponse.json({ 
       error: 'Failed to revert media version', 

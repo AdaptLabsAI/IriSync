@@ -79,8 +79,7 @@ export async function GET(request: NextRequest) {
     const total = countSnapshot.data().count;
     
     // Log success and return result
-    logger.info({ 
-      userId, 
+    logger.info('Info operation', { userId, 
       method: 'GET', 
       path: '/api/content/posts', 
       filters: { platformId, status }, 
@@ -100,8 +99,7 @@ export async function GET(request: NextRequest) {
     console.error('Error getting posts:', error);
     const errorMsg = error instanceof Error ? error.message : 'An unknown error occurred';
     
-    logger.error({ 
-      error: errorMsg, 
+    logger.error('Error occurred', { error: errorMsg, 
       method: 'GET', 
       path: '/api/content/posts' 
     });
@@ -204,8 +202,7 @@ export async function POST(request: NextRequest) {
     });
     
     // Log success
-    logger.info({ 
-      userId, 
+    logger.info('Info operation', { userId, 
       method: 'POST', 
       path: '/api/content/posts', 
       postId: docRef.id,
@@ -227,8 +224,7 @@ export async function POST(request: NextRequest) {
     console.error('Error creating post:', error);
     const errorMsg = error instanceof Error ? error.message : 'An unknown error occurred';
     
-    logger.error({ 
-      error: errorMsg, 
+    logger.error('Error occurred', { error: errorMsg, 
       method: 'POST', 
       path: '/api/content/posts' 
     });

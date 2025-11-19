@@ -7,7 +7,7 @@ import { ForumPostStatus } from '@/lib/features/content/models/post';
 import { getCurrentUser, isAdmin } from '@/lib/features/auth/token';
 import { UserRole } from '@/lib/core/models/User';
 import { doc, getDoc } from 'firebase/firestore';
-import { getFirebaseFirestore } from '@/lib/core/firebase';
+import { getFirebaseFirestore, firestore } from '@/lib/core/firebase';
 
 // Force dynamic rendering - required for Firebase/database access
 export const dynamic = 'force-dynamic';

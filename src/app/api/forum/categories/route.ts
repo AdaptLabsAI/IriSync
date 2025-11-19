@@ -6,7 +6,7 @@ import { z } from 'zod';
 import { getCurrentUser, isAdmin } from '@/lib/features/auth/token';
 import { UserRole } from '@/lib/core/models/User';
 import { doc, getDoc } from 'firebase/firestore';
-import { getFirebaseFirestore } from '@/lib/core/firebase';
+import { getFirebaseFirestore, firestore } from '@/lib/core/firebase';
 import { getCategories } from '@/lib/features/forum/categories';
 
 // Force dynamic rendering - required for Firebase/database access

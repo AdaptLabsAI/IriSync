@@ -7,7 +7,7 @@ import { FileUpload } from '@/components/ui/fileupload/FileUpload';
 import Avatar from '@mui/material/Avatar';
 import { getAuth, updateProfile } from 'firebase/auth';
 import { doc, getDoc, updateDoc, serverTimestamp } from 'firebase/firestore';
-import { getFirebaseFirestore } from '@/lib/core/firebase';
+import { getFirebaseFirestore, firestore } from '@/lib/core/firebase';
 import { useSession } from 'next-auth/react';
 
 export default function ProfileForm() {

@@ -385,8 +385,7 @@ export const TeamTodoProvider: React.FC<{ children: ReactNode }> = ({ children }
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Failed to fetch todos';
       setError(errorMessage);
-      logger.error({
-        type: 'team_todo_fetch_error',
+      logger.error('Error', { type: 'team_todo_fetch_error',
         teamId: currentTeamId,
         organizationId: currentOrganizationId,
         error: errorMessage
@@ -435,8 +434,7 @@ export const TeamTodoProvider: React.FC<{ children: ReactNode }> = ({ children }
       });
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Failed to create todo';
-      logger.error({
-        type: 'team_todo_create_error',
+      logger.error('Error', { type: 'team_todo_create_error',
         error: errorMessage
       });
       throw error;
@@ -475,8 +473,7 @@ export const TeamTodoProvider: React.FC<{ children: ReactNode }> = ({ children }
       });
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Failed to update todo';
-      logger.error({
-        type: 'team_todo_update_error',
+      logger.error('Error', { type: 'team_todo_update_error',
         todoId: id,
         error: errorMessage
       });
@@ -512,8 +509,7 @@ export const TeamTodoProvider: React.FC<{ children: ReactNode }> = ({ children }
       });
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Failed to delete todo';
-      logger.error({
-        type: 'team_todo_delete_error',
+      logger.error('Error', { type: 'team_todo_delete_error',
         todoId: id,
         error: errorMessage
       });
@@ -546,8 +542,7 @@ export const TeamTodoProvider: React.FC<{ children: ReactNode }> = ({ children }
       });
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Failed to clear completed todos';
-      logger.error({
-        type: 'team_todo_clear_error',
+      logger.error('Error', { type: 'team_todo_clear_error',
         error: errorMessage
       });
       throw error;

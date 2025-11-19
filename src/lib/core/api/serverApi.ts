@@ -49,8 +49,7 @@ export async function serverFetch<T>(
       const errorData = await response.json().catch(() => ({ message: 'Failed to parse error response' }));
       const message = errorData?.message || `Failed with status: ${response.status}`;
       
-      logger.error({
-        type: 'server_api_error',
+      logger.error('Error', { type: 'server_api_error',
         endpoint,
         status: response.status,
         message
@@ -78,8 +77,7 @@ export async function serverFetch<T>(
   } catch (error: any) {
     const message = error.message || 'An unexpected error occurred';
     
-    logger.error({
-      type: 'server_api_error',
+    logger.error('Error', { type: 'server_api_error',
       endpoint,
       message,
       error: error?.stack

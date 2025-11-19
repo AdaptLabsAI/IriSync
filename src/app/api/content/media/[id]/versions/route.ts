@@ -33,7 +33,7 @@ export async function GET(req: NextRequest, { params }: { params: { id: string }
     const mediaDoc = await mediaRef.get();
     
     if (!mediaDoc.exists) {
-      logger.warn({ userId, mediaId: id }, 'Media not found when fetching versions');
+      logger.warn('Warn operation', { userId, mediaId: id }, 'Media not found when fetching versions');
       return NextResponse.json({ error: 'Media not found' }, { status: 404 });
     }
     
@@ -68,12 +68,12 @@ export async function GET(req: NextRequest, { params }: { params: { id: string }
       versions
     };
     
-    logger.info({ userId, mediaId: id, versionCount: versions.length }, 'Media versions fetched');
+    logger.info('Info operation', { userId, mediaId: id, versionCount: versions.length }, 'Media versions fetched');
     
     return NextResponse.json(response);
   } catch (error) {
     const errorMsg = error instanceof Error ? error.message : 'An unknown error occurred';
-    logger.error({ error: errorMsg }, 'Error fetching media versions');
+    logger.error('Error occurred', { error: errorMsg }, 'Error fetching media versions');
     
     return NextResponse.json({ 
       error: 'Failed to fetch version history', 

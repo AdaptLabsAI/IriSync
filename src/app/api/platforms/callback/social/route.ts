@@ -30,8 +30,7 @@ export async function GET(req: NextRequest) {
 
     // Check for errors from OAuth provider
     if (error) {
-      logger.error({ 
-        type: 'social_oauth_callback', 
+      logger.error('Error', { type: 'social_oauth_callback', 
         error, 
         errorDescription,
         platform 
@@ -42,8 +41,7 @@ export async function GET(req: NextRequest) {
 
     // Validate required parameters
     if (!platform || (!code && !oauthVerifier) || !state) {
-      logger.error({ 
-        type: 'social_oauth_callback',
+      logger.error('Error', { type: 'social_oauth_callback',
         error: 'Missing required parameters',
         platform,
         hasCode: !!code,
@@ -62,7 +60,7 @@ export async function GET(req: NextRequest) {
         throw new Error('Invalid state parameter');
       }
     } catch (e) {
-      logger.error({ type: 'social_oauth_callback', error: 'Invalid state parameter' }, 'OAuth state validation failed');
+      logger.error('Error', { type: 'social_oauth_callback', error: 'Invalid state parameter' }, 'OAuth state validation failed');
       return NextResponse.redirect(new URL('/dashboard/settings/connections?error=invalid_state&errorDescription=Invalid authentication state', req.url));
     }
 
@@ -72,7 +70,7 @@ export async function GET(req: NextRequest) {
     // Verify that this was a recent request to prevent replay attacks
     const reqDoc = await firestore.collection('oauthRequests').doc(requestId).get();
     if (!reqDoc.exists || Date.now() - reqDoc.data()?.timestamp.toMillis() > 1000 * 60 * 10) { // 10 minute expiry
-      logger.error({ type: 'social_oauth_callback', error: 'Expired or invalid request' }, 'OAuth request validation failed');
+      logger.error('Error', { type: 'social_oauth_callback', error: 'Expired or invalid request' }, 'OAuth request validation failed');
       return NextResponse.redirect(new URL('/dashboard/settings/connections?error=invalid_state&errorDescription=Authentication request expired or invalid', req.url));
     }
     
@@ -92,8 +90,7 @@ export async function GET(req: NextRequest) {
     const maxConnections = tier === 'creator' ? 5 : Infinity; // Creator tier is limited to 5 connections
     
     if (existingConnectionCount >= maxConnections) {
-      logger.warn({ 
-        type: 'social_oauth_callback',
+      logger.warn('Warn', { type: 'social_oauth_callback',
         userId,
         tier,
         connectionCount: existingConnectionCount,
@@ -143,8 +140,7 @@ export async function GET(req: NextRequest) {
     });
     
     // Log successful connection
-    logger.info({ 
-      type: 'social_oauth_callback',
+    logger.info('Info', { type: 'social_oauth_callback',
       platform,
       userId,
       connectionId,
@@ -156,8 +152,7 @@ export async function GET(req: NextRequest) {
     
   } catch (error: any) {
     // Log the error
-    logger.error({ 
-      type: 'social_oauth_callback',
+    logger.error('Error', { type: 'social_oauth_callback',
       error: error.message || 'Unknown error'
     }, 'Social platform OAuth callback processing error');
     
@@ -177,8 +172,7 @@ export async function POST(req: NextRequest) {
     const { platform, code, state } = await req.json();
     
     // Log inbound request
-    logger.info({ 
-      type: 'social_oauth_callback',
+    logger.info('Info', { type: 'social_oauth_callback',
       platform,
       has_code: !!code,
       has_state: !!state 
@@ -214,7 +208,7 @@ export async function POST(req: NextRequest) {
         userData = { userId: sessionData.user.id, requestId: null };
       }
     } catch (e) {
-      logger.error({ type: 'social_oauth_callback', error: e }, 'Failed to parse state parameter');
+      logger.error('Error', { type: 'social_oauth_callback', error: e }, 'Failed to parse state parameter');
       return NextResponse.json({ 
         success: false, 
         error: 'Invalid state parameter', 
@@ -307,8 +301,7 @@ export async function POST(req: NextRequest) {
       });
       
       // Log successful connection
-      logger.info({ 
-        type: 'social_oauth_callback',
+      logger.info('Info', { type: 'social_oauth_callback',
         platform,
         userId,
         connectionId,
@@ -325,8 +318,7 @@ export async function POST(req: NextRequest) {
       
     } catch (error: any) {
       // Log the error
-      logger.error({ 
-        type: 'social_oauth_callback',
+      logger.error('Error', { type: 'social_oauth_callback',
         error: error.message || 'Unknown error'
       }, 'Social platform OAuth code exchange failed');
       
@@ -338,8 +330,7 @@ export async function POST(req: NextRequest) {
     }
   } catch (error: any) {
     // Log any unexpected errors
-    logger.error({ 
-      type: 'social_oauth_callback',
+    logger.error('Error', { type: 'social_oauth_callback',
       error: error.message || 'Unknown error'
     }, 'Social platform POST handler error');
     

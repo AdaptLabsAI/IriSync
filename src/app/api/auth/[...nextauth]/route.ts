@@ -53,7 +53,7 @@ const handler = async (req: Request, context: any) => {
           }
         } catch (error) {
           console.error('Error syncing session cookies:', error);
-          logger.error({ error: String(error) }, 'NextAuth session cookie sync error');
+          logger.error('Error occurred', { error: String(error) }, 'NextAuth session cookie sync error');
         }
       }
     }

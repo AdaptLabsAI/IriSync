@@ -95,8 +95,7 @@ export const TodoProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       setCategories(categoriesList);
     } catch (error) {
       console.error('Error fetching data:', error);
-      logger.error({
-        type: 'todo_fetch_error',
+      logger.error('Error', { type: 'todo_fetch_error',
         error: error instanceof Error ? error.message : 'Unknown error'
       });
       
@@ -214,8 +213,7 @@ export const TodoProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       localStorage.setItem('todos', JSON.stringify([...todos, newTodo]));
     } catch (error) {
       console.error('Error adding todo:', error);
-      logger.error({
-        type: 'todo_add_error',
+      logger.error('Error', { type: 'todo_add_error',
         error: error instanceof Error ? error.message : 'Unknown error'
       });
       
@@ -268,8 +266,7 @@ export const TodoProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       ));
     } catch (error) {
       console.error('Error toggling todo:', error);
-      logger.error({
-        type: 'todo_toggle_error',
+      logger.error('Error', { type: 'todo_toggle_error',
         error: error instanceof Error ? error.message : 'Unknown error',
         todoId: id
       });
@@ -308,8 +305,7 @@ export const TodoProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       ));
     } catch (error) {
       console.error('Error deleting todo:', error);
-      logger.error({
-        type: 'todo_delete_error',
+      logger.error('Error', { type: 'todo_delete_error',
         error: error instanceof Error ? error.message : 'Unknown error',
         todoId: id
       });
@@ -353,8 +349,7 @@ export const TodoProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       });
     } catch (error) {
       console.error('Error clearing completed todos:', error);
-      logger.error({
-        type: 'todo_clear_completed_error',
+      logger.error('Error', { type: 'todo_clear_completed_error',
         error: error instanceof Error ? error.message : 'Unknown error'
       });
       
@@ -390,8 +385,7 @@ export const TodoProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       ));
     } catch (error) {
       console.error('Error updating todo:', error);
-      logger.error({
-        type: 'todo_update_error',
+      logger.error('Error', { type: 'todo_update_error',
         error: error instanceof Error ? error.message : 'Unknown error',
         todoId: id
       });
@@ -430,8 +424,7 @@ export const TodoProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       localStorage.setItem('todoCategories', JSON.stringify([...categories, category]));
     } catch (error) {
       console.error('Error adding category:', error);
-      logger.error({
-        type: 'todo_category_add_error',
+      logger.error('Error', { type: 'todo_category_add_error',
         error: error instanceof Error ? error.message : 'Unknown error',
         category
       });
@@ -513,8 +506,7 @@ export const TodoProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       });
     } catch (error) {
       console.error('Error deleting category:', error);
-      logger.error({
-        type: 'todo_category_delete_error',
+      logger.error('Error', { type: 'todo_category_delete_error',
         error: error instanceof Error ? error.message : 'Unknown error',
         category
       });
