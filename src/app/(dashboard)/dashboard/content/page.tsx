@@ -39,7 +39,7 @@ import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
 import { useRouter, useSearchParams } from 'next/navigation';
 import DashboardLayout from '../../../../components/layouts/DashboardLayout';
 import { collection, getDocs, query, where, orderBy, Timestamp } from 'firebase/firestore';
-import { firestore } from '@/lib/core/firebase/client';
+import { getFirebaseFirestore } from '@/lib/core/firebase/client';
 
 // Define properly typed interfaces
 interface ContentPost {
@@ -101,7 +101,14 @@ export default function ContentPage() {
       try {
         setLoading(true);
         setError(null);
-        
+
+        const firestore = getFirebaseFirestore();
+        if (!firestore) {
+          setError('Firebase not configured');
+          setLoading(false);
+          return;
+        }
+
         // Create query to get content posts from Firestore
         const postsRef = collection(firestore, 'contentPosts');
         let postsQuery = query(
