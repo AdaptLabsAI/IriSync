@@ -18,6 +18,7 @@ import {
   Avatar,
   List,
   ListItem,
+  ListItemButton,
   ListItemText,
   ListItemAvatar,
   Divider,
@@ -506,8 +507,7 @@ export default function InboxPage() {
               ) : (
                 conversations.map((conversation) => (
                   <React.Fragment key={conversation.id}>
-                    <ListItem
-                      button
+                    <ListItemButton
                       selected={selectedConversation?.id === conversation.id}
                       onClick={() => setSelectedConversation(conversation)}
                       sx={{
@@ -567,7 +567,7 @@ export default function InboxPage() {
                           </Stack>
                         }
                       />
-                    </ListItem>
+                    </ListItemButton>
                     <Divider variant="inset" component="li" />
                   </React.Fragment>
                 ))
