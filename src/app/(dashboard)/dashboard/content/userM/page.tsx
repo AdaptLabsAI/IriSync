@@ -116,12 +116,12 @@ export default function UserManagementPage() {
                 placeholder="Search by email or name..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#00CC44] focus:border-transparent"
               />
             </div>
             <button
               onClick={loadUsers}
-              className="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+              className="px-6 py-3 bg-[#00CC44] text-white rounded-lg hover:bg-[#00AA33] transition-colors"
             >
               Refresh
             </button>
@@ -139,7 +139,7 @@ export default function UserManagementPage() {
         <div className="bg-white rounded-lg shadow-sm overflow-hidden">
           {loading ? (
             <div className="p-12 text-center">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600 mx-auto"></div>
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#00CC44] mx-auto"></div>
               <p className="mt-4 text-gray-600">Loading users...</p>
             </div>
           ) : filteredUsers.length === 0 ? (
@@ -183,7 +183,7 @@ export default function UserManagementPage() {
                       <td className="px-6 py-4 whitespace-nowrap">
                         <span className={`px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${
                           user.emailVerified
-                            ? 'bg-green-100 text-green-800'
+                            ? 'bg-[#00FF6A]/10 text-[#00CC44]'
                             : 'bg-yellow-100 text-yellow-800'
                         }`}>
                           {user.emailVerified ? 'Verified' : 'Pending'}
@@ -238,7 +238,7 @@ export default function UserManagementPage() {
           </div>
           <div className="bg-white rounded-lg shadow-sm p-6">
             <div className="text-sm text-gray-600 mb-1">Verified Users</div>
-            <div className="text-3xl font-bold text-green-600">{users.filter(u => u.emailVerified).length}</div>
+            <div className="text-3xl font-bold text-[#00CC44]">{users.filter(u => u.emailVerified).length}</div>
           </div>
         </div>
       </div>

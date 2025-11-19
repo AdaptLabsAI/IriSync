@@ -245,8 +245,8 @@ export default function TestimonialSubmissionPage() {
             )}
             
             {success && (
-              <div className="p-4 bg-green-50 border border-green-200 rounded-lg mb-6">
-                <Typography variant="body" className="text-green-700">
+              <div className="p-4 bg-[#00FF6A]/5 border border-[#00FF6A]/20 rounded-lg mb-6">
+                <Typography variant="body" className="text-[#00AA33]">
                   Thank you for your testimonial! We appreciate your feedback.
                 </Typography>
               </div>

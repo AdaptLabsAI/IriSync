@@ -88,7 +88,7 @@ export default function SystemHealthPage() {
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'healthy': return 'bg-green-100 text-green-800 border-green-200';
+      case 'healthy': return 'bg-[#00FF6A]/10 text-[#00CC44] border-[#00FF6A]/20';
       case 'degraded': return 'bg-yellow-100 text-yellow-800 border-yellow-200';
       case 'down': return 'bg-red-100 text-red-800 border-red-200';
       default: return 'bg-gray-100 text-gray-800 border-gray-200';
@@ -99,7 +99,7 @@ export default function SystemHealthPage() {
     switch (status) {
       case 'healthy':
         return (
-          <svg className="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-6 h-6 text-[#00CC44]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
         );
@@ -130,7 +130,7 @@ export default function SystemHealthPage() {
           <button
             onClick={checkHealth}
             disabled={refreshing}
-            className="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors disabled:opacity-50 flex items-center gap-2"
+            className="px-6 py-3 bg-[#00CC44] text-white rounded-lg hover:bg-[#00AA33] transition-colors disabled:opacity-50 flex items-center gap-2"
           >
             {refreshing ? (
               <>
@@ -247,7 +247,7 @@ export default function SystemHealthPage() {
             <div className="flex items-center justify-between p-3 bg-gray-50 rounded">
               <span className="text-sm text-gray-600">Firebase API Key</span>
               <span className={`px-2 py-1 text-xs font-semibold rounded ${
-                process.env.NEXT_PUBLIC_FIREBASE_API_KEY ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+                process.env.NEXT_PUBLIC_FIREBASE_API_KEY ? 'bg-[#00FF6A]/10 text-[#00CC44]' : 'bg-red-100 text-red-800'
               }`}>
                 {process.env.NEXT_PUBLIC_FIREBASE_API_KEY ? 'SET' : 'NOT SET'}
               </span>
@@ -255,7 +255,7 @@ export default function SystemHealthPage() {
             <div className="flex items-center justify-between p-3 bg-gray-50 rounded">
               <span className="text-sm text-gray-600">Firebase Auth Domain</span>
               <span className={`px-2 py-1 text-xs font-semibold rounded ${
-                process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+                process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN ? 'bg-[#00FF6A]/10 text-[#00CC44]' : 'bg-red-100 text-red-800'
               }`}>
                 {process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN ? 'SET' : 'NOT SET'}
               </span>
@@ -263,7 +263,7 @@ export default function SystemHealthPage() {
             <div className="flex items-center justify-between p-3 bg-gray-50 rounded">
               <span className="text-sm text-gray-600">Firebase Project ID</span>
               <span className={`px-2 py-1 text-xs font-semibold rounded ${
-                process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+                process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID ? 'bg-[#00FF6A]/10 text-[#00CC44]' : 'bg-red-100 text-red-800'
               }`}>
                 {process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID ? 'SET' : 'NOT SET'}
               </span>
@@ -271,7 +271,7 @@ export default function SystemHealthPage() {
             <div className="flex items-center justify-between p-3 bg-gray-50 rounded">
               <span className="text-sm text-gray-600">Firebase App ID</span>
               <span className={`px-2 py-1 text-xs font-semibold rounded ${
-                process.env.NEXT_PUBLIC_FIREBASE_APP_ID ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+                process.env.NEXT_PUBLIC_FIREBASE_APP_ID ? 'bg-[#00FF6A]/10 text-[#00CC44]' : 'bg-red-100 text-red-800'
               }`}>
                 {process.env.NEXT_PUBLIC_FIREBASE_APP_ID ? 'SET' : 'NOT SET'}
               </span>
