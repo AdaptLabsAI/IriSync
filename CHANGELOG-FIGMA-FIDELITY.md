@@ -6,6 +6,20 @@
 
 ---
 
+## Commit: `cd82930` - Fix auth and firestore null checks in content create page
+
+**Date:** 2025-11-18
+
+### Changes
+- **Content Create Page** (`src/app/(dashboard)/dashboard/content/create/page.tsx`)
+  - Added auth null check before accessing `auth.currentUser` (line 37-39)
+  - Added firestore null check before using `collection()` (line 41-43)
+
+### Impact
+**CRITICAL FIX:** Resolved fifth TypeScript build error blocking Vercel deployment. Fixed null safety violations where `auth` and `firestore` were accessed without proper null checks.
+
+---
+
 ## Commit: `59609bb` - Fix Grid component import in AI page
 
 **Date:** 2025-11-18
