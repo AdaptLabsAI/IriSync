@@ -334,7 +334,7 @@ export const CaptionGenerationButton: React.FC<CaptionGenerationButtonProps> = (
                                       handleCaptionFeedback(index, true);
                                     }}
                                   >
-                                    <ThumbsUp className="h-4 w-4 text-gray-500 hover:text-green-500" />
+                                    <ThumbsUp className="h-4 w-4 text-gray-500 hover:text-[#00CC44]" />
                                   </Button>
                                 </TooltipTrigger>
                                 <TooltipContent>

@@ -240,7 +240,7 @@ const CalendarEventCard: React.FC<CalendarEventCardProps> = ({
         );
       case 'published':
         return (
-          <span className="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">
+          <span className="bg-[#00FF6A]/10 text-[#00CC44] text-xs px-2 py-1 rounded-full">
             Published
           </span>
         );

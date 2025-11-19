@@ -227,7 +227,7 @@ export function AIOptimalCalendarView({
 
   // Get confidence color
   const getConfidenceColor = (score: number): string => {
-    if (score >= 0.8) return 'bg-green-500';
+    if (score >= 0.8) return 'bg-[#00CC44]';
     if (score >= 0.6) return 'bg-yellow-500';
     return 'bg-red-500';
   };
@@ -422,7 +422,7 @@ export function AIOptimalCalendarView({
                               />
                               
                               {/* Engagement Indicator */}
-                              {engagementLevel === 'high' && <TrendingUp className="w-3 h-3 text-green-600" />}
+                              {engagementLevel === 'high' && <TrendingUp className="w-3 h-3 text-[#00CC44]" />}
                               {engagementLevel === 'medium' && <Target className="w-3 h-3 text-yellow-600" />}
                               {engagementLevel === 'low' && <Clock className="w-3 h-3 text-gray-500" />}
                             </div>
@@ -566,7 +566,7 @@ export function AIOptimalCalendarView({
           
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 text-sm">
             <div className="flex items-center space-x-2">
-              <div className="w-3 h-3 rounded-full bg-green-500" />
+              <div className="w-3 h-3 rounded-full bg-[#00CC44]" />
               <span>High Confidence (80%+)</span>
             </div>
             

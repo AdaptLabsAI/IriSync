@@ -341,7 +341,7 @@ const CustomRoleButton: React.FC<CustomRoleButtonProps> = ({
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-y-3">
                         {categoryPermissions.map(permission => (
                           <div key={permission.id} className="flex items-center gap-2">
-                            <Check className="h-4 w-4 text-green-500" />
+                            <Check className="h-4 w-4 text-[#00CC44]" />
                             <div>
                               <div className="text-sm font-medium">{permission.name}</div>
                               <div className="text-xs text-gray-500">{permission.description}</div>

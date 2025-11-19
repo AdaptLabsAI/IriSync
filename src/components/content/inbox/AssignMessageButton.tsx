@@ -238,7 +238,7 @@ export const AssignMessageButton: React.FC<AssignMessageButtonProps> = ({
     
     return (
       <div className={`absolute bottom-0 right-0 h-2.5 w-2.5 rounded-full border-2 border-white ${
-        status === 'online' ? 'bg-green-500' : 'bg-amber-500'
+        status === 'online' ? 'bg-[#00CC44]' : 'bg-amber-500'
       }`} />
     );
   };
@@ -283,7 +283,7 @@ export const AssignMessageButton: React.FC<AssignMessageButtonProps> = ({
       
       <PopoverContent className="w-60 p-0" align="end">
         {isProcessing || result ? (
-          <div className={`p-4 text-center ${result?.success ? 'text-green-600' : result ? 'text-red-600' : ''}`}>
+          <div className={`p-4 text-center ${result?.success ? 'text-[#00CC44]' : result ? 'text-red-600' : ''}`}>
             {isProcessing ? (
               <>
                 <Loader2 className="h-6 w-6 animate-spin mx-auto mb-2" />
@@ -349,7 +349,7 @@ export const AssignMessageButton: React.FC<AssignMessageButtonProps> = ({
                       </div>
                       
                       {currentAssignees.includes(member.id) && (
-                        <Check className="h-4 w-4 text-green-500 ml-2" />
+                        <Check className="h-4 w-4 text-[#00CC44] ml-2" />
                       )}
                       
                       {member.currentTaskCount !== undefined && member.currentTaskCount > 0 && (

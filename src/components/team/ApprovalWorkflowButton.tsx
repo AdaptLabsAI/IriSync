@@ -254,7 +254,7 @@ const ApprovalWorkflowButton: React.FC<ApprovalWorkflowButtonProps> = ({
                           <h4 className="font-medium flex items-center">
                             {workflow.name}
                             {workflow.isActive && (
-                              <span className="ml-2 text-xs bg-green-100 text-green-800 rounded-full px-2 py-0.5 flex items-center">
+                              <span className="ml-2 text-xs bg-[#00FF6A]/10 text-[#00CC44] rounded-full px-2 py-0.5 flex items-center">
                                 <CheckCircle className="h-3 w-3 mr-1" />
                                 Active
                               </span>

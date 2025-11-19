@@ -33,7 +33,7 @@ export function DashboardClient({ data, permissionError, errorMessage }: Dashboa
                 <p className="text-2xl font-bold text-gray-900">{stat.value}</p>
               </div>
               <div className={`flex items-center text-sm ${
-                stat.increasing ? 'text-green-600' : 'text-red-600'
+                stat.increasing ? 'text-[#00CC44]' : 'text-red-600'
               }`}>
                 <span>{stat.increasing ? '+' : ''}{stat.change}%</span>
               </div>

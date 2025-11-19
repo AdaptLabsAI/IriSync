@@ -620,7 +620,7 @@ export default function BrandVoiceConsistencyTool({
                 
                 <button
                   onClick={handleUseContent}
-                  className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
+                  className="px-4 py-2 bg-[#00CC44] text-white rounded hover:bg-[#00AA33]"
                 >
                   Use Analysis Results
                 </button>
