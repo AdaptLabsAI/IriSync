@@ -32,13 +32,21 @@ export default function ContentCreationPage() {
     try {
       setLoading(true);
       setError(null);
-      
+
       // Get current user
+      if (!auth) {
+        throw new Error('Authentication not initialized');
+      }
+
+      if (!firestore) {
+        throw new Error('Firestore not initialized');
+      }
+
       const currentUser = auth.currentUser;
       if (!currentUser) {
         throw new Error('You must be logged in to create content');
       }
-      
+
       // Prepare content data with metadata
       const completeContentData = {
         ...contentData,
