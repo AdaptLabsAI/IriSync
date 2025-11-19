@@ -376,15 +376,15 @@ export default function RegisterPage() {
                 name="acceptTerms"
                 checked={formData.acceptTerms}
                 onChange={handleInputChange}
-                className="mt-1 w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500"
+                className="mt-1 w-4 h-4 text-[#00CC44] border-gray-300 rounded focus:ring-[#00FF6A]"
               />
               <label htmlFor="acceptTerms" className="ml-2 text-sm text-gray-600">
                 I agree to the{' '}
-                <Link href="/legal/terms" className="text-green-600 hover:text-green-700 underline" target="_blank">
+                <Link href="/legal/terms" className="text-[#00CC44] hover:text-[#00FF6A] underline" target="_blank">
                   Terms and Conditions
                 </Link>{' '}
                 and{' '}
-                <Link href="/legal/privacy" className="text-green-600 hover:text-green-700 underline" target="_blank">
+                <Link href="/legal/privacy" className="text-[#00CC44] hover:text-[#00FF6A] underline" target="_blank">
                   Privacy Policy
                 </Link>
               </label>

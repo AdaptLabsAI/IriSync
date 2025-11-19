@@ -268,7 +268,7 @@ export default function ContactSalesPage() {
                   </>
                 ) : (
                   <div className="text-center py-12">
-                    <div className="inline-flex items-center justify-center w-16 h-16 bg-green-100 rounded-full mb-6">
+                    <div className="inline-flex items-center justify-center w-16 h-16 bg-[#00FF6A]/10 rounded-full mb-6">
                       <FaCheckCircle className="text-[#00FF6A] text-3xl" />
                     </div>
                     <Typography variant="h3" className="mb-4">
@@ -383,7 +383,7 @@ export default function ContactSalesPage() {
               </Card>
 
               {/* Quick Links Card */}
-              <Card className="p-6 bg-gradient-to-br from-green-50 to-green-100">
+              <Card className="p-6 bg-gradient-to-br from-[#00FF6A]/5 to-[#00FF6A]/10">
                 <Typography variant="h6" className="mb-4 font-bold">
                   Need Help Sooner?
                 </Typography>

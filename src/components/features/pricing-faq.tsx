@@ -58,7 +58,7 @@ export default function PricingFAQ() {
           <div className="lg:col-span-1">
             <div className="sticky top-8">
               <h2 className="text-4xl font-semibold text-gray-900 mb-4">
-                Pricing <span className="text-green-500">FAQ's</span>
+                Pricing <span className="text-[#00CC44]">FAQ's</span>
               </h2>
               <p className="text-gray-600 text-base leading-relaxed">
                 Got questions? We're here to help you find the plan that fits your goals
@@ -82,7 +82,7 @@ export default function PricingFAQ() {
                     <button
                       onClick={() => toggleExpanded(faq.id)}
                       className={`w-full px-6 py-5 text-left flex items-center justify-between transition-colors duration-200 ${
-                        isExpanded ? "bg-green-50" : "bg-white hover:bg-gray-50"
+                        isExpanded ? "bg-[#00FF6A]/5" : "bg-white hover:bg-gray-50"
                       }`}
                     >
                       <span className="text-lg font-medium text-gray-900 pr-4">{faq.question}</span>
@@ -96,7 +96,7 @@ export default function PricingFAQ() {
                     </button>
 
                     {isExpanded && (
-                      <div className="px-6 py-5 bg-green-50 border-t border-green-100">
+                      <div className="px-6 py-5 bg-[#00FF6A]/5 border-t border-[#00FF6A]/20">
                         <p className="text-gray-700 leading-relaxed">{faq.answer}</p>
                       </div>
                     )}

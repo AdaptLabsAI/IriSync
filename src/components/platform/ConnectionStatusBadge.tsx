@@ -91,8 +91,8 @@ export const ConnectionStatusBadge: React.FC<ConnectionStatusBadgeProps> = ({
   }> = {
     connected: {
       label: 'Connected',
-      bgColor: 'bg-green-100',
-      textColor: 'text-green-800',
+      bgColor: 'bg-[#00FF6A]/10',
+      textColor: 'text-[#00CC44]',
       icon: <CheckIcon />,
     },
     disconnected: {
