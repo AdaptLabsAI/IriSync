@@ -391,8 +391,8 @@ const KnowledgeBaseButton: React.FC<KnowledgeBaseButtonProps> = ({
                           <button
                             onClick={() => handleFeedback(true)}
                             className={`p-1 rounded-full ${
-                              feedbackSubmitted === true 
-                                ? 'bg-green-100 text-green-600' 
+                              feedbackSubmitted === true
+                                ? 'bg-[#00FF6A]/10 text-[#00CC44]'
                                 : 'hover:bg-gray-100 text-gray-500'
                             }`}
                             disabled={feedbackSubmitted !== null}
@@ -413,7 +413,7 @@ const KnowledgeBaseButton: React.FC<KnowledgeBaseButtonProps> = ({
                         </div>
                       </div>
                       {feedbackSubmitted !== null && (
-                        <p className="text-xs text-green-600 mt-1">
+                        <p className="text-xs text-[#00CC44] mt-1">
                           Thank you for your feedback!
                         </p>
                       )}

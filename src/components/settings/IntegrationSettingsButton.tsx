@@ -424,8 +424,8 @@ const IntegrationSettingsButton: React.FC<IntegrationSettingsButtonProps> = ({
                         
                         <div className="mt-2">
                           <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs ${
-                            integration.connected 
-                              ? 'bg-green-100 text-green-800' 
+                            integration.connected
+                              ? 'bg-[#00FF6A]/10 text-[#00CC44]'
                               : 'bg-red-100 text-red-800'
                           }`}>
                             {integration.connected ? (
@@ -556,8 +556,8 @@ const IntegrationSettingsButton: React.FC<IntegrationSettingsButtonProps> = ({
                   <InfoIcon className="h-4 w-4 text-gray-500 mr-2" />
                   <span className="text-sm text-gray-700">Status: </span>
                   <span className={`ml-1 inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${
-                    selectedIntegration.connected 
-                      ? 'bg-green-100 text-green-800' 
+                    selectedIntegration.connected
+                      ? 'bg-[#00FF6A]/10 text-[#00CC44]'
                       : 'bg-red-100 text-red-800'
                   }`}>
                     {selectedIntegration.connected ? 'Connected' : 'Disconnected'}

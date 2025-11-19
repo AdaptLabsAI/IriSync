@@ -154,7 +154,7 @@ export default function ConnectionsPage() {
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#00CC44]"></div>
       </div>
     );
   }
@@ -214,7 +214,7 @@ export default function ConnectionsPage() {
                     className={`px-4 py-2 rounded-lg font-medium transition-colors disabled:opacity-50 ${
                       isConnected
                         ? 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                        : 'bg-green-600 text-white hover:bg-green-700'
+                        : 'bg-[#00CC44] text-white hover:bg-[#00AA33]'
                     }`}
                   >
                     {isConnected ? 'Disconnect' : 'Connect'}
@@ -236,7 +236,7 @@ export default function ConnectionsPage() {
           <h3 className="text-lg font-semibold text-gray-900 mb-4">Connection Summary</h3>
           <div className="grid grid-cols-3 gap-6 text-center">
             <div>
-              <div className="text-3xl font-bold text-green-600">
+              <div className="text-3xl font-bold text-[#00CC44]">
                 {connections.filter(c => c.connected).length}
               </div>
               <div className="text-sm text-gray-600 mt-1">Connected</div>

@@ -311,7 +311,7 @@ const CustomRoleButton: React.FC<CustomRoleButtonProps> = ({
                   </div>
                 )}
                 {selectedRole.isDefault && (
-                  <div className="px-2 py-0.5 bg-green-100 text-green-800 text-xs rounded-md flex items-center">
+                  <div className="px-2 py-0.5 bg-[#00FF6A]/10 text-[#00CC44] text-xs rounded-md flex items-center">
                     <Check className="h-3 w-3 mr-1" />
                     Default
                   </div>
@@ -516,7 +516,7 @@ const CustomRoleButton: React.FC<CustomRoleButtonProps> = ({
                                 </div>
                               )}
                               {role.isDefault && (
-                                <div className="px-2 py-0.5 bg-green-100 text-green-800 text-xs rounded-md flex items-center">
+                                <div className="px-2 py-0.5 bg-[#00FF6A]/10 text-[#00CC44] text-xs rounded-md flex items-center">
                                   <Check className="h-3 w-3 mr-1" />
                                   Default
                                 </div>

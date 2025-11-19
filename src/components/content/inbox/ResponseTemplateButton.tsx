@@ -359,7 +359,7 @@ export const ResponseTemplateButton: React.FC<ResponseTemplateButtonProps> = ({
                               favoriteAction.loading ? (
                                 <Loader2 className="h-4 w-4 animate-spin" />
                               ) : favoriteAction.success ? (
-                                <Check className="h-4 w-4 text-green-500" />
+                                <Check className="h-4 w-4 text-[#00CC44]" />
                               ) : (
                                 <Star className="h-4 w-4" />
                               )

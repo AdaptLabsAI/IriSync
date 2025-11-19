@@ -123,7 +123,7 @@ export default function ProfilePage() {
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#00CC44]"></div>
       </div>
     );
   }
@@ -151,7 +151,7 @@ export default function ProfilePage() {
           {!editing ? (
             <button
               onClick={() => setEditing(true)}
-              className="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors flex items-center gap-2"
+              className="px-6 py-3 bg-[#00CC44] text-white rounded-lg hover:bg-[#00AA33] transition-colors flex items-center gap-2"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
@@ -181,7 +181,7 @@ export default function ProfilePage() {
               <button
                 onClick={handleSave}
                 disabled={saving}
-                className="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors disabled:opacity-50 flex items-center gap-2"
+                className="px-6 py-3 bg-[#00CC44] text-white rounded-lg hover:bg-[#00AA33] transition-colors disabled:opacity-50 flex items-center gap-2"
               >
                 {saving ? (
                   <>
@@ -204,12 +204,12 @@ export default function ProfilePage() {
         {/* Profile Card */}
         <div className="bg-white rounded-lg shadow-sm overflow-hidden mb-6">
           {/* Header Section */}
-          <div className="h-32 bg-gradient-to-r from-green-500 to-green-600"></div>
+          <div className="h-32 bg-gradient-to-r from-[#00FF6A] to-[#00CC44]"></div>
 
           {/* Profile Info */}
           <div className="px-8 pb-8">
             <div className="flex items-end -mt-16 mb-6">
-              <div className="w-32 h-32 bg-white rounded-full border-4 border-white shadow-lg flex items-center justify-center text-4xl font-bold text-green-600">
+              <div className="w-32 h-32 bg-white rounded-full border-4 border-white shadow-lg flex items-center justify-center text-4xl font-bold text-[#00CC44]">
                 {(formData.displayName || user.email || 'U')[0].toUpperCase()}
               </div>
               <div className="ml-6 mb-4">
@@ -229,7 +229,7 @@ export default function ProfilePage() {
                     type="text"
                     value={formData.displayName}
                     onChange={(e) => setFormData({ ...formData, displayName: e.target.value })}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#00CC44] focus:border-transparent"
                   />
                 ) : (
                   <p className="text-gray-900 py-3">{formData.displayName || 'Not set'}</p>
@@ -252,7 +252,7 @@ export default function ProfilePage() {
                     type="text"
                     value={formData.company}
                     onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#00CC44] focus:border-transparent"
                   />
                 ) : (
                   <p className="text-gray-900 py-3">{formData.company || 'Not set'}</p>
@@ -268,7 +268,7 @@ export default function ProfilePage() {
                     type="text"
                     value={formData.role}
                     onChange={(e) => setFormData({ ...formData, role: e.target.value })}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#00CC44] focus:border-transparent"
                   />
                 ) : (
                   <p className="text-gray-900 py-3">{formData.role || 'Not set'}</p>
@@ -284,7 +284,7 @@ export default function ProfilePage() {
                     type="tel"
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#00CC44] focus:border-transparent"
                   />
                 ) : (
                   <p className="text-gray-900 py-3">{formData.phone || 'Not set'}</p>
@@ -300,7 +300,7 @@ export default function ProfilePage() {
                     type="text"
                     value={formData.location}
                     onChange={(e) => setFormData({ ...formData, location: e.target.value })}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#00CC44] focus:border-transparent"
                   />
                 ) : (
                   <p className="text-gray-900 py-3">{formData.location || 'Not set'}</p>
@@ -316,7 +316,7 @@ export default function ProfilePage() {
                     value={formData.bio}
                     onChange={(e) => setFormData({ ...formData, bio: e.target.value })}
                     rows={4}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent resize-none"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#00CC44] focus:border-transparent resize-none"
                   />
                 ) : (
                   <p className="text-gray-900 py-3">{formData.bio || 'Not set'}</p>
@@ -334,7 +334,7 @@ export default function ProfilePage() {
               <span className="text-gray-600">Email Verified</span>
               <span className={`px-3 py-1 rounded-full text-sm font-medium ${
                 user.emailVerified
-                  ? 'bg-green-100 text-green-800'
+                  ? 'bg-[#00FF6A]/10 text-[#00CC44]'
                   : 'bg-yellow-100 text-yellow-800'
               }`}>
                 {user.emailVerified ? 'Verified' : 'Not Verified'}

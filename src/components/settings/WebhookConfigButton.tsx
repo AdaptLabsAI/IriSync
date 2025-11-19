@@ -502,20 +502,20 @@ const WebhookConfigButton: React.FC<WebhookConfigButtonProps> = ({
             )}
             
             {testResult && selectedWebhookId && (
-              <div className={`p-4 border rounded-md ${testResult.success ? 'border-green-300 bg-green-50' : 'border-red-300 bg-red-50'}`}>
+              <div className={`p-4 border rounded-md ${testResult.success ? 'border-[#00CC44] bg-[#00FF6A]/5' : 'border-red-300 bg-red-50'}`}>
                 <div className="flex items-start">
                   <div className="flex-shrink-0">
                     {testResult.success ? (
-                      <Check className="h-5 w-5 text-green-500" />
+                      <Check className="h-5 w-5 text-[#00CC44]" />
                     ) : (
                       <X className="h-5 w-5 text-red-500" />
                     )}
                   </div>
                   <div className="ml-3">
-                    <h4 className={`text-sm font-medium ${testResult.success ? 'text-green-800' : 'text-red-800'}`}>
+                    <h4 className={`text-sm font-medium ${testResult.success ? 'text-[#00CC44]' : 'text-red-800'}`}>
                       Test {testResult.success ? 'Successful' : 'Failed'}
                     </h4>
-                    <p className={`text-xs ${testResult.success ? 'text-green-700' : 'text-red-700'} mt-1`}>
+                    <p className={`text-xs ${testResult.success ? 'text-[#00CC44]' : 'text-red-700'} mt-1`}>
                       Status: {testResult.status} | {testResult.message}
                     </p>
                   </div>
@@ -541,7 +541,7 @@ const WebhookConfigButton: React.FC<WebhookConfigButtonProps> = ({
                           <div className="flex items-center">
                             <h4 className="text-sm font-medium">{webhook.name}</h4>
                             {webhook.active ? (
-                              <span className="ml-2 px-2 py-0.5 text-xs font-medium rounded-full bg-green-100 text-green-800">
+                              <span className="ml-2 px-2 py-0.5 text-xs font-medium rounded-full bg-[#00FF6A]/10 text-[#00CC44]">
                                 Active
                               </span>
                             ) : (
@@ -572,7 +572,7 @@ const WebhookConfigButton: React.FC<WebhookConfigButtonProps> = ({
                           
                           {webhook.lastResponse && (
                             <div className="mt-1 flex items-center text-xs">
-                              <span className={webhook.lastResponse.success ? 'text-green-500' : 'text-red-500'}>
+                              <span className={webhook.lastResponse.success ? 'text-[#00CC44]' : 'text-red-500'}>
                                 Last response: {webhook.lastResponse.status} ({webhook.lastResponse.success ? 'Success' : 'Failed'})
                               </span>
                             </div>

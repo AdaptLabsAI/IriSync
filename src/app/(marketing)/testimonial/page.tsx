@@ -264,7 +264,7 @@ export default function TestimonialSubmissionPage() {
                   required
                   value={formData.name}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#00CC44] focus:border-[#00CC44] transition-colors"
                 />
               </div>
               
@@ -279,10 +279,10 @@ export default function TestimonialSubmissionPage() {
                   value={formData.role}
                   onChange={handleChange}
                   placeholder="e.g. Social Media Manager"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#00CC44] focus:border-[#00CC44] transition-colors"
                 />
               </div>
-              
+
               <div>
                 <label htmlFor="company" className="block text-sm font-medium text-gray-700 mb-2">
                   Company
@@ -294,7 +294,7 @@ export default function TestimonialSubmissionPage() {
                   value={formData.company}
                   onChange={handleChange}
                   placeholder="e.g. Acme Inc."
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#00CC44] focus:border-[#00CC44] transition-colors"
                 />
               </div>
               
@@ -317,7 +317,7 @@ export default function TestimonialSubmissionPage() {
                   onChange={handleChange}
                   rows={6}
                   placeholder="Share your experience with IriSync and how it has helped your social media management..."
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors resize-vertical"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#00CC44] focus:border-[#00CC44] transition-colors resize-vertical"
                 />
               </div>
               
@@ -328,7 +328,7 @@ export default function TestimonialSubmissionPage() {
                     name="allowPublish"
                     checked={formData.allowPublish}
                     onChange={handleChange}
-                    className="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded mt-1"
+                    className="h-4 w-4 text-[#00CC44] focus:ring-[#00CC44] border-gray-300 rounded mt-1"
                   />
                   <span className="ml-2 text-sm text-gray-700">
                     I allow IriSync to publish my testimonial on their website

@@ -244,7 +244,7 @@ const APIKeyButton: React.FC<APIKeyButtonProps> = ({
       case 'read':
         return 'bg-blue-100 text-blue-800';
       case 'write':
-        return 'bg-green-100 text-green-800';
+        return 'bg-[#00FF6A]/10 text-[#00CC44]';
       case 'admin':
         return 'bg-purple-100 text-purple-800';
     }
