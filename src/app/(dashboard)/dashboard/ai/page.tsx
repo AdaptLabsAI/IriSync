@@ -9,7 +9,6 @@ import {
   Button,
   Stack,
   Chip,
-  Grid,
   Card,
   CardContent,
   TextField,
@@ -22,6 +21,7 @@ import {
   InputAdornment,
   Alert
 } from '@mui/material';
+import Grid from '@/components/ui/grid';
 import {
   Psychology as AIIcon,
   Send as SendIcon,
