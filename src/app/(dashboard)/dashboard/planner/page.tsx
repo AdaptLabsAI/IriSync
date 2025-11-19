@@ -11,7 +11,6 @@ import {
   Chip,
   IconButton,
   Tooltip,
-  Grid,
   Card,
   CardContent,
   CircularProgress,
@@ -20,6 +19,7 @@ import {
   ToggleButton,
   Divider
 } from '@mui/material';
+import Grid from '@/components/ui/grid';
 import {
   Add as AddIcon,
   CalendarMonth as CalendarIcon,
