@@ -124,8 +124,8 @@ export default function SystemHealthPage() {
         {/* Header */}
         <div className="mb-8 flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">System Health</h1>
-            <p className="text-gray-600">Monitor system components and performance</p>
+            <h1 className="text-2xl font-bold text-gray-900 mb-2">System Health</h1>
+            <p className="text-sm text-gray-600">Monitor system components and performance</p>
           </div>
           <button
             onClick={checkHealth}

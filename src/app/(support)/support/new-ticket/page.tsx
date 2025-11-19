@@ -49,8 +49,8 @@ export default function NewTicketPage() {
       <div className="max-w-3xl mx-auto">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Create Support Ticket</h1>
-          <p className="text-gray-600">We're here to help. Describe your issue and we'll get back to you soon.</p>
+          <h1 className="text-2xl font-bold text-gray-900 mb-2">Create Support Ticket</h1>
+          <p className="text-sm text-gray-600">We're here to help. Describe your issue and we'll get back to you soon.</p>
         </div>
 
         {/* Form */}

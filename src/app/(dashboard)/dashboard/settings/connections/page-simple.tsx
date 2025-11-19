@@ -175,8 +175,8 @@ export default function ConnectionsPage() {
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Connections</h1>
-          <p className="text-gray-600">Manage your social media platform connections</p>
+          <h1 className="text-2xl font-bold text-gray-900 mb-2">Connections</h1>
+          <p className="text-sm text-gray-600">Manage your social media platform connections</p>
         </div>
 
         {/* Info Alert */}
