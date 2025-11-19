@@ -15,7 +15,7 @@ import {
 import { AdminPanelSettings, Security } from '@mui/icons-material';
 import { getAuth } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
-import { firestore } from '@/lib/core/firebase';
+import { getFirebaseFirestore } from '@/lib/core/firebase';
 
 const ProfileRoleInfo = () => {
   const { data: session } = useSession();
@@ -34,6 +34,12 @@ const ProfileRoleInfo = () => {
           setLoading(false);
           return;
         }
+
+        const firestore = getFirebaseFirestore();
+
+
+        if (!firestore) { console.error('Firestore not configured'); return; }
+
 
         const userDocRef = doc(firestore, 'users', user.uid);
         const userDoc = await getDoc(userDocRef);

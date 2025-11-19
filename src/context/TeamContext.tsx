@@ -27,6 +27,10 @@ export const TeamProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       if (user && organization) {
         setLoading(true);
         try {
+          const firestore = getFirebaseFirestore();
+
+          if (!firestore) { console.error('Firestore not configured'); return; }
+
           const orgDocRef = doc(firestore, 'organizations', organization.id);
           const orgDoc = await getDoc(orgDocRef);
 
@@ -40,6 +44,10 @@ export const TeamProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
             } else if (userTeams.length > 0) {
               setCurrentTeam(userTeams[0]);
               if (user.uid) {
+                const firestore = getFirebaseFirestore();
+
+                if (!firestore) { console.error('Firestore not configured'); return; }
+
                 const userDocRef = doc(firestore, 'users', user.uid);
                 await updateDoc(userDocRef, { currentTeamId: userTeams[0].id });
               }
@@ -62,6 +70,10 @@ export const TeamProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     if (user && teams.some(team => team.id === teamId)) {
       setLoading(true);
       try {
+        const firestore = getFirebaseFirestore();
+
+        if (!firestore) { console.error('Firestore not configured'); return; }
+
         const userDocRef = doc(firestore, 'users', user.uid);
         await updateDoc(userDocRef, { currentTeamId: teamId });
         setCurrentTeam(teams.find(team => team.id === teamId) || null);

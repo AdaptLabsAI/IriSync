@@ -1,5 +1,5 @@
-import { firestore } from '../core/firebase';
-import { collection, doc, setDoc, getDoc, getDocs, query, where, orderBy, limit, updateDoc, deleteDoc, writeBatch, Timestamp } from 'firebase/firestore';
+import { getFirebaseFirestore } from '../core/firebase';
+import { Firestore, collection, doc, setDoc, getDoc, getDocs, query, where, orderBy, limit, updateDoc, deleteDoc, writeBatch, Timestamp } from 'firebase/firestore';
 import { v4 as uuidv4 } from 'uuid';
 import { ContentItem } from './CalendarService';
 
@@ -55,6 +55,12 @@ export interface VersionConflict {
  * This allows tracking changes over time and reverting to previous versions
  */
 export class ContentVersionService {
+  private getFirestore() {
+    const firestore = getFirebaseFirestore();
+    if (!firestore) throw new Error('Firestore not configured');
+    return firestore;
+  }
+
   private readonly COLLECTION = 'content_versions';
   private readonly MAX_VERSIONS_PER_CONTENT = 100;
   
@@ -94,7 +100,7 @@ export class ContentVersionService {
     };
     
     // Store in Firestore
-    await setDoc(doc(firestore, this.COLLECTION, versionId), {
+    await setDoc(doc(this.getFirestore(), this.COLLECTION, versionId), {
       ...version,
       createdAt: Timestamp.fromDate(version.createdAt)
     });
@@ -110,7 +116,7 @@ export class ContentVersionService {
    */
   async getLatestVersionNumber(contentId: string): Promise<number> {
     const versionsQuery = query(
-      collection(firestore, this.COLLECTION),
+      collection(this.getFirestore(), this.COLLECTION),
       where('contentId', '==', contentId),
       orderBy('version', 'desc'),
       limit(1)
@@ -130,7 +136,7 @@ export class ContentVersionService {
    */
   async getVersionHistory(contentId: string, limitCount?: number): Promise<ContentVersion[]> {
     let versionsQuery = query(
-      collection(firestore, this.COLLECTION),
+      collection(this.getFirestore(), this.COLLECTION),
       where('contentId', '==', contentId),
       orderBy('version', 'desc')
     );
@@ -158,7 +164,7 @@ export class ContentVersionService {
    */
   async getVersion(contentId: string, version: number): Promise<ContentVersion | null> {
     const versionQuery = query(
-      collection(firestore, this.COLLECTION),
+      collection(this.getFirestore(), this.COLLECTION),
       where('contentId', '==', contentId),
       where('version', '==', version),
       limit(1)
@@ -195,7 +201,7 @@ export class ContentVersionService {
     }
     
     // Get the current content
-    const contentDoc = await getDoc(doc(firestore, 'content', contentId));
+    const contentDoc = await getDoc(doc(this.getFirestore(), 'content', contentId));
     
     if (!contentDoc.exists()) {
       throw new Error(`Content ${contentId} not found`);
@@ -211,7 +217,7 @@ export class ContentVersionService {
     };
     
     // Update the content
-    await updateDoc(doc(firestore, 'content', contentId), {
+    await updateDoc(doc(this.getFirestore(), 'content', contentId), {
       ...newContent,
       updatedAt: Timestamp.fromDate(newContent.updatedAt!)
     });
@@ -392,7 +398,7 @@ export class ContentVersionService {
       
       const batch = writeBatch(firestore);
       versionsToDelete.forEach(version => {
-        const docRef = doc(firestore, this.COLLECTION, version.id);
+        const docRef = doc(this.getFirestore(), this.COLLECTION, version.id);
         batch.delete(docRef);
       });
       

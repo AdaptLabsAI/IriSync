@@ -6,7 +6,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/lib/features/auth';
-import { firestore } from '@/lib/core/firebase';
+import { getFirebaseFirestore } from '@/lib/core/firebase';
 import { getDoc, doc } from 'firebase/firestore';
 import { mediaAssetService } from '@/lib/features/media/MediaAssetService';
 

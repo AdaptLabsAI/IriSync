@@ -3,7 +3,7 @@
 
 import { logger } from '@/lib/core/logging/logger';
 import { firestore } from '@/lib/core/firebase/client';
-import { collection, query, where, getDocs, orderBy, Timestamp } from 'firebase/firestore';
+import { Firestore, collection, query, where, getDocs, orderBy, Timestamp } from 'firebase/firestore';
 
 import {
   Platform,
@@ -150,7 +150,7 @@ export class DataAggregator {
   ): Promise<PlatformMetrics | null> {
     try {
       // Get platform connection status
-      const connectionsRef = collection(firestore, 'users', userId, 'platformConnections');
+      const connectionsRef = collection(this.getFirestore(), 'users', userId, 'platformConnections');
       const connectionQuery = query(
         connectionsRef,
         where('platform', '==', platform),
@@ -171,7 +171,7 @@ export class DataAggregator {
       const connectionData = connectionSnapshot.docs[0].data();
 
       // Get recent metrics for this platform
-      const metricsRef = collection(firestore, 'users', userId, 'platformMetrics');
+      const metricsRef = collection(this.getFirestore(), 'users', userId, 'platformMetrics');
       const metricsQuery = query(
         metricsRef,
         where('platform', '==', platform),
@@ -354,7 +354,7 @@ export class DataAggregator {
       for (const platform of platforms) {
         try {
           // Get metrics for this platform
-          const metricsRef = collection(firestore, 'users', userId, 'platformMetrics');
+          const metricsRef = collection(this.getFirestore(), 'users', userId, 'platformMetrics');
           const metricsQuery = query(
             metricsRef,
             where('platform', '==', platform),
@@ -446,7 +446,7 @@ export class DataAggregator {
       for (const platform of targetPlatforms) {
         try {
           // Get platform metrics
-          const metricsRef = collection(firestore, 'users', userId, 'platformMetrics');
+          const metricsRef = collection(this.getFirestore(), 'users', userId, 'platformMetrics');
           const metricsQuery = query(
             metricsRef,
             where('platform', '==', platform),

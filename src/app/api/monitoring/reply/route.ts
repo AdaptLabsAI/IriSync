@@ -7,7 +7,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/lib/features/auth';
-import { firestore } from '@/lib/core/firebase';
+import { getFirebaseFirestore } from '@/lib/core/firebase';
 import { getDoc, doc, getDocs, query, collection, where, limit } from 'firebase/firestore';
 import { engagementService } from '@/lib/features/monitoring/EngagementService';
 import { PlatformType } from '@/lib/features/platforms/PlatformProvider';

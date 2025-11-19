@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { AuthService } from './auth-service';
 import { UserRole, isRegularUser } from '../core/models/User';
-import { firestore } from '../core/firebase';
+import { getFirebaseFirestore } from '../core/firebase';
 import { doc, getDoc } from 'firebase/firestore';
 import { OrganizationRole, getOrganization, getUserOrganizationRole, isMemberOfOrganization } from '../team/users/organization';
 import { getCurrentUser } from './token';

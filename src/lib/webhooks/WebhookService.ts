@@ -1,4 +1,4 @@
-import { firestore } from '../core/firebase';
+import { getFirebaseFirestore } from '../core/firebase';
 import { getFirestore } from '../core/firebase/admin';
 import { 
   doc, 

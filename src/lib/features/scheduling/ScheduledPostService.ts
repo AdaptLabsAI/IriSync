@@ -9,8 +9,8 @@
  * - Status tracking and analytics
  */
 
-import { firestore } from '../../core/firebase';
-import {
+import { getFirebaseFirestore } from '../../core/firebase';
+import { Firestore,
   collection,
   doc,
   addDoc,
@@ -93,6 +93,12 @@ export interface PublishResult {
  * Service for managing scheduled posts
  */
 export class ScheduledPostService {
+  private getFirestore() {
+    const firestore = getFirebaseFirestore();
+    if (!firestore) throw new Error('Firestore not configured');
+    return firestore;
+  }
+
   private readonly scheduledPostsCollection = 'scheduledPosts';
   private readonly publishQueueCollection = 'publishQueue';
   private readonly maxRetries = 3;
@@ -130,7 +136,7 @@ export class ScheduledPostService {
       };
 
       const docRef = await addDoc(
-        collection(firestore, this.scheduledPostsCollection),
+        collection(this.getFirestore(), this.scheduledPostsCollection),
         {
           ...scheduledPost,
           createdAt: serverTimestamp(),
@@ -161,7 +167,7 @@ export class ScheduledPostService {
    */
   async getScheduledPost(postId: string): Promise<ScheduledPost | null> {
     try {
-      const docRef = doc(firestore, this.scheduledPostsCollection, postId);
+      const docRef = doc(this.getFirestore(), this.scheduledPostsCollection, postId);
       const snapshot = await getDoc(docRef);
 
       if (!snapshot.exists()) {
@@ -238,7 +244,7 @@ export class ScheduledPostService {
       }
 
       const q = query(
-        collection(firestore, this.scheduledPostsCollection),
+        collection(this.getFirestore(), this.scheduledPostsCollection),
         ...constraints
       );
 
@@ -286,7 +292,7 @@ export class ScheduledPostService {
   async getDuePost(now: Date = new Date()): Promise<ScheduledPost[]> {
     try {
       const q = query(
-        collection(firestore, this.scheduledPostsCollection),
+        collection(this.getFirestore(), this.scheduledPostsCollection),
         where('status', '==', 'scheduled'),
         where('scheduledFor', '<=', Timestamp.fromDate(now)),
         orderBy('scheduledFor', 'asc'),
@@ -344,7 +350,7 @@ export class ScheduledPostService {
     }
   ): Promise<void> {
     try {
-      const docRef = doc(firestore, this.scheduledPostsCollection, postId);
+      const docRef = doc(this.getFirestore(), this.scheduledPostsCollection, postId);
 
       const updateData: any = {
         updatedAt: serverTimestamp()
@@ -391,7 +397,7 @@ export class ScheduledPostService {
         }
       });
 
-      await updateDoc(doc(firestore, this.scheduledPostsCollection, postId), {
+      await updateDoc(doc(this.getFirestore(), this.scheduledPostsCollection, postId), {
         status: 'published',
         publishedAt: serverTimestamp(),
         platformPostIds,
@@ -454,7 +460,7 @@ export class ScheduledPostService {
         });
       }
 
-      await updateDoc(doc(firestore, this.scheduledPostsCollection, postId), updateData);
+      await updateDoc(doc(this.getFirestore(), this.scheduledPostsCollection, postId), updateData);
     } catch (error) {
       logger.error('Failed to mark post as failed', {
         error: error instanceof Error ? error.message : String(error),
@@ -469,7 +475,7 @@ export class ScheduledPostService {
    */
   async deleteScheduledPost(postId: string): Promise<void> {
     try {
-      await deleteDoc(doc(firestore, this.scheduledPostsCollection, postId));
+      await deleteDoc(doc(this.getFirestore(), this.scheduledPostsCollection, postId));
 
       logger.info('Scheduled post deleted', { postId });
     } catch (error) {

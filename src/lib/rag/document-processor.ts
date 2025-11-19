@@ -2,8 +2,8 @@ import { v4 as uuidv4 } from 'uuid';
 import { logger } from '../core/logging/logger';
 import VectorDatabase from './vector-database';
 import TextChunker from './text-chunker';
-import { firestore } from '../core/firebase';
-import { collection, doc, getDoc, setDoc, updateDoc, deleteDoc, query, where, getDocs } from 'firebase/firestore';
+import { getFirebaseFirestore } from '../core/firebase';
+import { Firestore, collection, doc, getDoc, setDoc, updateDoc, deleteDoc, query, where, getDocs } from 'firebase/firestore';
 import { SubscriptionTier } from '../subscription/models/subscription';
 import { getTokenAllocationForTier } from '../subscription/index';
 import { TokenService } from '../tokens/token-service';
@@ -338,7 +338,7 @@ export class DocumentProcessor {
       
       // First check if the user has access to delete the document
       if (userId) {
-        const docRef = doc(firestore, 'ragDocuments', documentId);
+        const docRef = doc(this.getFirestore(), 'ragDocuments', documentId);
         const docSnap = await getDoc(docRef);
         
         if (docSnap.exists()) {
@@ -352,7 +352,7 @@ export class DocumentProcessor {
           // If org document, check if user is in that org
           if (docData.organizationId) {
             const orgMemberQuery = query(
-              collection(firestore, 'organizationMembers'),
+              collection(this.getFirestore(), 'organizationMembers'),
               where('userId', '==', userId),
               where('organizationId', '==', docData.organizationId)
             );
@@ -368,7 +368,7 @@ export class DocumentProcessor {
       
       // Get all chunk IDs for the document
       const chunksQuery = query(
-        collection(firestore, 'ragChunks'),
+        collection(this.getFirestore(), 'ragChunks'),
         where('documentId', '==', documentId)
       );
       
@@ -385,7 +385,7 @@ export class DocumentProcessor {
         
         // Also delete from Firestore if we're tracking chunks there
         try {
-          await deleteDoc(doc(firestore, 'ragChunks', chunkId));
+          await deleteDoc(doc(this.getFirestore(), 'ragChunks', chunkId));
         } catch (err) {
           const errorMessage = err instanceof Error ? err.message : String(err);
           logger.warn(`Error deleting chunk ${chunkId} from Firestore: ${errorMessage}`);
@@ -396,7 +396,7 @@ export class DocumentProcessor {
       await VectorDatabase.deleteDocument(`${documentId}-full`, collectionName);
       
       // Delete the document metadata from Firestore
-      await deleteDoc(doc(firestore, 'ragDocuments', documentId));
+      await deleteDoc(doc(this.getFirestore(), 'ragDocuments', documentId));
       
       logger.info(`Successfully deleted document ${documentId} with ${chunkIds.length} chunks`, { userId });
     } catch (error) {
@@ -444,7 +444,7 @@ export class DocumentProcessor {
   private async storeDocumentMetadata(document: Document): Promise<string> {
     try {
       const docId = document.id || uuidv4();
-      const docRef = doc(firestore, 'ragDocuments', docId);
+      const docRef = doc(this.getFirestore(), 'ragDocuments', docId);
       
       const docData = {
         id: docId,
@@ -481,7 +481,7 @@ export class DocumentProcessor {
    */
   private async updateDocumentMetadata(documentId: string, updates: Record<string, any>): Promise<void> {
     try {
-      const docRef = doc(firestore, 'ragDocuments', documentId);
+      const docRef = doc(this.getFirestore(), 'ragDocuments', documentId);
       
       await updateDoc(docRef, {
         ...updates,
@@ -534,7 +534,7 @@ export class DocumentProcessor {
   private async validateDocumentSize(document: Document, userId: string): Promise<void> {
     try {
       // Get user's data and organization
-      const userDoc = await getDoc(doc(firestore, 'users', userId));
+      const userDoc = await getDoc(doc(this.getFirestore(), 'users', userId));
       if (!userDoc.exists()) {
         throw new Error(`User ${userId} not found`);
       }
@@ -548,7 +548,7 @@ export class DocumentProcessor {
       
       if (orgId) {
         // Get organization subscription tier
-        const orgDoc = await getDoc(doc(firestore, 'organizations', orgId));
+        const orgDoc = await getDoc(doc(this.getFirestore(), 'organizations', orgId));
         if (orgDoc.exists()) {
           const orgData = orgDoc.data();
           if (orgData.billing?.subscriptionTier) {

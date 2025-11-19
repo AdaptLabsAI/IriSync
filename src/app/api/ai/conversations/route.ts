@@ -12,7 +12,7 @@ import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/lib/features/auth';
 import { conversationService } from '@/lib/features/ai/ConversationService';
 import { logger } from '@/lib/core/logging/logger';
-import { firestore } from '@/lib/core/firebase';
+import { getFirebaseFirestore } from '@/lib/core/firebase';
 import { doc, getDoc } from 'firebase/firestore';
 
 // Force dynamic rendering

@@ -11,7 +11,7 @@ import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/lib/features/auth';
 import { scheduledPostService } from '@/lib/features/scheduling/ScheduledPostService';
 import { logger } from '@/lib/core/logging/logger';
-import { firestore } from '@/lib/core/firebase';
+import { getFirebaseFirestore } from '@/lib/core/firebase';
 import { doc, getDoc } from 'firebase/firestore';
 import { PlatformPost, PostSchedule, PostStatus } from '@/lib/features/platforms/models/content';
 

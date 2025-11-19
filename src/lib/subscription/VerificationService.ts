@@ -1,5 +1,5 @@
-import { firestore } from '../core/firebase';
-import { collection, query, where, limit, getDocs, doc, setDoc, getDoc } from 'firebase/firestore';
+import { getFirebaseFirestore } from '../core/firebase';
+import { Firestore, collection, query, where, limit, getDocs, doc, setDoc, getDoc } from 'firebase/firestore';
 import { getStripeClient } from '../features/billing/stripe';
 import { logger } from '../core/logging/logger';
 
@@ -8,6 +8,12 @@ import { logger } from '../core/logging/logger';
  * Manages both payment method verification and social account verification
  */
 export class VerificationService {
+  private getFirestore() {
+    const firestore = getFirebaseFirestore();
+    if (!firestore) throw new Error('Firestore not configured');
+    return firestore;
+  }
+
   private readonly VERIFIED_USERS_COLLECTION = 'verified_users';
   
   /**
@@ -72,7 +78,7 @@ export class VerificationService {
   async verifySocialAccounts(userId: string): Promise<boolean> {
     try {
       // Check if the user has any connected social accounts
-      const socialAccountsCollection = collection(firestore, 'social_accounts');
+      const socialAccountsCollection = collection(this.getFirestore(), 'social_accounts');
       const socialAccountsQuery = query(
         socialAccountsCollection,
         where('userId', '==', userId),
@@ -116,7 +122,7 @@ export class VerificationService {
     }
   ): Promise<boolean> {
     try {
-      const userDocRef = doc(firestore, this.VERIFIED_USERS_COLLECTION, userId);
+      const userDocRef = doc(this.getFirestore(), this.VERIFIED_USERS_COLLECTION, userId);
       await setDoc(userDocRef, {
         ...verificationData,
         updatedAt: new Date()
@@ -145,7 +151,7 @@ export class VerificationService {
     verifiedAt?: Date;
   } | null> {
     try {
-      const userDocRef = doc(firestore, this.VERIFIED_USERS_COLLECTION, userId);
+      const userDocRef = doc(this.getFirestore(), this.VERIFIED_USERS_COLLECTION, userId);
       const docSnap = await getDoc(userDocRef);
       
       if (!docSnap.exists()) {

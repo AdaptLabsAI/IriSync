@@ -1,5 +1,5 @@
-import { firestore } from '../core/firebase';
-import { doc, getDoc, setDoc, updateDoc, collection, query, where, getDocs } from 'firebase/firestore';
+import { getFirebaseFirestore } from '../core/firebase';
+import { Firestore, doc, getDoc, setDoc, updateDoc, collection, query, where, getDocs } from 'firebase/firestore';
 import { AuthUser, AuthResponse } from './auth-service';
 import { sign } from 'jsonwebtoken';
 import fetch from 'node-fetch';
@@ -43,6 +43,12 @@ export interface SocialAccount {
  * Extensible for additional providers.
  */
 export class SocialAuthService {
+  private getFirestore() {
+    const firestore = getFirebaseFirestore();
+    if (!firestore) throw new Error('Firestore not configured');
+    return firestore;
+  }
+
   /**
    * Login or register with a social provider (Google, Apple)
    * @param provider Social provider
@@ -68,7 +74,7 @@ export class SocialAuthService {
       }
       if (!profile) return null;
       // Check if user exists by providerUserId
-      const socialRef = doc(firestore, 'socialAccounts', `${provider}:${profile.providerUserId}`);
+      const socialRef = doc(this.getFirestore(), 'socialAccounts', `${provider}:${profile.providerUserId}`);
       const socialSnap = await getDoc(socialRef);
       let userId: string;
       if (socialSnap.exists()) {
@@ -76,7 +82,7 @@ export class SocialAuthService {
         userId = socialSnap.data().userId;
       } else {
         // New user, check if email exists
-        const userSnap = await getDoc(doc(firestore, 'users', profile.email));
+        const userSnap = await getDoc(doc(this.getFirestore(), 'users', profile.email));
         if (userSnap.exists()) {
           // Link social account to existing user
           userId = userSnap.id;
@@ -96,7 +102,7 @@ export class SocialAuthService {
           const creatorTokenAllocation = getTokenAllocationForTier(SubscriptionTierValues.CREATOR, 1);
           
           // Set up the personal organization with default Creator tier
-          await setDoc(doc(firestore, 'organizations', personalOrgId), {
+          await setDoc(doc(this.getFirestore(), 'organizations', personalOrgId), {
             name: `${profile.displayName || 'Personal'}'s Workspace`,
             owner: profile.email,
             members: [profile.email],
@@ -129,7 +135,7 @@ export class SocialAuthService {
             createdAt: now,
             updatedAt: now,
           };
-          await setDoc(doc(firestore, 'users', user.id), {
+          await setDoc(doc(this.getFirestore(), 'users', user.id), {
             ...user,
             createdAt: now,
             updatedAt: now,
@@ -143,7 +149,7 @@ export class SocialAuthService {
         }
       }
       // Get user data
-      const userSnap = await getDoc(doc(firestore, 'users', userId));
+      const userSnap = await getDoc(doc(this.getFirestore(), 'users', userId));
       if (!userSnap.exists()) return null;
       const userData = userSnap.data();
       
@@ -157,7 +163,7 @@ export class SocialAuthService {
           errors: orgValidation.errors 
         });
         
-        await updateDoc(doc(firestore, 'users', userId), {
+        await updateDoc(doc(this.getFirestore(), 'users', userId), {
           personalOrganizationId: orgValidation.personalOrganizationId,
           currentOrganizationId: orgValidation.currentOrganizationId,
           updatedAt: new Date()
@@ -226,7 +232,7 @@ export class SocialAuthService {
       }
       if (!profile) return false;
       // Link social account
-      await setDoc(doc(firestore, 'socialAccounts', `${provider}:${profile.providerUserId}`), {
+      await setDoc(doc(this.getFirestore(), 'socialAccounts', `${provider}:${profile.providerUserId}`), {
         userId,
         ...profile,
         linkedAt: new Date(),
@@ -246,7 +252,7 @@ export class SocialAuthService {
   static async getLinkedProviders(userId: string): Promise<SocialAccount[]> {
     try {
       const accounts: SocialAccount[] = [];
-      const q = query(collection(firestore, 'socialAccounts'), where('userId', '==', userId));
+      const q = query(collection(this.getFirestore(), 'socialAccounts'), where('userId', '==', userId));
       const snap = await getDocs(q);
       snap.forEach(docSnap => {
         const data = docSnap.data();
@@ -275,7 +281,7 @@ export class SocialAuthService {
   static async unlinkProvider(userId: string, provider: SocialProvider): Promise<boolean> {
     try {
       // Find the social account doc for this user and provider
-      const q = query(collection(firestore, 'socialAccounts'), where('userId', '==', userId), where('provider', '==', provider));
+      const q = query(collection(this.getFirestore(), 'socialAccounts'), where('userId', '==', userId), where('provider', '==', provider));
       const snap = await getDocs(q);
       let success = false;
       for (const docSnap of snap.docs) {

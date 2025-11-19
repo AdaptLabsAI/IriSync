@@ -28,7 +28,7 @@ import { useRouter, usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { getAuth, signOut } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
-import { firestore } from '@/lib/core/firebase';
+import { getFirebaseFirestore } from '@/lib/core/firebase';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import { TeamSwitcher } from '@/components/ui/TeamSwitcher';
@@ -295,6 +295,10 @@ const SidebarContent = ({ onClose, collapsed, onToggleCollapse }: SidebarProps) 
         const currentUser = auth.currentUser;
         
         if (currentUser && firestore) {
+          const firestore = getFirebaseFirestore();
+
+          if (!firestore) { console.error('Firestore not configured'); return; }
+
           const userRef = doc(firestore, 'users', currentUser.uid);
           const userSnap = await getDoc(userRef);
           
@@ -628,6 +632,10 @@ const AccountMenu = () => {
           // Try to get additional data from Firestore
           if (firestore) {
             try {
+              const firestore = getFirebaseFirestore();
+
+              if (!firestore) { console.error('Firestore not configured'); return; }
+
               const userRef = doc(firestore, 'users', currentUser.uid);
               const userSnap = await getDoc(userRef);
               

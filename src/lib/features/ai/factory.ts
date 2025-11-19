@@ -6,8 +6,8 @@ import { OpenAIProvider } from './providers/OpenAIProvider';
 import { AnthropicProvider } from './providers/AnthropicProvider';
 import { GoogleAIProvider } from './providers/GoogleAIProvider';
 import { Cache } from '../../core/cache/Cache';
-import { doc, getDoc } from 'firebase/firestore';
-import { firestore } from '../../core/firebase';
+import { Firestore, doc, getDoc } from 'firebase/firestore';
+import { getFirebaseFirestore } from '../../core/firebase';
 
 /**
  * Factory options for provider creation
@@ -216,7 +216,7 @@ export class AIFactory {
     
     try {
       // Get firestore to fetch user information
-      const userRef = doc(firestore, 'users', userId);
+      const userRef = doc(this.getFirestore(), 'users', userId);
       const userDoc = await getDoc(userRef);
       
       if (!userDoc.exists()) {
@@ -235,7 +235,7 @@ export class AIFactory {
       }
       
       // Get organization to check token availability
-      const orgRef = doc(firestore, 'organizations', orgId);
+      const orgRef = doc(this.getFirestore(), 'organizations', orgId);
       const orgDoc = await getDoc(orgRef);
       
       if (!orgDoc.exists()) {

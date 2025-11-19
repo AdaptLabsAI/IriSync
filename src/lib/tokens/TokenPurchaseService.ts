@@ -1,5 +1,5 @@
-import { firestore } from '../core/firebase';
-import { 
+import { getFirebaseFirestore } from '../core/firebase';
+import { Firestore, 
   collection, 
   doc, 
   getDoc, 
@@ -71,6 +71,12 @@ export interface TokenPackage {
  * Service for managing token purchases and balances with individual billing cycles
  */
 export class TokenPurchaseService {
+  private getFirestore() {
+    const firestore = getFirebaseFirestore();
+    if (!firestore) throw new Error('Firestore not configured');
+    return firestore;
+  }
+
   private readonly PURCHASE_COLLECTION = 'token_purchases';
   private readonly BALANCE_COLLECTION = 'token_balances';
   private readonly PACKAGE_COLLECTION = 'token_packages';
@@ -82,7 +88,7 @@ export class TokenPurchaseService {
     try {
       // Query for the user's token balance
       let q = query(
-        collection(firestore, this.BALANCE_COLLECTION),
+        collection(this.getFirestore(), this.BALANCE_COLLECTION),
         where('userId', '==', userId),
         ...(organizationId ? [where('organizationId', '==', organizationId)] : []),
         limit(1)
@@ -125,14 +131,14 @@ export class TokenPurchaseService {
       let subscriptionStartDate = new Date();
       
       if (organizationId) {
-        const orgDoc = await getDoc(doc(firestore, 'organizations', organizationId));
+        const orgDoc = await getDoc(doc(this.getFirestore(), 'organizations', organizationId));
         if (orgDoc.exists()) {
           const orgData = orgDoc.data();
           subscriptionStartDate = orgData.billing?.subscriptionStartDate?.toDate() || new Date();
         }
       } else {
         // Get from user's subscription record
-        const userDoc = await getDoc(doc(firestore, 'users', userId));
+        const userDoc = await getDoc(doc(this.getFirestore(), 'users', userId));
         if (userDoc.exists()) {
           const userData = userDoc.data();
           subscriptionStartDate = userData.subscriptionStartDate?.toDate() || new Date();
@@ -142,7 +148,7 @@ export class TokenPurchaseService {
       // Get seat count for token calculation
       let seatCount = 1; // Default to 1 seat
       if (organizationId) {
-        const orgDocRef = doc(collection(firestore, 'organizations'), organizationId);
+        const orgDocRef = doc(collection(this.getFirestore(), 'organizations'), organizationId);
         const orgDocSnap = await getDoc(orgDocRef);
         
         if (orgDocSnap.exists()) {
@@ -194,7 +200,7 @@ export class TokenPurchaseService {
       };
       
       // Store in Firestore
-      const balanceDocRef = doc(collection(firestore, this.BALANCE_COLLECTION), userId);
+      const balanceDocRef = doc(collection(this.getFirestore(), this.BALANCE_COLLECTION), userId);
       await setDoc(balanceDocRef, tokenBalance);
       
       return tokenBalance;
@@ -237,7 +243,7 @@ export class TokenPurchaseService {
       
       // Get current balance
       const q = query(
-        collection(firestore, this.BALANCE_COLLECTION),
+        collection(this.getFirestore(), this.BALANCE_COLLECTION),
         where('userId', '==', userId),
         ...(organizationId ? [where('organizationId', '==', organizationId)] : []),
         limit(1)
@@ -257,7 +263,7 @@ export class TokenPurchaseService {
        // Get seat count for token calculation
        let seatCount = 1; // Default to 1 seat
        if (balance.organizationId) {
-         const orgDocRef = doc(collection(firestore, 'organizations'), balance.organizationId);
+         const orgDocRef = doc(collection(this.getFirestore(), 'organizations'), balance.organizationId);
          const orgDocSnap = await getDoc(orgDocRef);
          
          if (orgDocSnap.exists()) {
@@ -322,7 +328,7 @@ export class TokenPurchaseService {
       
       // Get all balances that need refresh (where nextRefreshDate <= now)
       const q = query(
-        collection(firestore, this.BALANCE_COLLECTION),
+        collection(this.getFirestore(), this.BALANCE_COLLECTION),
         where('nextRefreshDate', '<=', now)
       );
       
@@ -370,7 +376,7 @@ export class TokenPurchaseService {
   ): Promise<TokenPurchase> {
     try {
       // Get the token package
-      const packageDocRef = doc(collection(firestore, this.PACKAGE_COLLECTION), packageId);
+      const packageDocRef = doc(collection(this.getFirestore(), this.PACKAGE_COLLECTION), packageId);
       const packageDocSnap = await getDoc(packageDocRef);
       
       if (!packageDocSnap.exists()) {
@@ -408,7 +414,7 @@ export class TokenPurchaseService {
       };
       
       // Store purchase in Firestore
-      const purchaseDocRef = doc(collection(firestore, this.PURCHASE_COLLECTION), purchaseId);
+      const purchaseDocRef = doc(collection(this.getFirestore(), this.PURCHASE_COLLECTION), purchaseId);
       await setDoc(purchaseDocRef, purchase);
       
       // Process the purchase and update token balance
@@ -427,7 +433,7 @@ export class TokenPurchaseService {
   async processTokenPurchase(purchaseId: string): Promise<void> {
     try {
       // Get the purchase record
-      const purchaseDocRef = doc(collection(firestore, this.PURCHASE_COLLECTION), purchaseId);
+      const purchaseDocRef = doc(collection(this.getFirestore(), this.PURCHASE_COLLECTION), purchaseId);
       const purchaseDocSnap = await getDoc(purchaseDocRef);
       
       if (!purchaseDocSnap.exists()) {
@@ -448,7 +454,7 @@ export class TokenPurchaseService {
       }
       
       // Update token balance with purchased tokens
-      const balanceDocRef = doc(collection(firestore, this.BALANCE_COLLECTION), purchase.userId);
+      const balanceDocRef = doc(collection(this.getFirestore(), this.BALANCE_COLLECTION), purchase.userId);
       await updateDoc(balanceDocRef, {
         purchasedTokens: tokenBalance.purchasedTokens + purchase.tokenAmount,
         updatedAt: new Date()
@@ -475,7 +481,7 @@ export class TokenPurchaseService {
   private async sendPurchaseConfirmation(purchase: TokenPurchase): Promise<void> {
     try {
       // Get user email
-      const userDoc = await getDoc(doc(firestore, 'users', purchase.userId));
+      const userDoc = await getDoc(doc(this.getFirestore(), 'users', purchase.userId));
       
       if (!userDoc.exists()) {
         console.error('User not found for purchase confirmation:', purchase.userId);
@@ -525,7 +531,7 @@ export class TokenPurchaseService {
       }
       
       // Update token usage
-      const balanceDocRef = doc(collection(firestore, this.BALANCE_COLLECTION), userId);
+      const balanceDocRef = doc(collection(this.getFirestore(), this.BALANCE_COLLECTION), userId);
       await updateDoc(balanceDocRef, {
         totalUsedTokens: balance.totalUsedTokens + tokenAmount,
         lastUsedAt: new Date()
@@ -544,7 +550,7 @@ export class TokenPurchaseService {
   async getPurchaseHistory(userId: string, organizationId?: string): Promise<TokenPurchase[]> {
     try {
       let q = query(
-        collection(firestore, this.PURCHASE_COLLECTION),
+        collection(this.getFirestore(), this.PURCHASE_COLLECTION),
         where('userId', '==', userId),
         ...(organizationId ? [where('organizationId', '==', organizationId)] : []),
         orderBy('purchaseDate', 'desc')
@@ -571,7 +577,7 @@ export class TokenPurchaseService {
   async getAvailablePackages(tier: SubscriptionTier): Promise<TokenPackage[]> {
     try {
       const q = query(
-        collection(firestore, this.PACKAGE_COLLECTION),
+        collection(this.getFirestore(), this.PACKAGE_COLLECTION),
         where('isActive', '==', true),
         where('tier', 'in', [tier, 'all'])
       );
@@ -666,7 +672,7 @@ export class TokenPurchaseService {
       ];
       
       // Check if packages already exist
-      const q = query(collection(firestore, this.PACKAGE_COLLECTION));
+      const q = query(collection(this.getFirestore(), this.PACKAGE_COLLECTION));
       const existingPackagesSnapshot = await getDocs(q);
       
       if (!existingPackagesSnapshot.empty) {
@@ -677,7 +683,7 @@ export class TokenPurchaseService {
       const batch = writeBatch(firestore);
       
       defaultPackages.forEach(pkg => {
-        const docRef = doc(collection(firestore, this.PACKAGE_COLLECTION));
+        const docRef = doc(collection(this.getFirestore(), this.PACKAGE_COLLECTION));
         batch.set(docRef, pkg);
       });
       
@@ -694,7 +700,7 @@ export class TokenPurchaseService {
  */
 async function getSubscriptionTier(userId: string): Promise<SubscriptionTier> {
   try {
-    const userDoc = await getDoc(doc(firestore, 'users', userId));
+    const userDoc = await getDoc(doc(this.getFirestore(), 'users', userId));
     if (userDoc.exists()) {
       const userData = userDoc.data();
       return userData.subscriptionTier || SubscriptionTier.CREATOR;

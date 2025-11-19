@@ -8,7 +8,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { firestore } from '@/lib/core/firebase';
+import { getFirebaseFirestore } from '@/lib/core/firebase';
 import { getDocs, collection } from 'firebase/firestore';
 import { socialListeningService } from '@/lib/features/monitoring/SocialListeningService';
 import { engagementService } from '@/lib/features/monitoring/EngagementService';

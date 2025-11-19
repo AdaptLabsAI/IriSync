@@ -1,7 +1,7 @@
 import { logger } from '../logging/logger';
 import tokenPurchaseService from '../../features/tokens/TokenPurchaseService';
 import { firestore } from '../firebase';
-import { collection, query, where, getDocs, updateDoc, doc } from 'firebase/firestore';
+import { Firestore, collection, query, where, getDocs, updateDoc, doc } from 'firebase/firestore';
 import { SubscriptionTier } from '../../subscription/models/subscription';
 
 /**
@@ -78,7 +78,7 @@ export class TokenRefreshScheduler {
       logger.debug('Syncing organization token quotas');
 
       // Get all organizations
-      const orgsSnapshot = await getDocs(collection(firestore, 'organizations'));
+      const orgsSnapshot = await getDocs(collection(this.getFirestore(), 'organizations'));
 
       for (const orgDoc of orgsSnapshot.docs) {
         const orgData = orgDoc.data();
@@ -98,7 +98,7 @@ export class TokenRefreshScheduler {
 
           if (tokenBalance) {
             // Map TokenPurchaseService naming to organization aiTokens structure
-            await updateDoc(doc(firestore, 'organizations', organizationId), {
+            await updateDoc(doc(this.getFirestore(), 'organizations', organizationId), {
               'usageQuota.aiTokens.limit': tokenBalance.includedTokens,        // Monthly subscription tokens
               'usageQuota.aiTokens.additional': tokenBalance.purchasedTokens,  // Purchased tokens that carry over
               'usageQuota.aiTokens.used': tokenBalance.totalUsedTokens,        // Current period usage
@@ -145,12 +145,12 @@ export class TokenRefreshScheduler {
       logger.debug('Starting token package usage audit');
 
       // Get all token packages
-      const packagesSnapshot = await getDocs(collection(firestore, 'token_packages'));
+      const packagesSnapshot = await getDocs(collection(this.getFirestore(), 'token_packages'));
       const totalPackages = packagesSnapshot.size;
       const activePackages = packagesSnapshot.docs.filter(doc => doc.data().isActive).length;
 
       // Get all token purchases
-      const purchasesSnapshot = await getDocs(collection(firestore, 'token_purchases'));
+      const purchasesSnapshot = await getDocs(collection(this.getFirestore(), 'token_purchases'));
       const totalPurchases = purchasesSnapshot.size;
 
       // Calculate revenue and usage stats
@@ -186,7 +186,7 @@ export class TokenRefreshScheduler {
       }
 
       // Check if token refresh is working properly
-      const tokenBalancesSnapshot = await getDocs(collection(firestore, 'token_balances'));
+      const tokenBalancesSnapshot = await getDocs(collection(this.getFirestore(), 'token_balances'));
       const now = new Date();
       let balancesNeedingRefresh = 0;
 
@@ -285,11 +285,11 @@ export class TokenRefreshScheduler {
   }> {
     try {
       // Get all packages
-      const packagesSnapshot = await getDocs(collection(firestore, 'token_packages'));
+      const packagesSnapshot = await getDocs(collection(this.getFirestore(), 'token_packages'));
       const packages = packagesSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 
       // Get all purchases
-      const purchasesSnapshot = await getDocs(collection(firestore, 'token_purchases'));
+      const purchasesSnapshot = await getDocs(collection(this.getFirestore(), 'token_purchases'));
       const purchases = purchasesSnapshot.docs.map(doc => doc.data());
 
       // Calculate stats for each package

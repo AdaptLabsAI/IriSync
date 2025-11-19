@@ -1,4 +1,4 @@
-import { firestore } from '../core/firebase';
+import { getFirebaseFirestore } from '../core/firebase';
 import { doc, getDoc, collection, query, where, getDocs, setDoc, runTransaction } from 'firebase/firestore';
 import { SubscriptionTier, SubscriptionStatus, SubscriptionData, TierFeatures } from './models/subscription';
 

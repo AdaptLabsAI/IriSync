@@ -1,4 +1,4 @@
-import {
+import { Firestore,
   doc,
   getDoc,
   setDoc,
@@ -142,6 +142,12 @@ export interface ContentToCheck {
  * Manages brand guidelines and enforces brand compliance across content
  */
 export class BrandGuidelinesService {
+  private getFirestore() {
+    const firestore = getFirebaseFirestore();
+    if (!firestore) throw new Error('Firestore not configured');
+    return firestore;
+  }
+
   private static instance: BrandGuidelinesService;
   
   private constructor() {}
@@ -162,7 +168,7 @@ export class BrandGuidelinesService {
     userId: string
   ): Promise<BrandGuidelines> {
     try {
-      const guidelinesRef = doc(collection(firestore, 'brandGuidelines'));
+      const guidelinesRef = doc(collection(this.getFirestore(), 'brandGuidelines'));
       
       const newGuidelines: BrandGuidelines = {
         ...guidelines,
@@ -198,7 +204,7 @@ export class BrandGuidelinesService {
   async getBrandGuidelines(organizationId: string): Promise<BrandGuidelines | null> {
     try {
       const q = query(
-        collection(firestore, 'brandGuidelines'),
+        collection(this.getFirestore(), 'brandGuidelines'),
         where('organizationId', '==', organizationId)
       );
       
@@ -232,7 +238,7 @@ export class BrandGuidelinesService {
     userId: string
   ): Promise<void> {
     try {
-      const guidelinesRef = doc(firestore, 'brandGuidelines', guidelinesId);
+      const guidelinesRef = doc(this.getFirestore(), 'brandGuidelines', guidelinesId);
       
       await updateDoc(guidelinesRef, {
         ...updates,
@@ -655,7 +661,7 @@ export class BrandGuidelinesService {
     result: BrandComplianceResult
   ): Promise<void> {
     try {
-      const logRef = doc(collection(firestore, 'brandComplianceLogs'));
+      const logRef = doc(collection(this.getFirestore(), 'brandComplianceLogs'));
       
       await setDoc(logRef, {
         organizationId,
@@ -709,7 +715,7 @@ export class BrandGuidelinesService {
       }
       
       const q = query(
-        collection(firestore, 'brandComplianceLogs'),
+        collection(this.getFirestore(), 'brandComplianceLogs'),
         where('organizationId', '==', organizationId),
         where('checkedAt', '>=', Timestamp.fromDate(startDate)),
         where('checkedAt', '<=', Timestamp.fromDate(endDate))

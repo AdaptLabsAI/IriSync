@@ -5,7 +5,7 @@
  * Used for conditional rendering - stats should only display when platforms are connected.
  */
 
-import { firestore } from '@/lib/core/firebase';
+import { getFirebaseFirestore } from '@/lib/core/firebase';
 import { collection, query, where, getDocs } from 'firebase/firestore';
 
 export interface PlatformConnection {

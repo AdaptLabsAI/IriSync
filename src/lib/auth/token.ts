@@ -1,6 +1,6 @@
 import { verify } from 'jsonwebtoken';
 import { cookies } from 'next/headers';
-import { firestore } from '../core/firebase';
+import { getFirebaseFirestore } from '../core/firebase';
 import { doc, getDoc } from 'firebase/firestore';
 import { UserRole, SubscriptionTier } from '../core/models/User';
 import jwt, { JwtPayload } from 'jsonwebtoken';

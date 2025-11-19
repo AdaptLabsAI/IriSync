@@ -1,5 +1,5 @@
-import { firestore } from '../core/firebase';
-import { collection, addDoc, Timestamp, query, where, getDocs, orderBy, limit } from 'firebase/firestore';
+import { getFirebaseFirestore } from '../core/firebase';
+import { Firestore, collection, addDoc, Timestamp, query, where, getDocs, orderBy, limit } from 'firebase/firestore';
 import { TokenService } from './token-service';
 
 /**
@@ -35,6 +35,12 @@ export interface TokenNotification {
  * Service for managing token notifications
  */
 export class TokenNotificationService {
+  private getFirestore() {
+    const firestore = getFirebaseFirestore();
+    if (!firestore) throw new Error('Firestore not configured');
+    return firestore;
+  }
+
   private tokenService: TokenService;
   
   constructor(tokenService: TokenService) {
@@ -75,7 +81,7 @@ export class TokenNotificationService {
       };
       
       // Add to Firestore
-      const notificationRef = await addDoc(collection(firestore, 'tokenNotifications'), {
+      const notificationRef = await addDoc(collection(this.getFirestore(), 'tokenNotifications'), {
         ...notification,
         createdAt: Timestamp.fromDate(notification.createdAt)
       });
@@ -118,7 +124,7 @@ export class TokenNotificationService {
       };
       
       // Add to Firestore
-      const notificationRef = await addDoc(collection(firestore, 'tokenNotifications'), {
+      const notificationRef = await addDoc(collection(this.getFirestore(), 'tokenNotifications'), {
         ...notification,
         createdAt: Timestamp.fromDate(notification.createdAt)
       });
@@ -164,7 +170,7 @@ export class TokenNotificationService {
       };
       
       // Add to Firestore
-      const notificationRef = await addDoc(collection(firestore, 'tokenNotifications'), {
+      const notificationRef = await addDoc(collection(this.getFirestore(), 'tokenNotifications'), {
         ...notification,
         createdAt: Timestamp.fromDate(notification.createdAt)
       });
@@ -210,7 +216,7 @@ export class TokenNotificationService {
       };
       
       // Add to Firestore
-      const notificationRef = await addDoc(collection(firestore, 'tokenNotifications'), {
+      const notificationRef = await addDoc(collection(this.getFirestore(), 'tokenNotifications'), {
         ...notification,
         createdAt: Timestamp.fromDate(notification.createdAt)
       });
@@ -259,7 +265,7 @@ export class TokenNotificationService {
       };
       
       // Add to Firestore
-      const notificationRef = await addDoc(collection(firestore, 'tokenNotifications'), {
+      const notificationRef = await addDoc(collection(this.getFirestore(), 'tokenNotifications'), {
         ...notification,
         createdAt: Timestamp.fromDate(notification.createdAt)
       });
@@ -291,7 +297,7 @@ export class TokenNotificationService {
     try {
       // Create query
       let notificationQuery = query(
-        collection(firestore, 'tokenNotifications'),
+        collection(this.getFirestore(), 'tokenNotifications'),
         where('userId', '==', userId),
         orderBy('createdAt', 'desc'),
         limit(limitCount)

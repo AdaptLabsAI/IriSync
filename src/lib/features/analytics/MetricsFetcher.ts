@@ -8,8 +8,8 @@
  * - Tracks growth over time
  */
 
-import { firestore } from '../../core/firebase';
-import { collection, query, where, getDocs, orderBy, Timestamp } from 'firebase/firestore';
+import { getFirebaseFirestore } from '../../core/firebase';
+import { Firestore, collection, query, where, getDocs, orderBy, Timestamp } from 'firebase/firestore';
 import { logger } from '../../core/logging/logger';
 import { postAnalyticsService } from './PostAnalyticsService';
 import { scheduledPostService } from '../scheduling/ScheduledPostService';
@@ -162,7 +162,7 @@ export class MetricsFetcher {
 
       // Query scheduled posts collection for published posts
       const q = query(
-        collection(firestore, 'scheduledPosts'),
+        collection(this.getFirestore(), 'scheduledPosts'),
         where('status', '==', 'published'),
         where('publishedAt', '>=', Timestamp.fromDate(lookbackDate)),
         orderBy('publishedAt', 'desc')
@@ -312,7 +312,7 @@ export class MetricsFetcher {
     try {
       // Query connections collection
       const connectionsQuery = query(
-        collection(firestore, 'connections'),
+        collection(this.getFirestore(), 'connections'),
         where('userId', '==', userId),
         where('provider', '==', platformType.toLowerCase())
       );
@@ -322,7 +322,7 @@ export class MetricsFetcher {
       if (querySnap.empty) {
         // Try organization-level connection
         const orgConnectionsQuery = query(
-          collection(firestore, 'connections'),
+          collection(this.getFirestore(), 'connections'),
           where('organizationId', '==', organizationId),
           where('provider', '==', platformType.toLowerCase())
         );

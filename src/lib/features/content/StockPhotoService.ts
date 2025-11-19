@@ -1,7 +1,7 @@
 import { UnsplashAdapter, UnsplashPhoto } from '../integrations/UnsplashAdapter';
 import { PexelsAdapter, PexelsPhoto } from '../integrations/PexelsAdapter';
-import { firestore } from '../../core/firebase';
-import { collection, doc, setDoc, getDoc, getDocs, query, where, orderBy, limit, updateDoc, Timestamp } from 'firebase/firestore';
+import { getFirebaseFirestore } from '../../core/firebase';
+import { Firestore, collection, doc, setDoc, getDoc, getDocs, query, where, orderBy, limit, updateDoc, Timestamp } from 'firebase/firestore';
 import { v4 as uuidv4 } from 'uuid';
 
 /**
@@ -138,6 +138,12 @@ export interface StockPhotoAnalytics {
  * Stock Photo Service - Unified interface for all stock photo providers
  */
 export class StockPhotoService {
+  private getFirestore() {
+    const firestore = getFirebaseFirestore();
+    if (!firestore) throw new Error('Firestore not configured');
+    return firestore;
+  }
+
   private readonly COLLECTION = 'stock_photos';
   private readonly DOWNLOADS_COLLECTION = 'stock_photo_downloads';
   private readonly SEARCHES_COLLECTION = 'stock_photo_searches';
@@ -344,7 +350,7 @@ export class StockPhotoService {
         downloadedAt: new Date()
       };
 
-      await setDoc(doc(firestore, this.DOWNLOADS_COLLECTION, downloadId), {
+      await setDoc(doc(this.getFirestore(), this.DOWNLOADS_COLLECTION, downloadId), {
         ...download,
         downloadedAt: Timestamp.fromDate(download.downloadedAt)
       });
@@ -370,14 +376,14 @@ export class StockPhotoService {
     contentType: 'post' | 'story' | 'design' | 'campaign'
   ): Promise<void> {
     try {
-      const downloadDoc = await getDoc(doc(firestore, this.DOWNLOADS_COLLECTION, downloadId));
+      const downloadDoc = await getDoc(doc(this.getFirestore(), this.DOWNLOADS_COLLECTION, downloadId));
       
       if (downloadDoc.exists()) {
         const downloadData = downloadDoc.data() as StockPhotoDownload;
         const contentIds = downloadData.contentIds || [];
         
         if (!contentIds.includes(contentId)) {
-          await updateDoc(doc(firestore, this.DOWNLOADS_COLLECTION, downloadId), {
+          await updateDoc(doc(this.getFirestore(), this.DOWNLOADS_COLLECTION, downloadId), {
             contentIds: [...contentIds, contentId],
             usedAt: Timestamp.fromDate(new Date())
           });
@@ -398,7 +404,7 @@ export class StockPhotoService {
   ): Promise<StockPhotoDownload[]> {
     try {
       let downloadsQuery = query(
-        collection(firestore, this.DOWNLOADS_COLLECTION),
+        collection(this.getFirestore(), this.DOWNLOADS_COLLECTION),
         where('organizationId', '==', organizationId),
         orderBy('downloadedAt', 'desc'),
         limit(limit)
@@ -434,7 +440,7 @@ export class StockPhotoService {
     try {
       // Get downloads in date range
       const downloadsQuery = query(
-        collection(firestore, this.DOWNLOADS_COLLECTION),
+        collection(this.getFirestore(), this.DOWNLOADS_COLLECTION),
         where('organizationId', '==', organizationId),
         where('downloadedAt', '>=', Timestamp.fromDate(startDate)),
         where('downloadedAt', '<=', Timestamp.fromDate(endDate))
@@ -464,7 +470,7 @@ export class StockPhotoService {
 
       // Get search data for conversion rate
       const searchesQuery = query(
-        collection(firestore, this.SEARCHES_COLLECTION),
+        collection(this.getFirestore(), this.SEARCHES_COLLECTION),
         where('organizationId', '==', organizationId),
         where('searchedAt', '>=', Timestamp.fromDate(startDate)),
         where('searchedAt', '<=', Timestamp.fromDate(endDate))
@@ -695,7 +701,7 @@ export class StockPhotoService {
         searchedAt: Timestamp.fromDate(new Date())
       };
 
-      await setDoc(doc(firestore, this.SEARCHES_COLLECTION, searchId), searchData);
+      await setDoc(doc(this.getFirestore(), this.SEARCHES_COLLECTION, searchId), searchData);
     } catch (error) {
       console.error('Error tracking search:', error);
       // Don't throw error for analytics tracking

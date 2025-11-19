@@ -5,7 +5,10 @@
       "Bash(git push)",
       "Bash(copy \"src\\app\\(dashboard)\\dashboard\\settings\\connections\\page.tsx\" \"src\\app\\(dashboard)\\dashboard\\settings\\connections\\page-old-nextauth.tsx\")",
       "Bash(ls:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(npm run build:*)",
+      "Bash(npx next build:*)",
+      "Bash(npx tsc:*)"
     ],
     "deny": [],
     "ask": []

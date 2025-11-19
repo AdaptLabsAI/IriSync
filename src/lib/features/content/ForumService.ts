@@ -16,7 +16,7 @@ import {
   Timestamp,
   serverTimestamp
 } from 'firebase/firestore';
-import { firestore } from '../../core/firebase';
+import { getFirebaseFirestore } from '../../core/firebase';
 import { 
   ForumCategory, 
   ForumPost, 

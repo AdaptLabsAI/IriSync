@@ -1,5 +1,5 @@
-import { firestore } from '../core/firebase';
-import { doc, getDoc, updateDoc, collection, query, where, getDocs, Timestamp } from 'firebase/firestore';
+import { getFirebaseFirestore } from '../core/firebase';
+import { Firestore, doc, getDoc, updateDoc, collection, query, where, getDocs, Timestamp } from 'firebase/firestore';
 import { getStripeClient } from '../features/billing/stripe';
 import { logger } from '../core/logging/logger';
 import unifiedEmailService from '../core/notifications/unified-email-service';
@@ -46,6 +46,12 @@ export enum ReminderStage {
  * - Next billing cycle: Account closed, all billing stopped
  */
 export class UniversalBillingService {
+  private getFirestore() {
+    const firestore = getFirebaseFirestore();
+    if (!firestore) throw new Error('Firestore not configured');
+    return firestore;
+  }
+
   
   /**
    * Check and update billing status for an organization
@@ -55,7 +61,7 @@ export class UniversalBillingService {
   async checkBillingStatus(organizationId: string): Promise<BillingStatus> {
     try {
       // Get organization
-      const orgDoc = await getDoc(doc(firestore, 'organizations', organizationId));
+      const orgDoc = await getDoc(doc(this.getFirestore(), 'organizations', organizationId));
       
       if (!orgDoc.exists()) {
         throw new Error(`Organization ${organizationId} not found`);
@@ -100,7 +106,7 @@ export class UniversalBillingService {
       }
       
       // Update organization with new billing status
-      await updateDoc(doc(firestore, 'organizations', organizationId), {
+      await updateDoc(doc(this.getFirestore(), 'organizations', organizationId), {
         'billing.status': billingStatus,
         'billing.lastChecked': Timestamp.now(),
         updatedAt: Timestamp.now()
@@ -134,7 +140,7 @@ export class UniversalBillingService {
       // Find organizations with past due billing status
       const orgsSnapshot = await getDocs(
         query(
-          collection(firestore, 'organizations'),
+          collection(this.getFirestore(), 'organizations'),
           where('billing.status', 'in', [BillingStatus.PAST_DUE, BillingStatus.UNPAID])
         )
       );
@@ -176,7 +182,7 @@ export class UniversalBillingService {
         
       // If no pastDueSince date, set it now
       if (!pastDueDate) {
-        await updateDoc(doc(firestore, 'organizations', organizationId), {
+        await updateDoc(doc(this.getFirestore(), 'organizations', organizationId), {
           'billing.pastDueSince': Timestamp.now()
         });
         // Send first reminder immediately
@@ -219,7 +225,7 @@ export class UniversalBillingService {
       await this.sendPaymentReminder(organizationId, orgData, shouldSendReminder.stage!);
       
       // Update reminder tracking
-      await updateDoc(doc(firestore, 'organizations', organizationId), {
+      await updateDoc(doc(this.getFirestore(), 'organizations', organizationId), {
         'billing.reminderCount': reminderCount + 1,
         'billing.lastReminderSent': Timestamp.now(),
         'billing.lastReminderStage': shouldSendReminder.stage
@@ -295,7 +301,7 @@ export class UniversalBillingService {
       });
       
       // Update organization status
-      await updateDoc(doc(firestore, 'organizations', organizationId), {
+      await updateDoc(doc(this.getFirestore(), 'organizations', organizationId), {
         status: AccountStatus.SUSPENDED,
         suspendedAt: Timestamp.now(),
         suspensionReason: 'billing_past_due',
@@ -340,7 +346,7 @@ export class UniversalBillingService {
       }
       
       // Update organization status
-      await updateDoc(doc(firestore, 'organizations', organizationId), {
+      await updateDoc(doc(this.getFirestore(), 'organizations', organizationId), {
         status: AccountStatus.CLOSED,
         closedAt: Timestamp.now(),
         closureReason: 'billing_non_payment',
@@ -602,7 +608,7 @@ export class UniversalBillingService {
   async restoreAccount(organizationId: string): Promise<void> {
     try {
       // Get organization data to restore appropriate settings
-      const orgDoc = await getDoc(doc(firestore, 'organizations', organizationId));
+      const orgDoc = await getDoc(doc(this.getFirestore(), 'organizations', organizationId));
       
       if (!orgDoc.exists()) {
         throw new Error(`Organization ${organizationId} not found`);
@@ -614,7 +620,7 @@ export class UniversalBillingService {
       // Restore appropriate quotas based on subscription tier
       const quotas = this.getQuotasForTier(subscriptionTier);
       
-      await updateDoc(doc(firestore, 'organizations', organizationId), {
+      await updateDoc(doc(this.getFirestore(), 'organizations', organizationId), {
         status: AccountStatus.ACTIVE,
         suspendedAt: null,
         closedAt: null,

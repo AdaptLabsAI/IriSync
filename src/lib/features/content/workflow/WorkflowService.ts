@@ -1,5 +1,5 @@
 import { firestore } from '../../../core/firebase';
-import { 
+import { Firestore, 
   collection, 
   doc, 
   getDoc, 
@@ -46,6 +46,12 @@ export class WorkflowError extends Error {
 }
 
 export class WorkflowService {
+  private getFirestore() {
+    const firestore = getFirebaseFirestore();
+    if (!firestore) throw new Error('Firestore not configured');
+    return firestore;
+  }
+
   private logger: Logger;
   
   constructor() {
@@ -86,7 +92,7 @@ export class WorkflowService {
       };
       
       // Use modern Firebase v9 syntax
-      await setDoc(doc(firestore, 'workflow_templates', templateId), template);
+      await setDoc(doc(this.getFirestore(), 'workflow_templates', templateId), template);
       
       this.logger.info('Created workflow template', { templateId, organizationId: input.organizationId });
       
@@ -109,7 +115,7 @@ export class WorkflowService {
     userId: string
   ): Promise<WorkflowTemplate> {
     try {
-      const templateRef = doc(firestore, 'workflow_templates', templateId);
+      const templateRef = doc(this.getFirestore(), 'workflow_templates', templateId);
       const templateSnap = await getDoc(templateRef);
       
       if (!templateSnap.exists()) {
@@ -156,7 +162,7 @@ export class WorkflowService {
    */
   async getTemplate(templateId: string): Promise<WorkflowTemplate | null> {
     try {
-      const templateSnap = await getDoc(doc(firestore, 'workflow_templates', templateId));
+      const templateSnap = await getDoc(doc(this.getFirestore(), 'workflow_templates', templateId));
       
       if (!templateSnap.exists()) {
         return null;
@@ -175,7 +181,7 @@ export class WorkflowService {
   async getTemplates(organizationId: string): Promise<WorkflowTemplate[]> {
     try {
       const templatesQuery = query(
-        collection(firestore, 'workflow_templates'),
+        collection(this.getFirestore(), 'workflow_templates'),
         where('organizationId', '==', organizationId),
         orderBy('createdAt', 'desc')
       );
@@ -195,7 +201,7 @@ export class WorkflowService {
   async getDefaultTemplate(organizationId: string): Promise<WorkflowTemplate | null> {
     try {
       const defaultQuery = query(
-        collection(firestore, 'workflow_templates'),
+        collection(this.getFirestore(), 'workflow_templates'),
         where('organizationId', '==', organizationId),
         where('isDefault', '==', true),
         limit(1)
@@ -220,7 +226,7 @@ export class WorkflowService {
   async deleteTemplate(templateId: string): Promise<boolean> {
     try {
       // Check if template exists
-      const templateRef = doc(firestore, 'workflow_templates', templateId);
+      const templateRef = doc(this.getFirestore(), 'workflow_templates', templateId);
       const templateSnap = await getDoc(templateRef);
       
       if (!templateSnap.exists()) {
@@ -229,7 +235,7 @@ export class WorkflowService {
       
       // Check if any content items are using this template
       const contentQuery = query(
-        collection(firestore, 'workflow_status'),
+        collection(this.getFirestore(), 'workflow_status'),
         where('templateId', '==', templateId),
         limit(1)
       );
@@ -266,8 +272,8 @@ export class WorkflowService {
     try {
       // Get the content and template
       const [contentSnap, templateSnap] = await Promise.all([
-        getDoc(doc(firestore, 'content', contentId)),
-        getDoc(doc(firestore, 'workflow_templates', templateId))
+        getDoc(doc(this.getFirestore(), 'content', contentId)),
+        getDoc(doc(this.getFirestore(), 'workflow_templates', templateId))
       ]);
       
       if (!contentSnap.exists()) {
@@ -283,7 +289,7 @@ export class WorkflowService {
       
       // Check if content already has a workflow
       const existingQuery = query(
-        collection(firestore, 'workflow_status'),
+        collection(this.getFirestore(), 'workflow_status'),
         where('contentId', '==', contentId),
         limit(1)
       );
@@ -324,8 +330,8 @@ export class WorkflowService {
       
       // Create both documents in Firestore using modern syntax
       await Promise.all([
-        setDoc(doc(firestore, 'workflow_status', contentId), status),
-        addDoc(collection(firestore, 'workflow_history'), historyEntry)
+        setDoc(doc(this.getFirestore(), 'workflow_status', contentId), status),
+        addDoc(collection(this.getFirestore(), 'workflow_history'), historyEntry)
       ]);
       
       this.logger.info('Initialized content workflow', { contentId, templateId });
@@ -345,7 +351,7 @@ export class WorkflowService {
    */
   async getWorkflowStatus(contentId: string): Promise<WorkflowStatus | null> {
     try {
-      const statusSnap = await getDoc(doc(firestore, 'workflow_status', contentId));
+      const statusSnap = await getDoc(doc(this.getFirestore(), 'workflow_status', contentId));
       
       if (!statusSnap.exists()) {
         return null;
@@ -364,7 +370,7 @@ export class WorkflowService {
   async getWorkflowHistory(contentId: string): Promise<WorkflowHistoryEntry[]> {
     try {
       const historyQuery = query(
-        collection(firestore, 'workflow_history'),
+        collection(this.getFirestore(), 'workflow_history'),
         where('contentId', '==', contentId),
         orderBy('timestamp', 'desc')
       );
@@ -389,9 +395,9 @@ export class WorkflowService {
     try {
       const { contentId, action, comments, assignReviewers } = input;
       
-      return await runTransaction(firestore, async (transaction) => {
+      return await runTransaction(this.getFirestore(), async (transaction) => {
         // Get current workflow status
-        const statusRef = doc(firestore, 'workflow_status', contentId);
+        const statusRef = doc(this.getFirestore(), 'workflow_status', contentId);
         const statusSnap = await transaction.get(statusRef);
         
         if (!statusSnap.exists()) {
@@ -401,7 +407,7 @@ export class WorkflowService {
         const status = statusSnap.data() as WorkflowStatus;
         
         // Get the template
-        const templateRef = doc(firestore, 'workflow_templates', status.templateId);
+        const templateRef = doc(this.getFirestore(), 'workflow_templates', status.templateId);
         const templateSnap = await transaction.get(templateRef);
         
         if (!templateSnap.exists()) {
@@ -459,12 +465,12 @@ export class WorkflowService {
           timestamp: now
         };
         
-        const historyRef = doc(collection(firestore, 'workflow_history'));
+        const historyRef = doc(collection(this.getFirestore(), 'workflow_history'));
         transaction.set(historyRef, historyEntry);
         
         // If transitioning to APPROVED or REJECTED, update content status
         if (toState === WorkflowState.APPROVED || toState === WorkflowState.REJECTED) {
-          const contentRef = doc(firestore, 'content', contentId);
+          const contentRef = doc(this.getFirestore(), 'content', contentId);
           const contentSnap = await transaction.get(contentRef);
           
           if (contentSnap.exists()) {
@@ -510,9 +516,9 @@ export class WorkflowService {
     try {
       const { contentId, status: reviewStatus, comments } = input;
       
-      return await runTransaction(firestore, async (transaction) => {
+      return await runTransaction(this.getFirestore(), async (transaction) => {
         // Get current workflow status
-        const statusRef = doc(firestore, 'workflow_status', contentId);
+        const statusRef = doc(this.getFirestore(), 'workflow_status', contentId);
         const statusSnap = await transaction.get(statusRef);
         
         if (!statusSnap.exists()) {
@@ -590,7 +596,7 @@ export class WorkflowService {
           timestamp: now
         };
         
-        const historyRef = doc(collection(firestore, 'workflow_history'));
+        const historyRef = doc(collection(this.getFirestore(), 'workflow_history'));
         transaction.set(historyRef, historyEntry);
         
         // If state changed to APPROVED or REJECTED, update content status
@@ -598,7 +604,7 @@ export class WorkflowService {
           (newState === WorkflowState.APPROVED || newState === WorkflowState.REJECTED) && 
           newState !== workflowStatus.currentState
         ) {
-          const contentRef = doc(firestore, 'content', contentId);
+          const contentRef = doc(this.getFirestore(), 'content', contentId);
           const contentSnap = await transaction.get(contentRef);
           
           if (contentSnap.exists()) {
@@ -644,7 +650,7 @@ export class WorkflowService {
       }
       
       // First get workflow status items that match filter
-      let workflowQuery = query(collection(firestore, 'workflow_status'));
+      let workflowQuery = query(collection(this.getFirestore(), 'workflow_status'));
       
       if (filter.states && filter.states.length > 0) {
         workflowQuery = query(workflowQuery, where('currentState', 'in', filter.states));
@@ -673,7 +679,7 @@ export class WorkflowService {
       for (let i = 0; i < contentIds.length; i += 10) {
         const batch = contentIds.slice(i, i + 10);
         const contentQuery = query(
-          collection(firestore, 'content'),
+          collection(this.getFirestore(), 'content'),
           where('id', 'in', batch)
         );
         
@@ -791,7 +797,7 @@ export class WorkflowService {
   private async unsetDefaultTemplate(organizationId: string): Promise<void> {
     try {
       const defaultQuery = query(
-        collection(firestore, 'workflow_templates'),
+        collection(this.getFirestore(), 'workflow_templates'),
         where('organizationId', '==', organizationId),
         where('isDefault', '==', true)
       );

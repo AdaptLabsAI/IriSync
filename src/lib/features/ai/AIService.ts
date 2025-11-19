@@ -10,7 +10,7 @@ import { TieredModelRouter, TaskType, AIResponse as ModelRouterResponse } from '
 import { AITaskType, AITaskParams } from './models/AITask';
 import { logger } from '../../core/logging/logger';
 import { User } from '../../core/models/User';
-import { firestore } from '../../core/firebase';
+import { getFirebaseFirestore } from '../../core/firebase';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/features/auth';
 import { doc, getDoc } from 'firebase/firestore';

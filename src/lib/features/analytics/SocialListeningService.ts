@@ -1,4 +1,4 @@
-import {
+import { Firestore,
   doc,
   getDoc,
   setDoc,
@@ -12,7 +12,7 @@ import {
   serverTimestamp,
   Timestamp
 } from 'firebase/firestore';
-import { firestore } from '../core/firebase';
+import { getFirebaseFirestore } from '../core/firebase';
 import { tieredModelRouter, TaskType } from '../ai/models/tiered-model-router';
 import { User } from '../../core/models/User';
 import { logger } from '../../core/logging/logger';
@@ -326,6 +326,12 @@ interface TwitterAPIResponse {
  * Monitors mentions and brand conversations across platforms with AI-powered analysis
  */
 export class SocialListeningService {
+  private getFirestore() {
+    const firestore = getFirebaseFirestore();
+    if (!firestore) throw new Error('Firestore not configured');
+    return firestore;
+  }
+
   private static instance: SocialListeningService;
   
   private constructor() {}
@@ -345,7 +351,7 @@ export class SocialListeningService {
     userId: string
   ): Promise<SocialListeningConfig> {
     try {
-      const configRef = doc(collection(firestore, 'socialListeningConfigs'));
+      const configRef = doc(collection(this.getFirestore(), 'socialListeningConfigs'));
       
       const newConfig: SocialListeningConfig = {
         ...configData,
@@ -380,7 +386,7 @@ export class SocialListeningService {
   async getConfigs(organizationId: string): Promise<SocialListeningConfig[]> {
     try {
       const q = query(
-        collection(firestore, 'socialListeningConfigs'),
+        collection(this.getFirestore(), 'socialListeningConfigs'),
         where('organizationId', '==', organizationId),
         orderBy('createdAt', 'desc')
       );
@@ -407,7 +413,7 @@ export class SocialListeningService {
    */
   async fetchMentions(configId: string, user?: User): Promise<SocialMention[]> {
     try {
-      const configDoc = await getDoc(doc(firestore, 'socialListeningConfigs', configId));
+      const configDoc = await getDoc(doc(this.getFirestore(), 'socialListeningConfigs', configId));
       if (!configDoc.exists()) {
         throw new Error('Configuration not found');
       }
@@ -1061,7 +1067,7 @@ export class SocialListeningService {
    */
   private async saveMention(mention: SocialMention): Promise<void> {
     try {
-      const mentionRef = doc(collection(firestore, 'socialMentions'));
+      const mentionRef = doc(collection(this.getFirestore(), 'socialMentions'));
       
       await setDoc(mentionRef, {
         ...mention,
@@ -1092,7 +1098,7 @@ export class SocialListeningService {
   ): Promise<SocialMention[]> {
     try {
       let q = query(
-        collection(firestore, 'socialMentions'),
+        collection(this.getFirestore(), 'socialMentions'),
         where('organizationId', '==', organizationId)
       );
       
@@ -1154,7 +1160,7 @@ export class SocialListeningService {
     userId: string
   ): Promise<void> {
     try {
-      const mentionRef = doc(firestore, 'socialMentions', mentionId);
+      const mentionRef = doc(this.getFirestore(), 'socialMentions', mentionId);
       
       const updateData: any = {
         'response.status': response.status,
@@ -1212,7 +1218,7 @@ export class SocialListeningService {
       }
       
       let q = query(
-        collection(firestore, 'socialMentions'),
+        collection(this.getFirestore(), 'socialMentions'),
         where('organizationId', '==', organizationId),
         where('publishedAt', '>=', Timestamp.fromDate(startDate)),
         where('publishedAt', '<=', Timestamp.fromDate(endDate))
@@ -1380,7 +1386,7 @@ export class SocialListeningService {
       const oneDayAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
       
       const q = query(
-        collection(firestore, 'socialMentions'),
+        collection(this.getFirestore(), 'socialMentions'),
         where('organizationId', '==', organizationId),
         where('publishedAt', '>=', Timestamp.fromDate(oneDayAgo)),
         where('flags.isCrisis', '==', true)

@@ -6,8 +6,8 @@ import ffmpegInstaller from '@ffmpeg-installer/ffmpeg';
 import ffprobeInstaller from '@ffprobe-installer/ffprobe';
 import { execFile } from 'child_process';
 import { promisify } from 'util';
-import { firestore } from '../core/firebase';
-import { doc, getDoc, setDoc, updateDoc, deleteDoc, arrayUnion, arrayRemove } from 'firebase/firestore';
+import { getFirebaseFirestore } from '../core/firebase';
+import { Firestore, doc, getDoc, setDoc, updateDoc, deleteDoc, arrayUnion, arrayRemove } from 'firebase/firestore';
 import axios from 'axios';
 import { createReadStream, createWriteStream } from 'fs';
 import { unlink } from 'fs/promises';
@@ -73,6 +73,12 @@ export interface TransformOptions {
  * transformations, and storage management.
  */
 export class MediaService {
+  private getFirestore() {
+    const firestore = getFirebaseFirestore();
+    if (!firestore) throw new Error('Firestore not configured');
+    return firestore;
+  }
+
   private readonly ffmpegPath = ffmpegInstaller.path;
   private readonly ffprobePath = ffprobeInstaller.path;
   private readonly execFileAsync = promisify(execFile);
@@ -224,7 +230,7 @@ export class MediaService {
     };
     
     // Store metadata in Firestore
-    await setDoc(doc(firestore, 'media', mediaId), mediaMetadata);
+    await setDoc(doc(this.getFirestore(), 'media', mediaId), mediaMetadata);
     
     return mediaMetadata;
   }
@@ -252,7 +258,7 @@ export class MediaService {
    */
   async getMediaById(mediaId: string): Promise<MediaMetadata | null> {
     try {
-      const docSnapshot = await getDoc(doc(firestore, 'media', mediaId));
+      const docSnapshot = await getDoc(doc(this.getFirestore(), 'media', mediaId));
       
       if (!docSnapshot.exists()) {
         return null;
@@ -317,7 +323,7 @@ export class MediaService {
       }
       
       // Delete metadata from Firestore
-      await deleteDoc(doc(firestore, 'media', mediaId));
+      await deleteDoc(doc(this.getFirestore(), 'media', mediaId));
       
       return true;
     } catch (error) {
@@ -331,7 +337,7 @@ export class MediaService {
    */
   async addReference(mediaId: string, referenceId: string): Promise<void> {
     try {
-      await updateDoc(doc(firestore, 'media', mediaId), {
+      await updateDoc(doc(this.getFirestore(), 'media', mediaId), {
         references: arrayUnion(referenceId)
       });
     } catch (error) {
@@ -345,7 +351,7 @@ export class MediaService {
    */
   async removeReference(mediaId: string, referenceId: string): Promise<void> {
     try {
-      await updateDoc(doc(firestore, 'media', mediaId), {
+      await updateDoc(doc(this.getFirestore(), 'media', mediaId), {
         references: arrayRemove(referenceId)
       });
     } catch (error) {
@@ -421,7 +427,7 @@ export class MediaService {
       const url = `https://storage.googleapis.com/${this.bucketName}/${destPath}`;
       
       // Update metadata to include this transform
-      await updateDoc(doc(firestore, 'media', mediaId), {
+      await updateDoc(doc(this.getFirestore(), 'media', mediaId), {
         [`transforms.${transformId}`]: {
           url,
           options,

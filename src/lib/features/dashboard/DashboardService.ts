@@ -4,7 +4,7 @@
 import { firestore } from '@/lib/core/firebase/client';
 import { getFirestore } from '@/lib/core/firebase/admin';
 import { logger } from '@/lib/core/logging/logger';
-import { 
+import { Firestore, 
   collection, 
   doc, 
   getDocs, 
@@ -80,6 +80,12 @@ import { CRMService } from '../crm/CRMService';
  * Orchestrates all dashboard operations and integrates with third-party platforms
  */
 export class DashboardService {
+  private getFirestore() {
+    const firestore = getFirebaseFirestore();
+    if (!firestore) throw new Error('Firestore not configured');
+    return firestore;
+  }
+
   private static instance: DashboardService;
   private metricsCalculator: MetricsCalculator;
   private performanceAnalyzer: PerformanceAnalyzer;
@@ -122,7 +128,7 @@ export class DashboardService {
     try {
       logger.info('Fetching dashboard configurations', { userId, organizationId });
 
-      const dashboardsRef = collection(firestore, 'dashboardConfigs');
+      const dashboardsRef = collection(this.getFirestore(), 'dashboardConfigs');
       let q = query(
         dashboardsRef,
         where('userId', '==', userId),
@@ -164,7 +170,7 @@ export class DashboardService {
    */
   async getDashboard(dashboardId: string): Promise<DashboardConfiguration | null> {
     try {
-      const docRef = doc(firestore, 'dashboardConfigs', dashboardId);
+      const docRef = doc(this.getFirestore(), 'dashboardConfigs', dashboardId);
       const docSnap = await getDoc(docRef);
 
       if (!docSnap.exists()) {
@@ -201,7 +207,7 @@ export class DashboardService {
 
       const dashboardConfig = DashboardConfigUtils.create(dashboard);
       const firestoreData = DashboardConfigUtils.toFirestore(dashboardConfig);
-      const docRef = await addDoc(collection(firestore, 'dashboardConfigs'), firestoreData);
+      const docRef = await addDoc(collection(this.getFirestore(), 'dashboardConfigs'), firestoreData);
 
       const createdDashboard = {
         ...dashboardConfig,
@@ -234,7 +240,7 @@ export class DashboardService {
    */
   async updateDashboard(dashboardId: string, updates: Partial<DashboardConfigData>): Promise<DashboardConfiguration> {
     try {
-      const docRef = doc(firestore, 'dashboardConfigs', dashboardId);
+      const docRef = doc(this.getFirestore(), 'dashboardConfigs', dashboardId);
       const docSnap = await getDoc(docRef);
 
       if (!docSnap.exists()) {
@@ -283,7 +289,7 @@ export class DashboardService {
    */
   async deleteDashboard(dashboardId: string): Promise<void> {
     try {
-      const docRef = doc(firestore, 'dashboardConfigs', dashboardId);
+      const docRef = doc(this.getFirestore(), 'dashboardConfigs', dashboardId);
       await deleteDoc(docRef);
 
       // Also delete associated widgets
@@ -311,7 +317,7 @@ export class DashboardService {
    */
   async getWidgets(dashboardId: string): Promise<Widget[]> {
     try {
-      const widgetsRef = collection(firestore, 'widgets');
+      const widgetsRef = collection(this.getFirestore(), 'widgets');
       const q = query(
         widgetsRef,
         where('dashboardId', '==', dashboardId),
@@ -345,7 +351,7 @@ export class DashboardService {
     try {
       const widgetData = WidgetUtils.create(widget);
       const firestoreData = WidgetUtils.toFirestore(widgetData);
-      const docRef = await addDoc(collection(firestore, 'widgets'), firestoreData);
+      const docRef = await addDoc(collection(this.getFirestore(), 'widgets'), firestoreData);
 
       const createdWidget = {
         ...widgetData,
@@ -378,7 +384,7 @@ export class DashboardService {
    */
   async updateWidget(widgetId: string, updates: Partial<WidgetData>): Promise<Widget> {
     try {
-      const docRef = doc(firestore, 'widgets', widgetId);
+      const docRef = doc(this.getFirestore(), 'widgets', widgetId);
       const docSnap = await getDoc(docRef);
 
       if (!docSnap.exists()) {
@@ -427,7 +433,7 @@ export class DashboardService {
    */
   async deleteWidget(widgetId: string): Promise<void> {
     try {
-      const docRef = doc(firestore, 'widgets', widgetId);
+      const docRef = doc(this.getFirestore(), 'widgets', widgetId);
       await deleteDoc(docRef);
 
       logger.info('Successfully deleted widget', { widgetId });
@@ -694,7 +700,7 @@ export class DashboardService {
    */
   private async getWidget(widgetId: string): Promise<Widget | null> {
     try {
-      const docRef = doc(firestore, 'widgets', widgetId);
+      const docRef = doc(this.getFirestore(), 'widgets', widgetId);
       const docSnap = await getDoc(docRef);
 
       if (!docSnap.exists()) {
@@ -716,7 +722,7 @@ export class DashboardService {
    */
   private async deleteWidgetsByDashboard(dashboardId: string): Promise<void> {
     try {
-      const widgetsRef = collection(firestore, 'widgets');
+      const widgetsRef = collection(this.getFirestore(), 'widgets');
       const q = query(widgetsRef, where('dashboardId', '==', dashboardId));
       const snapshot = await getDocs(q);
 

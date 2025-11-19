@@ -1,5 +1,5 @@
-import { firestore } from '../core/firebase';
-import { doc, getDoc, updateDoc, increment, setDoc, collection, query, where, getDocs, Timestamp, limit, orderBy } from 'firebase/firestore';
+import { getFirebaseFirestore } from '../core/firebase';
+import { Firestore, doc, getDoc, updateDoc, increment, setDoc, collection, query, where, getDocs, Timestamp, limit, orderBy } from 'firebase/firestore';
 import { SubscriptionTier } from '../subscription/models/subscription';
 import { TokenRepository } from './token-repository';
 import { NotificationService } from '../core/notifications/NotificationService';
@@ -87,6 +87,12 @@ export interface TokenPurchase {
  * Production-ready Token Service for managing AI usage tokens
  */
 export class TokenService {
+  private getFirestore() {
+    const firestore = getFirebaseFirestore();
+    if (!firestore) throw new Error('Firestore not configured');
+    return firestore;
+  }
+
   private tokenRepository: TokenRepository;
   private notificationService: NotificationService;
   private alertThresholds = [75, 90, 100]; // Percentage thresholds for alerts
@@ -114,7 +120,7 @@ export class TokenService {
     
     try {
       // Get user document to find their organization
-      const userDoc = await getDoc(doc(firestore, 'users', userId));
+      const userDoc = await getDoc(doc(this.getFirestore(), 'users', userId));
       
       if (!userDoc.exists()) {
         throw new Error(`User ${userId} not found when getting token balance`);
@@ -130,7 +136,7 @@ export class TokenService {
       }
       
       // Get organization document
-      const orgDoc = await getDoc(doc(firestore, 'organizations', orgId));
+      const orgDoc = await getDoc(doc(this.getFirestore(), 'organizations', orgId));
       
       if (!orgDoc.exists()) {
         throw new Error(`Organization ${orgId} not found for user ${userId}`);
@@ -228,7 +234,7 @@ export class TokenService {
       }
       
       // Get user document to find their organization
-      const userDoc = await getDoc(doc(firestore, 'users', userId));
+      const userDoc = await getDoc(doc(this.getFirestore(), 'users', userId));
       
       if (!userDoc.exists()) {
         throw new Error(`User ${userId} not found when using tokens`);
@@ -244,7 +250,7 @@ export class TokenService {
       }
       
       // Get organization document
-      const orgDocRef = doc(firestore, 'organizations', orgId);
+      const orgDocRef = doc(this.getFirestore(), 'organizations', orgId);
       const orgDoc = await getDoc(orgDocRef);
       
       if (!orgDoc.exists()) {
@@ -340,7 +346,7 @@ export class TokenService {
       }
       
       // Get user document to find their organization
-      const userDoc = await getDoc(doc(firestore, 'users', userId));
+      const userDoc = await getDoc(doc(this.getFirestore(), 'users', userId));
       
       if (!userDoc.exists()) {
         throw new Error(`User ${userId} not found when adding tokens`);
@@ -356,7 +362,7 @@ export class TokenService {
       }
       
       // Get organization document
-      const orgDocRef = doc(firestore, 'organizations', orgId);
+      const orgDocRef = doc(this.getFirestore(), 'organizations', orgId);
       const orgDoc = await getDoc(orgDocRef);
       
       if (!orgDoc.exists()) {

@@ -1,11 +1,17 @@
 import { logger } from '../../../core/logging/logger';
 import { firestore } from '../../../core/firebase';
-import { collection, query, where, getDocs, doc, getDoc } from 'firebase/firestore';
+import { Firestore, collection, query, where, getDocs, doc, getDoc } from 'firebase/firestore';
 
 /**
  * Service for platform-specific functionality and data
  */
 export class PlatformService {
+  private getFirestore() {
+    const firestore = getFirebaseFirestore();
+    if (!firestore) throw new Error('Firestore not configured');
+    return firestore;
+  }
+
   /**
    * Get engagement data for a platform and content type
    * @param platform Platform name
@@ -17,7 +23,7 @@ export class PlatformService {
       logger.debug('Getting engagement data', { platform, contentType });
       
       // Try to get from the database first
-      const engagementRef = collection(firestore, 'platformEngagementData');
+      const engagementRef = collection(this.getFirestore(), 'platformEngagementData');
       const q = query(
         engagementRef, 
         where('platform', '==', platform),
@@ -58,7 +64,7 @@ export class PlatformService {
    */
   async getPlatformSettings(platform: string): Promise<any> {
     try {
-      const platformRef = doc(firestore, 'platformSettings', platform);
+      const platformRef = doc(this.getFirestore(), 'platformSettings', platform);
       const docSnap = await getDoc(platformRef);
       
       if (docSnap.exists()) {

@@ -4,7 +4,7 @@ import { authOptions } from '@/lib/features/auth/nextauth';
 import { TwitterProvider } from '@/lib/features/platforms/providers/TwitterProvider';
 import { TwitterSocialInboxAdapter } from '@/lib/features/content/TwitterSocialInboxAdapter';
 import { logger } from '@/lib/core/logging/logger';
-import { firestore } from '@/lib/core/firebase';
+import { getFirebaseFirestore } from '@/lib/core/firebase';
 import { collection, doc, getDoc, getDocs, query, where, orderBy, limit } from 'firebase/firestore';
 
 // Force dynamic rendering - required for Firebase/database access

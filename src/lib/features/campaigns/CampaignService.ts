@@ -14,7 +14,7 @@
  * - Goal setting and tracking
  */
 
-import { firestore } from '@/lib/core/firebase';
+import { getFirebaseFirestore } from '@/lib/core/firebase';
 import {
   doc,
   getDoc,

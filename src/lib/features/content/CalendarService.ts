@@ -1,4 +1,4 @@
-import { firestore } from '../core/firebase';
+import { getFirebaseFirestore } from '../core/firebase';
 import { PlatformType } from '../platforms/models';
 import { rrulestr } from 'rrule';
 import { v4 as uuidv4 } from 'uuid';

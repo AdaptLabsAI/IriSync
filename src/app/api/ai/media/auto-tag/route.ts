@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import formidable from 'formidable';
 import { Readable } from 'stream';
 import { getServerSession } from 'next-auth/next';
-import { firestore } from '@/lib/core/firebase';
+import { getFirebaseFirestore } from '@/lib/core/firebase';
 import { collection, doc, getDoc, getDocs, query, where, setDoc } from 'firebase/firestore';
 
 // Force dynamic rendering - required for Firebase/database access

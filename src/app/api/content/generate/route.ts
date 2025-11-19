@@ -11,7 +11,7 @@ import { authOptions } from '@/lib/features/auth';
 import { contentGenerationService } from '@/lib/features/content/ContentGenerationService';
 import { logger } from '@/lib/core/logging/logger';
 import { PlatformType } from '@/lib/features/platforms/PlatformProvider';
-import { firestore } from '@/lib/core/firebase';
+import { getFirebaseFirestore } from '@/lib/core/firebase';
 import { doc, getDoc } from 'firebase/firestore';
 
 // Force dynamic rendering

@@ -14,7 +14,7 @@ import { logger } from '../../core/logging/logger';
 import { scheduledPostService, ScheduledPost, PublishResult } from './ScheduledPostService';
 import { PlatformProviderFactory } from '../platforms/providers/PlatformProviderFactory';
 import { PlatformType } from '../platforms/PlatformProvider';
-import { firestore } from '../../core/firebase';
+import { getFirebaseFirestore } from '../../core/firebase';
 import { doc, getDoc } from 'firebase/firestore';
 
 /**

@@ -1,4 +1,4 @@
-import { firestore } from '../core/firebase';
+import { getFirebaseFirestore } from '../core/firebase';
 import { doc, getDoc } from 'firebase/firestore';
 import { SubscriptionTier, SubscriptionTierValues } from '../core/models/User';
 import { SubscriptionTier as BaseSubscriptionTier } from './models/subscription';

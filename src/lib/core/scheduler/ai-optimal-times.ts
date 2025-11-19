@@ -1,5 +1,5 @@
 import { firestore } from '../core/firebase/admin';
-import { collection, query, where, orderBy, limit, getDocs, doc, getDoc } from 'firebase/firestore';
+import { Firestore, collection, query, where, orderBy, limit, getDocs, doc, getDoc } from 'firebase/firestore';
 import { ProviderType, SubscriptionTier, TaskCategory } from '../ai/models';
 import { TieredModelRouter } from '../ai/models/tiered-model-router';
 import { TokenService } from '../tokens/token-service';
@@ -104,6 +104,12 @@ export interface AIAnalysisContext {
  * AI-powered optimal posting time analyzer and scheduler integration
  */
 export class AIOptimalPostingTimeService {
+  private getFirestore() {
+    const firestore = getFirebaseFirestore();
+    if (!firestore) throw new Error('Firestore not configured');
+    return firestore;
+  }
+
   private tieredModelRouter: TieredModelRouter;
   private tokenService: TokenService;
   private readonly CACHE_DURATION = 24 * 60 * 60 * 1000; // 24 hours
@@ -508,7 +514,7 @@ Focus on actionable insights based on the actual data provided. If data is limit
     organizationId?: string
   ): Promise<PostingPerformanceData[]> {
     try {
-      const postsRef = collection(firestore, 'contentPosts');
+      const postsRef = collection(this.getFirestore(), 'contentPosts');
       const q = query(
         postsRef,
         where('userId', '==', userId),
@@ -557,7 +563,7 @@ Focus on actionable insights based on the actual data provided. If data is limit
     organizationId?: string
   ): Promise<any> {
     try {
-      const insightsRef = doc(firestore, 'audienceInsights', `${userId}_${platform}`);
+      const insightsRef = doc(this.getFirestore(), 'audienceInsights', `${userId}_${platform}`);
       const snapshot = await getDoc(insightsRef);
       
       if (snapshot.exists()) {
@@ -583,7 +589,7 @@ Focus on actionable insights based on the actual data provided. If data is limit
     contentType: string
   ): Promise<any> {
     try {
-      const competitiveRef = collection(firestore, 'competitiveData');
+      const competitiveRef = collection(this.getFirestore(), 'competitiveData');
       const q = query(
         competitiveRef,
         where('platform', '==', platform),
@@ -613,7 +619,7 @@ Focus on actionable insights based on the actual data provided. If data is limit
     contentType: string
   ): Promise<any> {
     try {
-      const patternsRef = doc(firestore, 'platformPatterns', `${platform}_${contentType}`);
+      const patternsRef = doc(this.getFirestore(), 'platformPatterns', `${platform}_${contentType}`);
       const snapshot = await getDoc(patternsRef);
       
       if (snapshot.exists()) {
@@ -640,7 +646,7 @@ Focus on actionable insights based on the actual data provided. If data is limit
   ): Promise<void> {
     try {
       const cacheKey = this.getCacheKey(context);
-      const cacheRef = doc(firestore, 'optimalTimeCache', cacheKey);
+      const cacheRef = doc(this.getFirestore(), 'optimalTimeCache', cacheKey);
       
       await (cacheRef as any).set({
         userId: context.userId,
@@ -665,7 +671,7 @@ Focus on actionable insights based on the actual data provided. If data is limit
   ): Promise<AIScheduleRecommendation | null> {
     try {
       const cacheKey = this.getCacheKey(context);
-      const cacheRef = doc(firestore, 'optimalTimeCache', cacheKey);
+      const cacheRef = doc(this.getFirestore(), 'optimalTimeCache', cacheKey);
       const snapshot = await getDoc(cacheRef);
       
       if (snapshot.exists()) {

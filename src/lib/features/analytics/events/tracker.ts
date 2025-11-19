@@ -1,6 +1,6 @@
 import { addDoc, collection, Timestamp, serverTimestamp, getDoc, doc } from 'firebase/firestore';
 import { v4 as uuidv4 } from 'uuid';
-import { firestore } from '../../core/firebase';
+import { getFirebaseFirestore } from '../../core/firebase';
 import { AnalyticsEvent, EventSource, EventValidationResult } from '../models/events';
 import { validateEvent } from './validator';
 import { getEventSchema } from './schemas';

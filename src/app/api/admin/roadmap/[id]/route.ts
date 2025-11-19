@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { firestore } from '@/lib/core/firebase';
+import { getFirebaseFirestore } from '@/lib/core/firebase';
 import { doc, updateDoc, deleteDoc, getDoc, serverTimestamp } from 'firebase/firestore';
 import { withAdmin } from '@/lib/features/auth/route-handlers';
 

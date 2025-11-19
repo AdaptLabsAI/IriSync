@@ -1,6 +1,6 @@
 import { logger } from '@/lib/core/logging/logger';
 import { firestore } from '@/lib/core/firebase/config';
-import { 
+import { Firestore, 
   collection, 
   doc, 
   setDoc, 
@@ -75,6 +75,12 @@ export interface TimeSlotConfig {
  * Service for bulk scheduling content across multiple platforms
  */
 export class BulkSchedulingService {
+  private getFirestore() {
+    const firestore = getFirebaseFirestore();
+    if (!firestore) throw new Error('Firestore not configured');
+    return firestore;
+  }
+
   /**
    * Schedule multiple content items in bulk
    */
@@ -107,7 +113,7 @@ export class BulkSchedulingService {
     };
     
     // Save the job
-    await setDoc(doc(firestore, 'bulk_schedule_jobs', jobId), job);
+    await setDoc(doc(this.getFirestore(), 'bulk_schedule_jobs', jobId), job);
     
     // Process the items in the background
     // In a production app, this should be handled by a queue/worker system
@@ -128,7 +134,7 @@ export class BulkSchedulingService {
     job.startedAt = new Date();
     job.updatedAt = new Date();
     
-    await updateDoc(doc(firestore, 'bulk_schedule_jobs', job.id), job);
+    await updateDoc(doc(this.getFirestore(), 'bulk_schedule_jobs', job.id), job);
     
     const successItems: ContentItem[] = [];
     const failedItems: { item: BulkScheduleItem; error: string }[] = [];
@@ -191,7 +197,7 @@ export class BulkSchedulingService {
       // Update job progress every 10 items or at the end
       if (job.processedItems % 10 === 0 || job.processedItems === job.totalItems) {
         job.updatedAt = new Date();
-        await updateDoc(doc(firestore, 'bulk_schedule_jobs', job.id), {
+        await updateDoc(doc(this.getFirestore(), 'bulk_schedule_jobs', job.id), {
           processedItems: job.processedItems,
           successfulItems: job.successfulItems,
           failedItems: job.failedItems,
@@ -205,10 +211,10 @@ export class BulkSchedulingService {
     job.completedAt = new Date();
     job.updatedAt = new Date();
     
-    await updateDoc(doc(firestore, 'bulk_schedule_jobs', job.id), job);
+    await updateDoc(doc(this.getFirestore(), 'bulk_schedule_jobs', job.id), job);
     
     // Save detailed results
-    await setDoc(doc(firestore, 'bulk_schedule_results', job.id), {
+    await setDoc(doc(this.getFirestore(), 'bulk_schedule_results', job.id), {
       jobId: job.id,
       successItemIds: successItems.map(item => item.id),
       failedItems
@@ -219,7 +225,7 @@ export class BulkSchedulingService {
    * Get a bulk schedule job by ID
    */
   async getJob(jobId: string): Promise<BulkScheduleJob | null> {
-    const docRef = doc(firestore, 'bulk_schedule_jobs', jobId);
+    const docRef = doc(this.getFirestore(), 'bulk_schedule_jobs', jobId);
     const docSnap = await getDoc(docRef);
     
     if (!docSnap.exists()) {
@@ -233,7 +239,7 @@ export class BulkSchedulingService {
    * Get all bulk schedule jobs for a user
    */
   async getJobs(userId: string): Promise<BulkScheduleJob[]> {
-    const jobsRef = collection(firestore, 'bulk_schedule_jobs');
+    const jobsRef = collection(this.getFirestore(), 'bulk_schedule_jobs');
     const q = query(jobsRef, where('userId', '==', userId), orderBy('createdAt', 'desc'), limit(10));
     const snapshot = await getDocs(q);
     
@@ -251,8 +257,8 @@ export class BulkSchedulingService {
    */
   async getJobResults(jobId: string): Promise<BulkScheduleResult | null> {
     const [jobDoc, resultsDoc] = await Promise.all([
-      getDoc(doc(firestore, 'bulk_schedule_jobs', jobId)),
-      getDoc(doc(firestore, 'bulk_schedule_results', jobId))
+      getDoc(doc(this.getFirestore(), 'bulk_schedule_jobs', jobId)),
+      getDoc(doc(this.getFirestore(), 'bulk_schedule_results', jobId))
     ]);
     
     if (!jobDoc.exists() || !resultsDoc.exists()) {
@@ -270,7 +276,7 @@ export class BulkSchedulingService {
       for (let i = 0; i < results.successItemIds.length; i += 10) {
         const batchIds = results.successItemIds.slice(i, i + 10);
         const contentDocs = await Promise.all(
-          batchIds.map(id => getDoc(doc(firestore, 'content', id)))
+          batchIds.map(id => getDoc(doc(this.getFirestore(), 'content', id)))
         );
         
         contentDocs.forEach(doc => {
@@ -293,7 +299,7 @@ export class BulkSchedulingService {
    * This will stop processing any remaining items
    */
   async cancelJob(jobId: string): Promise<boolean> {
-    const jobRef = doc(firestore, 'bulk_schedule_jobs', jobId);
+    const jobRef = doc(this.getFirestore(), 'bulk_schedule_jobs', jobId);
     const jobDoc = await getDoc(jobRef);
     
     if (!jobDoc.exists()) {

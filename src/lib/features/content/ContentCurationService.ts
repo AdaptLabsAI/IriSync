@@ -1,4 +1,4 @@
-import {
+import { Firestore,
   doc,
   getDoc,
   setDoc,
@@ -12,7 +12,7 @@ import {
   serverTimestamp,
   Timestamp
 } from 'firebase/firestore';
-import { firestore } from '../core/firebase';
+import { getFirebaseFirestore } from '../core/firebase';
 import { tieredModelRouter, TaskType } from '../ai/models/tiered-model-router';
 import { User } from '../../core/models/User';
 import { logger } from '../../core/logging/logger';
@@ -164,6 +164,12 @@ export interface CurationAnalytics {
  * Automatically discovers, analyzes, and curates content from various sources
  */
 export class ContentCurationService {
+  private getFirestore() {
+    const firestore = getFirebaseFirestore();
+    if (!firestore) throw new Error('Firestore not configured');
+    return firestore;
+  }
+
   private static instance: ContentCurationService;
   
   private constructor() {}
@@ -183,7 +189,7 @@ export class ContentCurationService {
     userId: string
   ): Promise<ContentSource> {
     try {
-      const sourceRef = doc(collection(firestore, 'contentSources'));
+      const sourceRef = doc(collection(this.getFirestore(), 'contentSources'));
       
       const newSource: ContentSource = {
         ...source,
@@ -217,7 +223,7 @@ export class ContentCurationService {
   async getContentSources(organizationId: string): Promise<ContentSource[]> {
     try {
       const q = query(
-        collection(firestore, 'contentSources'),
+        collection(this.getFirestore(), 'contentSources'),
         where('organizationId', '==', organizationId),
         where('isActive', '==', true)
       );
@@ -454,7 +460,7 @@ export class ContentCurationService {
         user
       );
       
-      const curatedContentRef = doc(collection(firestore, 'curatedContent'));
+      const curatedContentRef = doc(collection(this.getFirestore(), 'curatedContent'));
       
       const curatedContent: CuratedContent = {
         id: curatedContentRef.id,
@@ -671,7 +677,7 @@ export class ContentCurationService {
   ): Promise<CuratedContent[]> {
     try {
       let q = query(
-        collection(firestore, 'curatedContent'),
+        collection(this.getFirestore(), 'curatedContent'),
         where('organizationId', '==', organizationId)
       );
       
@@ -717,7 +723,7 @@ export class ContentCurationService {
     notes?: string
   ): Promise<void> {
     try {
-      const contentRef = doc(firestore, 'curatedContent', contentId);
+      const contentRef = doc(this.getFirestore(), 'curatedContent', contentId);
       
       const updateData: any = {
         status,
@@ -770,7 +776,7 @@ export class ContentCurationService {
       }
       
       const q = query(
-        collection(firestore, 'curatedContent'),
+        collection(this.getFirestore(), 'curatedContent'),
         where('organizationId', '==', organizationId),
         where('fetchedAt', '>=', Timestamp.fromDate(startDate)),
         where('fetchedAt', '<=', Timestamp.fromDate(endDate))
@@ -813,7 +819,7 @@ export class ContentCurationService {
    */
   private async updateSourceLastFetched(sourceId: string): Promise<void> {
     try {
-      const sourceRef = doc(firestore, 'contentSources', sourceId);
+      const sourceRef = doc(this.getFirestore(), 'contentSources', sourceId);
       await updateDoc(sourceRef, {
         lastFetched: serverTimestamp(),
         updatedAt: serverTimestamp()

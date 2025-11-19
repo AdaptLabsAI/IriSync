@@ -18,7 +18,7 @@ import {
   arrayUnion,
   arrayRemove
 } from 'firebase/firestore';
-import { firestore } from '../core/firebase';
+import { getFirebaseFirestore } from '../core/firebase';
 import { 
   KnowledgeContent, 
   KnowledgeContentType, 
@@ -239,6 +239,10 @@ export const KnowledgeRepository = {
    * Get knowledge content by ID
    */
   async getById(id: string): Promise<KnowledgeContent | null> {
+    const firestore = getFirebaseFirestore();
+
+    if (!firestore) { console.error('Firestore not configured'); return; }
+
     const docRef = doc(firestore, KNOWLEDGE_COLLECTION, id);
     const docSnap = await getDoc(docRef);
     
@@ -313,6 +317,10 @@ export const KnowledgeRepository = {
    * Update existing knowledge content
    */
   async update(id: string, contentData: UpdateKnowledgeContentInput): Promise<KnowledgeContent> {
+    const firestore = getFirebaseFirestore();
+
+    if (!firestore) { console.error('Firestore not configured'); return; }
+
     const docRef = doc(firestore, KNOWLEDGE_COLLECTION, id);
     const currentContent = await this.getById(id);
     
@@ -413,6 +421,10 @@ export const KnowledgeRepository = {
     }
     
     // Now delete the document
+    const firestore = getFirebaseFirestore();
+
+    if (!firestore) { console.error('Firestore not configured'); return; }
+
     const docRef = doc(firestore, KNOWLEDGE_COLLECTION, id);
     await deleteDoc(docRef);
   },
@@ -557,6 +569,10 @@ export const KnowledgeRepository = {
    * Add a related content relationship
    */
   async addRelatedContent(contentId: string, relatedContentId: string): Promise<void> {
+    const firestore = getFirebaseFirestore();
+
+    if (!firestore) { console.error('Firestore not configured'); return; }
+
     const docRef = doc(firestore, KNOWLEDGE_COLLECTION, contentId);
     await updateDoc(docRef, {
       relatedContentIds: arrayUnion(relatedContentId)
@@ -567,6 +583,10 @@ export const KnowledgeRepository = {
    * Remove a related content relationship
    */
   async removeRelatedContent(contentId: string, relatedContentId: string): Promise<void> {
+    const firestore = getFirebaseFirestore();
+
+    if (!firestore) { console.error('Firestore not configured'); return; }
+
     const docRef = doc(firestore, KNOWLEDGE_COLLECTION, contentId);
     await updateDoc(docRef, {
       relatedContentIds: arrayRemove(relatedContentId)
@@ -583,7 +603,15 @@ export const KnowledgeRepository = {
     const articlesUpdated = await this.updateArticlesCategory(oldName, newName);
     
     // Then update the category in the categories collection
+    const firestore = getFirebaseFirestore();
+
+    if (!firestore) { console.error('Firestore not configured'); return; }
+
     const categoryRef = doc(firestore, KNOWLEDGE_CATEGORY_COLLECTION, oldName);
+    const firestore = getFirebaseFirestore();
+
+    if (!firestore) { console.error('Firestore not configured'); return; }
+
     const newCategoryRef = doc(firestore, KNOWLEDGE_CATEGORY_COLLECTION, newName);
     
     // Create new category
@@ -603,6 +631,10 @@ export const KnowledgeRepository = {
    */
   async deleteCategory(name: string): Promise<void> {
     // Delete the category document
+    const firestore = getFirebaseFirestore();
+
+    if (!firestore) { console.error('Firestore not configured'); return; }
+
     const categoryRef = doc(firestore, KNOWLEDGE_CATEGORY_COLLECTION, name);
     await deleteDoc(categoryRef);
     

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { firebaseAdmin } from '@/lib/core/firebase/admin';
-import { firestore } from '@/lib/core/firebase';
+import { getFirebaseFirestore } from '@/lib/core/firebase';
 import { doc, getDoc, setDoc, updateDoc, arrayUnion, arrayRemove, deleteDoc } from 'firebase/firestore';
 import { generateOAuthUrl } from '@/lib/features/platforms/auth/oauth';
 import { getGoogleOAuthClientId } from '@/lib/server/env';

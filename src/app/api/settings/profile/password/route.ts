@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/lib/features/auth';
 import { getAuth } from 'firebase-admin/auth';
-import { firestore } from '@/lib/core/firebase';
+import { getFirebaseFirestore } from '@/lib/core/firebase';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { compare, hash } from 'bcryptjs';
 

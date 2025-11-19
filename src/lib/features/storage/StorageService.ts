@@ -22,8 +22,8 @@ import { MediaProcessor } from './media/MediaProcessor';
 import { ValidationUtils } from './utils/validation';
 import { CacheManager } from './utils/cache';
 import { Logger } from '../logging';
-import { firestore } from '../core/firebase';
-import { 
+import { getFirebaseFirestore } from '../core/firebase';
+import { Firestore, 
   collection, 
   doc, 
   addDoc, 
@@ -43,6 +43,12 @@ import {
  * Main Storage Service - Singleton orchestrator for all storage operations
  */
 export class StorageService {
+  private getFirestore() {
+    const firestore = getFirebaseFirestore();
+    if (!firestore) throw new Error('Firestore not configured');
+    return firestore;
+  }
+
   private static instance: StorageService;
   private providers: Map<StoragePlatform, any> = new Map();
   private mediaProcessor: MediaProcessor;
@@ -120,7 +126,7 @@ export class StorageService {
         metadata: {}
       };
 
-      const docRef = await addDoc(collection(firestore, 'storageConnections'), connectionData);
+      const docRef = await addDoc(collection(this.getFirestore(), 'storageConnections'), connectionData);
       
       // Get the created document
       const docSnap = await getDoc(docRef);
@@ -162,7 +168,7 @@ export class StorageService {
   async getConnections(organizationId: string): Promise<StorageConnection[]> {
     try {
       const q = query(
-        collection(firestore, 'storageConnections'),
+        collection(this.getFirestore(), 'storageConnections'),
         where('organizationId', '==', organizationId),
         orderBy('createdAt', 'desc')
       );
@@ -208,7 +214,7 @@ export class StorageService {
     updates: Partial<StorageConnection>
   ): Promise<StorageConnection> {
     try {
-      const docRef = doc(firestore, 'storageConnections', connectionId);
+      const docRef = doc(this.getFirestore(), 'storageConnections', connectionId);
       const docSnap = await getDoc(docRef);
 
       if (!docSnap.exists()) {
@@ -264,7 +270,7 @@ export class StorageService {
    */
   async deleteConnection(connectionId: string): Promise<void> {
     try {
-      await deleteDoc(doc(firestore, 'storageConnections', connectionId));
+      await deleteDoc(doc(this.getFirestore(), 'storageConnections', connectionId));
       this.logger.info('Storage connection deleted', { connectionId });
     } catch (error) {
       this.logger.error('Failed to delete storage connection', { error: error instanceof Error ? error.message : 'Unknown error' });
@@ -320,7 +326,7 @@ export class StorageService {
         metadata: metadata.metadata || {}
       };
 
-      const docRef = await addDoc(collection(firestore, 'mediaFiles'), mediaFileData);
+      const docRef = await addDoc(collection(this.getFirestore(), 'mediaFiles'), mediaFileData);
       const docSnap = await getDoc(docRef);
       const data = docSnap.data()!;
 
@@ -372,7 +378,7 @@ export class StorageService {
       const { limit: pageLimit = 20, offset = 0 } = options;
       
       let q = query(
-        collection(firestore, 'mediaFiles'),
+        collection(this.getFirestore(), 'mediaFiles'),
         where('organizationId', '==', organizationId),
         orderBy('uploadedAt', 'desc')
       );
@@ -440,7 +446,7 @@ export class StorageService {
    */
   async deleteFile(fileId: string): Promise<void> {
     try {
-      const docRef = doc(firestore, 'mediaFiles', fileId);
+      const docRef = doc(this.getFirestore(), 'mediaFiles', fileId);
       const docSnap = await getDoc(docRef);
 
       if (!docSnap.exists()) {
@@ -526,7 +532,7 @@ export class StorageService {
       }
 
       const q = query(
-        collection(firestore, 'mediaFiles'),
+        collection(this.getFirestore(), 'mediaFiles'),
         where('organizationId', '==', organizationId),
         where('uploadedAt', '>=', Timestamp.fromDate(timeRange.start)),
         where('uploadedAt', '<=', Timestamp.fromDate(timeRange.end))
@@ -605,7 +611,7 @@ export class StorageService {
       const isHealthy = await provider.testConnection(credentials);
 
       // Update health status
-      await updateDoc(doc(firestore, 'storageConnections', connectionId), {
+      await updateDoc(doc(this.getFirestore(), 'storageConnections', connectionId), {
         'healthStatus.isHealthy': isHealthy,
         'healthStatus.lastCheckedAt': Timestamp.now(),
         'healthStatus.errorMessage': isHealthy ? null : 'Connection test failed'
@@ -622,7 +628,7 @@ export class StorageService {
    * Get connection by ID
    */
   private async getConnectionById(connectionId: string): Promise<StorageConnection> {
-    const docRef = doc(firestore, 'storageConnections', connectionId);
+    const docRef = doc(this.getFirestore(), 'storageConnections', connectionId);
     const docSnap = await getDoc(docRef);
 
     if (!docSnap.exists()) {

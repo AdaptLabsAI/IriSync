@@ -1,5 +1,5 @@
 import { firestore } from '@/lib/core/firebase/client';
-import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import { Firestore, doc, getDoc, updateDoc } from 'firebase/firestore';
 import { HubspotAdapter } from './HubspotAdapter';
 import { SalesforceAdapter } from './SalesforceAdapter';
 import { ZohoCRMAdapter } from './ZohoCRMAdapter';
@@ -38,6 +38,12 @@ export interface PlatformConfig {
  * Centralized service for handling token refresh across different integrations
  */
 export class TokenRefreshService {
+  private getFirestore() {
+    const firestore = getFirebaseFirestore();
+    if (!firestore) throw new Error('Firestore not configured');
+    return firestore;
+  }
+
   private static readonly ERROR_LOG_LIMIT = 50;
   private static errorLogs: Map<string, { count: number; lastError: string; timestamp: number }> = new Map();
   
@@ -300,7 +306,7 @@ export class TokenRefreshService {
     if (refreshResult.success && refreshResult.tokens) {
       // Update the stored tokens in Firestore
       try {
-        const connectionRef = doc(firestore, 'crmConnections', connectionId);
+        const connectionRef = doc(this.getFirestore(), 'crmConnections', connectionId);
         await updateDoc(connectionRef, { tokens: refreshResult.tokens });
         
         logger.info(`Successfully refreshed ${platform} token for user ${userId}`);

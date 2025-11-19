@@ -1,5 +1,5 @@
 import { firestore } from '../firebase';
-import { 
+import { Firestore, 
   collection, 
   doc, 
   setDoc, 
@@ -90,6 +90,12 @@ interface FirestoreNotification {
  * Notification service for managing user notifications
  */
 export class NotificationService {
+  private getFirestore() {
+    const firestore = getFirebaseFirestore();
+    if (!firestore) throw new Error('Firestore not configured');
+    return firestore;
+  }
+
   private readonly notificationsCollection = 'notifications';
   
   /**
@@ -126,7 +132,7 @@ export class NotificationService {
       
       // Save in-app notification to Firestore
       if (channel === NotificationChannel.IN_APP || channel === NotificationChannel.BOTH) {
-        const notificationsRef = collection(firestore, this.notificationsCollection);
+        const notificationsRef = collection(this.getFirestore(), this.notificationsCollection);
         const newNotificationRef = doc(notificationsRef);
         notificationId = newNotificationRef.id;
         
@@ -166,7 +172,7 @@ export class NotificationService {
   ): Promise<Notification[]> {
     try {
       let notificationsQuery = query(
-        collection(firestore, this.notificationsCollection),
+        collection(this.getFirestore(), this.notificationsCollection),
         where('userId', '==', userId),
         orderBy('createdAt', 'desc'),
         limit(limitCount)
@@ -174,10 +180,10 @@ export class NotificationService {
 
       // If lastNotificationId is provided, get notifications after that
       if (lastNotificationId) {
-        const lastNotificationDoc = await getDoc(doc(firestore, this.notificationsCollection, lastNotificationId));
+        const lastNotificationDoc = await getDoc(doc(this.getFirestore(), this.notificationsCollection, lastNotificationId));
         if (lastNotificationDoc.exists()) {
           notificationsQuery = query(
-            collection(firestore, this.notificationsCollection),
+            collection(this.getFirestore(), this.notificationsCollection),
             where('userId', '==', userId),
             orderBy('createdAt', 'desc'),
             limit(limitCount)
@@ -219,7 +225,7 @@ export class NotificationService {
    */
   async markAsRead(notificationId: string, userId: string): Promise<boolean> {
     try {
-      const notificationRef = doc(firestore, this.notificationsCollection, notificationId);
+      const notificationRef = doc(this.getFirestore(), this.notificationsCollection, notificationId);
       const notificationDoc = await getDoc(notificationRef);
 
       if (!notificationDoc.exists()) {
@@ -257,7 +263,7 @@ export class NotificationService {
   async markAllAsRead(userId: string): Promise<number> {
     try {
       const unreadQuery = query(
-        collection(firestore, this.notificationsCollection),
+        collection(this.getFirestore(), this.notificationsCollection),
         where('userId', '==', userId),
         where('isRead', '==', false)
       );
@@ -283,7 +289,7 @@ export class NotificationService {
    */
   async deleteNotification(notificationId: string, userId: string): Promise<boolean> {
     try {
-      const notificationRef = doc(firestore, this.notificationsCollection, notificationId);
+      const notificationRef = doc(this.getFirestore(), this.notificationsCollection, notificationId);
       const notificationDoc = await getDoc(notificationRef);
 
       if (!notificationDoc.exists()) {
@@ -321,7 +327,7 @@ export class NotificationService {
   async getUnreadCount(userId: string): Promise<number> {
     try {
       const unreadQuery = query(
-        collection(firestore, this.notificationsCollection),
+        collection(this.getFirestore(), this.notificationsCollection),
         where('userId', '==', userId),
         where('isRead', '==', false)
       );
@@ -342,7 +348,7 @@ export class NotificationService {
     try {
       const now = Timestamp.now();
       const expiredQuery = query(
-        collection(firestore, this.notificationsCollection),
+        collection(this.getFirestore(), this.notificationsCollection),
         where('expiresAt', '<=', now)
       );
 

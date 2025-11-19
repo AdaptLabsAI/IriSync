@@ -12,7 +12,7 @@ import {
   getDoc,
   writeBatch
 } from 'firebase/firestore';
-import { firestore } from '@/lib/core/firebase';
+import { getFirebaseFirestore } from '@/lib/core/firebase';
 import { logger } from '@/lib/core/logging/logger';
 import { handleApiError } from '@/lib/features/auth/utils';
 import axios from 'axios';

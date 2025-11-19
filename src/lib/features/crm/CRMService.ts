@@ -4,7 +4,7 @@
 import { firestore } from '@/lib/core/firebase/client';
 import { getFirestore } from '@/lib/core/firebase/admin';
 import { logger } from '@/lib/core/logging/logger';
-import { 
+import { Firestore, 
   collection, 
   doc, 
   getDocs, 
@@ -58,6 +58,12 @@ import { RateLimiter } from './utils/RateLimiter';
  * Orchestrates all CRM operations across different platforms
  */
 export class CRMService {
+  private getFirestore() {
+    const firestore = getFirebaseFirestore();
+    if (!firestore) throw new Error('Firestore not configured');
+    return firestore;
+  }
+
   private static instance: CRMService;
   private syncEngine: SyncEngine;
   private rateLimiter: RateLimiter;
@@ -86,7 +92,7 @@ export class CRMService {
     try {
       logger.info('Fetching CRM connections', { userId, organizationId });
 
-      const connectionsRef = collection(firestore, 'crmConnections');
+      const connectionsRef = collection(this.getFirestore(), 'crmConnections');
       let q = query(
         connectionsRef,
         where('userId', '==', userId),
@@ -126,7 +132,7 @@ export class CRMService {
    */
   async getConnection(connectionId: string): Promise<CRMConnection | null> {
     try {
-      const docRef = doc(firestore, 'crmConnections', connectionId);
+      const docRef = doc(this.getFirestore(), 'crmConnections', connectionId);
       const docSnap = await getDoc(docRef);
 
       if (!docSnap.exists()) {
@@ -160,7 +166,7 @@ export class CRMService {
       });
 
       const firestoreData = CRMConnectionUtils.toFirestore(connection);
-      const docRef = await addDoc(collection(firestore, 'crmConnections'), firestoreData);
+      const docRef = await addDoc(collection(this.getFirestore(), 'crmConnections'), firestoreData);
 
       const createdConnection = {
         ...connection,
@@ -197,7 +203,7 @@ export class CRMService {
    */
   async updateConnection(connectionId: string, updates: Partial<CRMConnection>): Promise<CRMConnection> {
     try {
-      const docRef = doc(firestore, 'crmConnections', connectionId);
+      const docRef = doc(this.getFirestore(), 'crmConnections', connectionId);
       const updateData = {
         ...updates,
         updatedAt: Timestamp.now()
@@ -233,7 +239,7 @@ export class CRMService {
     try {
       logger.info('Deleting CRM connection', { connectionId });
 
-      await deleteDoc(doc(firestore, 'crmConnections', connectionId));
+      await deleteDoc(doc(this.getFirestore(), 'crmConnections', connectionId));
 
       logger.info('Successfully deleted CRM connection', { connectionId });
     } catch (error) {
@@ -586,7 +592,7 @@ export class CRMService {
   private async storeContact(contact: Contact): Promise<void> {
     try {
       const firestoreData = ContactUtils.toFirestore(contact);
-      await addDoc(collection(firestore, 'crmContacts'), firestoreData);
+      await addDoc(collection(this.getFirestore(), 'crmContacts'), firestoreData);
     } catch (error) {
       logger.error('Error storing contact in Firestore', { contact, error });
     }

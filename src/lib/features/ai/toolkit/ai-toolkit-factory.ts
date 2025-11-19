@@ -10,7 +10,7 @@ import { ContentGeneratorImpl } from './tools/ContentGenerator';
 import { MediaAnalyzerImpl } from './tools/MediaAnalyzer';
 import { ResponseAssistantImpl } from './tools/ResponseAssistant';
 import { AITaskResult, ToolkitRequestOptions } from './interfaces';
-import { firestore } from '../../core/firebase';
+import { getFirebaseFirestore } from '../../core/firebase';
 import { doc, getDoc, collection, query, where, getDocs, limit } from 'firebase/firestore';
 import { OpenAIProvider } from '../providers/OpenAIProvider';
 import { AnthropicProvider } from '../providers/AnthropicProvider';

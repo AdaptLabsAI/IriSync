@@ -1,4 +1,4 @@
-import { firestore } from '../core/firebase';
+import { getFirebaseFirestore } from '../core/firebase';
 import { collection, query, where, getDocs, addDoc, Timestamp, orderBy, limit, doc, updateDoc, increment, getDoc, setDoc } from 'firebase/firestore';
 import { TokenService } from './token-service';
 import { AITaskType } from '../features/ai/models';

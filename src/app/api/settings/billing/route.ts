@@ -9,7 +9,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/features/auth';
 import { getDoc, doc } from 'firebase/firestore';
-import { firestore } from '@/lib/core/firebase';
+import { getFirebaseFirestore } from '@/lib/core/firebase';
 import { logger } from '@/lib/core/logging/logger';
 import { universalBillingService } from '@/lib/features/subscription/UniversalBillingService';
 

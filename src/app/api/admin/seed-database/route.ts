@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/features/auth';
-import { firestore } from '@/lib/core/firebase';
+import { getFirebaseFirestore } from '@/lib/core/firebase';
 import {   collection,   doc,   getDoc,   getDocs,  setDoc,  serverTimestamp,  writeBatch} from 'firebase/firestore';
 import { logger } from '@/lib/core/logging/logger';
 

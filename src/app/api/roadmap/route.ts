@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { firestore } from '@/lib/core/firebase';
+import { getFirebaseFirestore } from '@/lib/core/firebase';
 import { collection, getDocs, query, orderBy, where } from 'firebase/firestore';
 
 // Force dynamic rendering

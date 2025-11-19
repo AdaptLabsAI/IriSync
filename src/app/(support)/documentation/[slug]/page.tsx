@@ -17,7 +17,7 @@ import {
 } from '@mui/material';
 import Link from 'next/link';
 import { collection, doc, getDoc, query, where } from 'firebase/firestore';
-import { firestore } from '@/lib/core/firebase';
+import { getFirebaseFirestore } from '@/lib/core/firebase';
 import { useSession } from 'next-auth/react';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import EditIcon from '@mui/icons-material/Edit';

@@ -18,7 +18,7 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
-import { firestore } from '@/lib/core/firebase';
+import { getFirebaseFirestore } from '@/lib/core/firebase';
 
 export default function SupportLayout({
   children,
@@ -38,6 +38,10 @@ export default function SupportLayout({
       // Check if user is admin
       if (user && firestore) {
         try {
+          const firestore = getFirebaseFirestore();
+
+          if (!firestore) { console.error('Firestore not configured'); return; }
+
           const userRef = doc(firestore, 'users', user.uid);
           const userSnap = await getDoc(userRef);
           

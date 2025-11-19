@@ -1,6 +1,6 @@
 import { getAuth, User } from 'firebase/auth';
 import { doc, getDoc, setDoc, serverTimestamp } from 'firebase/firestore';
-import { firestore } from '@/lib/core/firebase';
+import { getFirebaseFirestore } from '@/lib/core/firebase';
 
 /**
  * Validates that a user has a profile in Firestore.

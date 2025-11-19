@@ -8,8 +8,8 @@
  * - Integrates with scheduling system
  */
 
-import { firestore } from '../../core/firebase';
-import {
+import { getFirebaseFirestore } from '../../core/firebase';
+import { Firestore,
   collection,
   doc,
   addDoc,
@@ -128,6 +128,12 @@ export interface AggregatedAnalytics {
  * Service for tracking post analytics
  */
 export class PostAnalyticsService {
+  private getFirestore() {
+    const firestore = getFirebaseFirestore();
+    if (!firestore) throw new Error('Firestore not configured');
+    return firestore;
+  }
+
   private readonly postMetricsCollection = 'postMetrics';
   private readonly postAnalyticsCache = 'postAnalyticsCache';
 
@@ -193,7 +199,7 @@ export class PostAnalyticsService {
 
       // Store metrics in Firestore
       const docRef = await addDoc(
-        collection(firestore, this.postMetricsCollection),
+        collection(this.getFirestore(), this.postMetricsCollection),
         {
           ...metrics,
           publishedAt: Timestamp.fromDate(metrics.publishedAt),
@@ -569,7 +575,7 @@ export class PostAnalyticsService {
   async getPostMetricsHistory(postId: string): Promise<PostMetrics[]> {
     try {
       const q = query(
-        collection(firestore, this.postMetricsCollection),
+        collection(this.getFirestore(), this.postMetricsCollection),
         where('postId', '==', postId),
         orderBy('fetchedAt', 'desc'),
         limit(100)
@@ -620,7 +626,7 @@ export class PostAnalyticsService {
       }
 
       const q = query(
-        collection(firestore, this.postMetricsCollection),
+        collection(this.getFirestore(), this.postMetricsCollection),
         ...constraints
       );
 

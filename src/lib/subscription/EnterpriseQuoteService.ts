@@ -1,5 +1,5 @@
-import { firestore } from '../core/firebase';
-import { collection, doc, getDoc, getDocs, setDoc, updateDoc, query, where, orderBy, limit, Timestamp } from 'firebase/firestore';
+import { getFirebaseFirestore } from '../core/firebase';
+import { Firestore, collection, doc, getDoc, getDocs, setDoc, updateDoc, query, where, orderBy, limit, Timestamp } from 'firebase/firestore';
 import { v4 as uuidv4 } from 'uuid';
 import { SubscriptionTier } from '../core/models/User';
 import unifiedEmailService from '../core/notifications/unified-email-service';
@@ -120,6 +120,12 @@ export interface EnterpriseQuoteRequest {
  * Service for managing Enterprise tier custom pricing and quotes
  */
 export class EnterpriseQuoteService {
+  private getFirestore() {
+    const firestore = getFirebaseFirestore();
+    if (!firestore) throw new Error('Firestore not configured');
+    return firestore;
+  }
+
   private readonly QUOTES_COLLECTION = 'enterprise_quotes';
   private readonly ADDONS_COLLECTION = 'enterprise_addons';
   
@@ -239,7 +245,7 @@ export class EnterpriseQuoteService {
       };
       
       // Save quote to Firestore
-      await setDoc(doc(firestore, this.QUOTES_COLLECTION, quoteId), quote);
+      await setDoc(doc(this.getFirestore(), this.QUOTES_COLLECTION, quoteId), quote);
       
       // Send notifications
       if (isSelfService) {
@@ -276,7 +282,7 @@ export class EnterpriseQuoteService {
    * Get an enterprise quote by ID
    */
   async getQuoteById(quoteId: string): Promise<EnterpriseQuote | null> {
-    const quoteDoc = await getDoc(doc(firestore, this.QUOTES_COLLECTION, quoteId));
+    const quoteDoc = await getDoc(doc(this.getFirestore(), this.QUOTES_COLLECTION, quoteId));
       
     if (!quoteDoc.exists()) {
       return null;
@@ -290,7 +296,7 @@ export class EnterpriseQuoteService {
    */
   async getQuotesForUser(userId: string): Promise<EnterpriseQuote[]> {
     const quotesQuery = query(
-      collection(firestore, this.QUOTES_COLLECTION),
+      collection(this.getFirestore(), this.QUOTES_COLLECTION),
       where('userId', '==', userId),
       orderBy('createdAt', 'desc')
     );
@@ -390,7 +396,7 @@ export class EnterpriseQuoteService {
             // Get add-ons data from Firestore
             const addOnsIds = updates.addOns.map(addon => addon.id);
             const addOnsQuery = query(
-              collection(firestore, this.ADDONS_COLLECTION),
+              collection(this.getFirestore(), this.ADDONS_COLLECTION),
               where('id', 'in', addOnsIds)
             );
             const addOnsSnapshot = await getDocs(addOnsQuery);
@@ -473,7 +479,7 @@ export class EnterpriseQuoteService {
       
       while (retries < maxRetries) {
         try {
-          await setDoc(doc(firestore, this.QUOTES_COLLECTION, quoteId), {
+          await setDoc(doc(this.getFirestore(), this.QUOTES_COLLECTION, quoteId), {
             ...existingQuote,
             ...updateData
           });
@@ -540,7 +546,7 @@ export class EnterpriseQuoteService {
       updatedAt: new Date()
     };
     
-    await setDoc(doc(firestore, this.QUOTES_COLLECTION, quoteId), {
+    await setDoc(doc(this.getFirestore(), this.QUOTES_COLLECTION, quoteId), {
       ...quote,
       ...updateData
     });
@@ -587,7 +593,7 @@ export class EnterpriseQuoteService {
       });
       
       // 2. Create a notification record in the system
-      const notificationsRef = collection(firestore, 'notifications');
+      const notificationsRef = collection(this.getFirestore(), 'notifications');
       await setDoc(doc(notificationsRef), {
         type: 'quote_approval_needed',
         quoteId: quote.id,
@@ -659,7 +665,7 @@ export class EnterpriseQuoteService {
       
       while (retries < maxRetries) {
         try {
-          await setDoc(doc(firestore, this.QUOTES_COLLECTION, quoteId), {
+          await setDoc(doc(this.getFirestore(), this.QUOTES_COLLECTION, quoteId), {
             ...quote,
             ...updateData
           });
@@ -754,7 +760,7 @@ export class EnterpriseQuoteService {
       updatedAt: new Date()
     };
     
-    await setDoc(doc(firestore, this.QUOTES_COLLECTION, quoteId), {
+    await setDoc(doc(this.getFirestore(), this.QUOTES_COLLECTION, quoteId), {
       ...quote,
       ...updateData
     });
@@ -784,7 +790,7 @@ export class EnterpriseQuoteService {
       updatedAt: new Date()
     };
     
-    await setDoc(doc(firestore, this.QUOTES_COLLECTION, quoteId), {
+    await setDoc(doc(this.getFirestore(), this.QUOTES_COLLECTION, quoteId), {
       ...quote,
       ...updateData
     });
@@ -881,7 +887,7 @@ export class EnterpriseQuoteService {
       updateData.billingNotes = `Failed to create Stripe subscription: ${error instanceof Error ? error.message : 'Unknown error'}`;
     }
     
-    await setDoc(doc(firestore, this.QUOTES_COLLECTION, quoteId), {
+    await setDoc(doc(this.getFirestore(), this.QUOTES_COLLECTION, quoteId), {
       ...quote,
       ...updateData
     });
@@ -889,7 +895,7 @@ export class EnterpriseQuoteService {
     // Trigger onboarding process
     try {
       // 1. Update user's subscription to Enterprise tier
-      const userRef = doc(firestore, 'users', quote.userId);
+      const userRef = doc(this.getFirestore(), 'users', quote.userId);
       const userDoc = await getDoc(userRef);
       
       if (!userDoc.exists()) {
@@ -947,7 +953,7 @@ export class EnterpriseQuoteService {
         }
 
         // Create organization record
-        await setDoc(doc(firestore, 'organizations', orgId), {
+        await setDoc(doc(this.getFirestore(), 'organizations', orgId), {
           id: orgId,
           name: quote.companyName,
           ownerUserId: quote.userId,
@@ -993,7 +999,7 @@ export class EnterpriseQuoteService {
         });
         
         // Update quote with organization ID
-        await updateDoc(doc(firestore, this.QUOTES_COLLECTION, quote.id), {
+        await updateDoc(doc(this.getFirestore(), this.QUOTES_COLLECTION, quote.id), {
           organizationId: orgId
         });
         
@@ -1054,7 +1060,7 @@ export class EnterpriseQuoteService {
       });
       
       // 4. Create a task for the customer success team
-      await setDoc(doc(collection(firestore, 'tasks')), {
+      await setDoc(doc(collection(this.getFirestore(), 'tasks')), {
         type: 'enterprise_onboarding',
         status: 'pending',
         priority: 'high',
@@ -1188,7 +1194,7 @@ export class EnterpriseQuoteService {
       updatedAt: new Date()
     };
     
-    await setDoc(doc(firestore, this.QUOTES_COLLECTION, quoteId), {
+    await setDoc(doc(this.getFirestore(), this.QUOTES_COLLECTION, quoteId), {
       ...quote,
       ...updateData
     });
@@ -1232,7 +1238,7 @@ export class EnterpriseQuoteService {
       followupDate.setDate(followupDate.getDate() + 3); // 3 days from now
       
       // Update quote with email tracking info
-      await setDoc(doc(firestore, this.QUOTES_COLLECTION, quote.id), {
+      await setDoc(doc(this.getFirestore(), this.QUOTES_COLLECTION, quote.id), {
         ...quote,
         emailSentAt: new Date(),
         followupScheduledFor: followupDate
@@ -1249,7 +1255,7 @@ export class EnterpriseQuoteService {
       });
       
       // Still update quote status despite email failure
-      await setDoc(doc(firestore, this.QUOTES_COLLECTION, quote.id), {
+      await setDoc(doc(this.getFirestore(), this.QUOTES_COLLECTION, quote.id), {
         ...quote,
         emailError: error instanceof Error ? error.message : 'Unknown error sending email',
         lastEmailAttempt: new Date()
@@ -1273,7 +1279,7 @@ export class EnterpriseQuoteService {
   ): Promise<string> {
     try {
       // Check if user already has a Stripe customer ID
-      const userDoc = await getDoc(doc(firestore, 'users', userId));
+      const userDoc = await getDoc(doc(this.getFirestore(), 'users', userId));
       
       if (!userDoc.exists()) {
         throw new Error(`User with ID ${userId} not found`);
@@ -1304,7 +1310,7 @@ export class EnterpriseQuoteService {
       );
       
       // Update user with Stripe customer ID
-      await updateDoc(doc(firestore, 'users', userId), {
+      await updateDoc(doc(this.getFirestore(), 'users', userId), {
         stripeCustomerId: customerId
       });
       
@@ -1434,7 +1440,7 @@ export class EnterpriseQuoteService {
    */
   private async getAvailableAddOns(): Promise<EnterpriseFeatureAddOn[]> {
     try {
-      const addOnsSnapshot = await getDocs(collection(firestore, this.ADDONS_COLLECTION));
+      const addOnsSnapshot = await getDocs(collection(this.getFirestore(), this.ADDONS_COLLECTION));
       return addOnsSnapshot.docs.map(doc => doc.data() as EnterpriseFeatureAddOn);
     } catch (error) {
       logger.error('Failed to get available add-ons', { error });

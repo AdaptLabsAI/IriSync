@@ -16,7 +16,7 @@
  * Set CREDIT_SYSTEM_ACTIVE=true in environment variables to enable.
  */
 
-import { firestore } from '@/lib/core/firebase';
+import { getFirebaseFirestore } from '@/lib/core/firebase';
 import {
   doc,
   getDoc,

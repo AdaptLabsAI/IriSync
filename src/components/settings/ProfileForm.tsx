@@ -7,7 +7,7 @@ import { FileUpload } from '@/components/ui/fileupload/FileUpload';
 import Avatar from '@mui/material/Avatar';
 import { getAuth, updateProfile } from 'firebase/auth';
 import { doc, getDoc, updateDoc, serverTimestamp } from 'firebase/firestore';
-import { firestore } from '@/lib/core/firebase';
+import { getFirebaseFirestore } from '@/lib/core/firebase';
 import { useSession } from 'next-auth/react';
 
 export default function ProfileForm() {
@@ -48,6 +48,10 @@ export default function ProfileForm() {
         }
         
         // Get user data from Firestore
+        const firestore = getFirebaseFirestore();
+
+        if (!firestore) { console.error('Firestore not configured'); return; }
+
         const userRef = doc(firestore, 'users', currentUser.uid);
         const userSnap = await getDoc(userRef);
         
@@ -116,6 +120,10 @@ export default function ProfileForm() {
       });
       
       // Update Firestore profile
+      const firestore = getFirebaseFirestore();
+
+      if (!firestore) { console.error('Firestore not configured'); return; }
+
       const userRef = doc(firestore, 'users', currentUser.uid);
       await updateDoc(userRef, {
         name: profile.name,

@@ -1,5 +1,5 @@
-import { firestore } from '../core/firebase';
-import { collection, doc, setDoc, getDoc, getDocs, updateDoc, query, where, limit, orderBy } from 'firebase/firestore';
+import { getFirebaseFirestore } from '../core/firebase';
+import { Firestore, collection, doc, setDoc, getDoc, getDocs, updateDoc, query, where, limit, orderBy } from 'firebase/firestore';
 import { v4 as uuidv4 } from 'uuid';
 import { SubscriptionTier } from './models/subscription';
 import { sendTrialWelcomeEmail, sendTrialExpirationReminderEmail } from '../core/notifications/email';
@@ -31,6 +31,12 @@ export interface TrialSubscription {
  * Service for managing free trials
  */
 export class TrialService {
+  private getFirestore() {
+    const firestore = getFirebaseFirestore();
+    if (!firestore) throw new Error('Firestore not configured');
+    return firestore;
+  }
+
   private readonly COLLECTION = 'trial_subscriptions';
   private readonly DEFAULT_TRIAL_DAYS = 7; // Fixed 7-day trial
   private readonly TRIAL_COOLDOWN_MONTHS = 6; // Months required before eligible for another trial
@@ -95,7 +101,7 @@ export class TrialService {
     };
     
     // Store in Firestore
-    const trialRef = doc(collection(firestore, this.COLLECTION), trialId);
+    const trialRef = doc(collection(this.getFirestore(), this.COLLECTION), trialId);
     await setDoc(trialRef, trial);
     
     // Attach payment method to customer if not already attached
@@ -170,7 +176,7 @@ export class TrialService {
    * Get an active trial for a user if one exists
    */
   async getActiveTrial(userId: string): Promise<TrialSubscription | null> {
-    const trialsRef = collection(firestore, this.COLLECTION);
+    const trialsRef = collection(this.getFirestore(), this.COLLECTION);
     const q = query(
       trialsRef,
       where('userId', '==', userId),
@@ -192,7 +198,7 @@ export class TrialService {
    * Get all trials for a user (active and expired)
    */
   async getUserTrials(userId: string): Promise<TrialSubscription[]> {
-    const trialsRef = collection(firestore, this.COLLECTION);
+    const trialsRef = collection(this.getFirestore(), this.COLLECTION);
     const q = query(
       trialsRef,
       where('userId', '==', userId),
@@ -213,7 +219,7 @@ export class TrialService {
    * Cancel an active trial
    */
   async cancelTrial(trialId: string, userId: string): Promise<boolean> {
-    const trialRef = doc(collection(firestore, this.COLLECTION), trialId);
+    const trialRef = doc(collection(this.getFirestore(), this.COLLECTION), trialId);
     const trialDoc = await getDoc(trialRef);
     
     if (!trialDoc.exists()) {
@@ -244,7 +250,7 @@ export class TrialService {
    * Mark a trial as converted to a paid subscription
    */
   async convertTrialToPaid(trialId: string, userId: string): Promise<TrialSubscription> {
-    const trialRef = doc(collection(firestore, this.COLLECTION), trialId);
+    const trialRef = doc(collection(this.getFirestore(), this.COLLECTION), trialId);
     const trialDoc = await getDoc(trialRef);
     
     if (!trialDoc.exists()) {
@@ -315,7 +321,7 @@ export class TrialService {
     // Check if user's last activity (trial or paid subscription) ended more than 6 months ago
     // First, check subscription history to verify they were fully canceled
     try {
-      const subscriptionsRef = collection(firestore, 'subscriptions');
+      const subscriptionsRef = collection(this.getFirestore(), 'subscriptions');
       const subscriptionsQuery = query(
         subscriptionsRef,
         where('userId', '==', userId),
@@ -366,7 +372,7 @@ export class TrialService {
     additionalDays: number,
     adminUserId: string
   ): Promise<TrialSubscription> {
-    const trialRef = doc(collection(firestore, this.COLLECTION), trialId);
+    const trialRef = doc(collection(this.getFirestore(), this.COLLECTION), trialId);
     const trialDoc = await getDoc(trialRef);
     
     if (!trialDoc.exists()) {
@@ -403,7 +409,7 @@ export class TrialService {
     const now = new Date();
     
     // Find trials that have ended but are still marked as active
-    const trialsRef = collection(firestore, this.COLLECTION);
+    const trialsRef = collection(this.getFirestore(), this.COLLECTION);
     const expiredTrialsQuery = query(
       trialsRef,
       where('isActive', '==', true),
@@ -427,7 +433,7 @@ export class TrialService {
         // Auto-charge the customer's payment method for their chosen tier
         // Note: This should already be handled by Stripe's subscription system
         // Just mark the trial as expired/converted
-        const trialRef = doc(collection(firestore, this.COLLECTION), trial.id);
+        const trialRef = doc(collection(this.getFirestore(), this.COLLECTION), trial.id);
         await updateDoc(trialRef, {
           isActive: false,
           isExpired: true,
@@ -454,7 +460,7 @@ export class TrialService {
     oneDayFromNow.setDate(oneDayFromNow.getDate() + 1);
     
     // Find active trials expiring in the next 24 hours that haven't received a day-before reminder
-    const trialsRef = collection(firestore, this.COLLECTION);
+    const trialsRef = collection(this.getFirestore(), this.COLLECTION);
     const expiringTrialsQuery = query(
       trialsRef,
       where('isActive', '==', true),
@@ -495,7 +501,7 @@ export class TrialService {
         });
         
         // Update the trial record to mark reminder as sent
-        const trialRef = doc(collection(firestore, this.COLLECTION), trial.id);
+        const trialRef = doc(collection(this.getFirestore(), this.COLLECTION), trial.id);
         await updateDoc(trialRef, {
           remindersSent: [...trial.remindersSent, 'day-before'],
           updatedAt: now
@@ -520,7 +526,7 @@ export class TrialService {
     trialsByTier: Record<SubscriptionTier, number>;
   }> {
     // Get all trials
-    const trialsRef = collection(firestore, this.COLLECTION);
+    const trialsRef = collection(this.getFirestore(), this.COLLECTION);
     const trialSnapshot = await getDocs(trialsRef);
     
     let activeTrials = 0;

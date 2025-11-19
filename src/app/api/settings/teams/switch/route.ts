@@ -10,7 +10,7 @@ import {
   getDocs,
   serverTimestamp
 } from 'firebase/firestore';
-import { firestore } from '@/lib/core/firebase';
+import { getFirebaseFirestore } from '@/lib/core/firebase';
 import { handleApiError } from '@/lib/features/auth/utils';
 import { logger } from '@/lib/core/logging/logger';
 

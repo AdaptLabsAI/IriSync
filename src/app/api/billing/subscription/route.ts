@@ -3,7 +3,7 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/features/auth';
 import { getStripeClient } from '@/lib/features/billing/stripe';
 import { getDoc, doc, updateDoc, Timestamp } from 'firebase/firestore';
-import { firestore } from '@/lib/core/firebase';
+import { getFirebaseFirestore } from '@/lib/core/firebase';
 import { logger } from '@/lib/core/logging/logger';
 import { universalBillingService, BillingStatus } from '@/lib/features/subscription/UniversalBillingService';
 import { TrialService } from '@/lib/features/subscription/TrialService';

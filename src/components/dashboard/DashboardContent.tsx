@@ -38,7 +38,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { getAuth } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
-import { firestore } from '@/lib/core/firebase';
+import { getFirebaseFirestore } from '@/lib/core/firebase';
 import { tokens } from '@/styles/tokens';
 
 /**
@@ -74,6 +74,10 @@ export default function DashboardContent() {
         const currentUser = auth.currentUser;
         if (currentUser && firestore) {
           try {
+            const firestore = getFirebaseFirestore();
+
+            if (!firestore) { console.error('Firestore not configured'); return; }
+
             const userRef = doc(firestore, 'users', currentUser.uid);
             const userSnap = await getDoc(userRef);
             if (userSnap.exists()) {
