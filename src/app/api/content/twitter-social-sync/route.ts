@@ -4,7 +4,7 @@ import { authOptions } from '@/lib/features/auth/nextauth';
 import { TwitterProvider } from '@/lib/features/platforms/providers/TwitterProvider';
 import { TwitterSocialInboxAdapter } from '@/lib/features/content/TwitterSocialInboxAdapter';
 import { logger } from '@/lib/core/logging/logger';
-import { getFirebaseFirestore } from '@/lib/core/firebase';
+import { getFirebaseFirestore, firestore } from '@/lib/core/firebase';
 import { collection, doc, getDoc, getDocs, query, where, orderBy, limit } from 'firebase/firestore';
 
 // Force dynamic rendering - required for Firebase/database access
@@ -39,6 +39,10 @@ export async function POST(request: NextRequest) {
     }
 
     // Get Twitter credentials for this account
+    const firestore = getFirebaseFirestore();
+    if (!firestore) {
+      return NextResponse.json({ error: 'Database not configured' }, { status: 500 });
+    }
     const accountDocRef = doc(firestore, 'connectedAccounts', accountId);
     const accountDoc = await getDoc(accountDocRef);
 

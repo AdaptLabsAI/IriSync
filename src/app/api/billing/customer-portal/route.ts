@@ -30,6 +30,10 @@ export async function POST(req: NextRequest) {
     const { returnUrl } = await req.json();
 
     // Get user's Stripe customer ID
+    const firestore = getFirebaseFirestore();
+    if (!firestore) {
+      return NextResponse.json({ error: 'Database not configured' }, { status: 500 });
+    }
     const userDoc = await getDoc(doc(firestore, 'users', user.id));
     
     if (!userDoc.exists()) {

@@ -2,6 +2,7 @@ import { getFirebaseFirestore } from '../core/firebase';
 import { doc, getDoc } from 'firebase/firestore';
 import { SubscriptionTier, SubscriptionTierValues } from '../core/models/User';
 import { SubscriptionTier as BaseSubscriptionTier } from './models/subscription';
+import { firestore } from '@/lib/core/firebase';
 
 /**
  * Get a user's current subscription tier from their organization
@@ -11,6 +12,10 @@ import { SubscriptionTier as BaseSubscriptionTier } from './models/subscription'
 export async function getUserSubscriptionTier(userId: string): Promise<SubscriptionTier> {
   try {
     // Get user document
+    const firestore = getFirebaseFirestore();
+    if (!firestore) {
+      return NextResponse.json({ error: 'Database not configured' }, { status: 500 });
+    }
     const userDoc = await getDoc(doc(firestore, 'users', userId));
     
     if (!userDoc.exists()) {

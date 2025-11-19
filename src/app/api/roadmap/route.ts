@@ -9,6 +9,10 @@ export const runtime = 'nodejs';
 export async function GET() {
   try {
     // Fetch published roadmap items from Firestore
+    const firestore = getFirebaseFirestore();
+    if (!firestore) {
+      return NextResponse.json({ error: 'Database not configured' }, { status: 500 });
+    }
     const roadmapRef = collection(firestore, 'roadmapItems');
     const q = query(
       roadmapRef, 

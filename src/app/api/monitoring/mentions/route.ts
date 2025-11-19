@@ -7,7 +7,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/lib/features/auth';
-import { getFirebaseFirestore } from '@/lib/core/firebase';
+import { getFirebaseFirestore, firestore } from '@/lib/core/firebase';
 import { getDoc, doc } from 'firebase/firestore';
 import { socialListeningService, FetchMentionsOptions } from '@/lib/features/monitoring/SocialListeningService';
 import { sentimentAnalysisService } from '@/lib/features/monitoring/SentimentAnalysisService';
@@ -30,6 +30,10 @@ export async function GET(request: NextRequest) {
     const userId = session.user.id;
 
     // Get user's organization
+    const firestore = getFirebaseFirestore();
+    if (!firestore) {
+      return NextResponse.json({ error: 'Database not configured' }, { status: 500 });
+    }
     const userDoc = await getDoc(doc(firestore, 'users', userId));
     if (!userDoc.exists()) {
       return NextResponse.json(

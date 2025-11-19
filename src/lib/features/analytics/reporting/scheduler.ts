@@ -39,15 +39,19 @@ const REPORT_DEFINITIONS_COLLECTION = 'report_definitions';
  */
 export async function processScheduledReports(): Promise<ReportInstance[]> {
   try {
+    const firestore = getFirebaseFirestore();
+    if (!firestore) {
+      return [];
+    }
     const now = new Date();
     const generatedReports: ReportInstance[] = [];
-    
+
     // Get all enabled schedules
     const schedulesQuery = query(
       collection(firestore, REPORT_SCHEDULES_COLLECTION),
       where('isEnabled', '==', true)
     );
-    
+
     const schedulesSnapshot = await getDocs(schedulesQuery);
     
     // Process each active schedule
@@ -65,17 +69,17 @@ export async function processScheduledReports(): Promise<ReportInstance[]> {
           
           if (reportDefinition) {
             // Generate the report
-            const reportInstance = await generateReportInstance(reportDefinition, schedule);
-            
+            const reportInstance = await generateReportInstance(reportDefinition, schedule, firestore);
+
             if (reportInstance) {
               generatedReports.push(reportInstance);
-              
+
               // Update the schedule with the next run time
-              await updateScheduleNextRun(schedule);
-              
+              await updateScheduleNextRun(schedule, firestore);
+
               // Handle delivery if needed
               if (schedule.recipients && schedule.recipients.length > 0) {
-                await deliverReport(reportInstance, schedule);
+                await deliverReport(reportInstance, schedule, firestore);
               }
             }
           }
@@ -114,11 +118,13 @@ function shouldRunSchedule(schedule: ReportSchedule, currentTime: Date): boolean
  * Generate a report instance from a definition
  * @param reportDefinition The report definition
  * @param schedule The report schedule
+ * @param firestore The Firestore instance
  * @returns The generated report instance
  */
 async function generateReportInstance(
   reportDefinition: ReportDefinition,
-  schedule: ReportSchedule
+  schedule: ReportSchedule,
+  firestore: any
 ): Promise<ReportInstance | null> {
   try {
     // Calculate date range based on the report timeframe
@@ -386,8 +392,9 @@ function calculateReportDateRanges(reportDefinition: ReportDefinition): {
 /**
  * Update a schedule's next run time
  * @param schedule The report schedule to update
+ * @param firestore The Firestore instance
  */
-async function updateScheduleNextRun(schedule: ReportSchedule): Promise<void> {
+async function updateScheduleNextRun(schedule: ReportSchedule, firestore: any): Promise<void> {
   try {
     const now = new Date();
     let nextRun = new Date(now);
@@ -482,10 +489,12 @@ function getTimezoneOffset(timezone: string): number | null {
  * Deliver a report to recipients
  * @param report The report instance
  * @param schedule The report schedule
+ * @param firestore The Firestore instance
  */
 async function deliverReport(
   report: ReportInstance,
-  schedule: ReportSchedule
+  schedule: ReportSchedule,
+  firestore: any
 ): Promise<void> {
   try {
     // Get the report definition for title and details

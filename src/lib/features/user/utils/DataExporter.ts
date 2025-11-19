@@ -1,4 +1,4 @@
-import { getFirebaseFirestore } from '@/lib/core/firebase';
+import { getFirebaseFirestore, firestore } from '@/lib/core/firebase';
 import { doc, getDoc, collection, query, where, getDocs } from 'firebase/firestore';
 import { 
   UserConfig, 
@@ -125,6 +125,10 @@ export class DataExporter {
 
     // Collect user profile data
     if (options.includeProfile) {
+      const firestore = getFirebaseFirestore();
+      if (!firestore) {
+        return NextResponse.json({ error: 'Database not configured' }, { status: 500 });
+      }
       const userDoc = await getDoc(doc(firestore, 'users', userId));
       if (userDoc.exists()) {
         const user = UserUtils.fromFirestore(userId, userDoc.data() as any);

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { withSuperAdmin } from '@/lib/features/auth/route-handlers';
-import { getFirebaseFirestore } from '@/lib/core/firebase';
+import { getFirebaseFirestore, firestore } from '@/lib/core/firebase';
 import { getFirestore as getAdminFirestore, serverTimestamp } from '@/lib/core/firebase/admin';
 import * as admin from 'firebase-admin';
 import { 
@@ -188,6 +188,10 @@ export const GET = withSuperAdmin(async (request: NextRequest, adminUser: any) =
     
     // Get system settings if requested
     if (section === 'all' || section === 'settings') {
+      const firestore = getFirebaseFirestore();
+      if (!firestore) {
+        return NextResponse.json({ error: 'Database not configured' }, { status: 500 });
+      }
       const settingsDoc = await getDoc(doc(firestore, SYSTEM_SETTINGS_COLLECTION, 'general'));
       
       if (settingsDoc.exists()) {

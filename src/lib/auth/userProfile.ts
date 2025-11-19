@@ -1,6 +1,6 @@
 import { getAuth, User } from 'firebase/auth';
 import { doc, getDoc, setDoc, serverTimestamp } from 'firebase/firestore';
-import { getFirebaseFirestore } from '@/lib/core/firebase';
+import { getFirebaseFirestore, firestore } from '@/lib/core/firebase';
 
 /**
  * Validates that a user has a profile in Firestore.
@@ -14,6 +14,10 @@ export async function ensureUserProfile(userAuth: User): Promise<boolean> {
       return false;
     }
     
+    const firestore = getFirebaseFirestore();
+    if (!firestore) {
+      return NextResponse.json({ error: 'Database not configured' }, { status: 500 });
+    }
     const userRef = doc(firestore, 'users', userAuth.uid);
     const userSnapshot = await getDoc(userRef);
     

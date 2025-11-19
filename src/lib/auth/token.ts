@@ -5,6 +5,7 @@ import { doc, getDoc } from 'firebase/firestore';
 import { UserRole, SubscriptionTier } from '../core/models/User';
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import { Logger, LogLevel } from '../core/logging/logger';
+import { firestore } from '@/lib/core/firebase';
 
 const logger = new Logger({
   minLevel: LogLevel.INFO,
@@ -69,6 +70,10 @@ export async function verifyAuthToken(token: string): Promise<AuthUser | null> {
     }
     
     // Get user data from Firestore to ensure it's current
+    const firestore = getFirebaseFirestore();
+    if (!firestore) {
+      return NextResponse.json({ error: 'Database not configured' }, { status: 500 });
+    }
     const userSnapshot = await getDoc(doc(firestore, 'users', payload.userId));
     
     if (!userSnapshot.exists()) {

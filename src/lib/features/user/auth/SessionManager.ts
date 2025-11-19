@@ -24,6 +24,7 @@ import {
   ActivityContext
 } from '../types';
 import { ActivityUtils } from '../models/Activity';
+import { firestore } from '@/lib/core/firebase';
 
 /**
  * Session manager configuration
@@ -224,6 +225,10 @@ export class SessionManager {
    */
   async getSession(sessionId: string): Promise<SessionData | null> {
     try {
+      const firestore = getFirebaseFirestore();
+      if (!firestore) {
+        return NextResponse.json({ error: 'Database not configured' }, { status: 500 });
+      }
       const sessionDoc = await getDoc(doc(firestore, 'sessions', sessionId));
       if (!sessionDoc.exists()) return null;
 

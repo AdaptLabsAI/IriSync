@@ -101,6 +101,10 @@ export async function GET(request: NextRequest) {
     }
     
     // Attempt to fetch AI tools from Firestore
+    const firestore = getFirebaseFirestore();
+    if (!firestore) {
+      return NextResponse.json({ error: 'Database not configured' }, { status: 500 });
+    }
     const toolsRef = collection(firestore, 'aiTools');
     const toolsQuery = query(toolsRef, where('enabled', '==', true));
     const toolsSnapshot = await getDocs(toolsQuery);

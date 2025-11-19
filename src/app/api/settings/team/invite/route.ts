@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/lib/features/auth';
-import { getFirebaseFirestore } from '@/lib/core/firebase';
+import { getFirebaseFirestore, firestore } from '@/lib/core/firebase';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { v4 as uuidv4 } from 'uuid';
 import { 
@@ -97,6 +97,10 @@ const sendInviteEmail = async (email: string, teamId: string, token: string, inv
  * Get user's current organization and team context
  */
 async function getUserOrganizationContext(userId: string) {
+  const firestore = getFirebaseFirestore();
+  if (!firestore) {
+    return NextResponse.json({ error: 'Database not configured' }, { status: 500 });
+  }
   const userDoc = await getDoc(doc(firestore, 'users', userId));
   if (!userDoc.exists()) {
     throw new Error('User not found');

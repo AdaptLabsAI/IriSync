@@ -2,6 +2,7 @@ import { getFirebaseFirestore } from '../core/firebase';
 import { Firestore, collection, doc, setDoc, getDoc, getDocs, query, where, orderBy, limit, updateDoc, deleteDoc, writeBatch, Timestamp } from 'firebase/firestore';
 import { v4 as uuidv4 } from 'uuid';
 import { ContentItem } from './CalendarService';
+import { firestore } from '@/lib/core/firebase';
 
 /**
  * Interface representing a version of content

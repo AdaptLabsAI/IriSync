@@ -15,7 +15,7 @@ import {
   runTransaction,
   writeBatch
 } from 'firebase/firestore';
-import { getFirebaseFirestore } from '@/lib/core/firebase';
+import { getFirebaseFirestore, firestore } from '@/lib/core/firebase';
 import { Logger } from '@/lib/core/logging';
 import { Cache } from '@/lib/core/cache';
 import {
@@ -134,6 +134,10 @@ export class TeamManager {
       this.logger.info('Creating team', { ownerId, teamName: teamData.name });
 
       // Get user data for subscription check
+      const firestore = getFirebaseFirestore();
+      if (!firestore) {
+        return NextResponse.json({ error: 'Database not configured' }, { status: 500 });
+      }
       const userDoc = await getDoc(doc(firestore, 'users', ownerId));
       if (!userDoc.exists()) {
         return {

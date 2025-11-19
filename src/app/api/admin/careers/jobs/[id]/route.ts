@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/features/auth';
-import { getFirebaseFirestore } from '@/lib/core/firebase';
+import { getFirebaseFirestore, firestore } from '@/lib/core/firebase';
 import { 
   doc, 
   getDoc, 
@@ -20,6 +20,10 @@ export const runtime = 'nodejs';
  * Check if user has admin privileges
  */
 async function checkAdminAccess(userId: string): Promise<boolean> {
+  const firestore = getFirebaseFirestore();
+  if (!firestore) {
+    return NextResponse.json({ error: 'Database not configured' }, { status: 500 });
+  }
   const userDoc = await getDoc(doc(firestore, 'users', userId));
   if (!userDoc.exists()) return false;
   

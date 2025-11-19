@@ -1,5 +1,6 @@
 import { getFirebaseFirestore } from '../../core/firebase';
 import { collection, query, where, orderBy, getDocs, Timestamp } from 'firebase/firestore';
+import { firestore } from '@/lib/core/firebase';
 
 interface PostQueryParams {
   startDate?: string;
@@ -16,6 +17,10 @@ interface PostQueryParams {
 export async function getScheduledPostCount(userId: string): Promise<number> {
   try {
     // Query scheduled posts for this user
+    const firestore = getFirebaseFirestore();
+    if (!firestore) {
+      return 0;
+    }
     const postsQuery = query(
       collection(firestore, 'posts'),
       where('userId', '==', userId),

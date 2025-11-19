@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { withAdmin } from '@/lib/features/auth/route-handlers';
-import { getFirebaseFirestore } from '@/lib/core/firebase';
+import { getFirebaseFirestore, firestore } from '@/lib/core/firebase';
 import { 
   collection, 
   doc, 
@@ -52,6 +52,10 @@ export const POST = withAdmin(async (request: NextRequest, adminUser: any) => {
 
     for (const userId of validatedData.userIds) {
       try {
+        const firestore = getFirebaseFirestore();
+        if (!firestore) {
+          return NextResponse.json({ error: 'Database not configured' }, { status: 500 });
+        }
         const userDoc = await getDoc(doc(firestore, 'users', userId));
         
         if (userDoc.exists()) {

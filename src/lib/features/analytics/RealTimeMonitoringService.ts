@@ -2,6 +2,7 @@ import { getFirebaseFirestore } from '../core/firebase';
 import { v4 as uuidv4 } from 'uuid';
 import { Timestamp } from 'firebase/firestore';
 import { EventEmitter } from 'events';
+import { firestore } from '@/lib/core/firebase';
 
 /**
  * Interface for real-time monitoring configuration

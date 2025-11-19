@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
-import { getFirebaseFirestore } from '@/lib/core/firebase';
+import { getFirebaseFirestore, firestore } from '@/lib/core/firebase';
 import { collection, doc, getDoc, query, where, getDocs, addDoc, serverTimestamp, setDoc } from 'firebase/firestore';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -1123,6 +1123,10 @@ Also include overall strategy recommendations, timeline, and metrics to track.`;
 async function getUserAIProvider(userId: string): Promise<string> {
   try {
     // Check user's subscription
+    const firestore = getFirebaseFirestore();
+    if (!firestore) {
+      return NextResponse.json({ error: 'Database not configured' }, { status: 500 });
+    }
     const subscriptionsRef = collection(firestore, 'subscriptions');
     const subscriptionsQuery = query(subscriptionsRef, where('userId', '==', userId), where('status', '==', 'active'));
     const subscriptionsSnapshot = await getDocs(subscriptionsQuery);

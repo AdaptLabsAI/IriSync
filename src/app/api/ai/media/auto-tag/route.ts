@@ -122,6 +122,10 @@ export async function POST(req: NextRequest) {
     }
     
     // Check user's subscription and AI usage limits
+    const firestore = getFirebaseFirestore();
+    if (!firestore) {
+      return NextResponse.json({ error: 'Database not configured' }, { status: 500 });
+    }
     const subscriptionsRef = collection(firestore, 'subscriptions');
     const subscriptionsQuery = query(subscriptionsRef, where('userId', '==', userId), where('status', '==', 'active'));
     const subscriptionsSnapshot = await getDocs(subscriptionsQuery);

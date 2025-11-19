@@ -13,7 +13,7 @@
  * - Historical mention storage and analytics
  */
 
-import { getFirebaseFirestore } from '@/lib/core/firebase';
+import { getFirebaseFirestore, firestore } from '@/lib/core/firebase';
 import {
   collection,
   doc,
@@ -613,8 +613,12 @@ class SocialListeningService {
     for (const mention of mentions) {
       try {
         // Check if mention already exists (by platform post ID)
-        const existingQuery = query(
-          collection(firestore, this.MENTIONS_COLLECTION),
+        const firestore = getFirebaseFirestore();
+    if (!firestore) {
+      return 0;
+    }
+    const existingQuery = query(
+      collection(firestore, this.MENTIONS_COLLECTION),
           where('userId', '==', mention.userId),
           where('source.platformPostId', '==', mention.source.platformPostId),
           firestoreLimit(1)

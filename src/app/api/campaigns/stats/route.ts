@@ -25,6 +25,10 @@ export async function GET(request: NextRequest) {
     }
 
     const userId = session.user.id;
+    const firestore = getFirebaseFirestore();
+    if (!firestore) {
+      return NextResponse.json({ error: 'Database not configured' }, { status: 500 });
+    }
     const userDoc = await getDoc(doc(firestore, 'users', userId));
     if (!userDoc.exists()) {
       return NextResponse.json(

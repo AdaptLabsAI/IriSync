@@ -17,6 +17,10 @@ export async function checkAccountSuspension(
     }
 
     // Check organization status
+    const firestore = getFirebaseFirestore();
+    if (!firestore) {
+      return NextResponse.json({ error: 'Database not configured' }, { status: 500 });
+    }
     const orgRef = doc(firestore, 'organizations', organizationId);
     const orgDoc = await getDoc(orgRef);
 
@@ -126,6 +130,10 @@ export async function checkAITokenAccess(organizationId: string): Promise<{
     }
 
     // Check token quota
+    const firestore = getFirebaseFirestore();
+    if (!firestore) {
+      return { hasAccess: false, tokensRemaining: 0, reason: 'Database not configured' };
+    }
     const orgRef = doc(firestore, 'organizations', organizationId);
     const orgDoc = await getDoc(orgRef);
 

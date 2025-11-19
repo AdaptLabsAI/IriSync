@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getFirebaseFirestore } from '@/lib/core/firebase';
+import { getFirebaseFirestore, firestore } from '@/lib/core/firebase';
 import { doc, updateDoc, deleteDoc, getDoc, serverTimestamp } from 'firebase/firestore';
 import { withAdmin } from '@/lib/features/auth/route-handlers';
 
@@ -16,6 +16,10 @@ export const GET = withAdmin(async (request: NextRequest, adminUser: any) => {
     const pathSegments = url.pathname.split('/');
     const id = pathSegments[pathSegments.length - 1];
     
+    const firestore = getFirebaseFirestore();
+    if (!firestore) {
+      return NextResponse.json({ error: 'Database not configured' }, { status: 500 });
+    }
     const docRef = doc(firestore, 'roadmapItems', id);
     const docSnap = await getDoc(docRef);
     

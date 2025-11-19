@@ -45,6 +45,10 @@ export async function GET(request: NextRequest) {
     }
     
     // Get user's connected platforms first (if available)
+    const firestore = getFirebaseFirestore();
+    if (!firestore) {
+      return NextResponse.json({ error: 'Database not configured' }, { status: 500 });
+    }
     const connectionsRef = collection(firestore, 'platformConnections');
     const connectionsQuery = query(connectionsRef, where('userId', '==', userId));
     const connectionsSnapshot = await getDocs(connectionsQuery);

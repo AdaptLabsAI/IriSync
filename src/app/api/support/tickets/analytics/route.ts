@@ -103,6 +103,10 @@ export async function GET(request: NextRequest) {
     }
 
     // Fetch all tickets
+    const firestore = getFirebaseFirestore();
+    if (!firestore) {
+      return NextResponse.json({ error: 'Database not configured' }, { status: 500 });
+    }
     const ticketsRef = collection(firestore, TICKETS_COLLECTION);
     const ticketsQuery = query(
       ticketsRef,

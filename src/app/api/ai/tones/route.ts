@@ -45,6 +45,10 @@ export async function GET(request: NextRequest) {
     }
     
     // Attempt to fetch tones from Firestore
+    const firestore = getFirebaseFirestore();
+    if (!firestore) {
+      return NextResponse.json({ error: 'Database not configured' }, { status: 500 });
+    }
     const tonesRef = collection(firestore, 'contentTones');
     const tonesQuery = query(tonesRef, where('enabled', '==', true));
     const tonesSnapshot = await getDocs(tonesQuery);

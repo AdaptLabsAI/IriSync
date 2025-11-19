@@ -28,7 +28,7 @@ import { useRouter, usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { getAuth, signOut } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
-import { getFirebaseFirestore } from '@/lib/core/firebase';
+import { getFirebaseFirestore, firestore } from '@/lib/core/firebase';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import { TeamSwitcher } from '@/components/ui/TeamSwitcher';
@@ -299,6 +299,10 @@ const SidebarContent = ({ onClose, collapsed, onToggleCollapse }: SidebarProps) 
 
           if (!firestore) { console.error('Firestore not configured'); return; }
 
+          const firestore = getFirebaseFirestore();
+          if (!firestore) {
+            return NextResponse.json({ error: 'Database not configured' }, { status: 500 });
+          }
           const userRef = doc(firestore, 'users', currentUser.uid);
           const userSnap = await getDoc(userRef);
           

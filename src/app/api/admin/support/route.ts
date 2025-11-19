@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { withSuperAdmin, withAdmin } from '@/lib/features/auth/route-handlers';
-import { getFirebaseFirestore } from '@/lib/core/firebase';
+import { getFirebaseFirestore, firestore } from '@/lib/core/firebase';
 import { firebaseAdmin, getFirestore, serverTimestamp } from '@/lib/core/firebase/admin';
 import { 
   collection, 
@@ -274,6 +274,10 @@ export const GET = withAdmin(async (request: NextRequest, adminUser: any) => {
       : SUPPORT_FAQS_COLLECTION;
     
     // Build query with filters
+    const firestore = getFirebaseFirestore();
+    if (!firestore) {
+      return NextResponse.json({ error: 'Database not configured' }, { status: 500 });
+    }
     let supportQuery: any = query(collection(firestore, collectionName));
     
     // Apply filters based on type

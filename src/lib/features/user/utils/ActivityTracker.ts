@@ -1,4 +1,4 @@
-import { getFirebaseFirestore } from '@/lib/core/firebase';
+import { getFirebaseFirestore, firestore } from '@/lib/core/firebase';
 import { doc, setDoc, getDoc, query, where, orderBy, limit, getDocs, collection, deleteDoc } from 'firebase/firestore';
 import { 
   UserConfig, 
@@ -67,6 +67,10 @@ export class ActivityTracker {
         }
       );
 
+      const firestore = getFirebaseFirestore();
+      if (!firestore) {
+        return NextResponse.json({ error: 'Database not configured' }, { status: 500 });
+      }
       const activityRef = doc(firestore, 'user_activities', activity.id);
       await setDoc(activityRef, ActivityUtils.toFirestore(activity));
 

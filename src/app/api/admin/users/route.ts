@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { withSuperAdmin, withAdmin } from '@/lib/features/auth/route-handlers';
-import { getFirebaseFirestore } from '@/lib/core/firebase';
+import { getFirebaseFirestore, firestore } from '@/lib/core/firebase';
 import { firebaseAdmin, getFirestore, getAuth, serverTimestamp } from '@/lib/core/firebase/admin';
 import { 
   collection, 
@@ -92,6 +92,10 @@ async function formatUserForResponse(userId: string, userData: any) {
   
   if (orgId) {
     try {
+      const firestore = getFirebaseFirestore();
+      if (!firestore) {
+        return NextResponse.json({ error: 'Database not configured' }, { status: 500 });
+      }
       const orgDoc = await getDoc(doc(firestore, 'organizations', orgId));
       if (orgDoc.exists()) {
         organizationData = {

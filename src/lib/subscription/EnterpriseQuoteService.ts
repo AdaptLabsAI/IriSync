@@ -9,6 +9,7 @@ import { logger } from '../core/logging/logger';
 import { createCustomer, getStripeClient, createSubscription } from '../features/billing/stripe';
 import { generateOrganizationId } from '../utils';
 import { z } from 'zod';
+import { firestore } from '@/lib/core/firebase';
 
 /**
  * Status of an enterprise quote

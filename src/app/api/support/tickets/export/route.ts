@@ -61,12 +61,16 @@ export async function GET(request: NextRequest) {
     if (assignedTo) filters.push(where('assignedTo', '==', assignedTo));
     
     // Execute query
+    const firestore = getFirebaseFirestore();
+    if (!firestore) {
+      return NextResponse.json({ error: 'Database not configured' }, { status: 500 });
+    }
     const ticketsQuery = query(
-      collection(firestore, 'supportTickets'), 
-      ...filters, 
+      collection(firestore, 'supportTickets'),
+      ...filters,
       orderBy('createdAt', 'desc')
     );
-    
+
     const snapshot = await getDocs(ticketsQuery);
     let tickets = snapshot.docs.map(doc => {
       const data = doc.data();

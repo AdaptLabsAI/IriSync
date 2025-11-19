@@ -5,6 +5,7 @@ import { AnalyticsEvent, EventSource, EventValidationResult } from '../models/ev
 import { validateEvent } from './validator';
 import { getEventSchema } from './schemas';
 import { User } from '../../models/User';
+import { firestore } from '@/lib/core/firebase';
 
 // Collection reference
 const EVENTS_COLLECTION = 'analyticsEvents';
@@ -128,6 +129,10 @@ export async function trackEvent(
   
   // Save to Firestore
   try {
+    const firestore = getFirebaseFirestore();
+    if (!firestore) {
+      return NextResponse.json({ error: 'Database not configured' }, { status: 500 });
+    }
     const docRef = await addDoc(collection(firestore, EVENTS_COLLECTION), event);
     
     // Send to external analytics if configured

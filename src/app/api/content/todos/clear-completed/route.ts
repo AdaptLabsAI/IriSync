@@ -27,6 +27,10 @@ export async function POST(request: NextRequest) {
     const userId = (session.user as any).id || session.user.email;
     
     // Clear all completed todos for this user
+    const firestore = getFirebaseFirestore();
+    if (!firestore) {
+      return NextResponse.json({ error: 'Database not configured' }, { status: 500 });
+    }
     const todosRef = collection(firestore, 'todos');
     const completedTodosQuery = query(
       todosRef,

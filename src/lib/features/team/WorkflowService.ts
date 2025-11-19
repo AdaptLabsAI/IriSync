@@ -17,7 +17,7 @@
  * - Published: Content has been published
  */
 
-import { getFirebaseFirestore } from '@/lib/core/firebase';
+import { getFirebaseFirestore, firestore } from '@/lib/core/firebase';
 import {
   doc,
   getDoc,
@@ -177,6 +177,10 @@ class WorkflowService {
         updatedAt: new Date(),
       };
 
+      const firestore = getFirebaseFirestore();
+      if (!firestore) {
+        return NextResponse.json({ error: 'Database not configured' }, { status: 500 });
+      }
       const workflowRef = await addDoc(collection(firestore, this.WORKFLOWS_COLLECTION), {
         ...workflow,
         createdAt: Timestamp.now(),

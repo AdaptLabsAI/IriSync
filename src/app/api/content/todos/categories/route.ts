@@ -11,7 +11,7 @@ import {
   deleteDoc,
   serverTimestamp
 } from 'firebase/firestore';
-import { getFirebaseFirestore } from '@/lib/core/firebase';
+import { getFirebaseFirestore, firestore } from '@/lib/core/firebase';
 import { handleApiError } from '@/lib/features/auth/utils';
 
 // Force dynamic rendering - required for Firebase/database access
@@ -28,6 +28,10 @@ export async function GET(request: NextRequest) {
     }
     
     const userId = (session.user as any).id || session.user.email;
+    const firestore = getFirebaseFirestore();
+    if (!firestore) {
+      return NextResponse.json({ error: 'Database not configured' }, { status: 500 });
+    }
     const categoriesRef = collection(firestore, 'todoCategories');
     const userCategoriesQuery = query(categoriesRef, where('userId', '==', userId));
     const snapshot = await getDocs(userCategoriesQuery);

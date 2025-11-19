@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
-import { getFirebaseFirestore } from '@/lib/core/firebase';
+import { getFirebaseFirestore, firestore } from '@/lib/core/firebase';
 import { collection, doc, getDoc, addDoc, serverTimestamp, getDocs, query, where, orderBy, limit, deleteDoc, updateDoc } from 'firebase/firestore';
 
 // Force dynamic rendering - required for Firebase/database access
@@ -52,6 +52,10 @@ export async function GET(request: NextRequest) {
     const maxResults = limitParam ? parseInt(limitParam, 10) : 20;
     
     // Build the query
+    const firestore = getFirebaseFirestore();
+    if (!firestore) {
+      return NextResponse.json({ error: 'Database not configured' }, { status: 500 });
+    }
     const draftsRef = collection(firestore, 'contentDrafts');
     let draftsQuery = query(
       draftsRef,

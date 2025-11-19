@@ -58,6 +58,10 @@ export async function POST(req: NextRequest) {
     }
     
     // Get user from Firestore
+    const firestore = getFirebaseFirestore();
+    if (!firestore) {
+      return NextResponse.json({ error: 'Database not configured' }, { status: 500 });
+    }
     const userRef = doc(firestore, 'users', user.id);
     const userSnap = await getDoc(userRef);
     

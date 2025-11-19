@@ -16,7 +16,7 @@
  * - Additional team members: $15/month per user (Creator), $25/month (Influencer), $40/month (Enterprise)
  */
 
-import { getFirebaseFirestore } from '@/lib/core/firebase';
+import { getFirebaseFirestore, firestore } from '@/lib/core/firebase';
 import {
   doc,
   getDoc,
@@ -305,8 +305,12 @@ class TeamService {
    */
   async getTeamMembers(organizationId: string): Promise<TeamMember[]> {
     try {
-      const membersQuery = query(
-        collection(firestore, this.MEMBERS_COLLECTION),
+      const firestore = getFirebaseFirestore();
+    if (!firestore) {
+      return 0;
+    }
+    const membersQuery = query(
+      collection(firestore, this.MEMBERS_COLLECTION),
         where('organizationId', '==', organizationId),
         where('status', '!=', MemberStatus.REMOVED),
         orderBy('status'),

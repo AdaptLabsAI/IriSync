@@ -33,6 +33,7 @@ import { Document } from '../rag/document-processor';
 import { RAGService } from '../rag/rag-service';
 import { logger } from '../core/logging/logger';
 import { AccessLevel } from '../rag/knowledge-base';
+import { firestore } from '@/lib/core/firebase';
 
 // Collection references
 const KNOWLEDGE_COLLECTION = 'knowledgeContent';
@@ -146,6 +147,10 @@ export const KnowledgeRepository = {
     const startIndex = pageIndex * pageSize;
     
     // Start building the query
+    const firestore = getFirebaseFirestore();
+    if (!firestore) {
+      return NextResponse.json({ error: 'Database not configured' }, { status: 500 });
+    }
     let baseQuery = query(collection(firestore, KNOWLEDGE_COLLECTION));
     let conditions = [];
     

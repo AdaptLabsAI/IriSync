@@ -270,6 +270,10 @@ export const GET = withAdmin(async (request: NextRequest, adminUser: any) => {
     try {
       if (lastDocId) {
         // Use cursor-based pagination if lastDocId is provided
+        const firestore = getFirebaseFirestore();
+        if (!firestore) {
+          return NextResponse.json({ error: 'Database not configured' }, { status: 500 });
+        }
         const lastDocRef = doc(firestore, KNOWLEDGE_COLLECTION, lastDocId);
         const lastDocSnapshot = await getDoc(lastDocRef);
         

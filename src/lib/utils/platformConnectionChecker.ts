@@ -31,6 +31,10 @@ export async function hasConnectedPlatforms(
   organizationId: string
 ): Promise<boolean> {
   try {
+    const firestore = getFirebaseFirestore();
+    if (!firestore) {
+      return false;
+    }
     const connectionsQuery = query(
       collection(firestore, 'platformConnections'),
       where('userId', '==', userId),
@@ -54,6 +58,15 @@ export async function getConnectionStatus(
   organizationId: string
 ): Promise<ConnectionStatus> {
   try {
+    const firestore = getFirebaseFirestore();
+    if (!firestore) {
+      return {
+        hasAnyConnection: false,
+        connectedPlatforms: [],
+        platformDetails: [],
+        totalConnections: 0,
+      };
+    }
     const connectionsQuery = query(
       collection(firestore, 'platformConnections'),
       where('userId', '==', userId),
@@ -107,6 +120,10 @@ export async function isPlatformConnected(
   platformType: string
 ): Promise<boolean> {
   try {
+    const firestore = getFirebaseFirestore();
+    if (!firestore) {
+      return false;
+    }
     const connectionsQuery = query(
       collection(firestore, 'platformConnections'),
       where('userId', '==', userId),

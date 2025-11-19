@@ -25,6 +25,10 @@ class SubscriptionService {
   async getSubscription(userId: string): Promise<SubscriptionData | null> {
     try {
       // Get user document to find their organization
+      const firestore = getFirebaseFirestore();
+      if (!firestore) {
+        return NextResponse.json({ error: 'Database not configured' }, { status: 500 });
+      }
       const userDoc = await getDoc(doc(firestore, 'users', userId));
       
       if (!userDoc.exists()) {
@@ -186,15 +190,19 @@ class SubscriptionService {
    */
   private async getCurrentUsage(userId: string, usageType: keyof UsageData): Promise<number> {
     try {
+      const firestore = getFirebaseFirestore();
+      if (!firestore) {
+        throw new Error('Database not configured');
+      }
       // Get user's organization for proper billing context
       const userDoc = await getDoc(doc(firestore, 'users', userId));
       if (!userDoc.exists()) {
         throw new Error('User not found');
       }
-      
+
       const userData = userDoc.data();
       const organizationId = userData.currentOrganizationId || userData.personalOrganizationId;
-      
+
       if (!organizationId) {
         throw new Error('No organization found for user');
       }
@@ -228,8 +236,12 @@ class SubscriptionService {
    * Initialize usage tracking for an organization
    */
   private async initializeUsageTracking(organizationId: string): Promise<void> {
+    const firestore = getFirebaseFirestore();
+    if (!firestore) {
+      throw new Error('Database not configured');
+    }
     const currentPeriod = this.getCurrentBillingPeriod();
-    
+
     await setDoc(doc(firestore, 'organizationUsage', organizationId), {
       organizationId,
       periods: {
@@ -260,14 +272,18 @@ class SubscriptionService {
    * Increment usage for a specific feature
    */
   async incrementUsage(
-    organizationId: string, 
-    usageType: keyof UsageData, 
+    organizationId: string,
+    usageType: keyof UsageData,
     amount: number = 1
   ): Promise<void> {
     try {
+      const firestore = getFirebaseFirestore();
+      if (!firestore) {
+        throw new Error('Database not configured');
+      }
       const currentPeriod = this.getCurrentBillingPeriod();
       const usageRef = doc(firestore, 'organizationUsage', organizationId);
-      
+
       // Use Firestore transaction for atomic updates
       await runTransaction(firestore, async (transaction) => {
         const usageDoc = await transaction.get(usageRef);
@@ -316,6 +332,10 @@ class SubscriptionService {
    */
   async getUsageStats(organizationId: string): Promise<UsageData> {
     try {
+      const firestore = getFirebaseFirestore();
+      if (!firestore) {
+        throw new Error('Database not configured');
+      }
       const currentPeriod = this.getCurrentBillingPeriod();
       const usageDoc = await getDoc(doc(firestore, 'organizationUsage', organizationId));
       

@@ -65,6 +65,10 @@ export async function POST(request: NextRequest) {
     }
 
     // Get platform connection for access token
+    const firestore = getFirebaseFirestore();
+    if (!firestore) {
+      return NextResponse.json({ error: 'Database not configured' }, { status: 500 });
+    }
     const connectionsDoc = await getDoc(doc(firestore, 'platformConnections', userId));
     if (!connectionsDoc.exists()) {
       return NextResponse.json(

@@ -2,6 +2,7 @@ import { getFirebaseFirestore } from '../core/firebase';
 import { PlatformType } from '../platforms/models';
 import { rrulestr } from 'rrule';
 import { v4 as uuidv4 } from 'uuid';
+import { firestore } from '@/lib/core/firebase';
 
 export enum PostStatus {
   DRAFT = 'draft',

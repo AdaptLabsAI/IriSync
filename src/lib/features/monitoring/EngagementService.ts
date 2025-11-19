@@ -13,7 +13,7 @@
  * - Bulk actions (mark as read, archive, etc.)
  */
 
-import { getFirebaseFirestore } from '@/lib/core/firebase';
+import { getFirebaseFirestore, firestore } from '@/lib/core/firebase';
 import {
   collection,
   doc,
@@ -307,8 +307,12 @@ class EngagementService {
     for (const item of items) {
       try {
         // Check if item already exists
-        const existingQuery = query(
-          collection(firestore, this.ENGAGEMENT_COLLECTION),
+        const firestore = getFirebaseFirestore();
+    if (!firestore) {
+      return 0;
+    }
+    const existingQuery = query(
+      collection(firestore, this.ENGAGEMENT_COLLECTION),
           where('userId', '==', item.userId),
           where('platformItemId', '==', item.platformItemId),
           firestoreLimit(1)

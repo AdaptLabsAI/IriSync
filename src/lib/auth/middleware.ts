@@ -221,6 +221,10 @@ export async function hasOrganizationRole(
     }
     
     // Get the organization document
+    const firestore = getFirebaseFirestore();
+    if (!firestore) {
+      return NextResponse.json({ error: 'Database not configured' }, { status: 500 });
+    }
     const orgDoc = await getDoc(doc(firestore, 'organizations', organizationId));
     
     if (!orgDoc.exists()) {

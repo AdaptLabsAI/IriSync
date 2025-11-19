@@ -5,7 +5,7 @@ import Link from "next/link"
 import { MessageSquare, Menu, X, Bell, Settings, User } from "lucide-react"
 import { getAuth, onAuthStateChanged } from "firebase/auth"
 import { doc, getDoc } from "firebase/firestore"
-import { getFirebaseFirestore } from "@/lib/core/firebase";
+import { getFirebaseFirestore, firestore } from '@/lib/core/firebase';
 import { useRouter, usePathname } from "next/navigation"
 
 // Define the navigation links
@@ -47,6 +47,10 @@ export default function Navbar() {
 
           if (!firestore) { console.error('Firestore not configured'); return; }
 
+          const firestore = getFirebaseFirestore();
+          if (!firestore) {
+            return NextResponse.json({ error: 'Database not configured' }, { status: 500 });
+          }
           const userRef = doc(firestore, "users", currentUser.uid)
           const userSnap = await getDoc(userRef)
 

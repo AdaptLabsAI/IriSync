@@ -28,6 +28,7 @@ import {
 import { Team, TeamUtils } from '../models/Team';
 import { User, UserUtils } from '../../core/models/User';
 import { ActivityUtils } from '../models/Activity';
+import { firestore } from '@/lib/core/firebase';
 
 /**
  * Custom role interface for teams
@@ -220,6 +221,10 @@ export class RoleManager {
         };
       }
 
+      const firestore = getFirebaseFirestore();
+      if (!firestore) {
+        return NextResponse.json({ error: 'Database not configured' }, { status: 500 });
+      }
       const roleId = doc(collection(firestore, 'customRoles')).id;
       const now = new Date();
 

@@ -3,7 +3,7 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/features/auth';
 import { getStripeClient } from '@/lib/features/billing/stripe';
 import { getDoc, doc, updateDoc, Timestamp } from 'firebase/firestore';
-import { getFirebaseFirestore } from '@/lib/core/firebase';
+import { getFirebaseFirestore, firestore } from '@/lib/core/firebase';
 import { logger } from '@/lib/core/logging/logger';
 import { universalBillingService, BillingStatus } from '@/lib/features/subscription/UniversalBillingService';
 import { TrialService } from '@/lib/features/subscription/TrialService';
@@ -38,6 +38,10 @@ const verificationService = new VerificationService();
  * Get user's organization for billing operations
  */
 async function getUserOrganization(userId: string) {
+  const firestore = getFirebaseFirestore();
+  if (!firestore) {
+    return NextResponse.json({ error: 'Database not configured' }, { status: 500 });
+  }
   const userDoc = await getDoc(doc(firestore, 'users', userId));
   if (!userDoc.exists()) {
     throw new Error('User not found');

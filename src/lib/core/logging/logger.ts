@@ -79,12 +79,12 @@ export const getLogger = (): pino.Logger => {
 
 // Export a getter-based logger object that lazy-loads
 export const logger = {
-  trace: (...args: Parameters<pino.Logger['trace']>) => getLogger().trace(...args),
-  debug: (...args: Parameters<pino.Logger['debug']>) => getLogger().debug(...args),
-  info: (...args: Parameters<pino.Logger['info']>) => getLogger().info(...args),
-  warn: (...args: Parameters<pino.Logger['warn']>) => getLogger().warn(...args),
-  error: (...args: Parameters<pino.Logger['error']>) => getLogger().error(...args),
-  fatal: (...args: Parameters<pino.Logger['fatal']>) => getLogger().fatal(...args),
+  trace: (msg: string | object, ...args: any[]) => getLogger().trace(msg, ...args),
+  debug: (msg: string | object, ...args: any[]) => getLogger().debug(msg, ...args),
+  info: (msg: string | object, ...args: any[]) => getLogger().info(msg, ...args),
+  warn: (msg: string | object, ...args: any[]) => getLogger().warn(msg, ...args),
+  error: (msg: string | object, ...args: any[]) => getLogger().error(msg, ...args),
+  fatal: (msg: string | object, ...args: any[]) => getLogger().fatal(msg, ...args),
 };
 
 /**

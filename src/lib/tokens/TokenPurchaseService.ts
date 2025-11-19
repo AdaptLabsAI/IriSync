@@ -19,6 +19,7 @@ import { Firestore,
 import { v4 as uuidv4 } from 'uuid';
 import { SubscriptionTier } from '../subscription/utils';
 import unifiedEmailService from '../core/notifications/unified-email-service';
+import { firestore } from '@/lib/core/firebase';
 
 /**
  * Token purchase record

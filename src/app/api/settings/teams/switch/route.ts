@@ -10,7 +10,7 @@ import {
   getDocs,
   serverTimestamp
 } from 'firebase/firestore';
-import { getFirebaseFirestore } from '@/lib/core/firebase';
+import { getFirebaseFirestore, firestore } from '@/lib/core/firebase';
 import { handleApiError } from '@/lib/features/auth/utils';
 import { logger } from '@/lib/core/logging/logger';
 
@@ -41,6 +41,10 @@ export async function POST(request: NextRequest) {
     }
     
     // Verify the team exists and user is a member
+    const firestore = getFirebaseFirestore();
+    if (!firestore) {
+      return NextResponse.json({ error: 'Database not configured' }, { status: 500 });
+    }
     const teamsRef = collection(firestore, 'teams');
     const teamQuery = query(teamsRef, where('id', '==', teamId));
     const teamSnapshot = await getDocs(teamQuery);

@@ -7,6 +7,7 @@ import { SubscriptionTier, UserRole, SubscriptionTierValues } from '../core/mode
 import { getTokenAllocationForTier } from '../subscription';
 import { generateOrganizationId, validateUserOrganizationConnections } from '../utils';
 import { getGoogleOAuthClientId } from '@/lib/server/env';
+import { firestore } from '@/lib/core/firebase';
 
 /**
  * Get Google OAuth client ID with runtime check

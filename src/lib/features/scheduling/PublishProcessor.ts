@@ -16,6 +16,7 @@ import { PlatformProviderFactory } from '../platforms/providers/PlatformProvider
 import { PlatformType } from '../platforms/PlatformProvider';
 import { getFirebaseFirestore } from '../../core/firebase';
 import { doc, getDoc } from 'firebase/firestore';
+import { firestore } from '@/lib/core/firebase';
 
 /**
  * Processing statistics

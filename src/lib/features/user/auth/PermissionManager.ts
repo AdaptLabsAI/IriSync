@@ -39,6 +39,7 @@ import {
 import { UserRole } from '../../models/User';
 import { SubscriptionTier } from '../../subscription/models/subscription';
 import { ActivityUtils } from '../models/Activity';
+import { firestore } from '@/lib/core/firebase';
 
 /**
  * Permission cache entry
@@ -270,6 +271,10 @@ export class PermissionManager {
       };
 
       // Store in database
+      const firestore = getFirebaseFirestore();
+      if (!firestore) {
+        return NextResponse.json({ error: 'Database not configured' }, { status: 500 });
+      }
       const permissionDoc = doc(firestore, 'userPermissions', `${userId}_${permissionId}`);
       await setDoc(permissionDoc, {
         ...userPermission,

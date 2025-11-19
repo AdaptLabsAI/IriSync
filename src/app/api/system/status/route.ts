@@ -36,6 +36,10 @@ export interface Incident {
 export async function GET() {
   try {
     // Try to fetch services from Firestore
+    const firestore = getFirebaseFirestore();
+    if (!firestore) {
+      return NextResponse.json({ error: 'Database not configured' }, { status: 500 });
+    }
     const servicesRef = collection(firestore, 'system_services');
     const servicesQuery = query(servicesRef, orderBy('lastUpdated', 'desc'));
     const servicesSnapshot = await getDocs(servicesQuery);

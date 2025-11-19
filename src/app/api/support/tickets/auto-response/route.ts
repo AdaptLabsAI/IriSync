@@ -148,6 +148,10 @@ Response:
 async function getFAQs(query: string): Promise<FAQResult[]> {
   try {
     // This is a simplified approach - in production, use semantic search
+    const firestore = getFirebaseFirestore();
+    if (!firestore) {
+      return NextResponse.json({ error: 'Database not configured' }, { status: 500 });
+    }
     const faqsRef = collection(firestore, FAQ_COLLECTION);
     const faqsQuery = firestoreQuery(faqsRef, orderBy('updatedAt', 'desc'), firestoreLimit(3));
     const snapshot = await getDocs(faqsQuery);

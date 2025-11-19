@@ -8,13 +8,17 @@ import { collection, query, where, getDocs } from 'firebase/firestore';
  */
 export async function getConnectedPlatforms(userId: string): Promise<string[]> {
   try {
+    const firestore = getFirebaseFirestore();
+    if (!firestore) {
+      return [];
+    }
     // Query the platforms collection for this user
     const platformsQuery = query(
       collection(firestore, 'platformConnections'),
       where('userId', '==', userId),
       where('isConnected', '==', true)
     );
-    
+
     const platformsSnapshot = await getDocs(platformsQuery);
     
     // If there are no results, return an empty array

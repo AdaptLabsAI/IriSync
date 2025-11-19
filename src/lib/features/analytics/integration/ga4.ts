@@ -59,6 +59,10 @@ export async function identifyUserGA4(user: User): Promise<void> {
   if (!orgId) return;
 
   try {
+    const firestore = getFirebaseFirestore();
+    if (!firestore) {
+      return NextResponse.json({ error: 'Database not configured' }, { status: 500 });
+    }
     const orgDoc = await getDoc(doc(firestore, 'organizations', orgId));
     const orgData = orgDoc.data();
     

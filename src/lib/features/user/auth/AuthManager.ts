@@ -25,6 +25,7 @@ import {
   OrganizationRole
 } from '../types';
 import { User, UserUtils } from '../models';
+import { firestore } from '@/lib/core/firebase';
 
 /**
  * Authentication configuration
@@ -134,6 +135,10 @@ export class AuthManager {
         updatedAt: new Date()
       });
 
+      const firestore = getFirebaseFirestore();
+      if (!firestore) {
+        return NextResponse.json({ error: 'Database not configured' }, { status: 500 });
+      }
       const userRef = doc(firestore, 'users', userId);
       await setDoc(userRef, UserUtils.toFirestore(user));
 

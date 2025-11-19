@@ -33,6 +33,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { generateSlug } from '../../core/utils/slug';
 import { logger } from '../../core/logging/logger';
 import { UserRole } from '../../core/models/User';
+import { firestore } from '@/lib/core/firebase';
 
 // Collection names
 const CATEGORIES_COLLECTION = 'forumCategories';
@@ -44,6 +45,10 @@ const COMMENTS_COLLECTION = 'forumComments';
  */
 async function checkUserIsAdmin(userId: string): Promise<boolean> {
   try {
+    const firestore = getFirebaseFirestore();
+    if (!firestore) {
+      return NextResponse.json({ error: 'Database not configured' }, { status: 500 });
+    }
     const userDoc = await getDoc(doc(firestore, 'users', userId));
     
     if (!userDoc.exists()) {

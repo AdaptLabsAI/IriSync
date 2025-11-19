@@ -175,6 +175,10 @@ class CreditService {
    */
   async getBalance(userId: string, organizationId: string): Promise<CreditBalance> {
     try {
+      const firestore = getFirebaseFirestore();
+      if (!firestore) {
+        throw new Error('Database not configured');
+      }
       const balanceDoc = await getDoc(
         doc(firestore, this.BALANCES_COLLECTION, `${userId}_${organizationId}`)
       );
@@ -217,6 +221,10 @@ class CreditService {
    */
   private async createBalance(userId: string, organizationId: string): Promise<void> {
     try {
+      const firestore = getFirebaseFirestore();
+      if (!firestore) {
+        throw new Error('Database not configured');
+      }
       // Check if user is admin (has admin role in Firestore)
       const userDoc = await getDoc(doc(firestore, 'users', userId));
       const isAdmin = userDoc.exists() && userDoc.data().role === 'super_admin';
@@ -234,6 +242,10 @@ class CreditService {
         }
       );
     } catch (error) {
+      const firestore = getFirebaseFirestore();
+      if (!firestore) {
+        throw new Error('Database not configured');
+      }
       // Document doesn't exist, create it
       await addDoc(collection(firestore, this.BALANCES_COLLECTION), {
         userId,
@@ -326,6 +338,10 @@ class CreditService {
       }
 
       // Deduct credits
+      const firestore = getFirebaseFirestore();
+      if (!firestore) {
+        throw new Error('Database not configured');
+      }
       const balanceRef = doc(firestore, this.BALANCES_COLLECTION, `${userId}_${organizationId}`);
       await updateDoc(balanceRef, {
         balance: increment(-cost),
@@ -371,6 +387,10 @@ class CreditService {
     metadata?: Record<string, any>
   ): Promise<{ success: boolean; newBalance: number }> {
     try {
+      const firestore = getFirebaseFirestore();
+      if (!firestore) {
+        throw new Error('Database not configured');
+      }
       const balanceRef = doc(firestore, this.BALANCES_COLLECTION, `${userId}_${organizationId}`);
 
       // Update balance
@@ -411,6 +431,10 @@ class CreditService {
    */
   private async recordTransaction(transaction: CreditTransaction): Promise<void> {
     try {
+      const firestore = getFirebaseFirestore();
+      if (!firestore) {
+        throw new Error('Database not configured');
+      }
       await addDoc(collection(firestore, this.TRANSACTIONS_COLLECTION), {
         ...transaction,
         createdAt: Timestamp.fromDate(transaction.createdAt),
@@ -429,6 +453,10 @@ class CreditService {
     limitCount: number = 50
   ): Promise<CreditTransaction[]> {
     try {
+      const firestore = getFirebaseFirestore();
+      if (!firestore) {
+        throw new Error('Database not configured');
+      }
       const transactionsQuery = query(
         collection(firestore, this.TRANSACTIONS_COLLECTION),
         where('userId', '==', userId),
@@ -469,6 +497,10 @@ class CreditService {
    */
   async setUnlimitedCredits(userId: string, organizationId: string): Promise<void> {
     try {
+      const firestore = getFirebaseFirestore();
+      if (!firestore) {
+        throw new Error('Database not configured');
+      }
       const balanceRef = doc(firestore, this.BALANCES_COLLECTION, `${userId}_${organizationId}`);
       await updateDoc(balanceRef, {
         isUnlimited: true,

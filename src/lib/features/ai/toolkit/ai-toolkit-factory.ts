@@ -16,6 +16,7 @@ import { OpenAIProvider } from '../providers/OpenAIProvider';
 import { AnthropicProvider } from '../providers/AnthropicProvider';
 import { GoogleAIProvider } from '../providers/GoogleAIProvider';
 import { AIProvider, AIProviderConfig } from '../providers/AIProvider';
+import { firestore } from '@/lib/core/firebase';
 
 /**
  * @fileoverview AI Toolkit Factory for creating AI tools with token validation
@@ -453,6 +454,10 @@ export class AIToolkitFactory {
   private async getUserSubscriptionTier(userId: string): Promise<string> {
     try {
       // Get user document reference
+      const firestore = getFirebaseFirestore();
+      if (!firestore) {
+        return NextResponse.json({ error: 'Database not configured' }, { status: 500 });
+      }
       const userRef = doc(firestore as any, 'users', userId);
       const userDoc = await getDoc(userRef);
       

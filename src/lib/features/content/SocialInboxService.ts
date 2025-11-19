@@ -16,6 +16,7 @@ import {
 } from 'firebase/firestore';
 import { v4 as uuidv4 } from 'uuid';
 import { PlatformType } from '../platforms/PlatformProvider';
+import { firestore } from '@/lib/core/firebase';
 
 // Lazy getter for firestore - avoids build-time initialization
 let _firestoreInstance: any = null;

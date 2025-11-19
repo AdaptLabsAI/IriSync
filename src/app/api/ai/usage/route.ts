@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/lib/features/auth';
-import { getFirebaseFirestore } from '@/lib/core/firebase';
+import { getFirebaseFirestore, firestore } from '@/lib/core/firebase';
 import { collection, doc, getDoc, getDocs, query, where, setDoc } from 'firebase/firestore';
 
 // Force dynamic rendering - required for Firebase/database access
@@ -39,6 +39,10 @@ export async function GET(request: NextRequest) {
     }
     
     // Get the user's current subscription to determine their token limit
+    const firestore = getFirebaseFirestore();
+    if (!firestore) {
+      return NextResponse.json({ error: 'Database not configured' }, { status: 500 });
+    }
     const subscriptionsRef = collection(firestore, 'subscriptions');
     const subscriptionsQuery = query(subscriptionsRef, where('userId', '==', userId), where('status', '==', 'active'));
     const subscriptionsSnapshot = await getDocs(subscriptionsQuery);

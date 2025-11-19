@@ -15,6 +15,7 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/features/auth';
 import { doc, getDoc } from 'firebase/firestore';
 import { processAIGeneratedContent, BrandedContent } from './utils/content-branding';
+import { firestore } from '@/lib/core/firebase';
 
 // AI Service Types for billing distinction
 export enum AIServiceType {

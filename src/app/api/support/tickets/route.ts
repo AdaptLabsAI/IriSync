@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getFirebaseFirestore } from '@/lib/core/firebase';
+import { getFirebaseFirestore, firestore } from '@/lib/core/firebase';
 import { getAuth } from '@/lib/core/firebase/admin';
 import { collection, doc, getDoc, getDocs, setDoc, updateDoc, deleteDoc, query, where, orderBy, Timestamp } from 'firebase/firestore';
 import { withAuth, withAdmin } from '@/lib/features/auth/route-handlers';
@@ -94,6 +94,10 @@ async function logTicketEvent(userId: string, organizationId: string | undefined
 
 async function autoEscalateOldTickets() {
   const now = Date.now();
+  const firestore = getFirebaseFirestore();
+  if (!firestore) {
+    return NextResponse.json({ error: 'Database not configured' }, { status: 500 });
+  }
   const ticketsQuery = query(collection(firestore, TICKETS_COLLECTION), where('status', '==', 'open'));
   const snapshot = await getDocs(ticketsQuery);
   for (const docSnap of snapshot.docs) {

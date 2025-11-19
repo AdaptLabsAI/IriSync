@@ -45,6 +45,10 @@ export async function GET(request: NextRequest) {
     }
     
     // Attempt to fetch audiences from Firestore
+    const firestore = getFirebaseFirestore();
+    if (!firestore) {
+      return NextResponse.json({ error: 'Database not configured' }, { status: 500 });
+    }
     const audiencesRef = collection(firestore, 'audienceSegments');
     const audiencesQuery = query(audiencesRef, where('enabled', '==', true));
     const audiencesSnapshot = await getDocs(audiencesQuery);

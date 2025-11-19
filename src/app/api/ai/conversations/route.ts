@@ -124,6 +124,10 @@ export async function POST(request: NextRequest) {
     // Get user's organization
     let organizationId: string | undefined;
     try {
+      const firestore = getFirebaseFirestore();
+      if (!firestore) {
+        return NextResponse.json({ error: 'Database not configured' }, { status: 500 });
+      }
       const userDoc = await getDoc(doc(firestore, 'users', userId));
       if (userDoc.exists()) {
         const userData = userDoc.data();

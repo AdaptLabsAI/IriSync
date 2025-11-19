@@ -63,6 +63,10 @@ export const GET = withAdmin(async (request: NextRequest, adminUser: any) => {
     constraints.push(limit(pageSize));
 
     // Create the query with all constraints
+    const firestore = getFirebaseFirestore();
+    if (!firestore) {
+      return NextResponse.json({ error: 'Database not configured' }, { status: 500 });
+    }
     let teamsQuery = query(collection(firestore, 'teams'), ...constraints);
 
     // Apply pagination if lastDocId provided

@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getFirebaseFirestore } from '@/lib/core/firebase';
+import { getFirebaseFirestore, firestore } from '@/lib/core/firebase';
 import { collection, getDocs, addDoc, serverTimestamp, query, orderBy, where, doc, getDoc } from 'firebase/firestore';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/lib/features/auth';
@@ -15,6 +15,10 @@ async function isUserAdmin(email: string | null | undefined) {
   if (!email) return false;
   
   try {
+    const firestore = getFirebaseFirestore();
+    if (!firestore) {
+      return NextResponse.json({ error: 'Database not configured' }, { status: 500 });
+    }
     const userRef = doc(firestore, 'users', email);
     const userSnap = await getDoc(userRef);
     

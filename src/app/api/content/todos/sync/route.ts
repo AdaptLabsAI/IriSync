@@ -84,6 +84,10 @@ export async function POST(request: NextRequest) {
     // Parse request body to see which services to sync
     const { services = ['google', 'microsoft'] } = await request.json();
     
+    const firestore = getFirebaseFirestore();
+    if (!firestore) {
+      return NextResponse.json({ error: 'Database not configured' }, { status: 500 });
+    }
     const todosRef = collection(firestore, 'todos');
     const connectionsRef = collection(firestore, 'connections');
     

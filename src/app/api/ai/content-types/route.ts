@@ -44,6 +44,10 @@ export async function GET(request: NextRequest) {
     }
     
     // Attempt to fetch content types from Firestore
+    const firestore = getFirebaseFirestore();
+    if (!firestore) {
+      return NextResponse.json({ error: 'Database not configured' }, { status: 500 });
+    }
     const contentTypesRef = collection(firestore, 'contentTypes');
     const contentTypesQuery = query(contentTypesRef, where('enabled', '==', true));
     const contentTypesSnapshot = await getDocs(contentTypesQuery);

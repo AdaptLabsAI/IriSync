@@ -130,6 +130,10 @@ const featureAccess: Record<SubscriptionTier, Record<FeatureKey, boolean>> = {
 export async function getUserSubscriptionTier(userId: string): Promise<SubscriptionTier> {
   try {
     // Get user document from Firestore
+    const firestore = getFirebaseFirestore();
+    if (!firestore) {
+      return NextResponse.json({ error: 'Database not configured' }, { status: 500 });
+    }
     const userDoc = await getDoc(doc(firestore, 'users', userId));
     
     if (!userDoc.exists()) {
@@ -254,6 +258,10 @@ export async function checkSubscriptionExpiration(userId: string): Promise<{
   daysRemaining: number | null;
 }> {
   try {
+    const firestore = getFirebaseFirestore();
+    if (!firestore) {
+      return { isExpired: true, daysRemaining: null };
+    }
     const userDoc = await getDoc(doc(firestore, 'users', userId));
     
     if (!userDoc.exists()) {

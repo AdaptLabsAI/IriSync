@@ -147,6 +147,10 @@ export class WebhookService {
       };
       
       // Generate a unique ID
+      const firestore = getFirebaseFirestore();
+      if (!firestore) {
+        return NextResponse.json({ error: 'Database not configured' }, { status: 500 });
+      }
       const webhooksRef = collection(firestore, this.webhooksCollection);
       const newWebhookRef = doc(webhooksRef);
       const webhookId = newWebhookRef.id;
@@ -174,6 +178,10 @@ export class WebhookService {
    */
   async getWebhookById(webhookId: string): Promise<Webhook | null> {
     try {
+      const firestore = getFirebaseFirestore();
+      if (!firestore) {
+        throw new Error('Database not configured');
+      }
       const webhookRef = doc(firestore, this.webhooksCollection, webhookId);
       const webhookSnapshot = await getDoc(webhookRef);
       
@@ -207,6 +215,10 @@ export class WebhookService {
    */
   async getWebhooksByOrganization(organizationId: string): Promise<Webhook[]> {
     try {
+      const firestore = getFirebaseFirestore();
+      if (!firestore) {
+        throw new Error('Database not configured');
+      }
       const webhooksRef = collection(firestore, this.webhooksCollection);
       const webhooksQuery = query(webhooksRef, where('organizationId', '==', organizationId));
       const webhooksSnapshot = await getDocs(webhooksQuery);
@@ -240,6 +252,10 @@ export class WebhookService {
    */
   async updateWebhook(webhookId: string, updates: Partial<Omit<Webhook, 'id' | 'organizationId' | 'createdAt'>>): Promise<Webhook> {
     try {
+      const firestore = getFirebaseFirestore();
+      if (!firestore) {
+        throw new Error('Database not configured');
+      }
       const webhookRef = doc(firestore, this.webhooksCollection, webhookId);
       const webhookSnapshot = await getDoc(webhookRef);
       
@@ -282,6 +298,10 @@ export class WebhookService {
    */
   async deleteWebhook(webhookId: string): Promise<void> {
     try {
+      const firestore = getFirebaseFirestore();
+      if (!firestore) {
+        throw new Error('Database not configured');
+      }
       const webhookRef = doc(firestore, this.webhooksCollection, webhookId);
       
       // Delete from Firestore
@@ -311,6 +331,10 @@ export class WebhookService {
     organizationId?: string
   ): Promise<string[]> {
     try {
+      const firestore = getFirebaseFirestore();
+      if (!firestore) {
+        throw new Error('Database not configured');
+      }
       // Get webhooks that subscribe to this event
       const webhooksRef = collection(firestore, this.webhooksCollection);
       let webhooksQuery = query(
@@ -370,6 +394,10 @@ export class WebhookService {
    */
   async getDeliveryAttempts(webhookId: string, limitCount: number = 50): Promise<WebhookDeliveryAttempt[]> {
     try {
+      const firestore = getFirebaseFirestore();
+      if (!firestore) {
+        throw new Error('Database not configured');
+      }
       const attemptsRef = collection(firestore, this.deliveryAttemptsCollection);
       const attemptsQuery = query(
         attemptsRef,
@@ -416,6 +444,10 @@ export class WebhookService {
     payload: any
   ): Promise<string> {
     try {
+      const firestore = getFirebaseFirestore();
+      if (!firestore) {
+        throw new Error('Database not configured');
+      }
       const now = new Date();
       const attemptData: FirestoreWebhookDeliveryAttempt = {
         webhookId,
@@ -424,7 +456,7 @@ export class WebhookService {
         status: WebhookDeliveryStatus.FAILED, // Assume failure until successful
         requestedAt: Timestamp.fromDate(now)
       };
-      
+
       // Generate a unique ID
       const attemptsRef = collection(firestore, this.deliveryAttemptsCollection);
       const newAttemptRef = doc(attemptsRef);
@@ -487,6 +519,10 @@ export class WebhookService {
       });
       
       // Update the delivery attempt as successful
+      const firestore = getFirebaseFirestore();
+      if (!firestore) {
+        throw new Error('Database not configured');
+      }
       const attemptRef = doc(firestore, this.deliveryAttemptsCollection, deliveryAttemptId);
       await updateDoc(attemptRef, {
         status: WebhookDeliveryStatus.SUCCESS,
@@ -509,6 +545,11 @@ export class WebhookService {
       logger.info(`Webhook ${webhook.id} delivered successfully for event ${eventType}`);
     } catch (error: any) {
       // Update the delivery attempt as failed
+      const firestore = getFirebaseFirestore();
+      if (!firestore) {
+        logger.error('Database not configured');
+        return;
+      }
       const attemptRef = doc(firestore, this.deliveryAttemptsCollection, deliveryAttemptId);
       await updateDoc(attemptRef, {
         status: WebhookDeliveryStatus.FAILED,

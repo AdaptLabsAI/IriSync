@@ -14,7 +14,7 @@
  * - Goal setting and tracking
  */
 
-import { getFirebaseFirestore } from '@/lib/core/firebase';
+import { getFirebaseFirestore, firestore } from '@/lib/core/firebase';
 import {
   doc,
   getDoc,
@@ -195,6 +195,10 @@ class CampaignService {
   ): Promise<Campaign> {
     try {
       // Get creator name
+      const firestore = getFirebaseFirestore();
+      if (!firestore) {
+        return NextResponse.json({ error: 'Database not configured' }, { status: 500 });
+      }
       const userDoc = await getDoc(doc(firestore, 'users', createdBy));
       const createdByName = userDoc.exists()
         ? userDoc.data().name || userDoc.data().email

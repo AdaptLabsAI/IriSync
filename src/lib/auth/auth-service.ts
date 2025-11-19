@@ -5,6 +5,7 @@ import { sign, verify } from 'jsonwebtoken';
 import { SubscriptionTier, SubscriptionTierValues, UserRole } from '../core/models/User';
 import { getTokenAllocationForTier } from '../subscription';
 import { generateOrganizationId, validateUserOrganizationConnections } from '../utils';
+import { firestore } from '@/lib/core/firebase';
 
 /**
  * User interface for authentication

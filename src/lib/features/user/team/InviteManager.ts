@@ -17,6 +17,7 @@ import {
   serverTimestamp
 } from 'firebase/firestore';
 import { getFirebaseFirestore } from '../../core/firebase';
+import { firestore } from '@/lib/core/firebase';
 import { 
   Team, 
   FirestoreTeam, 
@@ -255,6 +256,10 @@ export class InviteManager {
 
       return await runTransaction(firestore, async (transaction) => {
         // Get team
+        const firestore = getFirebaseFirestore();
+        if (!firestore) {
+          return NextResponse.json({ error: 'Database not configured' }, { status: 500 });
+        }
         const teamRef = doc(firestore, 'teams', inviteData.teamId);
         const teamDoc = await transaction.get(teamRef);
 
