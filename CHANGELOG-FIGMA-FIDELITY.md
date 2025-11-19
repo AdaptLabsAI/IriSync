@@ -6,6 +6,20 @@
 
 ---
 
+## Commit: `f51005b` - Fix firestore null checks in careers job detail page
+
+**Date:** 2025-11-18
+
+### Changes
+- **Careers Job Detail Page** (`src/app/(careers)/careers/[slug]/page.tsx`)
+  - Added firestore null check in `fetchJobDetails` function (line 97-99)
+  - Added firestore null check in `handleSubmitApplication` function (line 250-252)
+
+### Impact
+**CRITICAL FIX:** Resolved second TypeScript build error blocking Vercel deployment. Fixed null safety violations where `firestore` (type `Firestore | null`) was used without proper null checks in collection and addDoc calls. This unblocked production deployment.
+
+---
+
 ## Commit: `b6b41a0` - Update navigation and marketing components with brand colors
 
 **Date:** 2025-11-18
