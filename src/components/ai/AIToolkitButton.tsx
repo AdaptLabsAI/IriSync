@@ -142,9 +142,9 @@ const AIToolkitButton: React.FC<AIToolkitButtonProps> = ({
                 <span className="text-sm font-medium">{tokensRemaining.toLocaleString()} / {tokenLimit.toLocaleString()}</span>
               </div>
               <div className="w-full bg-gray-200 rounded-full h-2.5">
-                <div 
+                <div
                   className={`h-2.5 rounded-full ${
-                    getTokenPercentage() > 50 ? 'bg-green-500' : 
+                    getTokenPercentage() > 50 ? 'bg-[#00CC44]' :
                     getTokenPercentage() > 25 ? 'bg-yellow-400' : 'bg-red-500'
                   }`}
                   style={{ width: `${getTokenPercentage()}%` }}
@@ -192,9 +192,9 @@ const AIToolkitButton: React.FC<AIToolkitButtonProps> = ({
                       </div>
                       
                       {(tool.isNew || !canAccessTool(tool)) && (
-                        <div 
+                        <div
                           className={`px-2 py-0.5 text-xs rounded-md ${
-                            tool.isNew ? 'bg-green-100 text-green-800' : 'bg-amber-100 text-amber-800'
+                            tool.isNew ? 'bg-[#00FF6A]/10 text-[#00CC44]' : 'bg-amber-100 text-amber-800'
                           }`}
                         >
                           {tool.isNew ? 'New' : `${tool.featureTier.charAt(0).toUpperCase() + tool.featureTier.slice(1)}+`}
@@ -248,9 +248,9 @@ const AIToolkitButton: React.FC<AIToolkitButtonProps> = ({
                         </div>
                         
                         {(tool.isNew || !canAccessTool(tool)) && (
-                          <div 
+                          <div
                             className={`px-2 py-0.5 text-xs rounded-md ${
-                              tool.isNew ? 'bg-green-100 text-green-800' : 'bg-amber-100 text-amber-800'
+                              tool.isNew ? 'bg-[#00FF6A]/10 text-[#00CC44]' : 'bg-amber-100 text-amber-800'
                             }`}
                           >
                             {tool.isNew ? 'New' : `${tool.featureTier.charAt(0).toUpperCase() + tool.featureTier.slice(1)}+`}

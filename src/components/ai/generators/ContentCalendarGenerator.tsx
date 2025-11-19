@@ -560,7 +560,7 @@ export default function ContentCalendarGenerator({
             <h3 className="font-semibold text-lg">Generated Content Calendar</h3>
             <button
               onClick={handleUseCalendar}
-              className="px-3 py-1 bg-green-600 text-white rounded hover:bg-green-700"
+              className="px-3 py-1 bg-[#00CC44] text-white rounded hover:bg-[#00AA33]"
             >
               Use Calendar
             </button>

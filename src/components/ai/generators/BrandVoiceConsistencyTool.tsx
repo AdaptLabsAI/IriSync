@@ -519,9 +519,9 @@ export default function BrandVoiceConsistencyTool({
                   <span className="font-medium">{analysisResult.score}/100</span>
                 </div>
                 <div className="bg-gray-200 h-2 rounded">
-                  <div 
+                  <div
                     className={`h-2 rounded ${
-                      analysisResult.score >= 80 ? 'bg-green-500' : 
+                      analysisResult.score >= 80 ? 'bg-[#00CC44]' :
                       analysisResult.score >= 60 ? 'bg-yellow-500' : 'bg-red-500'
                     }`}
                     style={{ width: `${analysisResult.score}%` }}
@@ -534,9 +534,9 @@ export default function BrandVoiceConsistencyTool({
                   <h4 className="text-sm font-medium text-gray-700 mb-1">Tone Consistency</h4>
                   <div className="flex items-center">
                     <div className="flex-grow h-2 bg-gray-200 rounded mr-2">
-                      <div 
+                      <div
                         className={`h-2 rounded ${
-                          analysisResult.tone >= 80 ? 'bg-green-500' : 
+                          analysisResult.tone >= 80 ? 'bg-[#00CC44]' :
                           analysisResult.tone >= 60 ? 'bg-yellow-500' : 'bg-red-500'
                         }`}
                         style={{ width: `${analysisResult.tone}%` }}
@@ -549,9 +549,9 @@ export default function BrandVoiceConsistencyTool({
                   <h4 className="text-sm font-medium text-gray-700 mb-1">Terminology Usage</h4>
                   <div className="flex items-center">
                     <div className="flex-grow h-2 bg-gray-200 rounded mr-2">
-                      <div 
+                      <div
                         className={`h-2 rounded ${
-                          analysisResult.terminology >= 80 ? 'bg-green-500' : 
+                          analysisResult.terminology >= 80 ? 'bg-[#00CC44]' :
                           analysisResult.terminology >= 60 ? 'bg-yellow-500' : 'bg-red-500'
                         }`}
                         style={{ width: `${analysisResult.terminology}%` }}
@@ -564,9 +564,9 @@ export default function BrandVoiceConsistencyTool({
                   <h4 className="text-sm font-medium text-gray-700 mb-1">Overall Consistency</h4>
                   <div className="flex items-center">
                     <div className="flex-grow h-2 bg-gray-200 rounded mr-2">
-                      <div 
+                      <div
                         className={`h-2 rounded ${
-                          analysisResult.consistency >= 80 ? 'bg-green-500' : 
+                          analysisResult.consistency >= 80 ? 'bg-[#00CC44]' :
                           analysisResult.consistency >= 60 ? 'bg-yellow-500' : 'bg-red-500'
                         }`}
                         style={{ width: `${analysisResult.consistency}%` }}
@@ -630,7 +630,7 @@ export default function BrandVoiceConsistencyTool({
             {optimizedContent && (
               <div className="mt-6">
                 <h3 className="font-medium text-gray-700 mb-2">Optimized Content</h3>
-                <div className="p-4 border rounded bg-green-50">
+                <div className="p-4 border rounded bg-[#00FF6A]/5">
                   <p className="whitespace-pre-line">{optimizedContent}</p>
                 </div>
               </div>

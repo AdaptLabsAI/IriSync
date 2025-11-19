@@ -225,7 +225,7 @@ export default function ContentGenerator({ onContentGenerated }: ContentGenerato
             
             <button
               onClick={handleUseContent}
-              className="px-3 py-1 bg-green-500 text-white rounded hover:bg-green-600"
+              className="px-3 py-1 bg-[#00CC44] text-white rounded hover:bg-[#00AA33]"
             >
               Use This Content
             </button>

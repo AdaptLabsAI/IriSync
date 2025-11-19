@@ -29,8 +29,8 @@ export default function NoConnectionsState({
     <div className="min-h-[60vh] flex items-center justify-center p-8">
       <div className="max-w-2xl w-full bg-white rounded-2xl shadow-sm p-12 text-center">
         {/* Icon */}
-        <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-          <Link2 className="w-10 h-10 text-green-600" />
+        <div className="w-20 h-20 bg-[#00FF6A]/10 rounded-full flex items-center justify-center mx-auto mb-6">
+          <Link2 className="w-10 h-10 text-[#00CC44]" />
         </div>
 
         {/* Title */}
@@ -61,7 +61,7 @@ export default function NoConnectionsState({
         {/* CTA Button */}
         <button
           onClick={() => router.push('/dashboard/settings/connections')}
-          className="px-8 py-3 bg-green-600 text-white rounded-full font-medium hover:bg-green-700 transition-colors inline-flex items-center gap-2"
+          className="px-8 py-3 bg-[#00CC44] text-white rounded-full font-medium hover:bg-[#00AA33] transition-colors inline-flex items-center gap-2"
         >
           <Link2 className="w-5 h-5" />
           Connect Platforms
@@ -72,7 +72,7 @@ export default function NoConnectionsState({
           You can connect multiple platforms in{' '}
           <button
             onClick={() => router.push('/dashboard/settings/connections')}
-            className="text-green-600 hover:text-green-700 font-medium underline"
+            className="text-[#00CC44] hover:text-[#00AA33] font-medium underline"
           >
             Settings → Connections
           </button>

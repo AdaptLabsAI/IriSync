@@ -623,7 +623,7 @@ export default function ContentRepurposingTool({
             <h3 className="font-semibold text-lg">Repurposed Content</h3>
             <button
               onClick={handleUseContent}
-              className="px-3 py-1 bg-green-600 text-white rounded hover:bg-green-700"
+              className="px-3 py-1 bg-[#00CC44] text-white rounded hover:bg-[#00AA33]"
             >
               Use Repurposed Content
             </button>
