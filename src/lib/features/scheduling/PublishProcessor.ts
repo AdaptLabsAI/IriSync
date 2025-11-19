@@ -82,7 +82,7 @@ export class PublishProcessor {
       logger.info('Starting publish processor');
 
       // Get posts due for publishing
-      const duePosts = await scheduledPostService.getDuePost();
+      const duePosts = await scheduledPostService.getDuePosts();
 
       if (duePosts.length === 0) {
         logger.info('No posts due for publishing');

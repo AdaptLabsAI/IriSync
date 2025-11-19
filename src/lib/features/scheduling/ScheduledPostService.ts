@@ -289,7 +289,7 @@ export class ScheduledPostService {
   /**
    * Get posts due for publishing
    */
-  async getDuePost(now: Date = new Date()): Promise<ScheduledPost[]> {
+  async getDuePosts(now: Date = new Date()): Promise<ScheduledPost[]> {
     try {
       const q = query(
         collection(this.getFirestore(), this.scheduledPostsCollection),
