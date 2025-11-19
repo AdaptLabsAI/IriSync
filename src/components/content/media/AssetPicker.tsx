@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Tabs, Tab, Button, CircularProgress, TextField, List, ListItem, ListItemText, Typography, Snackbar, Alert } from '@mui/material';
+import { Box, Tabs, Tab, Button, CircularProgress, TextField, List, ListItem, ListItemButton, ListItemText, Typography, Snackbar, Alert } from '@mui/material';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
 interface AssetPickerProps {
@@ -536,12 +536,12 @@ export default function AssetPicker({ onSelect, onClose }: AssetPickerProps) {
               {gdLoading ? <CircularProgress /> : gdError ? <Alert severity="error">{gdError}</Alert> : (
                 <List>
                   {gdFiles.map(file => (
-                    <ListItem button key={file.id} onClick={() => handleGdSelect(file)}>
+                    <ListItemButton key={file.id} onClick={() => handleGdSelect(file)}>
                       <ListItemText
                         primary={file.name}
                         secondary={file.mimeType}
                       />
-                    </ListItem>
+                    </ListItemButton>
                   ))}
                   {gdFiles.length === 0 && <Typography variant="body2">No files found.</Typography>}
                 </List>
@@ -573,12 +573,12 @@ export default function AssetPicker({ onSelect, onClose }: AssetPickerProps) {
               {dbxLoading ? <CircularProgress /> : dbxError ? <Alert severity="error">{dbxError}</Alert> : (
                 <List>
                   {dbxFiles.map(file => (
-                    <ListItem button key={file.id || file.name} onClick={() => handleDbxSelect(file)}>
+                    <ListItemButton key={file.id || file.name} onClick={() => handleDbxSelect(file)}>
                       <ListItemText
                         primary={file.name}
                         secondary={file['.tag']}
                       />
-                    </ListItem>
+                    </ListItemButton>
                   ))}
                   {dbxFiles.length === 0 && <Typography variant="body2">No files found.</Typography>}
                 </List>
@@ -601,9 +601,9 @@ export default function AssetPicker({ onSelect, onClose }: AssetPickerProps) {
               {onedriveLoading ? <CircularProgress /> : onedriveError ? <Alert severity="error">{onedriveError}</Alert> : (
                 <List>
                   {onedriveFiles.map(file => (
-                    <ListItem button key={file.id} onClick={() => handleOnedriveSelect(file)}>
+                    <ListItemButton key={file.id} onClick={() => handleOnedriveSelect(file)}>
                       <ListItemText primary={file.name} secondary={file.fileType || file.mimeType} />
-                    </ListItem>
+                    </ListItemButton>
                   ))}
                   {onedriveFiles.length === 0 && <Typography variant="body2">No files found.</Typography>}
                 </List>
@@ -626,9 +626,9 @@ export default function AssetPicker({ onSelect, onClose }: AssetPickerProps) {
               {canvaLoading ? <CircularProgress /> : canvaError ? <Alert severity="error">{canvaError}</Alert> : (
                 <List>
                   {canvaFiles.map(file => (
-                    <ListItem button key={file.id} onClick={() => handleCanvaSelect(file)}>
+                    <ListItemButton key={file.id} onClick={() => handleCanvaSelect(file)}>
                       <ListItemText primary={file.name} secondary={file.fileType || file.mimeType} />
-                    </ListItem>
+                    </ListItemButton>
                   ))}
                   {canvaFiles.length === 0 && <Typography variant="body2">No files found.</Typography>}
                 </List>
@@ -653,9 +653,9 @@ export default function AssetPicker({ onSelect, onClose }: AssetPickerProps) {
               {airtableLoading ? <CircularProgress /> : airtableError ? <Alert severity="error">{airtableError}</Alert> : (
                 <List>
                   {airtableFiles.map(file => (
-                    <ListItem button key={file.id} onClick={() => handleAirtableSelect(file)}>
+                    <ListItemButton key={file.id} onClick={() => handleAirtableSelect(file)}>
                       <ListItemText primary={file.name || file.id} secondary={file.fileType || file.mimeType} />
-                    </ListItem>
+                    </ListItemButton>
                   ))}
                   {airtableFiles.length === 0 && <Typography variant="body2">No files found.</Typography>}
                 </List>
@@ -678,9 +678,9 @@ export default function AssetPicker({ onSelect, onClose }: AssetPickerProps) {
               {notionLoading ? <CircularProgress /> : notionError ? <Alert severity="error">{notionError}</Alert> : (
                 <List>
                   {notionFiles.map(file => (
-                    <ListItem button key={file.id} onClick={() => handleNotionSelect(file)}>
+                    <ListItemButton key={file.id} onClick={() => handleNotionSelect(file)}>
                       <ListItemText primary={file.name || file.id} secondary={file.fileType || file.mimeType} />
-                    </ListItem>
+                    </ListItemButton>
                   ))}
                   {notionFiles.length === 0 && <Typography variant="body2">No files found or Notion API limitation."</Typography>}
                 </List>
