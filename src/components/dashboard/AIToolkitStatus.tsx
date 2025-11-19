@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Box, Typography, Paper, Grid, LinearProgress, Chip, Alert, Button } from '@mui/material';
+import { Box, Typography, Paper, LinearProgress, Chip, Alert, Button } from '@mui/material';
+import Grid from '@/components/ui/grid';
 import { useRouter } from 'next/navigation';
 
 // AI toolkit tools and their implementation status

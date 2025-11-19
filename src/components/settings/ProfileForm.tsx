@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Box, Button, TextField, Typography, Alert, CircularProgress, Stack, Divider, Grid } from '@mui/material';
+import { Box, Button, TextField, Typography, Alert, CircularProgress, Stack, Divider } from '@mui/material';
+import Grid from '@/components/ui/grid';
 import { FileUpload } from '@/components/ui/fileupload/FileUpload';
 import Avatar from '@mui/material/Avatar';
 import { getAuth, updateProfile } from 'firebase/auth';

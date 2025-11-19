@@ -9,7 +9,6 @@ import {
   Button,
   Stack,
   Chip,
-  Grid,
   Card,
   CardContent,
   TextField,
@@ -28,6 +27,7 @@ import {
   Alert,
   AlertTitle
 } from '@mui/material';
+import Grid from '@/components/ui/grid';
 import {
   Search as SearchIcon,
   Add as AddIcon,

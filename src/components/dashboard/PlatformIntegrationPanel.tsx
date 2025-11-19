@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Box, Typography, Tabs, Tab, Grid, Paper, Divider, Chip, Button, Alert } from '@mui/material';
+import { Box, Typography, Tabs, Tab, Paper, Divider, Chip, Button, Alert } from '@mui/material';
+import Grid from '@/components/ui/grid';
 import { useRouter } from 'next/navigation';
 
 // Platform type definitions (imported from PlatformConnectButton)
