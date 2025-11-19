@@ -230,7 +230,7 @@ const TaskAssignmentButton: React.FC<TaskAssignmentButtonProps> = ({
       case 'todo': return 'bg-gray-100';
       case 'in_progress': return 'bg-blue-100 text-blue-800';
       case 'review': return 'bg-yellow-100 text-yellow-800';
-      case 'completed': return 'bg-green-100 text-green-800';
+      case 'completed': return 'bg-[#00FF6A]/10 text-[#00CC44]';
       default: return '';
     }
   };

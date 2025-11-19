@@ -128,7 +128,7 @@ NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID=G-XXXXXXXXXX`}
             </ol>
           </div>
         ) : (
-          <div className="text-green-700 bg-green-50 p-4 rounded-lg">
+          <div className="text-[#00CC44] bg-[#00FF6A]/5 p-4 rounded-lg">
             <Typography variant="body">
               Your Firebase configuration looks good! If you&apos;re still experiencing issues, check that:
             </Typography>
@@ -172,13 +172,13 @@ NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID=G-XXXXXXXXXX`}
               <Typography variant="h5" className="mb-4">Test Results</Typography>
               
               <div className={`p-4 rounded-lg mb-4 ${
-                testResult.status === 'success' 
-                  ? 'bg-green-50 border border-green-200' 
+                testResult.status === 'success'
+                  ? 'bg-[#00FF6A]/5 border border-[#00FF6A]/20'
                   : 'bg-red-50 border border-red-200'
               }`}>
-                <Typography 
-                  variant="body" 
-                  className={testResult.status === 'success' ? 'text-green-700' : 'text-red-700'}
+                <Typography
+                  variant="body"
+                  className={testResult.status === 'success' ? 'text-[#00CC44]' : 'text-red-700'}
                 >
                   {testResult.message}
                 </Typography>

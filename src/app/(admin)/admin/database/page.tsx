@@ -92,14 +92,14 @@ export default function DatabaseAdminPage() {
 
   const getStatusColor = () => {
     if (!status) return 'text-gray-500';
-    if (status.isSeeded) return 'text-green-600';
+    if (status.isSeeded) return 'text-[#00CC44]';
     if (status.needsSeeding) return 'text-red-600';
     return 'text-yellow-600';
   };
 
   const getStatusIcon = () => {
     if (!status) return <Database className="h-6 w-6" />;
-    if (status.isSeeded) return <Check className="h-6 w-6 text-green-600" />;
+    if (status.isSeeded) return <Check className="h-6 w-6 text-[#00CC44]" />;
     if (status.needsSeeding) return <AlertTriangle className="h-6 w-6 text-red-600" />;
     return <AlertTriangle className="h-6 w-6 text-yellow-600" />;
   };

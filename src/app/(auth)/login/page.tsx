@@ -218,7 +218,7 @@ export default function LoginPage() {
             <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-xl">
               <p className="text-red-700 text-sm">{formErrors.general}</p>
               {emailVerificationNeeded && (
-                <Link href="/resend-verification" className="text-green-600 underline text-sm mt-2 block">
+                <Link href="/resend-verification" className="text-[#00CC44] underline text-sm mt-2 block">
                   Resend verification email
                 </Link>
               )}

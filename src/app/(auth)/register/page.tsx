@@ -257,7 +257,7 @@ export default function RegisterPage() {
                   value={formData.userName}
                   onChange={handleInputChange}
                   placeholder="User Name"
-                  className={`w-full pl-12 pr-4 py-4 border ${errors.userName ? 'border-red-300' : 'border-gray-200'} rounded-xl bg-gray-50 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all text-gray-900 placeholder-gray-400`}
+                  className={`w-full pl-12 pr-4 py-4 border ${errors.userName ? 'border-red-300' : 'border-gray-200'} rounded-xl bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#00CC44] focus:border-transparent transition-all text-gray-900 placeholder-gray-400`}
                 />
               </div>
               {errors.userName && (
@@ -280,7 +280,7 @@ export default function RegisterPage() {
                   value={formData.email}
                   onChange={handleInputChange}
                   placeholder="Email Address"
-                  className={`w-full pl-12 pr-4 py-4 border ${errors.email ? 'border-red-300' : 'border-gray-200'} rounded-xl bg-gray-50 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all text-gray-900 placeholder-gray-400`}
+                  className={`w-full pl-12 pr-4 py-4 border ${errors.email ? 'border-red-300' : 'border-gray-200'} rounded-xl bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#00CC44] focus:border-transparent transition-all text-gray-900 placeholder-gray-400`}
                 />
               </div>
               {errors.email && (
@@ -303,7 +303,7 @@ export default function RegisterPage() {
                   value={formData.password}
                   onChange={handleInputChange}
                   placeholder="Enter Password"
-                  className={`w-full pl-12 pr-12 py-4 border ${errors.password ? 'border-red-300' : 'border-gray-200'} rounded-xl bg-gray-50 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all text-gray-900 placeholder-gray-400`}
+                  className={`w-full pl-12 pr-12 py-4 border ${errors.password ? 'border-red-300' : 'border-gray-200'} rounded-xl bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#00CC44] focus:border-transparent transition-all text-gray-900 placeholder-gray-400`}
                 />
                 <button
                   type="button"
@@ -343,7 +343,7 @@ export default function RegisterPage() {
                   value={formData.confirmPassword}
                   onChange={handleInputChange}
                   placeholder="Re-Enter Password"
-                  className={`w-full pl-12 pr-12 py-4 border ${errors.confirmPassword ? 'border-red-300' : 'border-gray-200'} rounded-xl bg-gray-50 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all text-gray-900 placeholder-gray-400`}
+                  className={`w-full pl-12 pr-12 py-4 border ${errors.confirmPassword ? 'border-red-300' : 'border-gray-200'} rounded-xl bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#00CC44] focus:border-transparent transition-all text-gray-900 placeholder-gray-400`}
                 />
                 <button
                   type="button"
@@ -407,7 +407,7 @@ export default function RegisterPage() {
           <div className="mt-6 text-center">
             <p className="text-gray-600">
               Have an account?{' '}
-              <Link href="/login" className="text-gray-900 font-medium underline hover:text-green-600 transition-colors">
+              <Link href="/login" className="text-gray-900 font-medium underline hover:text-[#00CC44] transition-colors">
                 LOGIN
               </Link>
             </p>

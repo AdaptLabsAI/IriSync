@@ -34,7 +34,7 @@ const priorityColors = {
   [TodoPriority.CRITICAL]: '#d32f2f',
   [TodoPriority.HIGH]: '#ef5350',
   [TodoPriority.MEDIUM]: '#ff9800',
-  [TodoPriority.LOW]: '#66bb6a'
+  [TodoPriority.LOW]: '#00CC44'
 };
 
 const statusColors = {
@@ -749,7 +749,7 @@ const TeamTodoApp: React.FC = () => {
           </Card>
           <Card>
             <CardBody className="text-center p-4">
-              <div className="text-2xl font-bold text-green-600">{stats.completed}</div>
+              <div className="text-2xl font-bold text-[#00CC44]">{stats.completed}</div>
               <div className="text-sm text-gray-500">Completed</div>
             </CardBody>
           </Card>

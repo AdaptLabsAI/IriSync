@@ -209,7 +209,7 @@ export default function ResetPasswordPage() {
                     if (error) setError('');
                   }}
                   placeholder="Email Address"
-                  className={`w-full pl-12 pr-4 py-4 border ${error ? 'border-red-300' : 'border-gray-200'} rounded-xl bg-gray-50 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all text-gray-900 placeholder-gray-400`}
+                  className={`w-full pl-12 pr-4 py-4 border ${error ? 'border-red-300' : 'border-gray-200'} rounded-xl bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#00CC44] focus:border-transparent transition-all text-gray-900 placeholder-gray-400`}
                 />
               </div>
             </div>
