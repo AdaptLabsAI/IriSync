@@ -92,8 +92,12 @@ export default function JobDetailPage({ params }: PageProps) {
     const fetchJobDetails = async () => {
       setIsLoading(true);
       setError(null);
-      
+
       try {
+        if (!firestore) {
+          throw new Error('Firestore not initialized');
+        }
+
         // Create a query to get the job with the matching slug
         const jobsQuery = query(
           collection(firestore, 'jobListings'),
@@ -241,8 +245,12 @@ export default function JobDetailPage({ params }: PageProps) {
     
     setIsSubmitting(true);
     setSubmitError(null);
-    
+
     try {
+      if (!firestore) {
+        throw new Error('Firestore not initialized');
+      }
+
       // Process custom question answers
       const answers = job.applicationQuestions?.map(question => {
         const answer = formData.answers.find(a => a.questionId === question.id);
@@ -251,7 +259,7 @@ export default function JobDetailPage({ params }: PageProps) {
           value: answer?.value || null
         };
       }) || [];
-      
+
       // Create application object
       const application: Partial<JobApplication> = {
         jobId: job.id,
@@ -269,7 +277,7 @@ export default function JobDetailPage({ params }: PageProps) {
         createdAt: new Date() as any,
         updatedAt: new Date() as any
       };
-      
+
       // Save to Firestore
       await addDoc(collection(firestore, 'jobApplications'), application).catch(error => {
         console.error('Error submitting application:', error);
