@@ -155,8 +155,6 @@ export const KnowledgeRepository = {
     
     // Apply filters
     if (contentType) {
-  const firestore = getFirebaseFirestore();
-  if (!firestore) throw new Error('Database not configured');
 
       let q = query(baseQuery);
       if (Array.isArray(contentType)) {
@@ -615,9 +613,6 @@ export const KnowledgeRepository = {
     if (!firestore) { console.error('Firestore not configured'); return; }
 
     const categoryRef = doc(firestore, KNOWLEDGE_CATEGORY_COLLECTION, oldName);
-    const firestore = getFirebaseFirestore();
-
-    if (!firestore) { console.error('Firestore not configured'); return; }
 
     const newCategoryRef = doc(firestore, KNOWLEDGE_CATEGORY_COLLECTION, newName);
     

@@ -117,9 +117,6 @@ export async function GET(request: NextRequest) {
   const firestore = getFirebaseFirestore();
   if (!firestore) throw new Error('Database not configured');
 
-  const firestore = getFirebaseFirestore();
-  if (!firestore) throw new Error('Database not configured');
-
     const jobsQuery = query(
       collection(firestore, 'jobListings'),
       orderBy('updatedAt', 'desc')
@@ -236,9 +233,6 @@ export async function POST(request: NextRequest) {
   const firestore = getFirebaseFirestore();
   if (!firestore) throw new Error('Database not configured');
 
-  const firestore = getFirebaseFirestore();
-  if (!firestore) throw new Error('Database not configured');
-
     const docRef = doc(collection(firestore, 'jobListings'));
     await setDoc(docRef, jobData);
 
@@ -293,9 +287,6 @@ export async function PUT(request: NextRequest) {
     }
 
     // Check if job exists
-  const firestore = getFirebaseFirestore();
-  if (!firestore) throw new Error('Database not configured');
-
   const firestore = getFirebaseFirestore();
   if (!firestore) throw new Error('Database not configured');
 
@@ -373,9 +364,6 @@ export async function DELETE(request: NextRequest) {
     }
 
     // Check if job exists
-  const firestore = getFirebaseFirestore();
-  if (!firestore) throw new Error('Database not configured');
-
   const firestore = getFirebaseFirestore();
   if (!firestore) throw new Error('Database not configured');
 

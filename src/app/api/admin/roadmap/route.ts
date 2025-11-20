@@ -40,9 +40,6 @@ export const GET = withAdmin(async (_request: Request, adminUser: any) => {
   const firestore = getFirebaseFirestore();
   if (!firestore) throw new Error('Database not configured');
 
-  const firestore = getFirebaseFirestore();
-  if (!firestore) throw new Error('Database not configured');
-
     const roadmapRef = collection(firestore, 'roadmapItems');
     const q = query(roadmapRef, orderBy('createdAt', 'desc'));
     const querySnapshot = await getDocs(q);
@@ -71,9 +68,6 @@ export const POST = withAdmin(async (request: Request, adminUser: any) => {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
     }
     // Create new roadmap item
-  const firestore = getFirebaseFirestore();
-  if (!firestore) throw new Error('Database not configured');
-
   const firestore = getFirebaseFirestore();
   if (!firestore) throw new Error('Database not configured');
 

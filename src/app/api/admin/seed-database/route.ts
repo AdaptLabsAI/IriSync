@@ -146,9 +146,6 @@ export async function POST(req: NextRequest) {
   const firestore = getFirebaseFirestore();
   if (!firestore) throw new Error('Database not configured');
 
-  const firestore = getFirebaseFirestore();
-  if (!firestore) throw new Error('Database not configured');
-
     const batch = writeBatch(firestore);
     let seededCount = 0;
     let skippedCount = 0;
@@ -293,9 +290,6 @@ export async function GET(req: NextRequest) {
     }
 
     // Count existing configurations
-  const firestore = getFirebaseFirestore();
-  if (!firestore) throw new Error('Database not configured');
-
   const firestore = getFirebaseFirestore();
   if (!firestore) throw new Error('Database not configured');
 

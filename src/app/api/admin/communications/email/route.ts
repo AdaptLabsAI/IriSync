@@ -135,9 +135,6 @@ export const POST = withAdmin(async (request: NextRequest, adminUser: any) => {
   const firestore = getFirebaseFirestore();
   if (!firestore) throw new Error('Database not configured');
 
-  const firestore = getFirebaseFirestore();
-  if (!firestore) throw new Error('Database not configured');
-
     const campaignRef = await addDoc(collection(firestore, 'emailCampaigns'), campaignData);
 
     // Log admin action
@@ -230,9 +227,6 @@ export const GET = withAdmin(async (request: NextRequest, adminUser: any) => {
     constraints.push(limit(limitValue));
 
     // Build the final query
-  const firestore = getFirebaseFirestore();
-  if (!firestore) throw new Error('Database not configured');
-
   const firestore = getFirebaseFirestore();
   if (!firestore) throw new Error('Database not configured');
 

@@ -25,9 +25,6 @@ export async function getScheduledPostCount(userId: string): Promise<number> {
       where('userId', '==', userId),
       where('status', '==', 'scheduled')
     );
-    
-  const firestore = getFirebaseFirestore();
-  if (!firestore) throw new Error('Database not configured');
 
     const postsSnapshot = await getDocs(postsQuery);
     
