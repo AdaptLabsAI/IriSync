@@ -12,7 +12,7 @@ import { sendEmail } from '@/lib/core/notifications/email';
 import { NotificationService, NotificationPriority, NotificationCategory, NotificationChannel } from '@/lib/core/notifications/NotificationService';
 import { sendTicketCreatedEmail, sendTicketUpdatedEmail, sendTicketClosedEmail } from '@/lib/core/notifications/email';
 import { notifySlack, notifyCRM, notifyEmail } from '@/lib/core/notifications/integrations';
-import { parse as parseToCSV } from '@json2csv/plainjs';
+import { Parser } from '@json2csv/plainjs';
 import { ChatbotService, UserTier } from '@/lib/features/support/chatbot-service';
 import { AIProviderFactory } from '@/lib/features/ai/providers/AIProviderFactory';
 import { ProviderType } from '@/lib/features/ai/providers/ProviderType';
@@ -970,7 +970,8 @@ export async function GET_export(request: NextRequest) {
     // Format export
     if (format === 'csv') {
       const fields = ['id', 'subject', 'description', 'priority', 'status', 'tags', 'assignedTo', 'userId', 'createdAt', 'updatedAt', 'closedAt', 'satisfactionRating', 'escalated', 'type', 'createdBy', 'lastResponseAt', 'lastResponseBy', 'convertedToForumId', 'category', 'orgId', 'email'];
-      const csv = parseToCSV(tickets.map(t => ({
+      const parser = new Parser({ fields });
+      const csv = parser.parse(tickets.map(t => ({
         ...t,
         tags: Array.isArray(t.tags) ? t.tags.join(', ') : '',
         createdAt: t.createdAt ? String(t.createdAt) : '',
@@ -978,7 +979,7 @@ export async function GET_export(request: NextRequest) {
         lastResponseAt: t.lastResponseAt ? String(t.lastResponseAt) : '',
         closedAt: t.closedAt ? String(t.closedAt) : '',
         responses: t.responses ? JSON.stringify(t.responses) : ''
-      })), { fields });
+      })));
       return new NextResponse(csv, {
         status: 200,
         headers: {
