@@ -23,9 +23,9 @@ const nextConfig = {
   // Note: isrMemoryCacheSize was removed in Next.js 15
   // ISR is disabled by using 'standalone' output mode
   experimental: {
-    // Reduce memory usage during builds
-    workerThreads: false,
-    cpus: 1,
+    // Enable parallel builds for faster compilation
+    // workerThreads: false,  // Disabled to allow parallel compilation
+    // cpus: 1,  // Removed to use all available CPUs on Vercel
   },
   
   // Configure Next.js to handle page data collection failures gracefully
