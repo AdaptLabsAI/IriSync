@@ -1,5 +1,4 @@
-import { firestore as adminFirestore } from '../core/firebase/admin';
-import { firestore } from '../firebase';
+import { getFirestore } from '../core/firebase/admin';
 import { 
   doc, 
   collection, 
@@ -326,10 +325,10 @@ export class OrganizationRepository {
   ): Promise<void> {
     try {
       // Create a new batch
-      const batch = adminFirestore.batch();
+      const batch = getFirestore().batch();
       
       // Set organization
-      const orgRef = adminFirestore.collection(this.organizationsCollection).doc(orgId);
+      const orgRef = getFirestore().collection(this.organizationsCollection).doc(orgId);
       batch.set(orgRef, orgData);
       
       // Set members
@@ -363,10 +362,10 @@ export class OrganizationRepository {
   ): Promise<void> {
     try {
       // Create a new batch
-      const batch = adminFirestore.batch();
+      const batch = getFirestore().batch();
       
       // Update organization
-      const orgRef = adminFirestore.collection(this.organizationsCollection).doc(orgId);
+      const orgRef = getFirestore().collection(this.organizationsCollection).doc(orgId);
       batch.update(orgRef, { ...orgData });
       
       // Handle members
@@ -422,11 +421,11 @@ export class OrganizationRepository {
    */
   private async deleteOrganizationInAdmin(orgId: string): Promise<void> {
     try {
-      const orgRef = adminFirestore.collection(this.organizationsCollection).doc(orgId);
+      const orgRef = getFirestore().collection(this.organizationsCollection).doc(orgId);
       
       // Delete members
       const membersSnapshot = await orgRef.collection(this.membersSubcollection).get();
-      const batch = adminFirestore.batch();
+      const batch = getFirestore().batch();
       
       membersSnapshot.docs.forEach((doc: any) => {
         batch.delete(doc.ref);

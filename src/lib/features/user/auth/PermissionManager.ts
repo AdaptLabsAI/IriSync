@@ -39,7 +39,6 @@ import {
 import { UserRole } from '../../models/User';
 import { SubscriptionTier } from '../../subscription/models/subscription';
 import { ActivityUtils } from '../models/Activity';
-import { firestore } from '@/lib/core/firebase';
 
 /**
  * Permission cache entry

@@ -71,9 +71,9 @@ const MediaAnalysisViewer: React.FC<MediaAnalysisViewerProps> = ({
         <div className="mb-4">
           <h4 className="font-medium mb-2">Tags</h4>
           <div className="flex flex-wrap gap-2">
-            {result.tags.map((tag, idx) => (
-              <span 
-                key={idx} 
+            {result.tags.map((tag: any, idx: any) => (
+              <span
+                key={idx}
                 className="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs"
               >
                 {tag}
@@ -88,9 +88,9 @@ const MediaAnalysisViewer: React.FC<MediaAnalysisViewerProps> = ({
         <div className="mb-4">
           <h4 className="font-medium mb-2">Detected Objects</h4>
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-            {result.objects.map((obj, idx) => (
-              <div 
-                key={idx} 
+            {result.objects.map((obj: any, idx: any) => (
+              <div
+                key={idx}
                 className="p-2 border rounded-md flex justify-between items-center"
               >
                 <span className="text-sm font-medium">{obj.name}</span>
@@ -108,13 +108,13 @@ const MediaAnalysisViewer: React.FC<MediaAnalysisViewerProps> = ({
         <div className="mb-4">
           <h4 className="font-medium mb-2">Dominant Colors</h4>
           <div className="flex flex-wrap gap-2">
-            {result.colors.map((color, idx) => (
-              <div 
-                key={idx} 
+            {result.colors.map((color: any, idx: any) => (
+              <div
+                key={idx}
                 className="flex items-center space-x-2 p-2 border rounded-md"
               >
-                <div 
-                  className="w-6 h-6 rounded-full border" 
+                <div
+                  className="w-6 h-6 rounded-full border"
                   style={{ backgroundColor: color.color }}
                 ></div>
                 <span className="text-sm">{color.color}</span>
@@ -162,7 +162,7 @@ const MediaAnalysisViewer: React.FC<MediaAnalysisViewerProps> = ({
                 </tr>
               </thead>
               <tbody>
-                {result.contentWarnings.map((warning, idx) => (
+                {result.contentWarnings.map((warning: any, idx: any) => (
                   <tr key={idx} className="border-b border-amber-100 last:border-0">
                     <td className="py-2">{warning.type}</td>
                     <td className={`py-2 ${

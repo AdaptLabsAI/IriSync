@@ -6,6 +6,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/features/auth/nextauth';
+import { getFirebaseFirestore } from '@/lib/core/firebase';
 import { healthCheckService } from '@/lib/features/system';
 
 // Force dynamic rendering
@@ -32,6 +33,9 @@ export async function GET(request: NextRequest) {
     // Check if user is admin
     const { firestore } = await import('@/lib/core/firebase');
     const { doc, getDoc } = await import('firebase/firestore');
+
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
 
     const userDoc = await getDoc(doc(firestore, 'users', session.user.id));
 

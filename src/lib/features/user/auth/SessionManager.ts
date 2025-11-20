@@ -24,7 +24,6 @@ import {
   ActivityContext
 } from '../types';
 import { ActivityUtils } from '../models/Activity';
-import { firestore } from '@/lib/core/firebase';
 
 /**
  * Session manager configuration

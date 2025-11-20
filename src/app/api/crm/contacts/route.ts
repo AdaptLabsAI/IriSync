@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
+import { getFirebaseFirestore } from '@/lib/core/firebase';
 import { firestore } from '@/lib/core/firebase/client';
 import { collection, query, where, getDocs } from 'firebase/firestore';
 import { logger } from '@/lib/core/logging/logger';
@@ -63,6 +64,9 @@ export async function GET(request: NextRequest) {
     const userId = session.user.email;
     
     // Get the user's CRM connections
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
+
     const connectionsRef = collection(firestore, 'crmConnections');
     const connectionsQuery = query(connectionsRef, where('userId', '==', userId));
     const connectionsSnapshot = await getDocs(connectionsQuery);

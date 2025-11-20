@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/lib/features/auth';
-import { getFirebaseFirestore, firestore } from '@/lib/core/firebase';
+import { getFirebaseFirestore  } from '@/lib/core/firebase';
 import { collection, doc, getDoc, getDocs, query, where, setDoc } from 'firebase/firestore';
 
 // Force dynamic rendering - required for Firebase/database access
@@ -80,6 +80,9 @@ export async function GET(request: NextRequest) {
     }
     
     // Get the user's AI usage data
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
+
     const usageRef = doc(firestore, 'aiUsage', userId);
     const usageSnapshot = await getDoc(usageRef);
     
@@ -158,6 +161,9 @@ export async function POST(request: NextRequest) {
     }
     
     // Get the user's current AI usage
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
+
     const usageRef = doc(firestore, 'aiUsage', userId);
     const usageSnapshot = await getDoc(usageRef);
     

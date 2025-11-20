@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/lib/features/auth';
-import { getFirebaseFirestore, firestore } from '@/lib/core/firebase';
+import { getFirebaseFirestore  } from '@/lib/core/firebase';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { v4 as uuidv4 } from 'uuid';
 import { 
@@ -204,6 +204,9 @@ export async function POST(req: NextRequest) {
     const { team, teamId } = getOrCreateDefaultTeam(organization, user.id);
     
     // Get existing invites
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
+
     const invitesDoc = await getDoc(doc(firestore, 'team_invites', teamId));
     const existingInvites = invitesDoc.exists() ? invitesDoc.data().invites || [] : [];
     

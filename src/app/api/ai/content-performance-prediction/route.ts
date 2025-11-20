@@ -30,7 +30,7 @@ class ContentPerformancePredictionService {
         .limit(30)
         .get();
 
-      const posts = snapshot.docs.map(doc => ({
+      const posts = snapshot.docs.map((doc: any) => ({
         id: doc.id,
         ...doc.data()
       })) as Array<{
@@ -180,7 +180,7 @@ async function getHistoricalPerformance(userId: string, platform: string) {
       .limit(30)
       .get();
 
-    const posts = snapshot.docs.map(doc => ({
+    const posts = snapshot.docs.map((doc: any) => ({
       id: doc.id,
       ...doc.data()
     })) as Array<{

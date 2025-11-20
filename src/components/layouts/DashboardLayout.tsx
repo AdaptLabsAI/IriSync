@@ -1,6 +1,7 @@
 'use client';
 
 import React, { ReactNode, useState, useEffect } from 'react';
+import { NextResponse } from 'next/server';
 import {
   Box,
   Drawer,

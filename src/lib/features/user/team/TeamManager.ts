@@ -15,7 +15,7 @@ import {
   runTransaction,
   writeBatch
 } from 'firebase/firestore';
-import { getFirebaseFirestore, firestore } from '@/lib/core/firebase';
+import { getFirebaseFirestore  } from '@/lib/core/firebase';
 import { Logger } from '@/lib/core/logging';
 import { Cache } from '@/lib/core/cache';
 import {

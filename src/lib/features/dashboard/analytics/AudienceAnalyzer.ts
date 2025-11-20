@@ -2,7 +2,6 @@
 // Production-ready analytics component following existing codebase patterns
 
 import { logger } from '@/lib/core/logging/logger';
-import { firestore } from '@/lib/core/firebase/client';
 import { collection, query, where, getDocs, orderBy, limit, Timestamp } from 'firebase/firestore';
 
 import {

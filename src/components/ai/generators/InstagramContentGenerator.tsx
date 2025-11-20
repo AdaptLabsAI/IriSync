@@ -71,9 +71,9 @@ export default function InstagramContentGenerator({
             // Parse hashtags string into array
             const hashtags = result.hashtags
               .split(/[#\s]+/)
-              .map(tag => tag.trim())
-              .filter(tag => tag.length > 0)
-              .map(tag => tag.startsWith('#') ? tag : `#${tag}`);
+              .map((tag: any) => tag.trim())
+              .filter((tag: any) => tag.length > 0)
+              .map((tag: any) => tag.startsWith('#') ? tag : `#${tag}`);
             
             setGeneratedHashtags(hashtags);
           }
@@ -149,9 +149,9 @@ export default function InstagramContentGenerator({
             const hashtags = result.hashtags
               .toString()
               .split(/[#\s]+/)
-              .map(tag => tag.trim())
-              .filter(tag => tag.length > 0)
-              .map(tag => tag.startsWith('#') ? tag : `#${tag}`);
+              .map((tag: any) => tag.trim())
+              .filter((tag: any) => tag.length > 0)
+              .map((tag: any) => tag.startsWith('#') ? tag : `#${tag}`);
             
             setGeneratedHashtags(hashtags);
           }
@@ -233,7 +233,7 @@ export default function InstagramContentGenerator({
         </div>
       )}
       
-      <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as 'create' | 'advanced')}>
+      <Tabs value={activeTab} onValueChange={(value: any) => setActiveTab(value as 'create' | 'advanced')}>
         <TabsList className="mb-4">
           <TabsTrigger value="create">Create Content</TabsTrigger>
           <TabsTrigger 

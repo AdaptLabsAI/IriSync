@@ -334,7 +334,11 @@ async function getHistoricalAnalyticsData(organizationId: string, timeRange: str
     // Query Firestore for historical analytics data BY ORGANIZATION
     const { firestore } = await import('../../../../lib/core/firebase');
     const { collection, query, where, orderBy, getDocs } = await import('firebase/firestore');
-    
+
+    if (!firestore) {
+      throw new Error('Firestore is not initialized');
+    }
+
     const analyticsQuery = query(
       collection(firestore, 'analytics'),
       where('organizationId', '==', organizationId), // Use organizationId instead of userId
@@ -402,7 +406,11 @@ async function getUserOrganizationId(userId: string): Promise<string | null> {
   try {
     const { firestore } = await import('../../../../lib/core/firebase');
     const { doc, getDoc } = await import('firebase/firestore');
-    
+
+    if (!firestore) {
+      throw new Error('Firestore is not initialized');
+    }
+
     const userDoc = await getDoc(doc(firestore, 'users', userId));
     
     if (userDoc.exists()) {
@@ -446,7 +454,11 @@ async function createUserForAI(userId: string, organizationId: string): Promise<
     const { firestore } = await import('../../../../lib/core/firebase');
     const { doc, getDoc } = await import('firebase/firestore');
     const { Timestamp } = await import('firebase/firestore');
-    
+
+    if (!firestore) {
+      throw new Error('Firestore is not initialized');
+    }
+
     const userDoc = await getDoc(doc(firestore, 'users', userId));
     
     if (userDoc.exists()) {

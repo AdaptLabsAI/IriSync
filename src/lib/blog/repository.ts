@@ -1,22 +1,22 @@
-import { 
-  collection, 
-  doc, 
-  getDoc, 
-  getDocs, 
-  setDoc, 
-  updateDoc, 
-  addDoc, 
-  deleteDoc, 
-  query, 
-  where, 
-  orderBy, 
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  setDoc,
+  updateDoc,
+  addDoc,
+  deleteDoc,
+  query,
+  where,
+  orderBy,
   limit,
   startAfter,
   Timestamp,
   DocumentReference,
   serverTimestamp
 } from 'firebase/firestore';
-import { db } from '../core/firebase';
+import { getFirebaseFirestore, firestore } from '../core/firebase';
 import { BlogPost, BlogComment, BlogPostStatus, CommentStatus, BlogCategory } from './models';
 import { User } from '../core/models/User';
 import { generateSlug } from '../utils/slug';
@@ -34,8 +34,11 @@ export const BlogPostRepository = {
     pageSize = 10, 
     lastDoc: any = null
   ): Promise<{ posts: BlogPost[], lastDoc: any, hasMore: boolean }> {
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
+
     let postQuery = query(
-      collection(db, POST_COLLECTION),
+      collection(firestore, POST_COLLECTION),
       where('status', '==', status),
       orderBy('publishedAt', 'desc'),
       limit(pageSize)
@@ -56,8 +59,11 @@ export const BlogPostRepository = {
   },
 
   async getBySlug(slug: string): Promise<BlogPost | null> {
+    const firestore = getFirebaseFirestore();
+    if (!firestore) throw new Error('Database not configured');
+
     const postQuery = query(
-      collection(db, POST_COLLECTION),
+      collection(firestore, POST_COLLECTION),
       where('slug', '==', slug),
       where('status', '==', BlogPostStatus.PUBLISHED),
       limit(1)
@@ -70,7 +76,10 @@ export const BlogPostRepository = {
   },
 
   async getById(id: string): Promise<BlogPost | null> {
-    const docRef = doc(db, POST_COLLECTION, id);
+    const firestore = getFirebaseFirestore();
+    if (!firestore) throw new Error('Database not configured');
+
+    const docRef = doc(firestore, POST_COLLECTION, id);
     const docSnap = await getDoc(docRef);
     
     if (!docSnap.exists()) return null;
@@ -78,11 +87,14 @@ export const BlogPostRepository = {
   },
 
   async create(postData: Omit<BlogPost, 'id' | 'createdAt' | 'updatedAt' | 'slug'>): Promise<BlogPost> {
+    const firestore = getFirebaseFirestore();
+    if (!firestore) throw new Error('Database not configured');
+
     // Generate a unique slug from the title
     const baseSlug = generateSlug(postData.title);
     let slug = baseSlug;
     let iteration = 1;
-    
+
     // Check if slug already exists, if so, append a number
     while (await this.slugExists(slug)) {
       slug = `${baseSlug}-${iteration}`;
@@ -98,12 +110,15 @@ export const BlogPostRepository = {
       publishedAt: postData.status === BlogPostStatus.PUBLISHED ? timestamp : null
     };
 
-    const docRef = await addDoc(collection(db, POST_COLLECTION), newPost);
+    const docRef = await addDoc(collection(firestore, POST_COLLECTION), newPost);
     return { id: docRef.id, ...newPost } as BlogPost;
   },
 
   async update(id: string, postData: Partial<BlogPost>): Promise<BlogPost> {
-    const docRef = doc(db, POST_COLLECTION, id);
+    const firestore = getFirebaseFirestore();
+    if (!firestore) throw new Error('Database not configured');
+
+    const docRef = doc(firestore, POST_COLLECTION, id);
     const currentPost = await this.getById(id);
     
     if (!currentPost) {
@@ -145,18 +160,18 @@ export const BlogPostRepository = {
   },
 
   async delete(id: string): Promise<void> {
-    const docRef = doc(db, POST_COLLECTION, id);
+    const docRef = doc(firestore, POST_COLLECTION, id);
     await deleteDoc(docRef);
     
     // Also delete all comments associated with this post
     const commentsQuery = query(
-      collection(db, COMMENT_COLLECTION),
+      collection(firestore, COMMENT_COLLECTION),
       where('postId', '==', id)
     );
     
     const commentsSnapshot = await getDocs(commentsQuery);
     const deletePromises = commentsSnapshot.docs.map(commentDoc => 
-      deleteDoc(doc(db, COMMENT_COLLECTION, commentDoc.id))
+      deleteDoc(doc(firestore, COMMENT_COLLECTION, commentDoc.id))
     );
     
     await Promise.all(deletePromises);
@@ -164,7 +179,7 @@ export const BlogPostRepository = {
 
   async slugExists(slug: string, excludeId?: string): Promise<boolean> {
     let slugQuery = query(
-      collection(db, POST_COLLECTION),
+      collection(firestore, POST_COLLECTION),
       where('slug', '==', slug)
     );
     
@@ -180,7 +195,7 @@ export const BlogPostRepository = {
 
   async getByTag(tag: string, page = 1, pageSize = 10, lastDoc: any = null): Promise<{ posts: BlogPost[], lastDoc: any, hasMore: boolean }> {
     let tagQuery = query(
-      collection(db, POST_COLLECTION),
+      collection(firestore, POST_COLLECTION),
       where('tags', 'array-contains', tag),
       where('status', '==', BlogPostStatus.PUBLISHED),
       orderBy('publishedAt', 'desc'),
@@ -203,7 +218,7 @@ export const BlogPostRepository = {
 
   async getByAuthor(authorId: string, page = 1, pageSize = 10, lastDoc: any = null): Promise<{ posts: BlogPost[], lastDoc: any, hasMore: boolean }> {
     let authorQuery = query(
-      collection(db, POST_COLLECTION),
+      collection(firestore, POST_COLLECTION),
       where('author.id', '==', authorId),
       where('status', '==', BlogPostStatus.PUBLISHED),
       orderBy('publishedAt', 'desc'),
@@ -234,8 +249,11 @@ export const BlogCommentRepository = {
     pageSize = 20, 
     lastDoc: any = null
   ): Promise<{ comments: BlogComment[], lastDoc: any, hasMore: boolean }> {
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
+
     let commentQuery = query(
-      collection(db, COMMENT_COLLECTION),
+      collection(firestore, COMMENT_COLLECTION),
       where('postId', '==', postId),
       where('status', '==', status),
       orderBy('createdAt', 'desc'),
@@ -257,7 +275,7 @@ export const BlogCommentRepository = {
   },
 
   async getById(id: string): Promise<BlogComment | null> {
-    const docRef = doc(db, COMMENT_COLLECTION, id);
+    const docRef = doc(firestore, COMMENT_COLLECTION, id);
     const docSnap = await getDoc(docRef);
     
     if (!docSnap.exists()) return null;
@@ -275,12 +293,12 @@ export const BlogCommentRepository = {
       reportCount: 0
     };
 
-    const docRef = await addDoc(collection(db, COMMENT_COLLECTION), newComment);
+    const docRef = await addDoc(collection(firestore, COMMENT_COLLECTION), newComment);
     return { id: docRef.id, ...newComment } as BlogComment;
   },
 
   async update(id: string, commentData: Partial<BlogComment>): Promise<BlogComment> {
-    const docRef = doc(db, COMMENT_COLLECTION, id);
+    const docRef = doc(firestore, COMMENT_COLLECTION, id);
     const currentComment = await this.getById(id);
     
     if (!currentComment) {
@@ -300,7 +318,7 @@ export const BlogCommentRepository = {
   },
 
   async delete(id: string): Promise<void> {
-    const docRef = doc(db, COMMENT_COLLECTION, id);
+    const docRef = doc(firestore, COMMENT_COLLECTION, id);
     await deleteDoc(docRef);
   },
 
@@ -309,14 +327,14 @@ export const BlogCommentRepository = {
   },
 
   async incrementLikes(id: string): Promise<void> {
-    const docRef = doc(db, COMMENT_COLLECTION, id);
+    const docRef = doc(firestore, COMMENT_COLLECTION, id);
     await updateDoc(docRef, {
       likes: increment(1)
     });
   },
 
   async reportComment(id: string): Promise<void> {
-    const docRef = doc(db, COMMENT_COLLECTION, id);
+    const docRef = doc(firestore, COMMENT_COLLECTION, id);
     await updateDoc(docRef, {
       reportCount: increment(1)
     });
@@ -324,7 +342,7 @@ export const BlogCommentRepository = {
 
   async getPendingComments(page = 1, pageSize = 20, lastDoc: any = null): Promise<{ comments: BlogComment[], lastDoc: any, hasMore: boolean }> {
     let pendingQuery = query(
-      collection(db, COMMENT_COLLECTION),
+      collection(firestore, COMMENT_COLLECTION),
       where('status', '==', CommentStatus.PENDING),
       orderBy('createdAt', 'asc'),
       limit(pageSize)
@@ -348,8 +366,11 @@ export const BlogCommentRepository = {
 // Blog Category Repository
 export const BlogCategoryRepository = {
   async getAll(): Promise<BlogCategory[]> {
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
+
     const categoryQuery = query(
-      collection(db, CATEGORY_COLLECTION),
+      collection(firestore, CATEGORY_COLLECTION),
       orderBy('name', 'asc')
     );
 
@@ -359,7 +380,7 @@ export const BlogCategoryRepository = {
 
   async getBySlug(slug: string): Promise<BlogCategory | null> {
     const categoryQuery = query(
-      collection(db, CATEGORY_COLLECTION),
+      collection(firestore, CATEGORY_COLLECTION),
       where('slug', '==', slug),
       limit(1)
     );
@@ -387,12 +408,12 @@ export const BlogCategoryRepository = {
       postCount: 0
     };
 
-    const docRef = await addDoc(collection(db, CATEGORY_COLLECTION), newCategory);
+    const docRef = await addDoc(collection(firestore, CATEGORY_COLLECTION), newCategory);
     return { id: docRef.id, ...newCategory } as BlogCategory;
   },
 
   async update(id: string, categoryData: Partial<BlogCategory>): Promise<BlogCategory> {
-    const docRef = doc(db, CATEGORY_COLLECTION, id);
+    const docRef = doc(firestore, CATEGORY_COLLECTION, id);
     const currentCategory = await this.getById(id);
     
     if (!currentCategory) {
@@ -419,12 +440,12 @@ export const BlogCategoryRepository = {
   },
 
   async delete(id: string): Promise<void> {
-    const docRef = doc(db, CATEGORY_COLLECTION, id);
+    const docRef = doc(firestore, CATEGORY_COLLECTION, id);
     await deleteDoc(docRef);
   },
 
   async getById(id: string): Promise<BlogCategory | null> {
-    const docRef = doc(db, CATEGORY_COLLECTION, id);
+    const docRef = doc(firestore, CATEGORY_COLLECTION, id);
     const docSnap = await getDoc(docRef);
     
     if (!docSnap.exists()) return null;
@@ -432,14 +453,14 @@ export const BlogCategoryRepository = {
   },
 
   async incrementPostCount(id: string): Promise<void> {
-    const docRef = doc(db, CATEGORY_COLLECTION, id);
+    const docRef = doc(firestore, CATEGORY_COLLECTION, id);
     await updateDoc(docRef, {
       postCount: increment(1)
     });
   },
 
   async decrementPostCount(id: string): Promise<void> {
-    const docRef = doc(db, CATEGORY_COLLECTION, id);
+    const docRef = doc(firestore, CATEGORY_COLLECTION, id);
     
     // Get current count to avoid negative values
     const category = await this.getById(id);

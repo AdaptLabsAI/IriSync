@@ -163,7 +163,7 @@ export async function POST(request: NextRequest) {
     });
     
     // Process results to include only necessary information
-    const processedResults = results.map(result => ({
+    const processedResults = results.map((result: any) => ({
       id: result.id,
       score: result.score,
       content: result.content,

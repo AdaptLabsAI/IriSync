@@ -26,6 +26,9 @@ export async function getUserSubscriptionTier(userId: string): Promise<Subscript
     
     // Check current organization first
     if (userData.currentOrganizationId) {
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
+
       const orgDoc = await getDoc(doc(firestore, 'organizations', userData.currentOrganizationId));
       
       if (orgDoc.exists()) {
@@ -72,6 +75,9 @@ export async function getUserSubscriptionTier(userId: string): Promise<Subscript
 export async function isSubscriptionActive(userId: string): Promise<boolean> {
   try {
     // Get user document
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
+
     const userDoc = await getDoc(doc(firestore, 'users', userId));
     
     if (!userDoc.exists()) {

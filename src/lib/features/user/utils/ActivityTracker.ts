@@ -1,4 +1,4 @@
-import { getFirebaseFirestore, firestore } from '@/lib/core/firebase';
+import { getFirebaseFirestore  } from '@/lib/core/firebase';
 import { doc, setDoc, getDoc, query, where, orderBy, limit, getDocs, collection, deleteDoc } from 'firebase/firestore';
 import { 
   UserConfig, 

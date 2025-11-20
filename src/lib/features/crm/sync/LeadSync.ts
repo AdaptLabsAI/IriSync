@@ -2,7 +2,6 @@
 // Handles lead synchronization between CRM platforms and our database
 
 import { logger } from '@/lib/core/logging/logger';
-import { firestore } from '@/lib/core/firebase/client';
 import { collection, addDoc, updateDoc, doc, query, where, getDocs } from 'firebase/firestore';
 
 import {

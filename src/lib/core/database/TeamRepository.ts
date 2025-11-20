@@ -1,5 +1,4 @@
-import { firestore as adminFirestore } from '../core/firebase/admin';
-import { firestore } from '../firebase';
+import { getFirestore } from '../core/firebase/admin';
 import { 
   doc, 
   collection, 
@@ -50,7 +49,7 @@ export class TeamRepository {
       await setDoc(teamRef, teamData);
       
       // Also create in Firebase Admin
-      await adminFirestore
+      await getFirestore()
         .collection(this.organizationsCollection)
         .doc(orgId)
         .collection(this.teamsSubcollection)
@@ -154,7 +153,7 @@ export class TeamRepository {
       await updateDoc(teamRef, updatedData);
       
       // Update in Firebase Admin
-      await adminFirestore
+      await getFirestore()
         .collection(this.organizationsCollection)
         .doc(orgId)
         .collection(this.teamsSubcollection)
@@ -194,7 +193,7 @@ export class TeamRepository {
       await deleteDoc(teamRef);
       
       // Delete in Firebase Admin
-      await adminFirestore
+      await getFirestore()
         .collection(this.organizationsCollection)
         .doc(orgId)
         .collection(this.teamsSubcollection)
@@ -240,7 +239,7 @@ export class TeamRepository {
       });
       
       // Update in Firebase Admin
-      await adminFirestore
+      await getFirestore()
         .collection(this.organizationsCollection)
         .doc(orgId)
         .collection(this.teamsSubcollection)
@@ -289,7 +288,7 @@ export class TeamRepository {
       });
       
       // Update in Firebase Admin
-      await adminFirestore
+      await getFirestore()
         .collection(this.organizationsCollection)
         .doc(orgId)
         .collection(this.teamsSubcollection)

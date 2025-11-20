@@ -233,6 +233,9 @@ export const GET = withSuperAdmin(async (request: NextRequest, adminUser: any) =
         logsCollection = SYSTEM_LOGS_COLLECTION;
       }
       
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
+
       let logsQuery = query(
         collection(firestore, logsCollection),
         orderBy('timestamp', 'desc'),
@@ -544,6 +547,9 @@ export const POST = withSuperAdmin(async (request: NextRequest, adminUser: any) 
           }
           
           // Query for logs older than the max age
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
+
           const logsQuery = query(
             collection(firestore, logsCollection),
             where('timestamp', '<', maxTimestamp),
@@ -983,6 +989,9 @@ export const PATCH = withSuperAdmin(async (request: NextRequest, adminUser: any)
     const settingsData = validationResult.data;
     
     // Get existing settings
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
+
     const settingsDocRef = doc(firestore, SYSTEM_SETTINGS_COLLECTION, 'general');
     const settingsDoc = await getDoc(settingsDocRef);
     

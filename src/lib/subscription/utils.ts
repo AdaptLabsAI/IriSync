@@ -266,6 +266,9 @@ export async function getSubscriptionTier(userId: string): Promise<SubscriptionT
     const { firestore } = await import('../core/firebase');
     const { doc, getDoc } = await import('firebase/firestore');
     
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
+
     const userDoc = await getDoc(doc(firestore, 'users', userId));
     if (userDoc.exists()) {
       const userData = userDoc.data();

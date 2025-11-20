@@ -2,28 +2,29 @@ import { NextRequest, NextResponse } from 'next/server';
 import { withAdmin } from '@/lib/features/auth/route-handlers';
 import { getFirebaseFirestore, firestore } from '@/lib/core/firebase';
 import { firebaseAdmin, getFirestore, serverTimestamp } from '@/lib/core/firebase/admin';
-import { 
-  collection, 
-  doc, 
-  getDoc, 
-  getDocs, 
-  query, 
-  where, 
-  orderBy, 
-  limit, 
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  query,
+  where,
+  orderBy,
+  limit,
   startAfter,
-  Timestamp 
+  Timestamp
 } from 'firebase/firestore';
 import { z } from 'zod';
 import { logger } from '@/lib/core/logging/logger';
-import { 
-  KnowledgeContent, 
+import {
+  KnowledgeContent,
   KnowledgeContentFilter,
-  KnowledgeContentType, 
-  KnowledgeStatus, 
-  KnowledgeAccessLevel 
+  KnowledgeContentType,
+  KnowledgeStatus,
+  KnowledgeAccessLevel
 } from '@/lib/knowledge/models';
 import { generateSlug } from '@/lib/core/utils/slug';
+import { KnowledgeRepository } from '@/lib/knowledge/repository';
 
 // Force dynamic rendering - required for Firebase/database access
 export const dynamic = 'force-dynamic';

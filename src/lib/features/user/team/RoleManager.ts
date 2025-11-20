@@ -28,7 +28,6 @@ import {
 import { Team, TeamUtils } from '../models/Team';
 import { User, UserUtils } from '../../core/models/User';
 import { ActivityUtils } from '../models/Activity';
-import { firestore } from '@/lib/core/firebase';
 
 /**
  * Custom role interface for teams

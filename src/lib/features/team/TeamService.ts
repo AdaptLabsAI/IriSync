@@ -16,7 +16,7 @@
  * - Additional team members: $15/month per user (Creator), $25/month (Influencer), $40/month (Enterprise)
  */
 
-import { getFirebaseFirestore, firestore } from '@/lib/core/firebase';
+import { getFirebaseFirestore  } from '@/lib/core/firebase';
 import {
   doc,
   getDoc,

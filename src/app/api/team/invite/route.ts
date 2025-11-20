@@ -9,7 +9,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/lib/features/auth';
-import { getFirebaseFirestore, firestore } from '@/lib/core/firebase';
+import { getFirebaseFirestore  } from '@/lib/core/firebase';
 import { getDoc, doc } from 'firebase/firestore';
 import { teamService, TeamRole } from '@/lib/features/team/TeamService';
 
@@ -128,6 +128,9 @@ export async function GET(request: NextRequest) {
     const userId = session.user.id;
 
     // Get user's organization
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
+
     const userDoc = await getDoc(doc(firestore, 'users', userId));
     if (!userDoc.exists()) {
       return NextResponse.json(
@@ -195,6 +198,9 @@ export async function PATCH(request: NextRequest) {
     }
 
     // Get user data
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
+
     const userDoc = await getDoc(doc(firestore, 'users', userId));
     const userName = userDoc.exists() ? userDoc.data().name || userDoc.data().email : undefined;
 
@@ -237,6 +243,9 @@ export async function DELETE(request: NextRequest) {
     const userId = session.user.id;
 
     // Get user's organization
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
+
     const userDoc = await getDoc(doc(firestore, 'users', userId));
     if (!userDoc.exists()) {
       return NextResponse.json(

@@ -1,6 +1,6 @@
 'use client';
 
-import { 
+import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signInWithPopup,
@@ -10,7 +10,7 @@ import {
   UserCredential,
   updateProfile
 } from 'firebase/auth';
-import { auth, firestore } from '@/lib/core/firebase/client';
+import { auth, getFirebaseFirestore } from '@/lib/core/firebase';
 import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
 
 /**
@@ -37,8 +37,11 @@ export const registerWithEmailAndPassword = async (
     await updateProfile(userCredential.user, {
       displayName: `${firstName} ${lastName}`
     });
-    
+
     // Create user document in Firestore
+    const firestore = getFirebaseFirestore();
+    if (!firestore) throw new Error('Database not configured');
+
     await setDoc(doc(firestore, 'users', userCredential.user.uid), {
       uid: userCredential.user.uid,
       firstName,
@@ -61,7 +64,7 @@ export const registerWithEmailAndPassword = async (
       lastLogin: serverTimestamp(),
       requiresSubscription: true // Flag to indicate subscription is required
     });
-    
+
     // Create user settings
     await setDoc(doc(firestore, 'userSettings', userCredential.user.uid), {
       userId: userCredential.user.uid,
@@ -112,6 +115,9 @@ export const signInWithGoogle = async (): Promise<UserCredential> => {
     
     if (isNewUser) {
       // Create or update user document in Firestore
+      const firestore = getFirebaseFirestore();
+      if (!firestore) throw new Error('Database not configured');
+
       await setDoc(doc(firestore, 'users', userCredential.user.uid), {
         uid: userCredential.user.uid,
         email: userCredential.user.email,

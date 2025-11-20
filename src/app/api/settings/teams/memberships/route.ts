@@ -1,13 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
-import { 
-  collection, 
-  query, 
-  where, 
+import {
+  collection,
+  query,
+  where,
   getDocs,
   orderBy
 } from 'firebase/firestore';
-import { firestore } from '../../../../../lib/core/firebase';
+import { firestore, getFirebaseFirestore } from '@/lib/core/firebase';
 import { OrganizationRole, TeamRole } from '../../../../../lib/features/user/types';
 
 // Force dynamic rendering - required for Firebase/database access
@@ -41,6 +41,9 @@ export async function GET(request: NextRequest) {
     const userId = (session.user as any).id || session.user.email;
     
     // Query all teams where user is a member
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
+
     const teamsRef = collection(firestore, 'teams');
     const teamsQuery = query(
       teamsRef,

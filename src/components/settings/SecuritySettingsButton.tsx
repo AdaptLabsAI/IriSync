@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Button, ButtonProps } from '../ui/button/Button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '../ui/dialog';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs';
+import { toast } from '../ui/use-toast';
 
 import { Shield, Lock, Smartphone, Key, History, Loader2, Save } from 'lucide-react';
 

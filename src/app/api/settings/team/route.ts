@@ -300,6 +300,9 @@ export async function GET(req: NextRequest) {
     // If we created a new team, save it to the organization
     if (!organization.teams?.[teamId]) {
       await runTransaction(firestore, async (transaction) => {
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
+
         const orgRef = doc(firestore, 'organizations', organizationId);
         const teamsRef = doc(firestore, 'organizations', organizationId, 'teams', 'data');
         
@@ -381,6 +384,9 @@ export async function POST(req: NextRequest) {
     const { team, teamId } = getOrCreateDefaultTeam(organization, user.id);
     
     // Check if email is already invited
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
+
     const invitesDoc = await getDoc(doc(firestore, 'team_invites', teamId));
     const existingInvites = invitesDoc.exists() ? invitesDoc.data().invites || [] : [];
     const existingInvite = existingInvites.find((inv: any) => inv.email === email);
@@ -480,6 +486,9 @@ export async function DELETE(req: NextRequest) {
     if (memberToRemove) {
       // Remove from organization (this will handle team removal too)
       await runTransaction(firestore, async (transaction) => {
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
+
         const membersRef = doc(firestore, 'organizations', organizationId, 'members', 'data');
         const teamsRef = doc(firestore, 'organizations', organizationId, 'teams', 'data');
         
@@ -489,11 +498,11 @@ export async function DELETE(req: NextRequest) {
         
         // Remove member from all teams
         const updatedTeams = { ...organization.teams };
-        Object.keys(updatedTeams).forEach(tId => {
+        Object.keys(updatedTeams).forEach((tId: any) => {
           updatedTeams[tId] = {
             ...updatedTeams[tId],
-            memberIds: updatedTeams[tId].memberIds.filter(id => id !== memberToRemove.userId),
-            managers: updatedTeams[tId].managers.filter(id => id !== memberToRemove.userId)
+            memberIds: updatedTeams[tId].memberIds.filter((id: any) => id !== memberToRemove.userId),
+            managers: updatedTeams[tId].managers.filter((id: any) => id !== memberToRemove.userId)
           };
         });
         

@@ -502,6 +502,10 @@ async function handleProcessWebhook(params: any) {
 
 async function getConnectedAccounts(organizationId: string): Promise<SocialAccount[]> {
   try {
+    if (!firestore) {
+      throw new Error('Firestore is not initialized');
+    }
+
     const accountsQuery = query(
       collection(firestore, 'connectedAccounts'),
       where('organizationId', '==', organizationId),
@@ -537,7 +541,11 @@ async function getUserOrganizationId(userId: string): Promise<string | null> {
   try {
     const { firestore } = await import('../../../../lib/core/firebase/client');
     const { doc, getDoc } = await import('firebase/firestore');
-    
+
+    if (!firestore) {
+      throw new Error('Firestore is not initialized');
+    }
+
     const userDoc = await getDoc(doc(firestore, 'users', userId));
     
     if (userDoc.exists()) {

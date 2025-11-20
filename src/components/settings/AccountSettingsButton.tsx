@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Button, ButtonProps } from '../ui/button/Button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '../ui/dialog';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs';
+import { toast } from '../ui/use-toast';
 
 import { useAuth } from '../../hooks/useAuth';
 import { Settings, User, Mail, Edit2, Save, Loader2 } from 'lucide-react';

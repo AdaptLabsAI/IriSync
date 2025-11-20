@@ -41,6 +41,10 @@ async function getUserSubscriptionTier(userId: string): Promise<'creator' | 'inf
   // This would typically come from your user/subscription service
   // For now, defaulting to creator - implement based on your subscription system
   try {
+    if (!firestore) {
+      throw new Error('Firestore is not initialized');
+    }
+
     const userDoc = await getDoc(doc(firestore, 'users', userId));
     const userData = userDoc.data();
     return userData?.subscriptionTier || 'creator';
@@ -96,6 +100,9 @@ export async function GET(request: NextRequest) {
     const subscriptionTier = await getUserSubscriptionTier(userId);
     
     // Get user's role information
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
+
     const teamsRef = collection(firestore, 'teams');
     const teamQuery = query(teamsRef, where('id', '==', teamId));
     const teamSnapshot = await getDocs(teamQuery);
@@ -373,6 +380,9 @@ export async function POST(request: NextRequest) {
     const subscriptionTier = await getUserSubscriptionTier(userId);
     
     // Get user's role information and check permissions
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
+
     const teamsRef = collection(firestore, 'teams');
     const teamQuery = query(teamsRef, where('id', '==', teamId));
     const teamSnapshot = await getDocs(teamQuery);
@@ -529,6 +539,9 @@ export async function PUT(request: NextRequest) {
       );
     }
     
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
+
     const todoRef = doc(firestore, 'teamTodos', id);
     const todoDoc = await getDoc(todoRef);
     
@@ -630,6 +643,9 @@ export async function DELETE(request: NextRequest) {
     }
     
     // Get user's role information
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
+
     const teamsRef = collection(firestore, 'teams');
     const teamQuery = query(teamsRef, where('id', '==', teamId));
     const teamSnapshot = await getDocs(teamQuery);

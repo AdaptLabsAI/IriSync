@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getFirebaseFirestore, firestore } from '@/lib/core/firebase';
+import { getFirebaseFirestore  } from '@/lib/core/firebase';
 import { doc, updateDoc, deleteDoc, getDoc, serverTimestamp } from 'firebase/firestore';
 import { withAdmin } from '@/lib/features/auth/route-handlers';
 
@@ -57,6 +57,12 @@ export const PUT = withAdmin(async (request: NextRequest, adminUser: any) => {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
     }
     
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
+
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
+
     const docRef = doc(firestore, 'roadmapItems', id);
     
     // Check if document exists
@@ -97,6 +103,12 @@ export const DELETE = withAdmin(async (request: NextRequest, adminUser: any) => 
     const pathSegments = url.pathname.split('/');
     const id = pathSegments[pathSegments.length - 1];
     
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
+
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
+
     const docRef = doc(firestore, 'roadmapItems', id);
     
     // Check if document exists

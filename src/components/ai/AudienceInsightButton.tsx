@@ -227,7 +227,7 @@ const AudienceInsightButton: React.FC<AudienceInsightButtonProps> = ({
       
       <Dialog
         open={isOpen}
-        onOpenChange={(open) => {
+        onOpenChange={(open: any) => {
           setIsOpen(open);
         }}
       >
@@ -273,9 +273,9 @@ const AudienceInsightButton: React.FC<AudienceInsightButtonProps> = ({
                 
                 <div className="space-y-2">
                   <label className="text-sm font-medium">Insight Type</label>
-                  <Select 
-                    value={insightType} 
-                    onValueChange={(value) => setInsightType(value as InsightType)}
+                  <Select
+                    value={insightType}
+                    onValueChange={(value: any) => setInsightType(value as InsightType)}
                   >
                     <SelectTrigger>
                       <SelectValue placeholder="Select insight type" />
@@ -292,9 +292,9 @@ const AudienceInsightButton: React.FC<AudienceInsightButtonProps> = ({
                 
                 <div className="space-y-2">
                   <label className="text-sm font-medium">Time Period</label>
-                  <Select 
-                    value={timeframe} 
-                    onValueChange={(value) => setTimeframe(value as InsightTimeframe)}
+                  <Select
+                    value={timeframe}
+                    onValueChange={(value: any) => setTimeframe(value as InsightTimeframe)}
                   >
                     <SelectTrigger>
                       <SelectValue placeholder="Select time period" />

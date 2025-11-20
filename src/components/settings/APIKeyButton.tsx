@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Button, ButtonProps } from '../ui/button/Button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '../ui/dialog';
+import { toast } from '../ui/use-toast';
 
 import { Key, Plus, Copy, Eye, EyeOff, Trash, Loader2, Calendar, RefreshCw, ExternalLink } from 'lucide-react';
 

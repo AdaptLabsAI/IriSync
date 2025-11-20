@@ -184,7 +184,7 @@ Respond in JSON format with series structure and individual pieces.`;
         };
       }
 
-      const contentData = topContent.docs.map(doc => ({
+      const contentData = topContent.docs.map((doc: any) => ({
         id: doc.id,
         ...doc.data()
       })) as Array<{

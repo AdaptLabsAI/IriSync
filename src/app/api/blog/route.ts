@@ -116,6 +116,9 @@ export async function GET(request: NextRequest) {
     const lastDocId = searchParams.get('lastDoc');
 
     // Build query
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
+
     let blogQuery = collection(firestore, 'blogPosts');
     
     const constraints: any[] = [];
@@ -194,6 +197,9 @@ export async function POST(request: NextRequest) {
 
     // Ensure slug uniqueness
     while (true) {
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
+
       const existingPost = await getDocs(
         query(collection(firestore, 'blogPosts'), where('slug', '==', slug))
       );

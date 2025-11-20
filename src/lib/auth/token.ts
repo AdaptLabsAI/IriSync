@@ -137,6 +137,9 @@ export async function getCurrentUser(): Promise<TokenUser | null> {
     }
     
     // Get the user from Firestore to confirm they still exist and get latest data
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
+
     const userDoc = await getDoc(doc(firestore, 'users', decoded.sub));
     
     if (!userDoc.exists()) {

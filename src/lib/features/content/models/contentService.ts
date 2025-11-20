@@ -1,6 +1,5 @@
 import { getFirebaseFirestore } from '../../core/firebase';
 import { collection, query, where, orderBy, getDocs, Timestamp } from 'firebase/firestore';
-import { firestore } from '@/lib/core/firebase';
 
 interface PostQueryParams {
   startDate?: string;
@@ -27,6 +26,9 @@ export async function getScheduledPostCount(userId: string): Promise<number> {
       where('status', '==', 'scheduled')
     );
     
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
+
     const postsSnapshot = await getDocs(postsQuery);
     
     return postsSnapshot.size;

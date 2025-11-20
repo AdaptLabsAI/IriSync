@@ -19,7 +19,10 @@ export interface ForumCategory {
 export async function getCategories(): Promise<ForumCategory[]> {
   try {
     // Create a query against the categories collection, ordered by name
-    const q = query(collection(db, 'forumCategories'), orderBy('name'));
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
+
+    const q = query(collection(firestore, 'forumCategories'), orderBy('name'));
     
     // Execute the query
     const querySnapshot = await getDocs(q);

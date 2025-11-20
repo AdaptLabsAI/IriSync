@@ -219,7 +219,7 @@ export async function GET(req: NextRequest) {
     let totalTokensAllocated = 0;
     let totalTokensUsed = 0;
     
-    orgsSnapshot.docs.forEach(doc => {
+    orgsSnapshot.docs.forEach((doc: any) => {
       const data = doc.data();
       totalActive++;
       totalTokensAllocated += data.tokens?.monthlyAllocation || 0;

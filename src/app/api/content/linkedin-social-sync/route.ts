@@ -4,7 +4,7 @@ import { authOptions } from '@/lib/features/auth/nextauth';
 import { LinkedInProvider } from '@/lib/features/platforms/providers/LinkedInProvider';
 import { LinkedInSocialInboxAdapter } from '@/lib/features/content/LinkedInSocialInboxAdapter';
 import { logger } from '@/lib/core/logging/logger';
-import { getFirebaseFirestore, firestore } from '@/lib/core/firebase';
+import { getFirebaseFirestore  } from '@/lib/core/firebase';
 import { collection, doc, getDoc, getDocs, query, where, orderBy, limit } from 'firebase/firestore';
 
 // Force dynamic rendering - required for Firebase/database access
@@ -162,6 +162,9 @@ export async function GET(request: NextRequest) {
     }
 
     // Get recent LinkedIn messages from inbox
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
+
     const inboxQuery = query(
       collection(firestore, 'inbox'),
       where('userId', '==', session.user.id),

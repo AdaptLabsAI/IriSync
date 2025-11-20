@@ -23,7 +23,7 @@ export async function GET(request: NextRequest) {
     const userVotesQuery = votesRef.where('userId', '==', userId);
     const snapshot = await userVotesQuery.get();
 
-    const votes = snapshot.docs.map(doc => doc.data().itemId);
+    const votes = snapshot.docs.map((doc: any) => doc.data().itemId);
 
     return NextResponse.json({ votes });
   } catch (error) {

@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getFirebaseFirestore, firestore } from '@/lib/core/firebase';
+import { getFirebaseFirestore  } from '@/lib/core/firebase';
 import { collection, getDocs, addDoc, serverTimestamp, query, orderBy, where, doc, getDoc } from 'firebase/firestore';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/lib/features/auth';
@@ -37,6 +37,12 @@ async function isUserAdmin(email: string | null | undefined) {
 // GET all roadmap items (accessible by admins)
 export const GET = withAdmin(async (_request: Request, adminUser: any) => {
   try {
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
+
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
+
     const roadmapRef = collection(firestore, 'roadmapItems');
     const q = query(roadmapRef, orderBy('createdAt', 'desc'));
     const querySnapshot = await getDocs(q);
@@ -65,6 +71,12 @@ export const POST = withAdmin(async (request: Request, adminUser: any) => {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
     }
     // Create new roadmap item
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
+
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
+
     const roadmapRef = collection(firestore, 'roadmapItems');
     const newRoadmapItem = {
       title: data.title,

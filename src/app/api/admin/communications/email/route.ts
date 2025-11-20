@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { withAdmin } from '@/lib/features/auth/route-handlers';
-import { getFirebaseFirestore, firestore } from '@/lib/core/firebase';
+import { getFirebaseFirestore  } from '@/lib/core/firebase';
 import { 
   collection, 
   doc, 
@@ -132,6 +132,12 @@ export const POST = withAdmin(async (request: NextRequest, adminUser: any) => {
     };
 
     // Save campaign to database
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
+
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
+
     const campaignRef = await addDoc(collection(firestore, 'emailCampaigns'), campaignData);
 
     // Log admin action
@@ -224,6 +230,12 @@ export const GET = withAdmin(async (request: NextRequest, adminUser: any) => {
     constraints.push(limit(limitValue));
 
     // Build the final query
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
+
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
+
     const campaignsQuery = query(collection(firestore, 'emailCampaigns'), ...constraints);
 
     // Execute query

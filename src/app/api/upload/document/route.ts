@@ -117,8 +117,8 @@ export async function POST(request: NextRequest) {
     });
     
     // Handle success and error
-    const uploadPromise = new Promise<string>((resolve, reject) => {
-      blobStream.on('error', (err) => {
+    const uploadPromise = new Promise<string>((resolve: any, reject: any) => {
+      blobStream.on('error', (err: any) => {
         reject(err);
       });
       

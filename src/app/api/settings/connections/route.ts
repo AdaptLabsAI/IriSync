@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { firebaseAdmin } from '@/lib/core/firebase/admin';
-import { getFirebaseFirestore, firestore } from '@/lib/core/firebase';
+import { getFirebaseFirestore  } from '@/lib/core/firebase';
 import { doc, getDoc, setDoc, updateDoc, arrayUnion, arrayRemove, deleteDoc } from 'firebase/firestore';
 import { generateOAuthUrl } from '@/lib/features/platforms/auth/oauth';
 import { getGoogleOAuthClientId } from '@/lib/server/env';
@@ -295,6 +295,9 @@ export async function GET(req: NextRequest) {
     const connSnap = await getDoc(connRef);
 
     if (!connSnap.exists()) {
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
+
       await setDoc(connRef, { connections: [] });
       return NextResponse.json({
         connections: [],
@@ -347,6 +350,9 @@ export async function POST(req: NextRequest) {
     })).toString('base64');
 
     // Store the state in the database for verification during callback
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
+
     const stateRef = doc(firestore, 'oauth_states', state);
     await setDoc(stateRef, {
       userId: userId,
@@ -406,6 +412,9 @@ export async function PUT(req: NextRequest) {
     }
 
     // Verify state parameter
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
+
     const stateRef = doc(firestore, 'oauth_states', state);
     const stateDoc = await getDoc(stateRef);
 
@@ -582,6 +591,9 @@ export async function DELETE(req: NextRequest) {
         endpoint: '/api/settings/connections'
       }, { status: 400 });
     }
+
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
 
     const connRef = doc(firestore, 'connections', userId);
     const connSnap = await getDoc(connRef);

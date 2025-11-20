@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/features/auth';
+import { getFirebaseFirestore } from '@/lib/core/firebase';
 import { firestore } from '@/lib/core/firebase/client';
 import { doc, getDoc, updateDoc, serverTimestamp } from 'firebase/firestore';
 import { logger } from '@/lib/core/logging/logger';
@@ -137,6 +138,9 @@ export async function POST(request: NextRequest) {
     }
     
     // Get the user's storage connection for the requested platform
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
+
     const connectionRef = doc(firestore, 'storageConnections', `${userId}_${platform}`);
     const connectionSnap = await getDoc(connectionRef);
     

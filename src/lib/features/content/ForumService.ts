@@ -33,7 +33,6 @@ import { v4 as uuidv4 } from 'uuid';
 import { generateSlug } from '../../core/utils/slug';
 import { logger } from '../../core/logging/logger';
 import { UserRole } from '../../core/models/User';
-import { firestore } from '@/lib/core/firebase';
 
 // Collection names
 const CATEGORIES_COLLECTION = 'forumCategories';

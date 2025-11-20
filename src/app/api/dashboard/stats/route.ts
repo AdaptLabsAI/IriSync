@@ -30,8 +30,8 @@ export async function GET(req: NextRequest) {
       // Fetch data from Firestore
       // Stats
       const statsSnapshot = await firestore.collection('users').doc(userId).collection('stats').get();
-      const stats = statsSnapshot.docs.map(doc => doc.data());
-      
+      const stats = statsSnapshot.docs.map((doc: any) => doc.data());
+
       // Upcoming posts
       const postsSnapshot = await firestore
         .collection('users')
@@ -42,23 +42,23 @@ export async function GET(req: NextRequest) {
         .orderBy('scheduledFor', 'asc')
         .limit(5)
         .get();
-      
-      const upcomingPosts = postsSnapshot.docs.map(doc => ({
+
+      const upcomingPosts = postsSnapshot.docs.map((doc: any) => ({
         id: doc.id,
         ...doc.data(),
         status: doc.data().status === 'scheduled' ? 'ready' : 'draft',
         scheduledFor: formatScheduledDate(doc.data().scheduledFor)
       }));
-      
+
       // Platform stats
       const platformsSnapshot = await firestore
         .collection('users')
         .doc(userId)
         .collection('platformStats')
         .get();
-      
-      const platforms = platformsSnapshot.docs.map(doc => doc.data());
-      
+
+      const platforms = platformsSnapshot.docs.map((doc: any) => doc.data());
+
       // Top performing posts
       const topPostsSnapshot = await firestore
         .collection('users')
@@ -68,8 +68,8 @@ export async function GET(req: NextRequest) {
         .orderBy('engagementRate', 'desc')
         .limit(3)
         .get();
-      
-      const topPosts = topPostsSnapshot.docs.map(doc => {
+
+      const topPosts = topPostsSnapshot.docs.map((doc: any) => {
         const data = doc.data();
         return {
           id: doc.id,
@@ -79,7 +79,7 @@ export async function GET(req: NextRequest) {
           shares: data.metrics?.shares || 0
         };
       });
-      
+
       // Recent activities
       const activitiesSnapshot = await firestore
         .collection('users')
@@ -88,9 +88,9 @@ export async function GET(req: NextRequest) {
         .orderBy('timestamp', 'desc')
         .limit(5)
         .get();
-      
-      const recentActivities = activitiesSnapshot.docs.map(doc => doc.data());
-      
+
+      const recentActivities = activitiesSnapshot.docs.map((doc: any) => doc.data());
+
       // Notifications
       const notificationsSnapshot = await firestore
         .collection('users')
@@ -100,7 +100,7 @@ export async function GET(req: NextRequest) {
         .limit(5)
         .get();
       
-      const notifications = notificationsSnapshot.docs.map(doc => doc.data());
+      const notifications = notificationsSnapshot.docs.map((doc: any) => doc.data());
       
       // Return the dashboard data with empty arrays when no data is found
       return NextResponse.json({

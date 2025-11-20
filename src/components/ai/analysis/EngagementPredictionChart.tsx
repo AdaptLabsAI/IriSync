@@ -174,7 +174,7 @@ const EngagementPredictionChart: React.FC<EngagementPredictionChartProps> = ({
             <div className="p-3 border rounded-md">
               <h4 className="font-medium mb-2 text-[#00CC44]">Strengths</h4>
               <ul className="space-y-1 text-sm">
-                {result.strengths.map((strength, idx) => (
+                {result.strengths.map((strength: any, idx: any) => (
                   <li key={idx} className="flex items-start">
                     <span className="text-[#00CC44] mr-2">✓</span>
                     <span>{strength}</span>
@@ -189,7 +189,7 @@ const EngagementPredictionChart: React.FC<EngagementPredictionChartProps> = ({
             <div className="p-3 border rounded-md">
               <h4 className="font-medium mb-2 text-red-600">Areas for Improvement</h4>
               <ul className="space-y-1 text-sm">
-                {result.weaknesses.map((weakness, idx) => (
+                {result.weaknesses.map((weakness: any, idx: any) => (
                   <li key={idx} className="flex items-start">
                     <span className="text-red-500 mr-2">•</span>
                     <span>{weakness}</span>
@@ -207,7 +207,7 @@ const EngagementPredictionChart: React.FC<EngagementPredictionChartProps> = ({
           <h4 className="font-medium mb-2">Suggestions to Improve Engagement</h4>
           <div className="p-3 border rounded-md bg-blue-50">
             <ul className="space-y-2 text-sm">
-              {result.suggestions.map((suggestion, idx) => (
+              {result.suggestions.map((suggestion: any, idx: any) => (
                 <li key={idx} className="flex items-start">
                   <span className="text-blue-500 mr-2">→</span>
                   <span>{suggestion}</span>

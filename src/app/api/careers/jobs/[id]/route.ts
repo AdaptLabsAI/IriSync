@@ -16,8 +16,15 @@ export async function GET(
   { params }: { params: { id: string } }
 ) {
   try {
+    if (!db) {
+      return NextResponse.json(
+        { error: 'Database not initialized' },
+        { status: 500 }
+      );
+    }
+
     const jobId = params.id;
-    
+
     // Get job document
     const jobDoc = await getDoc(doc(db, 'jobListings', jobId));
     
@@ -70,26 +77,33 @@ export async function PUT(
   try {
     // Check if user is authenticated and has admin rights
     const session = await getServerSession(authOptions);
-    
+
     if (!session || !session.user) {
       return NextResponse.json(
         { error: 'Unauthorized' },
         { status: 401 }
       );
     }
-    
+
     // Cast session.user to include role
     const user = session.user as { role?: string };
-    
+
     if (user.role !== 'admin') {
       return NextResponse.json(
         { error: 'Unauthorized - Admin access required' },
         { status: 403 }
       );
     }
-    
+
+    if (!db) {
+      return NextResponse.json(
+        { error: 'Database not initialized' },
+        { status: 500 }
+      );
+    }
+
     const jobId = params.id;
-    
+
     // Check if job exists
     const jobDoc = await getDoc(doc(db, 'jobListings', jobId));
     
@@ -165,26 +179,33 @@ export async function DELETE(
   try {
     // Check if user is authenticated and has admin rights
     const session = await getServerSession(authOptions);
-    
+
     if (!session || !session.user) {
       return NextResponse.json(
         { error: 'Unauthorized' },
         { status: 401 }
       );
     }
-    
+
     // Cast session.user to include role
     const user = session.user as { role?: string };
-    
+
     if (user.role !== 'admin') {
       return NextResponse.json(
         { error: 'Unauthorized - Admin access required' },
         { status: 403 }
       );
     }
-    
+
+    if (!db) {
+      return NextResponse.json(
+        { error: 'Database not initialized' },
+        { status: 500 }
+      );
+    }
+
     const jobId = params.id;
-    
+
     // Check if job exists
     const jobDoc = await getDoc(doc(db, 'jobListings', jobId));
     

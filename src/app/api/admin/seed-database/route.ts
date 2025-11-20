@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/features/auth';
-import { getFirebaseFirestore, firestore } from '@/lib/core/firebase';
+import { getFirebaseFirestore  } from '@/lib/core/firebase';
 import {   collection,   doc,   getDoc,   getDocs,  setDoc,  serverTimestamp,  writeBatch} from 'firebase/firestore';
 import { logger } from '@/lib/core/logging/logger';
 
@@ -142,6 +142,12 @@ export async function POST(req: NextRequest) {
       adminId: session.user.id,
       force
     });
+
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
+
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
 
     const batch = writeBatch(firestore);
     let seededCount = 0;
@@ -287,6 +293,12 @@ export async function GET(req: NextRequest) {
     }
 
     // Count existing configurations
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
+
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
+
     const configsSnapshot = await getDocs(collection(firestore, 'aiModelConfigurations'));
     const existingCount = configsSnapshot.size;
     const expectedCount = defaultModelConfigurations.length;

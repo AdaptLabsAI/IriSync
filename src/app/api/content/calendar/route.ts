@@ -79,14 +79,14 @@ export async function GET(request: NextRequest) {
         
       // Combine and deduplicate
       allDocs = [...userPostsSnapshot.docs, ...orgPostsSnapshot.docs];
-      const uniqueDocs = allDocs.filter((doc, index, self) => 
-        index === self.findIndex(d => d.id === doc.id)
+      const uniqueDocs = allDocs.filter((doc: any, index: any, self: any) =>
+        index === self.findIndex((d: any) => d.id === doc.id)
       );
       allDocs = uniqueDocs;
     }
     
     // Map to CalendarPost objects
-    const posts: CalendarPost[] = allDocs.map(doc => {
+    const posts: CalendarPost[] = allDocs.map((doc: any, index: any, self: any) => {
       const data = doc.data();
       return {
         id: doc.id,

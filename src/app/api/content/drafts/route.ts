@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
-import { getFirebaseFirestore, firestore } from '@/lib/core/firebase';
+import { getFirebaseFirestore  } from '@/lib/core/firebase';
 import { collection, doc, getDoc, addDoc, serverTimestamp, getDocs, query, where, orderBy, limit, deleteDoc, updateDoc } from 'firebase/firestore';
 
 // Force dynamic rendering - required for Firebase/database access
@@ -65,6 +65,9 @@ export async function GET(request: NextRequest) {
     
     // Add platform filter if provided
     if (platform) {
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
+
       draftsQuery = query(
         draftsQuery,
         where('platform', '==', platform)
@@ -151,6 +154,9 @@ export async function POST(request: NextRequest) {
     };
     
     // Add the draft to Firestore
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
+
     const draftsRef = collection(firestore, 'contentDrafts');
     const docRef = await addDoc(draftsRef, {
       ...draft,
@@ -209,6 +215,9 @@ export async function PUT(request: NextRequest) {
     }
     
     // Get the existing draft
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
+
     const draftRef = doc(firestore, 'contentDrafts', draftData.id);
     const draftSnapshot = await getDoc(draftRef);
     
@@ -291,6 +300,9 @@ export async function DELETE(request: NextRequest) {
     }
     
     // Get the existing draft
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
+
     const draftRef = doc(firestore, 'contentDrafts', draftId);
     const draftSnapshot = await getDoc(draftRef);
     

@@ -45,7 +45,7 @@ export async function GET(req: NextRequest, { params }: { params: { id: string }
     const versionsSnapshot = await versionsRef.get();
     
     // Format versions for response
-    const versions = versionsSnapshot.docs.map(doc => {
+    const versions = versionsSnapshot.docs.map((doc: any) => {
       const data = doc.data();
       return {
         id: doc.id,

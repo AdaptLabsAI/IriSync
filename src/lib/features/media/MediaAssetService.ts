@@ -14,7 +14,7 @@
  * - Brand asset library management
  */
 
-import { firestore, storage } from '@/lib/core/firebase';
+import { getFirebaseFirestore, getFirebaseStorage } from '@/lib/core/firebase';
 import {
   collection,
   doc,
@@ -200,6 +200,18 @@ class MediaAssetService {
   private readonly ASSETS_COLLECTION = 'mediaAssets';
   private readonly FOLDERS_COLLECTION = 'mediaFolders';
   private readonly STORAGE_BASE_PATH = 'media';
+
+  private get firestore() {
+    const fs = getFirebaseFirestore();
+    if (!fs) throw new Error('Firestore not configured');
+    return fs;
+  }
+
+  private get storage() {
+    const st = getFirebaseStorage();
+    if (!st) throw new Error('Storage not configured');
+    return st;
+  }
 
   /**
    * Upload a media file

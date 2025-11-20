@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { withSuperAdmin, withAdmin } from '@/lib/features/auth/route-handlers';
-import { getFirebaseFirestore, firestore } from '@/lib/core/firebase';
+import { getFirebaseFirestore  } from '@/lib/core/firebase';
 import { firebaseAdmin, getFirestore, getAuth, serverTimestamp } from '@/lib/core/firebase/admin';
 import { 
   collection, 
@@ -231,6 +231,9 @@ export const GET = withAdmin(async (request: NextRequest, adminUser: any) => {
     }
 
     // Build query with filters
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
+
     let usersQuery: any = query(collection(firestore, USERS_COLLECTION));
     
     // Apply filters if provided
@@ -433,6 +436,9 @@ export const POST = withAdmin(async (request: NextRequest, adminUser: any) => {
     }
     
     // Check if the email is already in use
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
+
     const existingUser = await getDocs(
       query(collection(firestore, USERS_COLLECTION), where('email', '==', validatedUserData.email))
     );
@@ -587,6 +593,9 @@ export const PATCH = withAdmin(async (request: NextRequest, adminUser: any) => {
     const validatedUpdateData = validationResult.data;
     
     // Check if user exists
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
+
     const userDocRef = doc(firestore, USERS_COLLECTION, userId);
     const userDoc = await getDoc(userDocRef);
     
@@ -730,6 +739,9 @@ export const DELETE = withAdmin(async (request: NextRequest, adminUser: any) => 
     }
     
     // Check if user exists
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
+
     const userDocRef = doc(firestore, USERS_COLLECTION, userId);
     const userDoc = await getDoc(userDocRef);
     

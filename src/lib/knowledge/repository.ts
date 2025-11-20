@@ -33,7 +33,6 @@ import { Document } from '../rag/document-processor';
 import { RAGService } from '../rag/rag-service';
 import { logger } from '../core/logging/logger';
 import { AccessLevel } from '../rag/knowledge-base';
-import { firestore } from '@/lib/core/firebase';
 
 // Collection references
 const KNOWLEDGE_COLLECTION = 'knowledgeContent';
@@ -156,6 +155,9 @@ export const KnowledgeRepository = {
     
     // Apply filters
     if (contentType) {
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
+
       let q = query(baseQuery);
       if (Array.isArray(contentType)) {
         // Multiple content types require client-side filtering

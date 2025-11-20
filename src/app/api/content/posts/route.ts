@@ -176,7 +176,7 @@ export async function POST(request: NextRequest) {
         .filter((attachment: any) => attachment.id)
         .map(async (attachment: any) => {
           const mediaRef = firestore.collection('users').doc(userId).collection('media').doc(attachment.id);
-          return firestore.runTransaction(async (transaction) => {
+          return firestore.runTransaction(async (transaction: any) => {
             const mediaDoc = await transaction.get(mediaRef);
             if (mediaDoc.exists) {
               const currentCount = mediaDoc.data()?.usageCount || 0;
@@ -187,7 +187,7 @@ export async function POST(request: NextRequest) {
       
       await Promise.all(mediaUpdates);
     }
-    
+
     // Create activity log entry
     await firestore.collection('users').doc(userId).collection('activity').add({
       action: 'create_post',

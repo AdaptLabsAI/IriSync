@@ -6,6 +6,7 @@ import { Select } from '../ui/select/Select';
 import { TextArea } from '../ui/textarea/TextArea';
 import { Input } from '../ui/input/Input';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs';
+import { toast } from '../ui/use-toast';
 
 import { SocialPlatform } from '../../lib/models/SocialAccount';
 import { useAIToolkit } from '../../hooks/useAIToolkit';
@@ -611,7 +612,7 @@ const ContentGenerationButton: React.FC<ContentGenerationButtonProps> = ({
               
               {activeTab === 'brand-voice' && (
                 <BrandVoiceConsistencyTool
-                  onContentGenerated={(content, metadata) => 
+                  onContentGenerated={(content: any, metadata: any) =>
                     handleContentGenerated(content, metadata)}
                   initialContent={prompt}
                 />

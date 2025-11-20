@@ -326,7 +326,7 @@ const AIAssistantButton: React.FC<AIAssistantButtonProps> = ({
       ) : (
         <Dialog
           open={isOpen}
-          onOpenChange={(open) => {
+          onOpenChange={(open: any) => {
             setIsOpen(open);
           }}
         >

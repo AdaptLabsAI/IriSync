@@ -361,6 +361,9 @@ export async function syncPendingEvents(): Promise<void> {
     // Process each pending event
     const promises = pendingEvents.map(async (event: any) => {
       try {
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
+
         await addDoc(collection(firestore, EVENTS_COLLECTION), {
           ...event,
           timestamp: Timestamp.now()
@@ -441,6 +444,9 @@ export async function identifyUser(user: User): Promise<void> {
   
   if (orgId) {
     try {
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
+
       const orgDoc = await getDoc(doc(firestore, 'organizations', orgId));
       orgData = orgDoc.data();
     } catch (error) {

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { collection, getDocs, addDoc, query, where, orderBy, Timestamp, doc, getDoc } from 'firebase/firestore';
-import { firestore as db } from '@/lib/core/firebase';
+import { getFirebaseFirestore } from '@/lib/core/firebase';
 import { JobApplicationStatus } from '@/lib/careers/models';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/features/auth';
@@ -40,7 +40,15 @@ export async function GET(request: NextRequest) {
     const jobId = searchParams.get('jobId');
     const status = searchParams.get('status');
     const email = searchParams.get('email');
-    
+
+    const db = getFirebaseFirestore();
+    if (!db) {
+      return NextResponse.json(
+        { error: 'Database not initialized' },
+        { status: 500 }
+      );
+    }
+
     // Build query with filters
     let applicationsQuery = collection(db, 'jobApplications');
     
@@ -115,7 +123,7 @@ export async function POST(request: NextRequest) {
     
     // Set timestamps and initial status
     const now = Timestamp.now();
-    
+
     // Prepare data for Firestore
     const newApplicationData = {
       ...applicationData,
@@ -125,7 +133,15 @@ export async function POST(request: NextRequest) {
       // Add any additional custom fields submitted
       customFields: applicationData.customFields || {}
     };
-    
+
+    const db = getFirebaseFirestore();
+    if (!db) {
+      return NextResponse.json(
+        { error: 'Database not initialized' },
+        { status: 500 }
+      );
+    }
+
     // Add document to Firestore
     const docRef = await addDoc(collection(db, 'jobApplications'), newApplicationData);
     

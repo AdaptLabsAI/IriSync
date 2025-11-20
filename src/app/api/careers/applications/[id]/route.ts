@@ -17,26 +17,33 @@ export async function GET(
   try {
     // Check if user is authenticated and has admin rights
     const session = await getServerSession(authOptions);
-    
+
     if (!session || !session.user) {
       return NextResponse.json(
         { error: 'Unauthorized' },
         { status: 401 }
       );
     }
-    
+
     // Cast session.user to include role
     const user = session.user as { role?: string };
-    
+
     if (user.role !== 'admin') {
       return NextResponse.json(
         { error: 'Unauthorized - Admin access required' },
         { status: 403 }
       );
     }
-    
+
+    if (!db) {
+      return NextResponse.json(
+        { error: 'Database not initialized' },
+        { status: 500 }
+      );
+    }
+
     const applicationId = params.id;
-    
+
     // Get application document
     const applicationDoc = await getDoc(doc(db, 'jobApplications', applicationId));
     
@@ -77,26 +84,33 @@ export async function PUT(
   try {
     // Check if user is authenticated and has admin rights
     const session = await getServerSession(authOptions);
-    
+
     if (!session || !session.user) {
       return NextResponse.json(
         { error: 'Unauthorized' },
         { status: 401 }
       );
     }
-    
+
     // Cast session.user to include role
     const user = session.user as { role?: string; id?: string };
-    
+
     if (user.role !== 'admin') {
       return NextResponse.json(
         { error: 'Unauthorized - Admin access required' },
         { status: 403 }
       );
     }
-    
+
+    if (!db) {
+      return NextResponse.json(
+        { error: 'Database not initialized' },
+        { status: 500 }
+      );
+    }
+
     const applicationId = params.id;
-    
+
     // Check if application exists
     const applicationDoc = await getDoc(doc(db, 'jobApplications', applicationId));
     
@@ -157,26 +171,33 @@ export async function DELETE(
   try {
     // Check if user is authenticated and has admin rights
     const session = await getServerSession(authOptions);
-    
+
     if (!session || !session.user) {
       return NextResponse.json(
         { error: 'Unauthorized' },
         { status: 401 }
       );
     }
-    
+
     // Cast session.user to include role
     const user = session.user as { role?: string };
-    
+
     if (user.role !== 'admin') {
       return NextResponse.json(
         { error: 'Unauthorized - Admin access required' },
         { status: 403 }
       );
     }
-    
+
+    if (!db) {
+      return NextResponse.json(
+        { error: 'Database not initialized' },
+        { status: 500 }
+      );
+    }
+
     const applicationId = params.id;
-    
+
     // Check if application exists
     const applicationDoc = await getDoc(doc(db, 'jobApplications', applicationId));
     

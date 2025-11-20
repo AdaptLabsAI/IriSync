@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { withAdmin } from '@/lib/features/auth/route-handlers';
-import { getFirebaseFirestore, firestore } from '@/lib/core/firebase';
+import { getFirebaseFirestore  } from '@/lib/core/firebase';
 import { firebaseAdmin, getFirestore, serverTimestamp } from '@/lib/core/firebase/admin';
 import { 
   collection, 
@@ -234,6 +234,12 @@ export const GET = withAdmin(async (request: NextRequest, adminUser: any) => {
     
     // Apply filters
     if (status) {
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
+
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
+
       contentQuery = query(contentQuery, where('status', '==', status));
     }
     
@@ -436,6 +442,12 @@ export const POST = withAdmin(async (request: NextRequest, adminUser: any) => {
     };
     
     // Add item to Firestore
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
+
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
+
     const docRef = await addDoc(collection(firestore, CONTENT_COLLECTION), firestoreData);
     
     // Log admin action
@@ -504,6 +516,12 @@ export const PATCH = withAdmin(async (request: NextRequest, adminUser: any) => {
     const updateData = validationResult.data;
     
     // Check if content exists
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
+
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
+
     const docRef = doc(firestore, CONTENT_COLLECTION, id);
     const docSnapshot = await getDoc(docRef);
     
@@ -599,6 +617,12 @@ export const DELETE = withAdmin(async (request: NextRequest, adminUser: any) => 
     }
     
     // Check if content exists
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
+
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
+
     const docRef = doc(firestore, CONTENT_COLLECTION, id);
     const docSnapshot = await getDoc(docRef);
     

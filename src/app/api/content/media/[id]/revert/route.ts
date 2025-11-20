@@ -69,7 +69,7 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
     }
     
     // Find the requested version
-    const versions: MediaVersion[] = versionsSnapshot.docs.map(doc => {
+    const versions: MediaVersion[] = versionsSnapshot.docs.map((doc: any) => {
       const data = doc.data();
       return {
         id: doc.id,

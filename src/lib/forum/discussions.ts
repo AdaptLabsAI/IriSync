@@ -51,8 +51,11 @@ function formatRelativeTime(date: Date): string {
 export async function getRecentDiscussions(limitCount = 5): Promise<ForumDiscussion[]> {
   try {
     // Create a query against the discussions collection, ordered by lastActivity
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
+
     const q = query(
-      collection(db, 'forumDiscussions'), 
+      collection(firestore, 'forumDiscussions'), 
       orderBy('lastActivityTimestamp', 'desc'),
       limit(limitCount)
     );

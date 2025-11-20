@@ -10,7 +10,7 @@ import {
   getDocs,
   serverTimestamp
 } from 'firebase/firestore';
-import { getFirebaseFirestore, firestore } from '@/lib/core/firebase';
+import { getFirebaseFirestore  } from '@/lib/core/firebase';
 import { handleApiError } from '@/lib/features/auth/utils';
 import { logger } from '@/lib/core/logging/logger';
 
@@ -71,6 +71,9 @@ export async function POST(request: NextRequest) {
     }
     
     // Update user's current team in their user document
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
+
     const usersRef = collection(firestore, 'users');
     const userQuery = query(usersRef, where('id', '==', userId));
     const userSnapshot = await getDocs(userQuery);
@@ -145,6 +148,9 @@ export async function GET(request: NextRequest) {
     }
     
     // Get user's current team from user document
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
+
     const usersRef = collection(firestore, 'users');
     const userQuery = query(usersRef, where('id', '==', userId));
     const userSnapshot = await getDocs(userQuery);

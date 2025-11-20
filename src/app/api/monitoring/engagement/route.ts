@@ -8,7 +8,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/lib/features/auth';
-import { getFirebaseFirestore, firestore } from '@/lib/core/firebase';
+import { getFirebaseFirestore  } from '@/lib/core/firebase';
 import { getDoc, doc } from 'firebase/firestore';
 import { engagementService } from '@/lib/features/monitoring/EngagementService';
 
@@ -109,6 +109,9 @@ export async function POST(request: NextRequest) {
     const userId = session.user.id;
 
     // Get user's organization
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
+
     const userDoc = await getDoc(doc(firestore, 'users', userId));
     if (!userDoc.exists()) {
       return NextResponse.json(

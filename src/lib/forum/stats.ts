@@ -14,16 +14,19 @@ export interface ForumStats {
 export async function getForumStats(): Promise<ForumStats> {
   try {
     // Get user historical data - all non-deleted users
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
+
     const usersQuery = query(
-      collection(db, 'users'),
+      collection(firestore, 'users'),
       where('isDeleted', '==', false)
     );
     
     // Get forum discussions
-    const topicsQuery = query(collection(db, 'forumDiscussions'));
+    const topicsQuery = query(collection(firestore, 'forumDiscussions'));
     
     // Get forum posts/replies
-    const postsQuery = query(collection(db, 'forumPosts'));
+    const postsQuery = query(collection(firestore, 'forumPosts'));
     
     // Execute queries to get document counts
     const [usersSnapshot, topicsSnapshot, postsSnapshot] = await Promise.all([

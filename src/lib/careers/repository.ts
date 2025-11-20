@@ -1,25 +1,25 @@
-import { 
-  collection, 
-  doc, 
-  getDoc, 
-  getDocs, 
-  setDoc, 
-  updateDoc, 
-  addDoc, 
-  deleteDoc, 
-  query, 
-  where, 
-  orderBy, 
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  setDoc,
+  updateDoc,
+  addDoc,
+  deleteDoc,
+  query,
+  where,
+  orderBy,
   limit as firestoreLimit,
   startAfter,
   Timestamp,
   DocumentReference,
   serverTimestamp
 } from 'firebase/firestore';
-import { db } from '../core/firebase';
-import { 
-  JobListing, 
-  JobApplication, 
+import { getFirebaseFirestore, firestore } from '../core/firebase';
+import {
+  JobListing,
+  JobApplication,
   JobStatus,
   JobType
 } from './models';
@@ -43,14 +43,17 @@ export const JobRepository = {
     if (Array.isArray(status)) {
       // If multiple statuses are provided, we can't use where clause with orderBy
       // We'll filter after fetching
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
+
       jobQuery = query(
-        collection(db, JOB_COLLECTION),
+        collection(firestore, JOB_COLLECTION),
         orderBy('publishedAt', 'desc'),
         firestoreLimit(pageSize * 3) // Fetch more to account for filtering
       );
     } else {
       jobQuery = query(
-        collection(db, JOB_COLLECTION),
+        collection(firestore, JOB_COLLECTION),
         where('status', '==', status),
         orderBy('publishedAt', 'desc'),
         firestoreLimit(pageSize)
@@ -79,7 +82,7 @@ export const JobRepository = {
 
   async getFeatured(limit = 3): Promise<JobListing[]> {
     const featuredQuery = query(
-      collection(db, JOB_COLLECTION),
+      collection(firestore, JOB_COLLECTION),
       where('status', '==', JobStatus.PUBLISHED),
       where('featured', '==', true),
       orderBy('publishedAt', 'desc'),
@@ -97,7 +100,7 @@ export const JobRepository = {
     lastDoc: any = null
   ): Promise<{ jobs: JobListing[], lastDoc: any, hasMore: boolean }> {
     let deptQuery = query(
-      collection(db, JOB_COLLECTION),
+      collection(firestore, JOB_COLLECTION),
       where('department', '==', department),
       where('status', '==', JobStatus.PUBLISHED),
       orderBy('publishedAt', 'desc'),
@@ -125,7 +128,7 @@ export const JobRepository = {
     lastDoc: any = null
   ): Promise<{ jobs: JobListing[], lastDoc: any, hasMore: boolean }> {
     let typeQuery = query(
-      collection(db, JOB_COLLECTION),
+      collection(firestore, JOB_COLLECTION),
       where('jobType', '==', jobType),
       where('status', '==', JobStatus.PUBLISHED),
       orderBy('publishedAt', 'desc'),
@@ -148,7 +151,7 @@ export const JobRepository = {
 
   async getBySlug(slug: string): Promise<JobListing | null> {
     const jobQuery = query(
-      collection(db, JOB_COLLECTION),
+      collection(firestore, JOB_COLLECTION),
       where('slug', '==', slug),
       where('status', '==', JobStatus.PUBLISHED),
       firestoreLimit(1)
@@ -161,7 +164,7 @@ export const JobRepository = {
   },
 
   async getById(id: string): Promise<JobListing | null> {
-    const docRef = doc(db, JOB_COLLECTION, id);
+    const docRef = doc(firestore, JOB_COLLECTION, id);
     const docSnap = await getDoc(docRef);
     
     if (!docSnap.exists()) return null;
@@ -189,12 +192,12 @@ export const JobRepository = {
       publishedAt: jobData.status === JobStatus.PUBLISHED ? timestamp : null
     };
 
-    const docRef = await addDoc(collection(db, JOB_COLLECTION), newJob);
+    const docRef = await addDoc(collection(firestore, JOB_COLLECTION), newJob);
     return { id: docRef.id, ...newJob } as JobListing;
   },
 
   async update(id: string, jobData: Partial<JobListing>): Promise<JobListing> {
-    const docRef = doc(db, JOB_COLLECTION, id);
+    const docRef = doc(firestore, JOB_COLLECTION, id);
     const currentJob = await this.getById(id);
     
     if (!currentJob) {
@@ -236,7 +239,7 @@ export const JobRepository = {
   },
 
   async delete(id: string): Promise<void> {
-    const docRef = doc(db, JOB_COLLECTION, id);
+    const docRef = doc(firestore, JOB_COLLECTION, id);
     await deleteDoc(docRef);
     
     // Do not delete job applications, just orphan them
@@ -245,7 +248,7 @@ export const JobRepository = {
 
   async slugExists(slug: string, excludeId?: string): Promise<boolean> {
     let slugQuery = query(
-      collection(db, JOB_COLLECTION),
+      collection(firestore, JOB_COLLECTION),
       where('slug', '==', slug)
     );
     
@@ -261,7 +264,7 @@ export const JobRepository = {
 
   async getDepartments(): Promise<string[]> {
     const deptQuery = query(
-      collection(db, JOB_COLLECTION),
+      collection(firestore, JOB_COLLECTION),
       where('status', '==', JobStatus.PUBLISHED)
     );
     
@@ -280,7 +283,7 @@ export const JobRepository = {
 
   async getJobTypes(): Promise<JobType[]> {
     const typeQuery = query(
-      collection(db, JOB_COLLECTION),
+      collection(firestore, JOB_COLLECTION),
       where('status', '==', JobStatus.PUBLISHED)
     );
     
@@ -313,8 +316,11 @@ export const JobApplicationRepository = {
     pageSize = 20, 
     lastDoc: any = null
   ): Promise<{ applications: JobApplication[], lastDoc: any, hasMore: boolean }> {
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
+
     let appQuery = query(
-      collection(db, APPLICATION_COLLECTION),
+      collection(firestore, APPLICATION_COLLECTION),
       where('jobId', '==', jobId),
       orderBy('createdAt', 'desc'),
       firestoreLimit(pageSize)
@@ -335,7 +341,7 @@ export const JobApplicationRepository = {
   },
 
   async getById(id: string): Promise<JobApplication | null> {
-    const docRef = doc(db, APPLICATION_COLLECTION, id);
+    const docRef = doc(firestore, APPLICATION_COLLECTION, id);
     const docSnap = await getDoc(docRef);
     
     if (!docSnap.exists()) return null;
@@ -352,12 +358,12 @@ export const JobApplicationRepository = {
       updatedAt: timestamp
     };
 
-    const docRef = await addDoc(collection(db, APPLICATION_COLLECTION), newApplication);
+    const docRef = await addDoc(collection(firestore, APPLICATION_COLLECTION), newApplication);
     return { id: docRef.id, ...newApplication } as JobApplication;
   },
 
   async update(id: string, applicationData: Partial<JobApplication>): Promise<JobApplication> {
-    const docRef = doc(db, APPLICATION_COLLECTION, id);
+    const docRef = doc(firestore, APPLICATION_COLLECTION, id);
     const currentApplication = await this.getById(id);
     
     if (!currentApplication) {
@@ -392,7 +398,7 @@ export const JobApplicationRepository = {
 
   async getByEmail(email: string): Promise<JobApplication[]> {
     const emailQuery = query(
-      collection(db, APPLICATION_COLLECTION),
+      collection(firestore, APPLICATION_COLLECTION),
       where('email', '==', email),
       orderBy('createdAt', 'desc')
     );
@@ -403,7 +409,7 @@ export const JobApplicationRepository = {
 
   async getCountForJob(jobId: string): Promise<number> {
     const countQuery = query(
-      collection(db, APPLICATION_COLLECTION),
+      collection(firestore, APPLICATION_COLLECTION),
       where('jobId', '==', jobId)
     );
     

@@ -18,7 +18,7 @@ export const GET = withAdmin(async (request: NextRequest, adminUser: any) => {
       .orderBy('createdAt', 'desc')
       .get();
 
-    const testimonials = snapshot.docs.map(doc => ({
+    const testimonials = snapshot.docs.map((doc: any) => ({
       id: doc.id,
       ...doc.data(),
       createdAt: doc.data().createdAt.toDate().toISOString(),

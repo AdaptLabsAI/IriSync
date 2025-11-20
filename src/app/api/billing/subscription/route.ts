@@ -3,7 +3,7 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/features/auth';
 import { getStripeClient } from '@/lib/features/billing/stripe';
 import { getDoc, doc, updateDoc, Timestamp } from 'firebase/firestore';
-import { getFirebaseFirestore, firestore } from '@/lib/core/firebase';
+import { getFirebaseFirestore  } from '@/lib/core/firebase';
 import { logger } from '@/lib/core/logging/logger';
 import { universalBillingService, BillingStatus } from '@/lib/features/subscription/UniversalBillingService';
 import { TrialService } from '@/lib/features/subscription/TrialService';
@@ -84,6 +84,9 @@ export async function GET(req: NextRequest) {
     const { orgId, userData } = await getUserOrganization(user.id);
     
     // Get organization data
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
+
     const orgDoc = await getDoc(doc(firestore, 'organizations', orgId));
     if (!orgDoc.exists()) {
       return NextResponse.json({ 
@@ -451,6 +454,9 @@ export async function POST(req: NextRequest) {
         }
         
         // Update organization billing email
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
+
         await updateDoc(doc(firestore, 'organizations', orgId), {
           billingEmail,
           updatedAt: Timestamp.now()
@@ -507,6 +513,9 @@ export async function PUT(req: NextRequest) {
     const { orgId } = await getUserOrganization(user.id);
     
     // Get organization data
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
+
     const orgDoc = await getDoc(doc(firestore, 'organizations', orgId));
     if (!orgDoc.exists()) {
       return NextResponse.json({ 
@@ -586,6 +595,9 @@ export async function GET_CHECK_SUBSCRIPTION_STATUS(req: NextRequest) {
     const stripe = getStripeClient();
 
     // Get user data
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
+
     const userDoc = await firestore.collection('users').doc(userId).get();
     if (!userDoc.exists) {
       return NextResponse.json(

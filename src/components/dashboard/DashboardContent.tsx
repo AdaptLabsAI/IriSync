@@ -1,6 +1,9 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import { toast } from '@/components/ui/use-toast';
+import { firestore } from '@/lib/core/firebase';
+import { NextResponse } from 'next/server';
 import {
   Box,
   Container,
@@ -38,7 +41,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { getAuth } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
-import { getFirebaseFirestore, firestore } from '@/lib/core/firebase';
+import { getFirebaseFirestore  } from '@/lib/core/firebase';
 import { tokens } from '@/styles/tokens';
 
 /**

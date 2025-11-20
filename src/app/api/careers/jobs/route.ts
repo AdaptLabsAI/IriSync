@@ -23,6 +23,13 @@ export async function GET(request: NextRequest) {
     const locationType = searchParams.get('locationType');
     const isPublic = searchParams.get('public') === 'true';
 
+    if (!db) {
+      return NextResponse.json(
+        { error: 'Database not initialized' },
+        { status: 500 }
+      );
+    }
+
     // Build query with filters
     let jobsQuery = collection(db, 'jobListings');
     
@@ -145,7 +152,14 @@ export async function POST(request: NextRequest) {
       publishedAt: jobData.status === JobStatus.PUBLISHED ? now : null,
       createdBy: user.id || 'unknown'
     };
-    
+
+    if (!db) {
+      return NextResponse.json(
+        { error: 'Database not initialized' },
+        { status: 500 }
+      );
+    }
+
     // Add document to Firestore
     const docRef = await addDoc(collection(db, 'jobListings'), newJobData);
     

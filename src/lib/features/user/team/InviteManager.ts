@@ -17,7 +17,6 @@ import {
   serverTimestamp
 } from 'firebase/firestore';
 import { getFirebaseFirestore } from '../../core/firebase';
-import { firestore } from '@/lib/core/firebase';
 import { 
   Team, 
   FirestoreTeam, 

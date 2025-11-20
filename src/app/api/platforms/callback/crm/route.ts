@@ -151,6 +151,10 @@ async function storeCRMConnection(userId: string, platform: string, tokens: any,
     lastUsed: new Date().toISOString(),
   };
 
+  if (!firestore) {
+    throw new Error('Firestore is not initialized');
+  }
+
   // Save to Firestore
   const connectionRef = doc(firestore, 'crmConnections', `${userId}_${platform}`);
   await setDoc(connectionRef, connectionData);
@@ -238,6 +242,9 @@ export async function POST(req: NextRequest) {
       const authData = await response.json();
       
       // Store the CRM platform connection in the user's account
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
+
       const connectionsCollRef = collection(firestore, 'users', userId, 'crmConnections');
       const connectionRef = doc(connectionsCollRef);
       

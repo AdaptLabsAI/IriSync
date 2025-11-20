@@ -3,6 +3,7 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { useAuth } from '@/providers/AuthProvider';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import { getFirebaseFirestore } from '@/lib/core/firebase';
 import { firestore } from '@/lib/core/firebase/client';
 import { Organization, Team } from '@/lib/core/models/Organization';
 import { logger } from '@/lib/core/logging/logger';

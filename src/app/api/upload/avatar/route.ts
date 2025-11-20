@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/lib/features/auth';
+import { getFirebaseFirestore } from '@/lib/core/firebase';
 import { firestore } from '@/lib/core/firebase/client';
 import { doc, updateDoc } from 'firebase/firestore';
 import { logger } from '@/lib/core/logging/logger';
@@ -135,6 +136,9 @@ export async function POST(req: NextRequest) {
       
       // Update user profile with new avatar URL
       try {
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
+
         const userRef = doc(firestore, 'users', userId);
         await updateDoc(userRef, {
           avatar: uploadData.secure_url,

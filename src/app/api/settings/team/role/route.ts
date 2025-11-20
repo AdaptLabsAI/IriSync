@@ -171,6 +171,9 @@ export async function POST(req: NextRequest) {
     
     // Update member role in organization
     await runTransaction(firestore, async (transaction) => {
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
+
       const membersRef = doc(firestore, 'organizations', organizationId, 'members', 'data');
       
       // Update member role

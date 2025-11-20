@@ -11,7 +11,7 @@ import {
   deleteDoc,
   serverTimestamp
 } from 'firebase/firestore';
-import { getFirebaseFirestore, firestore } from '@/lib/core/firebase';
+import { getFirebaseFirestore  } from '@/lib/core/firebase';
 import { handleApiError } from '@/lib/features/auth/utils';
 
 // Force dynamic rendering - required for Firebase/database access
@@ -47,6 +47,9 @@ export async function GET(request: NextRequest) {
       };
       
       // Use user ID as the document ID for easy retrieval
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
+
       await setDoc(doc(categoriesRef, userId), categoriesData);
       
       return NextResponse.json({ categories: defaultCategories });
@@ -81,6 +84,9 @@ export async function POST(request: NextRequest) {
       );
     }
     
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
+
     const categoriesRef = collection(firestore, 'todoCategories');
     const userCategoriesQuery = query(categoriesRef, where('userId', '==', userId));
     const snapshot = await getDocs(userCategoriesQuery);
@@ -157,6 +163,9 @@ export async function DELETE(request: NextRequest) {
       );
     }
     
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
+
     const categoriesRef = collection(firestore, 'todoCategories');
     const userCategoriesQuery = query(categoriesRef, where('userId', '==', userId));
     const snapshot = await getDocs(userCategoriesQuery);

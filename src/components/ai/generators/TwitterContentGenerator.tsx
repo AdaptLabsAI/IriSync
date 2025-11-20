@@ -177,7 +177,7 @@ export default function TwitterContentGenerator({
         </div>
       )}
       
-      <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as 'create' | 'advanced')}>
+      <Tabs value={activeTab} onValueChange={(value: any) => setActiveTab(value as 'create' | 'advanced')}>
         <TabsList className="mb-4">
           <TabsTrigger value="create">Create Tweet</TabsTrigger>
           <TabsTrigger 

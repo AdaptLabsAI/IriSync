@@ -17,7 +17,7 @@
  * - Published: Content has been published
  */
 
-import { getFirebaseFirestore, firestore } from '@/lib/core/firebase';
+import { getFirebaseFirestore  } from '@/lib/core/firebase';
 import {
   doc,
   getDoc,

@@ -89,7 +89,7 @@ export const GET = withAdmin(async (request: NextRequest, adminUser: any) => {
       .get();
     
     // Process results
-    const usageRecords: TokenUsageRecord[] = tokenUsageSnapshot.docs.map(doc => {
+    const usageRecords: TokenUsageRecord[] = tokenUsageSnapshot.docs.map((doc: any) => {
       const data = doc.data();
       return {
         id: doc.id,

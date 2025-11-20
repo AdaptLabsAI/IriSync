@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/features/auth';
-import { getFirebaseFirestore, firestore } from '@/lib/core/firebase';
+import { getFirebaseFirestore  } from '@/lib/core/firebase';
 import { 
   collection, 
   doc, 
@@ -113,6 +113,12 @@ export async function GET(request: NextRequest) {
     const includeApplications = searchParams.get('includeApplications') === 'true';
 
     // Fetch job listings
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
+
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
+
     const jobsQuery = query(
       collection(firestore, 'jobListings'),
       orderBy('updatedAt', 'desc')
@@ -226,6 +232,12 @@ export async function POST(request: NextRequest) {
       applicationCount: 0
     };
 
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
+
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
+
     const docRef = doc(collection(firestore, 'jobListings'));
     await setDoc(docRef, jobData);
 
@@ -280,6 +292,12 @@ export async function PUT(request: NextRequest) {
     }
 
     // Check if job exists
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
+
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
+
     const jobRef = doc(firestore, 'jobListings', id);
     const jobDoc = await getDoc(jobRef);
     
@@ -354,6 +372,12 @@ export async function DELETE(request: NextRequest) {
     }
 
     // Check if job exists
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
+
+  const firestore = getFirebaseFirestore();
+  if (!firestore) throw new Error('Database not configured');
+
     const jobRef = doc(firestore, 'jobListings', jobId);
     const jobDoc = await getDoc(jobRef);
     
