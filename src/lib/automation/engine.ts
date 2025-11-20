@@ -615,7 +615,7 @@ export class AutomationEngine {
       
       const executions: WorkflowExecution[] = [];
       
-      snapshot.forEach(doc => {
+      snapshot.forEach((doc: any) => {
         executions.push(doc.data() as WorkflowExecution);
       });
       
@@ -660,7 +660,7 @@ export class AutomationEngine {
       
       const workflows: Workflow[] = [];
       
-      snapshot.forEach(doc => {
+      snapshot.forEach((doc: any) => {
         workflows.push(doc.data() as Workflow);
       });
       

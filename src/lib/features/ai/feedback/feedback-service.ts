@@ -273,7 +273,7 @@ export class FeedbackService {
     // Calculate metrics
     let totalRating = 0;
 
-    snapshot.forEach(doc => {
+    snapshot.forEach((doc: any) => {
       const feedback = doc.data() as Feedback;
       
       // Increment counts

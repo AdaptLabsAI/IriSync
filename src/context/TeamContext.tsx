@@ -40,8 +40,8 @@ export const TeamProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
             const userTeams = orgData.teams.filter(team => team.memberIds.includes(user.uid));
             setTeams(userTeams);
 
-            if (user.currentTeamId && userTeams.some(team => team.id === user.currentTeamId)) {
-              setCurrentTeam(userTeams.find(team => team.id === user.currentTeamId) || null);
+            if (user.currentTeamId && userTeams.some((team: any) => team.id === user.currentTeamId)) {
+              setCurrentTeam(userTeams.find((team: any) => team.id === user.currentTeamId) || null);
             } else if (userTeams.length > 0) {
               setCurrentTeam(userTeams[0]);
               if (user.uid) {

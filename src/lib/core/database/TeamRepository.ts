@@ -279,7 +279,7 @@ export class TeamRepository {
       }
       
       // Remove from the team
-      const updatedMemberIds = memberIds.filter(id => id !== userId);
+      const updatedMemberIds = memberIds.filter((id: any) => id !== userId);
       
       // Update in Firestore
       await updateDoc(teamRef, {

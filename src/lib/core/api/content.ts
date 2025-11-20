@@ -64,7 +64,7 @@ export async function fetchInboxLabels(): Promise<string[]> {
   const messages = await getInboxMessages();
   const labelSet = new Set<string>();
   messages.forEach(msg => {
-    if (msg.labels) msg.labels.forEach(label => labelSet.add(label));
+    if (msg.labels) msg.labels.forEach((label: any) => labelSet.add(label));
   });
   return Array.from(labelSet);
 }
