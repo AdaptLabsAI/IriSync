@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/features/auth';
-import { getFirebaseFirestore, firestore } from '@/lib/core/firebase';
+import { getFirebaseFirestore } from '@/lib/core/firebase';
 import { doc, getDoc } from 'firebase/firestore';
 import { TieredModelRouter } from '@/lib/features/ai/models/tiered-model-router';
 import { logger } from '@/lib/core/logging/logger';
@@ -27,18 +27,14 @@ function getGlobalModelRouter(): TieredModelRouter {
  * Check if user has admin privileges
  */
 async function checkAdminAccess(userId: string): Promise<boolean> {
-  // Check if Firestore is available (it won't be during build)
-  if (!firestore) {
-    console.warn('Firestore not available - skipping admin check');
-    return false;
-  }
-
   try {
-    const firestore = getFirebaseFirestore();
-    if (!firestore) {
-      return NextResponse.json({ error: 'Database not configured' }, { status: 500 });
+    const db = getFirebaseFirestore();
+    if (!db) {
+      // Just return false - the route handler will handle the HTTP response
+      console.error('Firestore not configured');
+      return false;
     }
-    const userDoc = await getDoc(doc(firestore, 'users', userId));
+    const userDoc = await getDoc(doc(db, 'users', userId));
     if (!userDoc.exists()) return false;
     
     const userData = userDoc.data();
@@ -52,10 +48,11 @@ async function checkAdminAccess(userId: string): Promise<boolean> {
 /**
  * POST - Force refresh the AI model router cache
  */
-export async function POST(req: NextRequest) {
+export async function POST(req: NextRequest): Promise<NextResponse> {
   try {
-    // Check if Firebase is available (won't be during build)
-    if (!firestore) {
+    // Check if Firebase is available
+    const db = getFirebaseFirestore();
+    if (!db) {
       return NextResponse.json({ 
         error: 'Service Unavailable', 
         message: 'Firebase is not initialized. Please check server configuration.' 
@@ -120,10 +117,11 @@ export async function POST(req: NextRequest) {
 /**
  * GET - Get current cache status
  */
-export async function GET(req: NextRequest) {
+export async function GET(req: NextRequest): Promise<NextResponse> {
   try {
-    // Check if Firebase is available (won't be during build)
-    if (!firestore) {
+    // Check if Firebase is available
+    const db = getFirebaseFirestore();
+    if (!db) {
       return NextResponse.json({ 
         error: 'Service Unavailable', 
         message: 'Firebase is not initialized. Please check server configuration.' 
