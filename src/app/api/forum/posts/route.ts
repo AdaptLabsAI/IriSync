@@ -56,11 +56,12 @@ const filterPostsSchema = z.object({
 async function checkUserIsAdmin(userId: string): Promise<boolean> {
   try {
     // First check if the user exists
-    const firestore = getFirebaseFirestore();
-    if (!firestore) {
-      return NextResponse.json({ error: 'Database not configured' }, { status: 500 });
+    const db = getFirebaseFirestore();
+    if (!db) {
+      console.error('Firestore not configured');
+      return false;
     }
-    const userDoc = await getDoc(doc(firestore, 'users', userId));
+    const userDoc = await getDoc(doc(db, 'users', userId));
     
     if (!userDoc.exists()) {
       logger.warn(`User not found during admin check: ${userId}`);

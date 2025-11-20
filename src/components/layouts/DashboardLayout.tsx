@@ -29,7 +29,7 @@ import { useRouter, usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { getAuth, signOut } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
-import { getFirebaseFirestore, firestore } from '@/lib/core/firebase';
+import { getFirebaseFirestore } from '@/lib/core/firebase';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import { TeamSwitcher } from '@/components/ui/TeamSwitcher';
@@ -295,16 +295,15 @@ const SidebarContent = ({ onClose, collapsed, onToggleCollapse }: SidebarProps) 
         const auth = getAuth();
         const currentUser = auth.currentUser;
         
-        if (currentUser && firestore) {
-          const firestore = getFirebaseFirestore();
+        if (currentUser) {
+          const db = getFirebaseFirestore();
 
-          if (!firestore) { console.error('Firestore not configured'); return; }
-
-          const firestore = getFirebaseFirestore();
-          if (!firestore) {
-            return NextResponse.json({ error: 'Database not configured' }, { status: 500 });
+          if (!db) { 
+            console.error('Firestore not configured'); 
+            return; 
           }
-          const userRef = doc(firestore, 'users', currentUser.uid);
+
+          const userRef = doc(db, 'users', currentUser.uid);
           const userSnap = await getDoc(userRef);
           
           if (userSnap.exists()) {
@@ -635,20 +634,22 @@ const AccountMenu = () => {
           let photoURL = currentUser.photoURL || '';
 
           // Try to get additional data from Firestore
-          if (firestore) {
-            try {
-              const firestore = getFirebaseFirestore();
+          try {
+            const db = getFirebaseFirestore();
 
-              if (!firestore) { console.error('Firestore not configured'); return; }
+            if (!db) { 
+              console.error('Firestore not configured'); 
+              return; 
+            }
 
-              const userRef = doc(firestore, 'users', currentUser.uid);
-              const userSnap = await getDoc(userRef);
-              
-              if (userSnap.exists()) {
-                const userData = userSnap.data();
-                // If Firestore has a name, use it instead
-                displayName = userData.name || 
-                             `${userData.firstName || ''} ${userData.lastName || ''}`.trim() || 
+            const userRef = doc(db, 'users', currentUser.uid);
+            const userSnap = await getDoc(userRef);
+            
+            if (userSnap.exists()) {
+              const userData = userSnap.data();
+              // If Firestore has a name, use it instead
+              displayName = userData.name || 
+                           `${userData.firstName || ''} ${userData.lastName || ''}`.trim() || 
                              displayName;
                 
                 // Use Firestore email if available
@@ -656,11 +657,10 @@ const AccountMenu = () => {
                 
                 // Use Firestore photo if available
                 photoURL = userData.photoURL || userData.image || photoURL;
-              }
-            } catch (firestoreError) {
-              console.error('Error fetching user data from Firestore:', firestoreError);
-              // Continue with auth data if Firestore fails
             }
+          } catch (firestoreError) {
+            console.error('Error fetching user data from Firestore:', firestoreError);
+            // Continue with auth data if Firestore fails
           }
 
           setUserData({

@@ -2,14 +2,6 @@
   "framework": "nextjs",
   "buildCommand": "npm ci --prefer-offline && npm run build",
   "installCommand": "npm ci --prefer-offline",
-  "functions": {
-    "app/**": {
-      "runtime": "nodejs20.x"
-    },
-    "api/**": {
-      "runtime": "nodejs20.x"
-    }
-  },
   "crons": [
     {
       "path": "/api/cron/token-refresh",

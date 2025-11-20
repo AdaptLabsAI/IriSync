@@ -69,11 +69,12 @@ function calculateReadTime(content: string): number {
  * Check if user has admin or editor privileges
  */
 async function checkBlogAccess(userId: string): Promise<boolean> {
-  const firestore = getFirebaseFirestore();
-  if (!firestore) {
-    return NextResponse.json({ error: 'Database not configured' }, { status: 500 });
+  const db = getFirebaseFirestore();
+  if (!db) {
+    console.error('Firestore not configured');
+    return false;
   }
-  const userDoc = await getDoc(doc(firestore, 'users', userId));
+  const userDoc = await getDoc(doc(db, 'users', userId));
   if (!userDoc.exists()) return false;
   
   const userData = userDoc.data();

@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from 'react';
 import { toast } from '@/components/ui/use-toast';
-import { firestore } from '@/lib/core/firebase';
 import { NextResponse } from 'next/server';
 import {
   Box,
@@ -75,17 +74,16 @@ export default function DashboardContent() {
         // Get user name from Firebase Auth/Firestore
         const auth = getAuth();
         const currentUser = auth.currentUser;
-        if (currentUser && firestore) {
+        if (currentUser) {
           try {
-            const firestore = getFirebaseFirestore();
+            const db = getFirebaseFirestore();
 
-            if (!firestore) { console.error('Firestore not configured'); return; }
-
-            const firestore = getFirebaseFirestore();
-            if (!firestore) {
-              return NextResponse.json({ error: 'Database not configured' }, { status: 500 });
+            if (!db) { 
+              console.error('Firestore not configured'); 
+              return; 
             }
-            const userRef = doc(firestore, 'users', currentUser.uid);
+
+            const userRef = doc(db, 'users', currentUser.uid);
             const userSnap = await getDoc(userRef);
             if (userSnap.exists()) {
               const userData = userSnap.data();

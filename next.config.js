@@ -23,9 +23,13 @@ const nextConfig = {
   // Note: isrMemoryCacheSize was removed in Next.js 15
   // ISR is disabled by using 'standalone' output mode
   experimental: {
-    // Reduce memory usage during builds
-    workerThreads: false,
-    cpus: 1,
+    // Enable parallel builds for faster compilation
+    // workerThreads: false,  // Disabled to allow parallel compilation
+    // cpus: 1,  // Removed to use all available CPUs on Vercel
+    
+    // Skip static page generation bailout to speed up build
+    // This prevents Next.js from attempting to analyze pages for static generation
+    staticGenerationBailout: 'force-dynamic',
   },
   
   // Configure Next.js to handle page data collection failures gracefully
@@ -38,6 +42,10 @@ const nextConfig = {
   // Prevent static optimization for dynamic API routes
   // All API routes marked with 'force-dynamic' will skip static analysis during build
   staticPageGenerationTimeout: 120,
+  
+  // Reduce build time by limiting minification during production builds
+  // This can significantly speed up builds for large applications
+  swcMinify: true, // Use SWC for faster minification
   
   // Skip trailing slash redirects which can cause issues with API routes
   skipTrailingSlashRedirect: false,
@@ -109,6 +117,14 @@ const nextConfig = {
     // Run 'tsc --noEmit' locally to check types before committing
     // NOTE: This should be set to false for production to catch type errors
     ignoreBuildErrors: process.env.SKIP_TYPE_CHECK === 'true',
+  },
+  
+  // Reduce build logging to speed up compilation
+  // This minimizes the overhead from logging during the build process
+  logging: {
+    fetches: {
+      fullUrl: false,
+    },
   },
   
   images: {
