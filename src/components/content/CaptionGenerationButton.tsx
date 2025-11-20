@@ -329,7 +329,7 @@ export const CaptionGenerationButton: React.FC<CaptionGenerationButtonProps> = (
                                     variant="ghost"
                                     size="icon"
                                     className="h-7 w-7"
-                                    onClick={(e) => {
+                                    onClick={(e: any) => {
                                       e.stopPropagation();
                                       handleCaptionFeedback(index, true);
                                     }}
@@ -350,7 +350,7 @@ export const CaptionGenerationButton: React.FC<CaptionGenerationButtonProps> = (
                                     variant="ghost"
                                     size="icon"
                                     className="h-7 w-7"
-                                    onClick={(e) => {
+                                    onClick={(e: any) => {
                                       e.stopPropagation();
                                       handleCaptionFeedback(index, false);
                                     }}
@@ -373,7 +373,7 @@ export const CaptionGenerationButton: React.FC<CaptionGenerationButtonProps> = (
                                 variant="ghost"
                                 size="icon"
                                 className="h-7 w-7"
-                                onClick={(e) => {
+                                onClick={(e: any) => {
                                   e.stopPropagation();
                                   handleCopyCaption(caption);
                                 }}

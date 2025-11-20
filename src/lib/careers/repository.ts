@@ -38,22 +38,22 @@ export const JobRepository = {
     pageSize = 10, 
     lastDoc: any = null
   ): Promise<{ jobs: JobListing[], lastDoc: any, hasMore: boolean }> {
+    const db = getFirebaseFirestore();
+    if (!db) throw new Error('Database not configured');
+
     let jobQuery;
-    
+
     if (Array.isArray(status)) {
       // If multiple statuses are provided, we can't use where clause with orderBy
       // We'll filter after fetching
-  const firestore = getFirebaseFirestore();
-  if (!firestore) throw new Error('Database not configured');
-
       jobQuery = query(
-        collection(firestore, JOB_COLLECTION),
+        collection(db, JOB_COLLECTION),
         orderBy('publishedAt', 'desc'),
         firestoreLimit(pageSize * 3) // Fetch more to account for filtering
       );
     } else {
       jobQuery = query(
-        collection(firestore, JOB_COLLECTION),
+        collection(db, JOB_COLLECTION),
         where('status', '==', status),
         orderBy('publishedAt', 'desc'),
         firestoreLimit(pageSize)
@@ -81,8 +81,11 @@ export const JobRepository = {
   },
 
   async getFeatured(limit = 3): Promise<JobListing[]> {
+    const db = getFirebaseFirestore();
+    if (!db) throw new Error('Database not configured');
+
     const featuredQuery = query(
-      collection(firestore, JOB_COLLECTION),
+      collection(db, JOB_COLLECTION),
       where('status', '==', JobStatus.PUBLISHED),
       where('featured', '==', true),
       orderBy('publishedAt', 'desc'),
@@ -99,8 +102,11 @@ export const JobRepository = {
     pageSize = 10, 
     lastDoc: any = null
   ): Promise<{ jobs: JobListing[], lastDoc: any, hasMore: boolean }> {
+    const db = getFirebaseFirestore();
+    if (!db) throw new Error('Database not configured');
+
     let deptQuery = query(
-      collection(firestore, JOB_COLLECTION),
+      collection(db, JOB_COLLECTION),
       where('department', '==', department),
       where('status', '==', JobStatus.PUBLISHED),
       orderBy('publishedAt', 'desc'),
@@ -127,8 +133,11 @@ export const JobRepository = {
     pageSize = 10, 
     lastDoc: any = null
   ): Promise<{ jobs: JobListing[], lastDoc: any, hasMore: boolean }> {
+    const db = getFirebaseFirestore();
+    if (!db) throw new Error('Database not configured');
+
     let typeQuery = query(
-      collection(firestore, JOB_COLLECTION),
+      collection(db, JOB_COLLECTION),
       where('jobType', '==', jobType),
       where('status', '==', JobStatus.PUBLISHED),
       orderBy('publishedAt', 'desc'),
@@ -150,8 +159,11 @@ export const JobRepository = {
   },
 
   async getBySlug(slug: string): Promise<JobListing | null> {
+    const db = getFirebaseFirestore();
+    if (!db) throw new Error('Database not configured');
+
     const jobQuery = query(
-      collection(firestore, JOB_COLLECTION),
+      collection(db, JOB_COLLECTION),
       where('slug', '==', slug),
       where('status', '==', JobStatus.PUBLISHED),
       firestoreLimit(1)
@@ -164,7 +176,10 @@ export const JobRepository = {
   },
 
   async getById(id: string): Promise<JobListing | null> {
-    const docRef = doc(firestore, JOB_COLLECTION, id);
+    const db = getFirebaseFirestore();
+    if (!db) throw new Error('Database not configured');
+
+    const docRef = doc(db, JOB_COLLECTION, id);
     const docSnap = await getDoc(docRef);
     
     if (!docSnap.exists()) return null;
@@ -172,11 +187,14 @@ export const JobRepository = {
   },
 
   async create(jobData: Omit<JobListing, 'id' | 'createdAt' | 'updatedAt' | 'slug'>): Promise<JobListing> {
+    const db = getFirebaseFirestore();
+    if (!db) throw new Error('Database not configured');
+
     // Generate a unique slug from the title
     const baseSlug = generateSlug(jobData.title);
     let slug = baseSlug;
     let iteration = 1;
-    
+
     // Check if slug already exists, if so, append a number
     while (await this.slugExists(slug)) {
       slug = `${baseSlug}-${iteration}`;
@@ -192,12 +210,15 @@ export const JobRepository = {
       publishedAt: jobData.status === JobStatus.PUBLISHED ? timestamp : null
     };
 
-    const docRef = await addDoc(collection(firestore, JOB_COLLECTION), newJob);
+    const docRef = await addDoc(collection(db, JOB_COLLECTION), newJob);
     return { id: docRef.id, ...newJob } as JobListing;
   },
 
   async update(id: string, jobData: Partial<JobListing>): Promise<JobListing> {
-    const docRef = doc(firestore, JOB_COLLECTION, id);
+    const db = getFirebaseFirestore();
+    if (!db) throw new Error('Database not configured');
+
+    const docRef = doc(db, JOB_COLLECTION, id);
     const currentJob = await this.getById(id);
     
     if (!currentJob) {
@@ -239,7 +260,10 @@ export const JobRepository = {
   },
 
   async delete(id: string): Promise<void> {
-    const docRef = doc(firestore, JOB_COLLECTION, id);
+    const db = getFirebaseFirestore();
+    if (!db) throw new Error('Database not configured');
+
+    const docRef = doc(db, JOB_COLLECTION, id);
     await deleteDoc(docRef);
     
     // Do not delete job applications, just orphan them
@@ -247,8 +271,11 @@ export const JobRepository = {
   },
 
   async slugExists(slug: string, excludeId?: string): Promise<boolean> {
+    const db = getFirebaseFirestore();
+    if (!db) throw new Error('Database not configured');
+
     let slugQuery = query(
-      collection(firestore, JOB_COLLECTION),
+      collection(db, JOB_COLLECTION),
       where('slug', '==', slug)
     );
     

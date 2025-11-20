@@ -285,7 +285,7 @@ export default function SEOContentGenerator({
       
       <Tabs 
         value={activeTab === 'create' ? 0 : 1}
-        onChange={(_, value) => setActiveTab(value === 0 ? 'create' : 'analyze')}
+        onChange={(_: any, value: any) => setActiveTab(value === 0 ? 'create' : 'analyze')}
         className="mb-6"
       >
         <TabsTrigger label="Create Content" />

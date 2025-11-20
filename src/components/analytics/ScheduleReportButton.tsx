@@ -399,7 +399,7 @@ const ScheduleReportButton: React.FC<ScheduleReportButtonProps> = ({
                     <Button 
                       variant="outline" 
                       size="sm"
-                      onClick={(e) => {
+                      onClick={(e: any) => {
                         const input = e.currentTarget.previousSibling as HTMLInputElement;
                         const email = input.value.trim();
                         if (email && !schedule.recipients.includes(email)) {

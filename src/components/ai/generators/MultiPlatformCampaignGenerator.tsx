@@ -290,7 +290,7 @@ export default function MultiPlatformCampaignGenerator({
       
       <Tabs 
         value={activeTab === 'create' ? 0 : 1}
-        onChange={(_, value) => setActiveTab(value === 0 ? 'create' : 'preview')}
+        onChange={(_: any, value: any) => setActiveTab(value === 0 ? 'create' : 'preview')}
       >
         <Tab label="Create Campaign" />
         <Tab label="Preview Campaign" disabled={!generatedCampaign} />

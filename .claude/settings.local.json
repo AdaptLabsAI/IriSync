@@ -15,7 +15,14 @@
       "Bash(source ~/.bashrc)",
       "Bash(node:*)",
       "Bash(cat:*)",
-      "Bash(src/components/ui/button.tsx)"
+      "Bash(src/components/ui/button.tsx)",
+      "Bash(src/components/todo/ui/card.tsx)",
+      "Bash(src/components/todo/ui/input/Input.tsx)",
+      "Bash(src/components/todo/ui/button/Button.tsx)",
+      "Bash(src/components/todo/ui/alert.tsx)",
+      "Bash(for file in src/components/ai/generators/*.tsx)",
+      "Bash(do sed -i 's/onChange={(_, value)/onChange={(_: any, value: any)/g' \"$file\")",
+      "Bash(done)"
     ],
     "deny": [],
     "ask": []

@@ -113,7 +113,7 @@ const TodoEditor: React.FC<{
             id="task-input"
             fullWidth
             value={text}
-            onChange={(e) => setText(e.target.value)}
+            onChange={(e: any) => setText(e.target.value)}
             placeholder="Enter task description"
             aria-required="true"
             disabled={saving}
@@ -128,7 +128,7 @@ const TodoEditor: React.FC<{
                 id="new-category"
                 fullWidth
                 value={newCategory}
-                onChange={(e) => setNewCategory(e.target.value)}
+                onChange={(e: any) => setNewCategory(e.target.value)}
                 placeholder="Enter new category name"
                 disabled={saving}
               />
@@ -150,7 +150,7 @@ const TodoEditor: React.FC<{
               { value: 'add-new', label: '+ Add New Category' }
             ]}
             value={category || ''}
-            onChange={(e) => {
+            onChange={(e: any) => {
               const value = e.target.value;
               if (value === 'add-new') {
                 setShowNewCategory(true);
@@ -181,7 +181,7 @@ const TodoEditor: React.FC<{
               label="Priority"
               options={priorityOptions}
               value={priority}
-              onChange={(e) => setPriority(e.target.value as 'low' | 'medium' | 'high')}
+              onChange={(e: any) => setPriority(e.target.value as 'low' | 'medium' | 'high')}
               disabled={saving}
               aria-label="Select priority level"
             />
@@ -304,7 +304,7 @@ const FilterSortDialog: React.FC<{
           label="Filter by Category"
           options={categoryOptions}
           value={localFilter.category || ''}
-          onChange={(e) => setLocalFilter({ ...localFilter, category: e.target.value || null })}
+          onChange={(e: any) => setLocalFilter({ ...localFilter, category: e.target.value || null })}
           aria-label="Filter by category"
         />
 
@@ -313,7 +313,7 @@ const FilterSortDialog: React.FC<{
           label="Sort By"
           options={sortOptions}
           value={localSort}
-          onChange={(e) => setLocalSort(e.target.value as SortOption)}
+          onChange={(e: any) => setLocalSort(e.target.value as SortOption)}
           aria-label="Sort tasks by"
         />
         
@@ -321,7 +321,7 @@ const FilterSortDialog: React.FC<{
           <span className="block text-sm font-medium text-gray-900 mb-1">Search</span>
           <Input 
             value={localFilter.search} 
-            onChange={(e) => setLocalFilter({ ...localFilter, search: e.target.value })}
+            onChange={(e: any) => setLocalFilter({ ...localFilter, search: e.target.value })}
             placeholder="Search tasks..."
             leftElement={<SearchIcon />}
           />
@@ -738,7 +738,7 @@ const TodoApp: React.FC = () => {
               <Select
                 id="sort-select"
                 value={sort}
-                onChange={(e) => setSort(e.target.value as SortOption)}
+                onChange={(e: any) => setSort(e.target.value as SortOption)}
                 className="text-xs py-1 h-auto min-h-0"
                 aria-label="Sort tasks"
                 options={[

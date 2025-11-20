@@ -160,26 +160,32 @@ export const BlogPostRepository = {
   },
 
   async delete(id: string): Promise<void> {
-    const docRef = doc(firestore, POST_COLLECTION, id);
+    const db = getFirebaseFirestore();
+    if (!db) throw new Error('Database not configured');
+
+    const docRef = doc(db, POST_COLLECTION, id);
     await deleteDoc(docRef);
-    
+
     // Also delete all comments associated with this post
     const commentsQuery = query(
-      collection(firestore, COMMENT_COLLECTION),
+      collection(db, COMMENT_COLLECTION),
       where('postId', '==', id)
     );
-    
+
     const commentsSnapshot = await getDocs(commentsQuery);
-    const deletePromises = commentsSnapshot.docs.map(commentDoc => 
-      deleteDoc(doc(firestore, COMMENT_COLLECTION, commentDoc.id))
+    const deletePromises = commentsSnapshot.docs.map(commentDoc =>
+      deleteDoc(doc(db, COMMENT_COLLECTION, commentDoc.id))
     );
-    
+
     await Promise.all(deletePromises);
   },
 
   async slugExists(slug: string, excludeId?: string): Promise<boolean> {
+    const db = getFirebaseFirestore();
+    if (!db) throw new Error('Database not configured');
+
     let slugQuery = query(
-      collection(firestore, POST_COLLECTION),
+      collection(db, POST_COLLECTION),
       where('slug', '==', slug)
     );
     
@@ -194,8 +200,11 @@ export const BlogPostRepository = {
   },
 
   async getByTag(tag: string, page = 1, pageSize = 10, lastDoc: any = null): Promise<{ posts: BlogPost[], lastDoc: any, hasMore: boolean }> {
+    const db = getFirebaseFirestore();
+    if (!db) throw new Error('Database not configured');
+
     let tagQuery = query(
-      collection(firestore, POST_COLLECTION),
+      collection(db, POST_COLLECTION),
       where('tags', 'array-contains', tag),
       where('status', '==', BlogPostStatus.PUBLISHED),
       orderBy('publishedAt', 'desc'),
@@ -217,8 +226,11 @@ export const BlogPostRepository = {
   },
 
   async getByAuthor(authorId: string, page = 1, pageSize = 10, lastDoc: any = null): Promise<{ posts: BlogPost[], lastDoc: any, hasMore: boolean }> {
+    const db = getFirebaseFirestore();
+    if (!db) throw new Error('Database not configured');
+
     let authorQuery = query(
-      collection(firestore, POST_COLLECTION),
+      collection(db, POST_COLLECTION),
       where('author.id', '==', authorId),
       where('status', '==', BlogPostStatus.PUBLISHED),
       orderBy('publishedAt', 'desc'),
@@ -275,14 +287,20 @@ export const BlogCommentRepository = {
   },
 
   async getById(id: string): Promise<BlogComment | null> {
-    const docRef = doc(firestore, COMMENT_COLLECTION, id);
+    const db = getFirebaseFirestore();
+    if (!db) throw new Error('Database not configured');
+
+    const docRef = doc(db, COMMENT_COLLECTION, id);
     const docSnap = await getDoc(docRef);
-    
+
     if (!docSnap.exists()) return null;
     return { id: docSnap.id, ...docSnap.data() } as BlogComment;
   },
 
   async create(commentData: Omit<BlogComment, 'id' | 'createdAt' | 'updatedAt' | 'isEdited' | 'likes' | 'reportCount'>): Promise<BlogComment> {
+    const db = getFirebaseFirestore();
+    if (!db) throw new Error('Database not configured');
+
     const timestamp = Timestamp.now();
     const newComment: Omit<BlogComment, 'id'> = {
       ...commentData,
@@ -293,14 +311,17 @@ export const BlogCommentRepository = {
       reportCount: 0
     };
 
-    const docRef = await addDoc(collection(firestore, COMMENT_COLLECTION), newComment);
+    const docRef = await addDoc(collection(db, COMMENT_COLLECTION), newComment);
     return { id: docRef.id, ...newComment } as BlogComment;
   },
 
   async update(id: string, commentData: Partial<BlogComment>): Promise<BlogComment> {
-    const docRef = doc(firestore, COMMENT_COLLECTION, id);
+    const db = getFirebaseFirestore();
+    if (!db) throw new Error('Database not configured');
+
+    const docRef = doc(db, COMMENT_COLLECTION, id);
     const currentComment = await this.getById(id);
-    
+
     if (!currentComment) {
       throw new Error(`Comment with ID ${id} not found`);
     }
@@ -312,13 +333,16 @@ export const BlogCommentRepository = {
     };
 
     await updateDoc(docRef, updates);
-    
+
     // Get the updated document
     return { ...currentComment, ...updates } as BlogComment;
   },
 
   async delete(id: string): Promise<void> {
-    const docRef = doc(firestore, COMMENT_COLLECTION, id);
+    const db = getFirebaseFirestore();
+    if (!db) throw new Error('Database not configured');
+
+    const docRef = doc(db, COMMENT_COLLECTION, id);
     await deleteDoc(docRef);
   },
 
@@ -327,22 +351,31 @@ export const BlogCommentRepository = {
   },
 
   async incrementLikes(id: string): Promise<void> {
-    const docRef = doc(firestore, COMMENT_COLLECTION, id);
+    const db = getFirebaseFirestore();
+    if (!db) throw new Error('Database not configured');
+
+    const docRef = doc(db, COMMENT_COLLECTION, id);
     await updateDoc(docRef, {
       likes: increment(1)
     });
   },
 
   async reportComment(id: string): Promise<void> {
-    const docRef = doc(firestore, COMMENT_COLLECTION, id);
+    const db = getFirebaseFirestore();
+    if (!db) throw new Error('Database not configured');
+
+    const docRef = doc(db, COMMENT_COLLECTION, id);
     await updateDoc(docRef, {
       reportCount: increment(1)
     });
   },
 
   async getPendingComments(page = 1, pageSize = 20, lastDoc: any = null): Promise<{ comments: BlogComment[], lastDoc: any, hasMore: boolean }> {
+    const db = getFirebaseFirestore();
+    if (!db) throw new Error('Database not configured');
+
     let pendingQuery = query(
-      collection(firestore, COMMENT_COLLECTION),
+      collection(db, COMMENT_COLLECTION),
       where('status', '==', CommentStatus.PENDING),
       orderBy('createdAt', 'asc'),
       limit(pageSize)

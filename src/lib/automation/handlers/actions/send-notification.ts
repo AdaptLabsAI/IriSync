@@ -85,7 +85,7 @@ export default class SendNotificationAction extends BaseActionHandler {
     if (!template) return '';
     
     return template.replace(/\{\{([^}]+)\}\}/g, (match, key) => {
-      const value = key.split('.').reduce((obj, part) => {
+      const value = key.split('.').reduce((obj: any, part: any) => {
         return obj && obj[part] !== undefined ? obj[part] : undefined;
       }, context);
       
