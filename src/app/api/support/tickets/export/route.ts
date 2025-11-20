@@ -3,7 +3,7 @@ import { getFirebaseFirestore } from '@/lib/core/firebase';
 import { getAuth } from '@/lib/core/firebase/admin';
 import { collection, getDocs, query, where, orderBy } from 'firebase/firestore';
 import { logger } from '@/lib/core/logging/logger';
-import { Parser as Json2CsvParser } from 'json2csv';
+import { parse as parseToCSV } from '@json2csv/plainjs';
 import PDFDocument from 'pdfkit';
 import { Readable } from 'stream';
 
@@ -172,8 +172,7 @@ async function generateCsvExport(tickets: any[]) {
     'forumPostId'
   ];
   
-  const json2csvParser = new Json2CsvParser({ fields });
-  const csv = json2csvParser.parse(tickets);
+  const csv = parseToCSV(tickets, { fields });
   
   return new NextResponse(csv, {
     headers: {

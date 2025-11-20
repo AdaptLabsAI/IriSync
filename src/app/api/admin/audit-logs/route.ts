@@ -3,7 +3,7 @@ import { withAdmin } from '@/lib/features/auth/route-handlers';
 import { TeamAuditLogger, AuditLogCategory, AuditLogSeverity, AuditLogEntry } from '@/lib/features/team/activity/audit-logger';
 import { getFirestore } from '@/lib/core/firebase/admin';
 import { logger as appLogger } from '@/lib/core/logging/logger';
-import { parse } from 'json2csv';
+import { parse } from '@json2csv/plainjs';
 
 // Configure route as fully dynamic to prevent build-time evaluation
 export const dynamic = 'force-dynamic';
