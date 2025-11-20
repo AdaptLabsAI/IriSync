@@ -271,6 +271,9 @@ export const GET = withSuperAdmin(async (request: NextRequest, adminUser: any) =
     
     // Get system stats if requested
     if (section === 'all' || section === 'stats') {
+      const firestore = getFirebaseFirestore();
+      if (!firestore) throw new Error('Database not configured');
+
       // Get analytics data for active users
       const now = new Date();
       const dayStart = new Date(now.setHours(0, 0, 0, 0));
