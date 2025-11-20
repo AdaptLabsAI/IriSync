@@ -290,8 +290,11 @@ export const JobRepository = {
   },
 
   async getDepartments(): Promise<string[]> {
+    const db = getFirebaseFirestore();
+    if (!db) throw new Error('Database not configured');
+
     const deptQuery = query(
-      collection(firestore, JOB_COLLECTION),
+      collection(db, JOB_COLLECTION),
       where('status', '==', JobStatus.PUBLISHED)
     );
     
@@ -309,8 +312,11 @@ export const JobRepository = {
   },
 
   async getJobTypes(): Promise<JobType[]> {
+    const db = getFirebaseFirestore();
+    if (!db) throw new Error('Database not configured');
+
     const typeQuery = query(
-      collection(firestore, JOB_COLLECTION),
+      collection(db, JOB_COLLECTION),
       where('status', '==', JobStatus.PUBLISHED)
     );
     
@@ -343,11 +349,11 @@ export const JobApplicationRepository = {
     pageSize = 20, 
     lastDoc: any = null
   ): Promise<{ applications: JobApplication[], lastDoc: any, hasMore: boolean }> {
-  const firestore = getFirebaseFirestore();
-  if (!firestore) throw new Error('Database not configured');
+    const db = getFirebaseFirestore();
+    if (!db) throw new Error('Database not configured');
 
     let appQuery = query(
-      collection(firestore, APPLICATION_COLLECTION),
+      collection(db, APPLICATION_COLLECTION),
       where('jobId', '==', jobId),
       orderBy('createdAt', 'desc'),
       firestoreLimit(pageSize)
@@ -368,7 +374,10 @@ export const JobApplicationRepository = {
   },
 
   async getById(id: string): Promise<JobApplication | null> {
-    const docRef = doc(firestore, APPLICATION_COLLECTION, id);
+    const db = getFirebaseFirestore();
+    if (!db) throw new Error('Database not configured');
+
+    const docRef = doc(db, APPLICATION_COLLECTION, id);
     const docSnap = await getDoc(docRef);
     
     if (!docSnap.exists()) return null;
@@ -376,6 +385,9 @@ export const JobApplicationRepository = {
   },
 
   async create(applicationData: Omit<JobApplication, 'id' | 'createdAt' | 'updatedAt' | 'status' | 'notes'>): Promise<JobApplication> {
+    const db = getFirebaseFirestore();
+    if (!db) throw new Error('Database not configured');
+
     const timestamp = Timestamp.now();
     const newApplication: Omit<JobApplication, 'id'> = {
       ...applicationData,
@@ -385,12 +397,15 @@ export const JobApplicationRepository = {
       updatedAt: timestamp
     };
 
-    const docRef = await addDoc(collection(firestore, APPLICATION_COLLECTION), newApplication);
+    const docRef = await addDoc(collection(db, APPLICATION_COLLECTION), newApplication);
     return { id: docRef.id, ...newApplication } as JobApplication;
   },
 
   async update(id: string, applicationData: Partial<JobApplication>): Promise<JobApplication> {
-    const docRef = doc(firestore, APPLICATION_COLLECTION, id);
+    const db = getFirebaseFirestore();
+    if (!db) throw new Error('Database not configured');
+
+    const docRef = doc(db, APPLICATION_COLLECTION, id);
     const currentApplication = await this.getById(id);
     
     if (!currentApplication) {
@@ -424,8 +439,11 @@ export const JobApplicationRepository = {
   },
 
   async getByEmail(email: string): Promise<JobApplication[]> {
+    const db = getFirebaseFirestore();
+    if (!db) throw new Error('Database not configured');
+
     const emailQuery = query(
-      collection(firestore, APPLICATION_COLLECTION),
+      collection(db, APPLICATION_COLLECTION),
       where('email', '==', email),
       orderBy('createdAt', 'desc')
     );
@@ -435,8 +453,11 @@ export const JobApplicationRepository = {
   },
 
   async getCountForJob(jobId: string): Promise<number> {
+    const db = getFirebaseFirestore();
+    if (!db) throw new Error('Database not configured');
+
     const countQuery = query(
-      collection(firestore, APPLICATION_COLLECTION),
+      collection(db, APPLICATION_COLLECTION),
       where('jobId', '==', jobId)
     );
     

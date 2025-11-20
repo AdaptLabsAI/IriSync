@@ -60,8 +60,12 @@ const updateTicketSchema = z.object({
 
 async function logAdminAction(adminUser: AuthUser, action: string, details: any) {
   try {
-    const adminFirestore = firestore;
-    const logRef = doc(collection(adminFirestore, AUDIT_LOGS_COLLECTION));
+    const db = getFirebaseFirestore();
+    if (!db) {
+      logger.error('Database not configured for audit logging');
+      return;
+    }
+    const logRef = doc(collection(db, AUDIT_LOGS_COLLECTION));
     await setDoc(logRef, {
       adminId: adminUser.id,
       adminEmail: adminUser.email,

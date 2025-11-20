@@ -412,8 +412,11 @@ export const BlogCategoryRepository = {
   },
 
   async getBySlug(slug: string): Promise<BlogCategory | null> {
+    const db = getFirebaseFirestore();
+    if (!db) throw new Error('Database not configured');
+
     const categoryQuery = query(
-      collection(firestore, CATEGORY_COLLECTION),
+      collection(db, CATEGORY_COLLECTION),
       where('slug', '==', slug),
       limit(1)
     );
@@ -425,11 +428,14 @@ export const BlogCategoryRepository = {
   },
 
   async create(categoryData: Omit<BlogCategory, 'id' | 'postCount'>): Promise<BlogCategory> {
+    const db = getFirebaseFirestore();
+    if (!db) throw new Error('Database not configured');
+
     // Generate slug from name if not provided
     if (!categoryData.slug) {
       categoryData.slug = generateSlug(categoryData.name);
     }
-    
+
     // Check if slug already exists
     const existingCategory = await this.getBySlug(categoryData.slug);
     if (existingCategory) {
@@ -441,7 +447,7 @@ export const BlogCategoryRepository = {
       postCount: 0
     };
 
-    const docRef = await addDoc(collection(firestore, CATEGORY_COLLECTION), newCategory);
+    const docRef = await addDoc(collection(db, CATEGORY_COLLECTION), newCategory);
     return { id: docRef.id, ...newCategory } as BlogCategory;
   },
 

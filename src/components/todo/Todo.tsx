@@ -85,7 +85,7 @@ const TodoEditor: React.FC<{
   };
 
   // Prepare category options for select
-  const categoryOptions = categories.map(cat => ({ value: cat, label: cat }));
+  const categoryOptions = categories.map((cat: any) => ({ value: cat, label: cat }));
   
   // Prepare priority options
   const priorityOptions = [
@@ -251,7 +251,7 @@ const FilterSortDialog: React.FC<{
   // Category options for select
   const categoryOptions = [
     { value: '', label: 'All Categories' },
-    ...categories.map(cat => ({ value: cat, label: cat }))
+    ...categories.map((cat: any) => ({ value: cat, label: cat }))
   ];
 
   // Sort options
