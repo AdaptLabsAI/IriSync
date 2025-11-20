@@ -638,44 +638,52 @@ export const POST = withSuperAdmin(async (request: NextRequest, adminUser: any) 
         }
         
         try {
+          const db = getFirebaseFirestore();
+          if (!db) {
+            return NextResponse.json(
+              { error: 'Database not configured' },
+              { status: 500 }
+            );
+          }
+
           // Determine which collection to reindex
           let collectionName: string;
           let batchSize = 500;
           let processingFunction: Function;
-          
+
           switch (body.indexType) {
             case 'content':
               collectionName = 'posts';
               // Define content indexing function
               processingFunction = async (docs: any[]) => {
-                const batch = writeBatch(firestore);
-                
-                docs.forEach(doc => {
+                const batch = writeBatch(db);
+
+                docs.forEach((doc: any) => {
                   const data = doc.data();
-                  batch.update(doc.ref, { 
+                  batch.update(doc.ref, {
                     searchLastUpdated: serverTimestamp(),
                     searchVector: data.content + ' ' + data.title
                   });
                 });
-                
+
                 return batch.commit();
               };
               break;
-              
+
             case 'users':
               collectionName = 'users';
               // Define users indexing function
               processingFunction = async (docs: any[]) => {
-                const batch = writeBatch(firestore);
-                
-                docs.forEach(doc => {
+                const batch = writeBatch(db);
+
+                docs.forEach((doc: any) => {
                   const data = doc.data();
-                  batch.update(doc.ref, { 
+                  batch.update(doc.ref, {
                     searchLastUpdated: serverTimestamp(),
                     searchTerms: `${data.firstName} ${data.lastName} ${data.email}`
                   });
                 });
-                
+
                 return batch.commit();
               };
               break;
@@ -684,34 +692,34 @@ export const POST = withSuperAdmin(async (request: NextRequest, adminUser: any) 
               collectionName = 'media';
               // Define media indexing function
               processingFunction = async (docs: any[]) => {
-                const batch = writeBatch(firestore);
-                
-                docs.forEach(doc => {
+                const batch = writeBatch(db);
+
+                docs.forEach((doc: any) => {
                   const data = doc.data();
-                  batch.update(doc.ref, { 
+                  batch.update(doc.ref, {
                     searchLastUpdated: serverTimestamp(),
                     searchTerms: [data.name, data.description, ...data.tags].join(' ')
                   });
                 });
-                
+
                 return batch.commit();
               };
               break;
-              
+
             case 'knowledge':
               collectionName = 'knowledgeBase';
               // Define knowledge base indexing function
               processingFunction = async (docs: any[]) => {
-                const batch = writeBatch(firestore);
-                
-                docs.forEach(doc => {
+                const batch = writeBatch(db);
+
+                docs.forEach((doc: any) => {
                   const data = doc.data();
-                  batch.update(doc.ref, { 
+                  batch.update(doc.ref, {
                     searchLastUpdated: serverTimestamp(),
                     searchVector: data.title + ' ' + data.content + ' ' + data.tags.join(' ')
                   });
                 });
-                
+
                 return batch.commit();
               };
               break;
