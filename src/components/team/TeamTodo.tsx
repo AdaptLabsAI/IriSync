@@ -562,7 +562,7 @@ const TeamTodoItem: React.FC<{
                     {permissions.canAssign ? (
                       <select
                         value={todo.assignedTo || ''}
-                        onChange={(e) => handleAssignmentChange(e.target.value)}
+                        onChange={(e: any) => handleAssignmentChange(e.target.value)}
                         disabled={isAssigning}
                         className="text-xs border border-gray-300 rounded px-2 py-1"
                       >
@@ -778,7 +778,7 @@ const TeamTodoApp: React.FC = () => {
           
           <Select
             value={Array.isArray(filter.status) ? filter.status[0] || 'all' : filter.status}
-            onChange={(e) => setFilter({ status: e.target.value === 'all' ? 'all' : [e.target.value as any] })}
+            onChange={(e: any) => setFilter({ status: e.target.value === 'all' ? 'all' : [e.target.value as any] })}
             options={[
               { value: 'all', label: 'All Tasks' },
               { value: 'active', label: 'Active' },
@@ -788,7 +788,7 @@ const TeamTodoApp: React.FC = () => {
           
           <Select
             value={Array.isArray(filter.category) ? filter.category[0] || '' : filter.category || ''}
-            onChange={(e) => setFilter({ category: e.target.value ? [e.target.value] : undefined })}
+            onChange={(e: any) => setFilter({ category: e.target.value ? [e.target.value] : undefined })}
             options={[
               { value: '', label: 'All Categories' },
               ...categories.map(cat => ({ value: cat, label: cat }))

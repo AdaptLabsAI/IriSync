@@ -276,7 +276,7 @@ const SecuritySettingsButton: React.FC<SecuritySettingsButtonProps> = ({
       
       <Dialog
         open={isOpen}
-        onOpenChange={(open) => {
+        onOpenChange={(open: any) => {
           setIsOpen(open);
           if (!open) {
             resetPasswordFields();
@@ -312,7 +312,7 @@ const SecuritySettingsButton: React.FC<SecuritySettingsButtonProps> = ({
                       type="password"
                       className="w-full px-3 py-2 border rounded-md"
                       value={currentPassword}
-                      onChange={(e) => setCurrentPassword(e.target.value)}
+                      onChange={(e: any) => setCurrentPassword(e.target.value)}
                     />
                   </div>
                   
@@ -322,7 +322,7 @@ const SecuritySettingsButton: React.FC<SecuritySettingsButtonProps> = ({
                       type="password"
                       className="w-full px-3 py-2 border rounded-md"
                       value={newPassword}
-                      onChange={(e) => setNewPassword(e.target.value)}
+                      onChange={(e: any) => setNewPassword(e.target.value)}
                     />
                   </div>
                   
@@ -332,7 +332,7 @@ const SecuritySettingsButton: React.FC<SecuritySettingsButtonProps> = ({
                       type="password"
                       className="w-full px-3 py-2 border rounded-md"
                       value={confirmPassword}
-                      onChange={(e) => setConfirmPassword(e.target.value)}
+                      onChange={(e: any) => setConfirmPassword(e.target.value)}
                     />
                   </div>
                   
@@ -387,7 +387,7 @@ const SecuritySettingsButton: React.FC<SecuritySettingsButtonProps> = ({
                     type="checkbox" 
                     className="sr-only peer" 
                     checked={localSettings.twoFactorEnabled}
-                    onChange={(e) => handleTwoFactorToggle(e.target.checked)}
+                    onChange={(e: any) => handleTwoFactorToggle(e.target.checked)}
                   />
                   <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
                 </label>
@@ -474,7 +474,7 @@ const SecuritySettingsButton: React.FC<SecuritySettingsButtonProps> = ({
                   <select
                     className="w-full px-3 py-2 border rounded-md mt-1"
                     value={localSettings.sessionTimeout}
-                    onChange={(e) => handleSessionTimeoutChange(e.target.value)}
+                    onChange={(e: any) => handleSessionTimeoutChange(e.target.value)}
                   >
                     <option value={15}>15 minutes</option>
                     <option value={30}>30 minutes</option>

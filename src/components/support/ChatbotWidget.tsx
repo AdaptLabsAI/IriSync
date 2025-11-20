@@ -366,7 +366,7 @@ const ChatbotWidget: React.FC<ChatbotWidgetProps> = ({
               type="text"
               ref={inputRef}
               value={input}
-              onChange={(e) => setInput(e.target.value)}
+              onChange={(e: any) => setInput(e.target.value)}
               placeholder="Type your message..."
               className="flex-1 border border-gray-300 rounded-full py-2 px-4 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
               disabled={isLoading}

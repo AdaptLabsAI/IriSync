@@ -441,7 +441,7 @@ const TaskAssignmentButton: React.FC<TaskAssignmentButtonProps> = ({
                 <Input
                   id="title"
                   value={newTask.title}
-                  onChange={(e) => setNewTask({ ...newTask, title: e.target.value })}
+                  onChange={(e: any) => setNewTask({ ...newTask, title: e.target.value })}
                   placeholder="Enter task title"
                   required
                 />
@@ -454,7 +454,7 @@ const TaskAssignmentButton: React.FC<TaskAssignmentButtonProps> = ({
                 <Textarea
                   id="description"
                   value={newTask.description}
-                  onChange={(e) => setNewTask({ ...newTask, description: e.target.value })}
+                  onChange={(e: any) => setNewTask({ ...newTask, description: e.target.value })}
                   placeholder="Enter task description"
                   rows={3}
                 />
@@ -468,7 +468,7 @@ const TaskAssignmentButton: React.FC<TaskAssignmentButtonProps> = ({
                   <Select
                     id="assignee"
                     value={newTask.assigneeId}
-                    onChange={(e) => setNewTask({ ...newTask, assigneeId: e.target.value })}
+                    onChange={(e: any) => setNewTask({ ...newTask, assigneeId: e.target.value })}
                   >
                     <option value="">Unassigned</option>
                     {teamMembers.map(member => (
@@ -500,7 +500,7 @@ const TaskAssignmentButton: React.FC<TaskAssignmentButtonProps> = ({
                   <Select
                     id="priority"
                     value={newTask.priority}
-                    onChange={(e) => setNewTask({ ...newTask, priority: e.target.value as Task['priority'] })}
+                    onChange={(e: any) => setNewTask({ ...newTask, priority: e.target.value as Task['priority'] })}
                   >
                     <option value="low">Low</option>
                     <option value="medium">Medium</option>
@@ -516,7 +516,7 @@ const TaskAssignmentButton: React.FC<TaskAssignmentButtonProps> = ({
                   <Select
                     id="status"
                     value={newTask.status}
-                    onChange={(e) => setNewTask({ ...newTask, status: e.target.value as Task['status'] })}
+                    onChange={(e: any) => setNewTask({ ...newTask, status: e.target.value as Task['status'] })}
                   >
                     <option value="todo">To Do</option>
                     <option value="in_progress">In Progress</option>
@@ -630,7 +630,7 @@ const TaskAssignmentButton: React.FC<TaskAssignmentButtonProps> = ({
                     <Input
                       id="new-title"
                       value={newTask.title}
-                      onChange={(e) => setNewTask({ ...newTask, title: e.target.value })}
+                      onChange={(e: any) => setNewTask({ ...newTask, title: e.target.value })}
                       placeholder="Enter task title"
                       required
                     />
@@ -643,7 +643,7 @@ const TaskAssignmentButton: React.FC<TaskAssignmentButtonProps> = ({
                     <Textarea
                       id="new-description"
                       value={newTask.description}
-                      onChange={(e) => setNewTask({ ...newTask, description: e.target.value })}
+                      onChange={(e: any) => setNewTask({ ...newTask, description: e.target.value })}
                       placeholder="Enter task description"
                       rows={3}
                     />
@@ -657,7 +657,7 @@ const TaskAssignmentButton: React.FC<TaskAssignmentButtonProps> = ({
                       <Select
                         id="new-assignee"
                         value={newTask.assigneeId}
-                        onChange={(e) => setNewTask({ ...newTask, assigneeId: e.target.value })}
+                        onChange={(e: any) => setNewTask({ ...newTask, assigneeId: e.target.value })}
                       >
                         <option value="">Unassigned</option>
                         {teamMembers.map(member => (
@@ -689,7 +689,7 @@ const TaskAssignmentButton: React.FC<TaskAssignmentButtonProps> = ({
                       <Select
                         id="new-priority"
                         value={newTask.priority}
-                        onChange={(e) => setNewTask({ ...newTask, priority: e.target.value as Task['priority'] })}
+                        onChange={(e: any) => setNewTask({ ...newTask, priority: e.target.value as Task['priority'] })}
                       >
                         <option value="low">Low</option>
                         <option value="medium">Medium</option>
@@ -705,7 +705,7 @@ const TaskAssignmentButton: React.FC<TaskAssignmentButtonProps> = ({
                       <Select
                         id="new-status"
                         value={newTask.status}
-                        onChange={(e) => setNewTask({ ...newTask, status: e.target.value as Task['status'] })}
+                        onChange={(e: any) => setNewTask({ ...newTask, status: e.target.value as Task['status'] })}
                       >
                         <option value="todo">To Do</option>
                         <option value="in_progress">In Progress</option>

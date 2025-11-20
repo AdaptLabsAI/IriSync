@@ -252,7 +252,7 @@ const AccountSettings = () => {
               type="password"
               fullWidth
               value={currentPassword}
-              onChange={(e) => setCurrentPassword(e.target.value)}
+              onChange={(e: any) => setCurrentPassword(e.target.value)}
               required
             />
             <TextField
@@ -260,7 +260,7 @@ const AccountSettings = () => {
               type="password"
               fullWidth
               value={newPassword}
-              onChange={(e) => setNewPassword(e.target.value)}
+              onChange={(e: any) => setNewPassword(e.target.value)}
               required
               helperText="Password must be at least 8 characters"
             />
@@ -269,7 +269,7 @@ const AccountSettings = () => {
               type="password"
               fullWidth
               value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
+              onChange={(e: any) => setConfirmPassword(e.target.value)}
               required
             />
           </Stack>

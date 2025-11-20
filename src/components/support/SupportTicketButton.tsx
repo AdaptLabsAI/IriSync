@@ -330,7 +330,7 @@ const SupportTicketButton: React.FC<SupportTicketButtonProps> = ({
       
       <Dialog
         open={isOpen}
-        onOpenChange={(open) => {
+        onOpenChange={(open: any) => {
           setIsOpen(open);
           if (!open) {
             setSelectedTicket(null);
@@ -426,7 +426,7 @@ const SupportTicketButton: React.FC<SupportTicketButtonProps> = ({
                   className="w-full px-3 py-2 border rounded-md"
                   placeholder="Brief summary of your issue"
                   value={newTicket.title}
-                  onChange={(e) => setNewTicket({ ...newTicket, title: e.target.value })}
+                  onChange={(e: any) => setNewTicket({ ...newTicket, title: e.target.value })}
                 />
               </div>
               
@@ -435,7 +435,7 @@ const SupportTicketButton: React.FC<SupportTicketButtonProps> = ({
                 <select
                   className="w-full px-3 py-2 border rounded-md"
                   value={newTicket.category}
-                  onChange={(e) => setNewTicket({ ...newTicket, category: e.target.value })}
+                  onChange={(e: any) => setNewTicket({ ...newTicket, category: e.target.value })}
                 >
                   <option value="general">General</option>
                   <option value="billing">Billing</option>
@@ -450,7 +450,7 @@ const SupportTicketButton: React.FC<SupportTicketButtonProps> = ({
                 <select
                   className="w-full px-3 py-2 border rounded-md"
                   value={newTicket.priority}
-                  onChange={(e) => setNewTicket({ ...newTicket, priority: e.target.value as TicketPriority })}
+                  onChange={(e: any) => setNewTicket({ ...newTicket, priority: e.target.value as TicketPriority })}
                 >
                   <option value="low">Low</option>
                   <option value="medium">Medium</option>
@@ -465,7 +465,7 @@ const SupportTicketButton: React.FC<SupportTicketButtonProps> = ({
                   className="w-full px-3 py-2 border rounded-md min-h-[120px]"
                   placeholder="Please provide details about your issue"
                   value={newTicket.description}
-                  onChange={(e) => setNewTicket({ ...newTicket, description: e.target.value })}
+                  onChange={(e: any) => setNewTicket({ ...newTicket, description: e.target.value })}
                 />
               </div>
               
@@ -605,7 +605,7 @@ const SupportTicketButton: React.FC<SupportTicketButtonProps> = ({
                       className="flex-1 px-3 py-2 border rounded-l-md min-h-[80px]"
                       placeholder="Type your message here..."
                       value={message}
-                      onChange={(e) => setMessage(e.target.value)}
+                      onChange={(e: any) => setMessage(e.target.value)}
                       disabled={selectedTicket.status === 'closed'}
                     />
                     <Button

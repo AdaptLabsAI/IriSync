@@ -150,7 +150,7 @@ const NotificationSettingsButton: React.FC<NotificationSettingsButtonProps> = ({
       
       <Dialog
         open={isOpen}
-        onOpenChange={(open) => {
+        onOpenChange={(open: any) => {
           setIsOpen(open);
         }}
       >

@@ -152,7 +152,7 @@ const AccountSettingsButton: React.FC<AccountSettingsButtonProps> = ({
       
       <Dialog
         open={isOpen}
-        onOpenChange={(open) => {
+        onOpenChange={(open: any) => {
           setIsOpen(open);
         }}
       >

@@ -293,7 +293,7 @@ const FeedbackSubmitButton: React.FC<FeedbackSubmitButtonProps> = ({
                   className="w-full px-3 py-2 border rounded-md"
                   placeholder="e.g., Dashboard, Content Calendar, Analytics, etc."
                   value={context}
-                  onChange={(e) => setContext(e.target.value)}
+                  onChange={(e: any) => setContext(e.target.value)}
                 />
               </div>
               
@@ -309,7 +309,7 @@ const FeedbackSubmitButton: React.FC<FeedbackSubmitButtonProps> = ({
                       : "Share your thoughts or suggestions with us..."
                   }
                   value={content}
-                  onChange={(e) => setContent(e.target.value)}
+                  onChange={(e: any) => setContent(e.target.value)}
                 />
               </div>
               
@@ -371,7 +371,7 @@ const FeedbackSubmitButton: React.FC<FeedbackSubmitButtonProps> = ({
                     className="w-full px-3 py-2 border rounded-md"
                     placeholder="In case we need to follow up"
                     value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={(e: any) => setEmail(e.target.value)}
                   />
                 </div>
               )}

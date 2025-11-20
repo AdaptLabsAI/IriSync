@@ -267,7 +267,7 @@ const APIKeyButton: React.FC<APIKeyButtonProps> = ({
       
       <Dialog
         open={isOpen}
-        onOpenChange={(open) => {
+        onOpenChange={(open: any) => {
           setIsOpen(open);
           if (!open) {
             setNewKey(null);
@@ -327,7 +327,7 @@ const APIKeyButton: React.FC<APIKeyButtonProps> = ({
                     className="w-full px-3 py-2 border rounded-md"
                     placeholder="e.g., Production API, Test Environment"
                     value={newKeyName}
-                    onChange={(e) => setNewKeyName(e.target.value)}
+                    onChange={(e: any) => setNewKeyName(e.target.value)}
                   />
                 </div>
                 
@@ -337,7 +337,7 @@ const APIKeyButton: React.FC<APIKeyButtonProps> = ({
                     <select
                       className="w-full px-3 py-2 border rounded-md"
                       value={newKeyScope}
-                      onChange={(e) => setNewKeyScope(e.target.value as 'read' | 'write' | 'admin')}
+                      onChange={(e: any) => setNewKeyScope(e.target.value as 'read' | 'write' | 'admin')}
                     >
                       <option value="read">Read Only</option>
                       <option value="write">Read & Write</option>
@@ -350,7 +350,7 @@ const APIKeyButton: React.FC<APIKeyButtonProps> = ({
                     <select
                       className="w-full px-3 py-2 border rounded-md"
                       value={newKeyExpiration}
-                      onChange={(e) => setNewKeyExpiration(e.target.value as 'never' | '30days' | '90days' | '1year')}
+                      onChange={(e: any) => setNewKeyExpiration(e.target.value as 'never' | '30days' | '90days' | '1year')}
                     >
                       <option value="never">Never</option>
                       <option value="30days">30 Days</option>

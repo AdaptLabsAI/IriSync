@@ -397,7 +397,7 @@ const CustomRoleButton: React.FC<CustomRoleButtonProps> = ({
                 <Input
                   id="name"
                   value={newRole.name}
-                  onChange={(e) => setNewRole({ ...newRole, name: e.target.value })}
+                  onChange={(e: any) => setNewRole({ ...newRole, name: e.target.value })}
                   placeholder="Enter role name"
                   required
                   disabled={selectedRole.isSystem}
@@ -411,7 +411,7 @@ const CustomRoleButton: React.FC<CustomRoleButtonProps> = ({
                 <Textarea
                   id="description"
                   value={newRole.description}
-                  onChange={(e) => setNewRole({ ...newRole, description: e.target.value })}
+                  onChange={(e: any) => setNewRole({ ...newRole, description: e.target.value })}
                   placeholder="Enter role description"
                   rows={2}
                   disabled={selectedRole.isSystem}
@@ -432,7 +432,7 @@ const CustomRoleButton: React.FC<CustomRoleButtonProps> = ({
                             id={`category-${category}`}
                             checked={isCategoryChecked(category)}
                             indeterminate={isCategoryIndeterminate(category)}
-                            onChange={(e) => handleCategoryToggle(category, e.target.checked)}
+                            onChange={(e: any) => handleCategoryToggle(category, e.target.checked)}
                             disabled={selectedRole.isSystem}
                           />
                           <label 
@@ -449,7 +449,7 @@ const CustomRoleButton: React.FC<CustomRoleButtonProps> = ({
                               <Checkbox
                                 id={`permission-${permission.id}`}
                                 checked={newRole.permissions.includes(permission.id)}
-                                onChange={(e) => handlePermissionToggle(permission.id, e.target.checked)}
+                                onChange={(e: any) => handlePermissionToggle(permission.id, e.target.checked)}
                                 disabled={selectedRole.isSystem || (permission.isEnterprise && !buttonProps.featureTier)}
                               />
                               <div>
@@ -589,7 +589,7 @@ const CustomRoleButton: React.FC<CustomRoleButtonProps> = ({
                     <Input
                       id="new-name"
                       value={newRole.name}
-                      onChange={(e) => setNewRole({ ...newRole, name: e.target.value })}
+                      onChange={(e: any) => setNewRole({ ...newRole, name: e.target.value })}
                       placeholder="Enter role name"
                       required
                     />
@@ -602,7 +602,7 @@ const CustomRoleButton: React.FC<CustomRoleButtonProps> = ({
                     <Textarea
                       id="new-description"
                       value={newRole.description}
-                      onChange={(e) => setNewRole({ ...newRole, description: e.target.value })}
+                      onChange={(e: any) => setNewRole({ ...newRole, description: e.target.value })}
                       placeholder="Enter role description"
                       rows={2}
                     />
@@ -613,7 +613,7 @@ const CustomRoleButton: React.FC<CustomRoleButtonProps> = ({
                       <Checkbox
                         id="is-default"
                         checked={!!newRole.isDefault}
-                        onChange={(e) => setNewRole({ ...newRole, isDefault: e.target.checked })}
+                        onChange={(e: any) => setNewRole({ ...newRole, isDefault: e.target.checked })}
                       />
                       <label htmlFor="is-default" className="ml-2 text-sm font-medium text-gray-700">
                         Make this the default role for new team members
@@ -635,7 +635,7 @@ const CustomRoleButton: React.FC<CustomRoleButtonProps> = ({
                                 id={`new-category-${category}`}
                                 checked={isCategoryChecked(category)}
                                 indeterminate={isCategoryIndeterminate(category)}
-                                onChange={(e) => handleCategoryToggle(category, e.target.checked)}
+                                onChange={(e: any) => handleCategoryToggle(category, e.target.checked)}
                               />
                               <label 
                                 htmlFor={`new-category-${category}`} 
@@ -651,7 +651,7 @@ const CustomRoleButton: React.FC<CustomRoleButtonProps> = ({
                                   <Checkbox
                                     id={`new-permission-${permission.id}`}
                                     checked={newRole.permissions.includes(permission.id)}
-                                    onChange={(e) => handlePermissionToggle(permission.id, e.target.checked)}
+                                    onChange={(e: any) => handlePermissionToggle(permission.id, e.target.checked)}
                                     disabled={permission.isEnterprise && !buttonProps.featureTier}
                                   />
                                   <div>

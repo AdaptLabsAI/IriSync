@@ -201,7 +201,7 @@ const FeedbackButton: React.FC<FeedbackButtonProps> = ({
               rows={3}
               placeholder="Enter your feedback..."
               value={feedbackMessage}
-              onChange={(e) => setFeedbackMessage(e.target.value)}
+              onChange={(e: any) => setFeedbackMessage(e.target.value)}
             />
             <div className="flex justify-end">
               <Button

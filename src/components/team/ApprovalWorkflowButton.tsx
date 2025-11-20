@@ -384,14 +384,14 @@ const ApprovalWorkflowButton: React.FC<ApprovalWorkflowButtonProps> = ({
                       label=""
                       options={availableRoles.map(role => ({ value: role.id, label: role.name }))}
                       value={step.role}
-                      onChange={(e) => handleStepChange(step.id, 'role', e.target.value)}
+                      onChange={(e: any) => handleStepChange(step.id, 'role', e.target.value)}
                       placeholder="Select role"
                     />
                     <div className="flex items-center gap-1">
                       <Checkbox
                         id={`optional-${step.id}`}
                         checked={step.isOptional}
-                        onChange={(e) => handleStepChange(step.id, 'isOptional', e.target.checked)}
+                        onChange={(e: any) => handleStepChange(step.id, 'isOptional', e.target.checked)}
                       />
                       <Label htmlFor={`optional-${step.id}`} className="text-xs cursor-pointer">
                         Optional
@@ -419,7 +419,7 @@ const ApprovalWorkflowButton: React.FC<ApprovalWorkflowButtonProps> = ({
                       <Checkbox
                         id={`content-type-${type.id}`}
                         checked={(newWorkflow.contentTypes || []).includes(type.id)}
-                        onChange={(e) => handleToggleContentType(type.id, e.target.checked)}
+                        onChange={(e: any) => handleToggleContentType(type.id, e.target.checked)}
                       />
                       <Label
                         htmlFor={`content-type-${type.id}`}

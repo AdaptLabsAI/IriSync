@@ -254,7 +254,7 @@ const TeamActivityButton: React.FC<TeamActivityButtonProps> = ({
               <Users className="h-4 w-4 text-gray-500" />
               <Select
                 value={selectedUser}
-                onChange={(e) => handleUserFilter(e.target.value)}
+                onChange={(e: any) => handleUserFilter(e.target.value)}
                 className="w-44"
               >
                 <option value="all">All Team Members</option>
@@ -268,7 +268,7 @@ const TeamActivityButton: React.FC<TeamActivityButtonProps> = ({
               <Filter className="h-4 w-4 text-gray-500" />
               <Select
                 value={selectedType}
-                onChange={(e) => handleTypeFilter(e.target.value)}
+                onChange={(e: any) => handleTypeFilter(e.target.value)}
                 className="w-40"
               >
                 <option value="all">All Activities</option>

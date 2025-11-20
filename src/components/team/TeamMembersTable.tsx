@@ -216,7 +216,7 @@ export default function TeamMembersTable({
         </TableBody>
       </Table>
 
-      <AlertDialog open={!!removingUserId} onOpenChange={(open) => !open && setRemovingUserId(null)}>
+      <AlertDialog open={!!removingUserId} onOpenChange={(open: any) => !open && setRemovingUserId(null)}>
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>Remove Team Member</AlertDialogTitle>

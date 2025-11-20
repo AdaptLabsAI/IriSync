@@ -330,7 +330,7 @@ const KnowledgeBaseButton: React.FC<KnowledgeBaseButtonProps> = ({
                       placeholder="Search knowledge base..."
                       className="w-full pl-10 pr-4 py-2 border rounded-l-md focus:ring-2 focus:ring-blue-300 focus:border-blue-500 focus:outline-none"
                       value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
+                      onChange={(e: any) => setSearchQuery(e.target.value)}
                       onKeyDown={handleKeyPress}
                     />
                   </div>

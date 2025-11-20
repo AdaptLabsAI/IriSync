@@ -284,7 +284,7 @@ const IntegrationSettingsButton: React.FC<IntegrationSettingsButtonProps> = ({
       
       <Dialog
         open={isOpen}
-        onOpenChange={(open) => {
+        onOpenChange={(open: any) => {
           setIsOpen(open);
           if (!open) {
             setSelectedIntegration(null);
@@ -596,7 +596,7 @@ const IntegrationSettingsButton: React.FC<IntegrationSettingsButtonProps> = ({
                             <input
                               type="checkbox"
                               checked={value}
-                              onChange={(e) => {
+                              onChange={(e: any) => {
                                 const newConfig = {
                                   ...selectedIntegration.configuration,
                                   [key]: e.target.checked
@@ -617,7 +617,7 @@ const IntegrationSettingsButton: React.FC<IntegrationSettingsButtonProps> = ({
                           <input
                             type="number"
                             value={value}
-                            onChange={(e) => {
+                            onChange={(e: any) => {
                               const newConfig = {
                                 ...selectedIntegration.configuration,
                                 [key]: Number(e.target.value)
@@ -633,7 +633,7 @@ const IntegrationSettingsButton: React.FC<IntegrationSettingsButtonProps> = ({
                         ) : Array.isArray(value) ? (
                           <select
                             value={value[0]}
-                            onChange={(e) => {
+                            onChange={(e: any) => {
                               const newConfig = {
                                 ...selectedIntegration.configuration,
                                 [key]: [e.target.value, ...value.slice(1)]
@@ -656,7 +656,7 @@ const IntegrationSettingsButton: React.FC<IntegrationSettingsButtonProps> = ({
                           <input
                             type="text"
                             value={value as string}
-                            onChange={(e) => {
+                            onChange={(e: any) => {
                               const newConfig = {
                                 ...selectedIntegration.configuration,
                                 [key]: e.target.value

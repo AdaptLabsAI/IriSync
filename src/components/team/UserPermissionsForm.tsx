@@ -219,7 +219,7 @@ export default function UserPermissionsForm({ teamMember, onSave, readOnly = fal
               <Switch 
                 size="small" 
                 checked={compactView} 
-                onChange={(e) => setCompactView(e.target.checked)} 
+                onChange={(e: any) => setCompactView(e.target.checked)} 
               />
             </Box>
           </Box>

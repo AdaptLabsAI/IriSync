@@ -143,7 +143,7 @@ const FAQSection: React.FC = () => {
           <input
             type="text"
             value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+            onChange={(e: any) => setSearchQuery(e.target.value)}
             onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
             placeholder="Search for answers..."
             className="w-full px-4 py-3 pl-10 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
@@ -192,7 +192,7 @@ const FAQSection: React.FC = () => {
           <div className="md:hidden mb-6">
             <select
               value={activeCategory || ''}
-              onChange={(e) => setCategory(e.target.value)}
+              onChange={(e: any) => setCategory(e.target.value)}
               className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
             >
               {categories.map((category) => (
