@@ -377,9 +377,6 @@ export async function loginWithGoogle(): Promise<{success: boolean; user?: User;
     // Check if this is a new user (first login)
     // We need to check Firestore too because the metadata might not be accurate
     // if the user was deleted and recreated
-  const firestore = getFirebaseFirestore();
-  if (!firestore) throw new Error('Database not configured');
-
     const userDocRef = doc(firestore, 'users', user.uid);
     const userDoc = await getDoc(userDocRef);
     const isNewUser = !userDoc.exists();
@@ -527,16 +524,13 @@ export async function completePasswordReset(code: string, newPassword: string): 
 export async function verifyEmail(code: string): Promise<{success: boolean; error?: string}> {
   try {
     const auth = getAuthSafely();
-    const firestore = getFirestoreSafely();
+    const db = getFirestoreSafely();
     
     await applyActionCode(auth, code);
     
     // Also update the user document in Firestore
-    if (auth.currentUser) {
-  const firestore = getFirebaseFirestore();
-  if (!firestore) throw new Error('Database not configured');
-
-      const userRef = doc(firestore, 'users', auth.currentUser.uid);
+    if (auth.currentUser && db) {
+      const userRef = doc(db, 'users', auth.currentUser.uid);
       await updateDoc(userRef, {
         emailVerified: true,
         updatedAt: serverTimestamp()

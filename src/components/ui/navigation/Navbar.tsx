@@ -5,7 +5,7 @@ import Link from "next/link"
 import { MessageSquare, Menu, X, Bell, Settings, User } from "lucide-react"
 import { getAuth, onAuthStateChanged } from "firebase/auth"
 import { doc, getDoc } from "firebase/firestore"
-import { getFirebaseFirestore, firestore } from '@/lib/core/firebase';
+import { getFirebaseFirestore } from '@/lib/core/firebase';
 import { NextResponse } from 'next/server';
 import { useRouter, usePathname } from "next/navigation"
 
@@ -42,17 +42,16 @@ export default function Navbar() {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       setUser(currentUser)
 
-      if (currentUser && firestore) {
+      if (currentUser) {
         try {
-          const firestore = getFirebaseFirestore();
+          const db = getFirebaseFirestore();
 
-          if (!firestore) { console.error('Firestore not configured'); return; }
-
-          const firestore = getFirebaseFirestore();
-          if (!firestore) {
-            return NextResponse.json({ error: 'Database not configured' }, { status: 500 });
+          if (!db) { 
+            console.error('Firestore not configured'); 
+            return; 
           }
-          const userRef = doc(firestore, "users", currentUser.uid)
+
+          const userRef = doc(db, "users", currentUser.uid)
           const userSnap = await getDoc(userRef)
 
           if (userSnap.exists()) {
