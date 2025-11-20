@@ -78,10 +78,8 @@ export async function GET(request: NextRequest) {
         { status: 403 }
       );
     }
-    
-    // Get the user's AI usage data
-  const firestore = getFirebaseFirestore();
-  if (!firestore) throw new Error('Database not configured');
+
+    // Get the user's AI usage data (firestore already initialized above)
 
     const usageRef = doc(firestore, 'aiUsage', userId);
     const usageSnapshot = await getDoc(usageRef);

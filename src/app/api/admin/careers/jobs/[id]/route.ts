@@ -53,6 +53,10 @@ export async function DELETE(
       );
     }
 
+    // Get Firestore instance
+    const firestore = getFirebaseFirestore();
+    if (!firestore) throw new Error('Database not configured');
+
     // Check if job exists
     const jobRef = doc(firestore, 'jobListings', params.id);
     const jobDoc = await getDoc(jobRef);
@@ -107,6 +111,10 @@ export async function PUT(
         { status: 403 }
       );
     }
+
+    // Get Firestore instance
+    const firestore = getFirebaseFirestore();
+    if (!firestore) throw new Error('Database not configured');
 
     // Check if job exists
     const jobRef = doc(firestore, 'jobListings', params.id);

@@ -69,10 +69,8 @@ export async function POST(request: NextRequest) {
         error: 'User is not a member of this team' 
       }, { status: 403 });
     }
-    
-    // Update user's current team in their user document
-  const firestore = getFirebaseFirestore();
-  if (!firestore) throw new Error('Database not configured');
+
+    // Update user's current team in their user document (firestore already initialized above)
 
     const usersRef = collection(firestore, 'users');
     const userQuery = query(usersRef, where('id', '==', userId));

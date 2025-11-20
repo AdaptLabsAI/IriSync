@@ -594,9 +594,7 @@ export async function GET_CHECK_SUBSCRIPTION_STATUS(req: NextRequest) {
     const firestore = getFirestore();
     const stripe = getStripeClient();
 
-    // Get user data
-  const firestore = getFirebaseFirestore();
-  if (!firestore) throw new Error('Database not configured');
+    // Get user data (using admin SDK firestore from above)
 
     const userDoc = await firestore.collection('users').doc(userId).get();
     if (!userDoc.exists) {

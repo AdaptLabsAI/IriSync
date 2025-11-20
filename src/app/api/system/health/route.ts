@@ -34,8 +34,7 @@ export async function GET(request: NextRequest) {
     const { firestore } = await import('@/lib/core/firebase');
     const { doc, getDoc } = await import('firebase/firestore');
 
-  const firestore = getFirebaseFirestore();
-  if (!firestore) throw new Error('Database not configured');
+    if (!firestore) throw new Error('Database not configured');
 
     const userDoc = await getDoc(doc(firestore, 'users', session.user.id));
 

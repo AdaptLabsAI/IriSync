@@ -60,9 +60,6 @@ export const PUT = withAdmin(async (request: NextRequest, adminUser: any) => {
   const firestore = getFirebaseFirestore();
   if (!firestore) throw new Error('Database not configured');
 
-  const firestore = getFirebaseFirestore();
-  if (!firestore) throw new Error('Database not configured');
-
     const docRef = doc(firestore, 'roadmapItems', id);
     
     // Check if document exists
@@ -103,9 +100,6 @@ export const DELETE = withAdmin(async (request: NextRequest, adminUser: any) => 
     const pathSegments = url.pathname.split('/');
     const id = pathSegments[pathSegments.length - 1];
     
-  const firestore = getFirebaseFirestore();
-  if (!firestore) throw new Error('Database not configured');
-
   const firestore = getFirebaseFirestore();
   if (!firestore) throw new Error('Database not configured');
 

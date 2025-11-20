@@ -287,9 +287,6 @@ export const GET = withAdmin(async (request: NextRequest, adminUser: any) => {
   const firestore = getFirebaseFirestore();
   if (!firestore) throw new Error('Database not configured');
 
-  const firestore = getFirebaseFirestore();
-  if (!firestore) throw new Error('Database not configured');
-
         supportQuery = query(supportQuery, where('status', '==', status));
       }
       
@@ -509,9 +506,6 @@ export const POST = withAdmin(async (request: NextRequest, adminUser: any) => {
   const firestore = getFirebaseFirestore();
   if (!firestore) throw new Error('Database not configured');
 
-  const firestore = getFirebaseFirestore();
-  if (!firestore) throw new Error('Database not configured');
-
     const docRef = await addDoc(collection(firestore, collectionName), firestoreData);
     
     // Format response data
@@ -614,9 +608,6 @@ export const PATCH = withAdmin(async (request: NextRequest, adminUser: any) => {
     const updateData = validationResult.data;
     
     // Check if item exists
-  const firestore = getFirebaseFirestore();
-  if (!firestore) throw new Error('Database not configured');
-
   const firestore = getFirebaseFirestore();
   if (!firestore) throw new Error('Database not configured');
 
@@ -754,9 +745,6 @@ export const DELETE = withAdmin(async (request: NextRequest, adminUser: any) => 
       : SUPPORT_FAQS_COLLECTION;
     
     // Check if item exists
-  const firestore = getFirebaseFirestore();
-  if (!firestore) throw new Error('Database not configured');
-
   const firestore = getFirebaseFirestore();
   if (!firestore) throw new Error('Database not configured');
 

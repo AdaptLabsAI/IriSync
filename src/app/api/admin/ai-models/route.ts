@@ -78,9 +78,6 @@ export async function GET(req: NextRequest) {
   const firestore = getFirebaseFirestore();
   if (!firestore) throw new Error('Database not configured');
 
-  const firestore = getFirebaseFirestore();
-  if (!firestore) throw new Error('Database not configured');
-
     const modelsQuery = query(
       collection(firestore, 'aiModelConfigurations'),
       orderBy('tier'),
@@ -186,9 +183,6 @@ export async function POST(req: NextRequest) {
   const firestore = getFirebaseFirestore();
   if (!firestore) throw new Error('Database not configured');
 
-  const firestore = getFirebaseFirestore();
-  if (!firestore) throw new Error('Database not configured');
-
     const existingDoc = await getDoc(doc(firestore, 'aiModelConfigurations', docId));
     if (existingDoc.exists()) {
       return NextResponse.json({
@@ -274,9 +268,6 @@ export async function PUT(req: NextRequest) {
   const firestore = getFirebaseFirestore();
   if (!firestore) throw new Error('Database not configured');
 
-  const firestore = getFirebaseFirestore();
-  if (!firestore) throw new Error('Database not configured');
-
     const configDoc = await getDoc(doc(firestore, 'aiModelConfigurations', id));
     if (!configDoc.exists()) {
       return NextResponse.json({
@@ -347,9 +338,6 @@ export async function DELETE(req: NextRequest) {
     }
 
     // Check if configuration exists
-  const firestore = getFirebaseFirestore();
-  if (!firestore) throw new Error('Database not configured');
-
   const firestore = getFirebaseFirestore();
   if (!firestore) throw new Error('Database not configured');
 
