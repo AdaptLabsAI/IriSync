@@ -432,12 +432,12 @@ export const RecurringToggle: React.FC<RecurringToggleProps> = ({
                   min="1"
                   max="99"
                   value={schedule.interval || 1}
-                  onChange={(e) => updateSchedule({ interval: parseInt(e.target.value) || 1 })}
+                  onChange={(e: any) => updateSchedule({ interval: parseInt(e.target.value) || 1 })}
                   className="w-16 p-2 border border-gray-300 rounded-md"
                 />
                 <select
                   value={schedule.intervalUnit || 'days'}
-                  onChange={(e) => updateSchedule({ intervalUnit: e.target.value as any })}
+                  onChange={(e: any) => updateSchedule({ intervalUnit: e.target.value as any })}
                   className="p-2 border border-gray-300 rounded-md bg-white"
                 >
                   <option value="days">days</option>
@@ -480,7 +480,7 @@ export const RecurringToggle: React.FC<RecurringToggleProps> = ({
                   <input
                     type="date"
                     value={schedule.endDate}
-                    onChange={(e) => updateSchedule({ endDate: e.target.value })}
+                    onChange={(e: any) => updateSchedule({ endDate: e.target.value })}
                     className="p-1 border border-gray-300 rounded-md"
                     min={new Date().toISOString().split('T')[0]}
                   />
@@ -507,7 +507,7 @@ export const RecurringToggle: React.FC<RecurringToggleProps> = ({
                       min="1"
                       max="99"
                       value={schedule.repetitions}
-                      onChange={(e) => updateSchedule({ repetitions: parseInt(e.target.value) || 1 })}
+                      onChange={(e: any) => updateSchedule({ repetitions: parseInt(e.target.value) || 1 })}
                       className="w-16 p-1 border border-gray-300 rounded-md"
                     />
                     <span className="text-sm">occurrences</span>

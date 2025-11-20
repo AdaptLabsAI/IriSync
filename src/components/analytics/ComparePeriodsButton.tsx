@@ -215,7 +215,7 @@ const ComparePeriodsButton: React.FC<ComparePeriodsButtonProps> = ({
                 <TabsContent value="preset" className="space-y-4">
                   <RadioGroup
                     value={comparisonType}
-                    onValueChange={(value) => setComparisonType(value as ComparisonType)}
+                    onValueChange={(value: any) => setComparisonType(value as ComparisonType)}
                     className="space-y-3"
                   >
                     <div className="flex items-start space-x-2">

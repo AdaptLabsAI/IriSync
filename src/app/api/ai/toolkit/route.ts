@@ -1123,11 +1123,11 @@ Also include overall strategy recommendations, timeline, and metrics to track.`;
 async function getUserAIProvider(userId: string): Promise<string> {
   try {
     // Check user's subscription
-    const firestore = getFirebaseFirestore();
-    if (!firestore) {
-      return NextResponse.json({ error: 'Database not configured' }, { status: 500 });
+    const db = getFirebaseFirestore();
+    if (!db) {
+      throw new Error('Database not configured');
     }
-    const subscriptionsRef = collection(firestore, 'subscriptions');
+    const subscriptionsRef = collection(db, 'subscriptions');
     const subscriptionsQuery = query(subscriptionsRef, where('userId', '==', userId), where('status', '==', 'active'));
     const subscriptionsSnapshot = await getDocs(subscriptionsQuery);
     
@@ -1157,20 +1157,23 @@ async function getUserAIProvider(userId: string): Promise<string> {
 async function checkAndUpdateTokenUsage(userId: string, operation: ToolkitOperation): Promise<{ allowed: boolean, reason?: string }> {
   try {
     // Get user's subscription tier
-    const subscriptionsRef = collection(firestore, 'subscriptions');
+    const db = getFirebaseFirestore();
+    if (!db) throw new Error('Database not configured');
+
+    const subscriptionsRef = collection(db, 'subscriptions');
     const subscriptionsQuery = query(subscriptionsRef, where('userId', '==', userId), where('status', '==', 'active'));
     const subscriptionsSnapshot = await getDocs(subscriptionsQuery);
-    
+
     let tier = 'creator'; // Default tier
-    
+
     if (!subscriptionsSnapshot.empty) {
       const subscription = subscriptionsSnapshot.docs[0].data();
       tier = subscription.tier || 'creator';
     }
-    
+
     // Set token limits based on subscription tier
     let tokenLimit = 100; // Default for creator tier
-    
+
     switch (tier) {
       case 'enterprise':
         tokenLimit = 5000; // 5000 tokens for Enterprise
@@ -1182,20 +1185,20 @@ async function checkAndUpdateTokenUsage(userId: string, operation: ToolkitOperat
         tokenLimit = 100; // 100 tokens for Creator
         break;
     }
-    
+
     // Get current token usage
-    const usageRef = doc(firestore, 'aiUsage', userId);
+    const usageRef = doc(db, 'aiUsage', userId);
     const usageSnapshot = await getDoc(usageRef);
-    
+
     const usageData = usageSnapshot.exists() ? usageSnapshot.data() : { tools: {} };
     const toolsUsage = usageData.tools || {};
-    
+
     // Calculate total usage
     const totalUsed = Object.values(toolsUsage).reduce((sum: number, count) => sum + (count as number), 0);
-    
+
     // Get token cost for this operation
     const tokenCost = operationTokenCosts[operation] || 1;
-    
+
     // Check if this would exceed the user's limit
     if (totalUsed + tokenCost > tokenLimit) {
       return {
@@ -1203,19 +1206,19 @@ async function checkAndUpdateTokenUsage(userId: string, operation: ToolkitOperat
         reason: `AI usage limit exceeded. You have used ${totalUsed}/${tokenLimit} tokens.`
       };
     }
-    
+
     // Update usage statistics
     const taskType = operationToTaskType[operation];
     toolsUsage[taskType] = (toolsUsage[taskType] || 0) + tokenCost;
-    
+
     await setDoc(usageRef, {
       userId,
       tools: toolsUsage,
       lastUpdated: serverTimestamp()
     }, { merge: true });
-    
+
     // Log the usage
-    const historyRef = collection(firestore, 'aiUsageHistory');
+    const historyRef = collection(db, 'aiUsageHistory');
     await addDoc(historyRef, {
       userId,
       operation,

@@ -117,10 +117,10 @@ export async function GET(request: NextRequest) {
     const lastDocId = searchParams.get('lastDoc');
 
     // Build query
-  const firestore = getFirebaseFirestore();
-  if (!firestore) throw new Error('Database not configured');
+    const db = getFirebaseFirestore();
+    if (!db) throw new Error('Database not configured');
 
-    let blogQuery = collection(firestore, 'blogPosts');
+    let blogQuery = collection(db, 'blogPosts');
     
     const constraints: any[] = [];
     
@@ -137,7 +137,7 @@ export async function GET(request: NextRequest) {
     
     // Add cursor for pagination if provided
     if (lastDocId) {
-      const lastDoc = await getDoc(doc(firestore, 'blogPosts', lastDocId));
+      const lastDoc = await getDoc(doc(db, 'blogPosts', lastDocId));
       if (lastDoc.exists()) {
         constraints.push(startAfter(lastDoc));
       }
@@ -197,16 +197,18 @@ export async function POST(request: NextRequest) {
     let counter = 1;
 
     // Ensure slug uniqueness
-    while (true) {
-  const firestore = getFirebaseFirestore();
-  if (!firestore) throw new Error('Database not configured');
+    const db = getFirebaseFirestore();
+    if (!db) {
+      return NextResponse.json({ error: 'Database not configured' }, { status: 500 });
+    }
 
+    while (true) {
       const existingPost = await getDocs(
-        query(collection(firestore, 'blogPosts'), where('slug', '==', slug))
+        query(collection(db, 'blogPosts'), where('slug', '==', slug))
       );
-      
+
       if (existingPost.empty) break;
-      
+
       slug = `${baseSlug}-${counter}`;
       counter++;
     }
@@ -215,7 +217,7 @@ export async function POST(request: NextRequest) {
     const readTime = calculateReadTime(validatedData.content);
 
     // Get author info
-    const userDoc = await getDoc(doc(firestore, 'users', session.user.id));
+    const userDoc = await getDoc(doc(db, 'users', session.user.id));
     const userData = userDoc.data();
     
     const author = {
@@ -241,7 +243,7 @@ export async function POST(request: NextRequest) {
       updatedAt: serverTimestamp()
     };
 
-    const docRef = doc(collection(firestore, 'blogPosts'));
+    const docRef = doc(collection(db, 'blogPosts'));
     await setDoc(docRef, blogPostData);
 
     // Return the created post

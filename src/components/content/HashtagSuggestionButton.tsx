@@ -454,7 +454,7 @@ export const HashtagSuggestionButton: React.FC<HashtagSuggestionButtonProps> = (
                     </div>
                     <Slider 
                       value={[relevance]} 
-                      onValueChange={(value) => setRelevance(value[0])}
+                      onValueChange={(value: any) => setRelevance(value[0])}
                       min={0}
                       max={100}
                       step={5}

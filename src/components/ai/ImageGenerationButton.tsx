@@ -281,7 +281,7 @@ const ImageGenerationButton: React.FC<ImageGenerationButtonProps> = ({
       
       <Dialog
         open={isOpen}
-        onOpenChange={(open) => {
+        onOpenChange={(open: any) => {
           setIsOpen(open);
         }}
       >
@@ -301,7 +301,7 @@ const ImageGenerationButton: React.FC<ImageGenerationButtonProps> = ({
               <label className="text-sm font-medium">Image Prompt</label>
               <Textarea
                 value={promptText}
-                onChange={(e) => setPromptText(e.target.value)}
+                onChange={(e: any) => setPromptText(e.target.value)}
                 placeholder="Describe the image you want to generate..."
                 rows={3}
               />
@@ -325,7 +325,7 @@ const ImageGenerationButton: React.FC<ImageGenerationButtonProps> = ({
                 <label className="text-sm font-medium">Style</label>
                 <Select 
                   value={imageStyle} 
-                  onValueChange={(value) => setImageStyle(value as ImageStyle)}
+                  onValueChange={(value: any) => setImageStyle(value as ImageStyle)}
                 >
                   <SelectTrigger>
                     <SelectValue placeholder="Select style" />
@@ -358,7 +358,7 @@ const ImageGenerationButton: React.FC<ImageGenerationButtonProps> = ({
                 <label className="text-sm font-medium">Aspect Ratio</label>
                 <Select 
                   value={aspectRatio} 
-                  onValueChange={(value) => setAspectRatio(value as ImageAspectRatio)}
+                  onValueChange={(value: any) => setAspectRatio(value as ImageAspectRatio)}
                 >
                   <SelectTrigger>
                     <SelectValue placeholder="Select aspect ratio" />
@@ -377,7 +377,7 @@ const ImageGenerationButton: React.FC<ImageGenerationButtonProps> = ({
                 <label className="text-sm font-medium">Size</label>
                 <Select 
                   value={imageSize} 
-                  onValueChange={(value) => setImageSize(value as ImageSize)}
+                  onValueChange={(value: any) => setImageSize(value as ImageSize)}
                 >
                   <SelectTrigger>
                     <SelectValue placeholder="Select size" />

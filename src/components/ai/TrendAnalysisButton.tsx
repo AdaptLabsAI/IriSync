@@ -241,7 +241,7 @@ const TrendAnalysisButton: React.FC<TrendAnalysisButtonProps> = ({
       
       <Dialog
         open={isOpen}
-        onOpenChange={(open) => {
+        onOpenChange={(open: any) => {
           setIsOpen(open);
         }}
       >
@@ -289,7 +289,7 @@ const TrendAnalysisButton: React.FC<TrendAnalysisButtonProps> = ({
                   <label className="text-sm font-medium">Trend Category</label>
                   <Select 
                     value={trendCategory} 
-                    onValueChange={(value) => setTrendCategory(value as TrendCategory)}
+                    onValueChange={(value: any) => setTrendCategory(value as TrendCategory)}
                   >
                     <SelectTrigger>
                       <SelectValue placeholder="Select trend category" />
@@ -308,7 +308,7 @@ const TrendAnalysisButton: React.FC<TrendAnalysisButtonProps> = ({
                   <label className="text-sm font-medium">Time Period</label>
                   <Select 
                     value={timeframe} 
-                    onValueChange={(value) => setTimeframe(value as TrendTimeframe)}
+                    onValueChange={(value: any) => setTimeframe(value as TrendTimeframe)}
                   >
                     <SelectTrigger>
                       <SelectValue placeholder="Select time period" />
@@ -329,7 +329,7 @@ const TrendAnalysisButton: React.FC<TrendAnalysisButtonProps> = ({
                     className="w-full px-3 py-2 border rounded-md"
                     placeholder="e.g., Fashion, Technology, Fitness"
                     value={industryInput}
-                    onChange={(e) => setIndustryInput(e.target.value)}
+                    onChange={(e: any) => setIndustryInput(e.target.value)}
                   />
                 </div>
               </div>

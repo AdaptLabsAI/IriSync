@@ -406,7 +406,7 @@ export const HashtagButton: React.FC<HashtagButtonProps> = ({
                           ref={inputRef}
                           type="text"
                           value={newHashtagText.replace(/^#/, '')}
-                          onChange={(e) => setNewHashtagText(e.target.value)}
+                          onChange={(e: any) => setNewHashtagText(e.target.value)}
                           className="w-full pl-7 pr-3 py-1 text-sm border border-gray-300 rounded-md"
                           placeholder="EnterHashtagWithoutSpaces"
                         />
@@ -420,7 +420,7 @@ export const HashtagButton: React.FC<HashtagButtonProps> = ({
                         </label>
                         <select
                           value={selectedCategory || ''}
-                          onChange={(e) => setSelectedCategory(e.target.value || null)}
+                          onChange={(e: any) => setSelectedCategory(e.target.value || null)}
                           className="w-full px-3 py-1 text-sm border border-gray-300 rounded-md"
                         >
                           <option value="">None</option>

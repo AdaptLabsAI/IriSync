@@ -250,7 +250,7 @@ export const CaptionGenerationButton: React.FC<CaptionGenerationButtonProps> = (
       
       <Dialog
         open={isOpen}
-        onOpenChange={(open) => {
+        onOpenChange={(open: any) => {
           setIsOpen(open);
           if (!open) {
             // Reset state when dialog closes
@@ -399,7 +399,7 @@ export const CaptionGenerationButton: React.FC<CaptionGenerationButtonProps> = (
                   <label className="text-sm font-medium">Tone</label>
                   <RadioGroup
                     value={tone}
-                    onValueChange={(value) => setTone(value as CaptionTone)}
+                    onValueChange={(value: any) => setTone(value as CaptionTone)}
                     className="grid grid-cols-2 gap-2"
                   >
                     <div className="flex items-center space-x-2">
@@ -441,7 +441,7 @@ export const CaptionGenerationButton: React.FC<CaptionGenerationButtonProps> = (
                   <label className="text-sm font-medium">Length</label>
                   <RadioGroup
                     value={length}
-                    onValueChange={(value) => setLength(value as CaptionLength)}
+                    onValueChange={(value: any) => setLength(value as CaptionLength)}
                     className="flex gap-4"
                   >
                     <div className="flex items-center space-x-2">
@@ -465,7 +465,7 @@ export const CaptionGenerationButton: React.FC<CaptionGenerationButtonProps> = (
                     <Textarea
                       placeholder="Enter custom instructions for the AI generator..."
                       value={customPrompt}
-                      onChange={(e) => setCustomPrompt(e.target.value)}
+                      onChange={(e: any) => setCustomPrompt(e.target.value)}
                       className="min-h-[80px]"
                     />
                     <p className="text-xs text-gray-500">

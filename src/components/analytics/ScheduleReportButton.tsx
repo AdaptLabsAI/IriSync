@@ -262,7 +262,7 @@ const ScheduleReportButton: React.FC<ScheduleReportButtonProps> = ({
                     <Label>Day of Week</Label>
                     <Select
                       value={String(schedule.dayOfWeek)}
-                      onValueChange={(value) => 
+                      onValueChange={(value: any) => 
                         setSchedule({ ...schedule, dayOfWeek: parseInt(value) })
                       }
                     >
@@ -287,7 +287,7 @@ const ScheduleReportButton: React.FC<ScheduleReportButtonProps> = ({
                     <Label>Day of Month</Label>
                     <Select
                       value={String(schedule.dayOfMonth || 1)}
-                      onValueChange={(value) => 
+                      onValueChange={(value: any) => 
                         setSchedule({ ...schedule, dayOfMonth: parseInt(value) })
                       }
                     >
@@ -310,7 +310,7 @@ const ScheduleReportButton: React.FC<ScheduleReportButtonProps> = ({
                   <Input
                     type="time"
                     value={schedule.time || '09:00'}
-                    onChange={(e) => setSchedule({ ...schedule, time: e.target.value })}
+                    onChange={(e: any) => setSchedule({ ...schedule, time: e.target.value })}
                   />
                 </div>
                 
@@ -348,7 +348,7 @@ const ScheduleReportButton: React.FC<ScheduleReportButtonProps> = ({
                       <Checkbox
                         id="include-team"
                         checked={schedule.includeTeam}
-                        onCheckedChange={(checked) => 
+                        onCheckedChange={(checked: any) => 
                           setSchedule({ ...schedule, includeTeam: checked as boolean })
                         }
                       />
@@ -365,7 +365,7 @@ const ScheduleReportButton: React.FC<ScheduleReportButtonProps> = ({
                           <Checkbox
                             id={`member-${member.email}`}
                             checked={schedule.recipients.includes(member.email)}
-                            onCheckedChange={(checked) => 
+                            onCheckedChange={(checked: any) => 
                               handleRecipientChange(member.email, checked as boolean)
                             }
                           />

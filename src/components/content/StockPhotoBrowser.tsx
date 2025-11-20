@@ -439,7 +439,7 @@ const StockPhotoBrowser: React.FC<StockPhotoBrowserProps> = ({
               fullWidth
               placeholder="Search for photos..."
               value={filters.query || ''}
-              onChange={(e) => setFilters(prev => ({ ...prev, query: e.target.value }))}
+              onChange={(e: any) => setFilters(prev => ({ ...prev, query: e.target.value }))}
               onKeyPress={(e) => e.key === 'Enter' && handleSearch(filters.query || '')}
               InputProps={{
                 startAdornment: <Search sx={{ mr: 1, color: 'action.active' }} />
@@ -465,7 +465,7 @@ const StockPhotoBrowser: React.FC<StockPhotoBrowserProps> = ({
                 <Select
                   value={filters.provider || 'all'}
                   label="Provider"
-                  onChange={(e) => handleFilterChange({ provider: e.target.value as any })}
+                  onChange={(e: any) => handleFilterChange({ provider: e.target.value as any })}
                 >
                   <MenuItem value="all">All</MenuItem>
                   <MenuItem value="unsplash">Unsplash</MenuItem>
@@ -478,7 +478,7 @@ const StockPhotoBrowser: React.FC<StockPhotoBrowserProps> = ({
                 <Select
                   value={filters.orientation || 'all'}
                   label="Orientation"
-                  onChange={(e) => handleFilterChange({ orientation: e.target.value as any })}
+                  onChange={(e: any) => handleFilterChange({ orientation: e.target.value as any })}
                 >
                   <MenuItem value="all">All</MenuItem>
                   <MenuItem value="landscape">Landscape</MenuItem>
@@ -492,7 +492,7 @@ const StockPhotoBrowser: React.FC<StockPhotoBrowserProps> = ({
                 <Select
                   value={filters.sortBy || 'relevance'}
                   label="Sort By"
-                  onChange={(e) => handleFilterChange({ sortBy: e.target.value as any })}
+                  onChange={(e: any) => handleFilterChange({ sortBy: e.target.value as any })}
                 >
                   <MenuItem value="relevance">Relevance</MenuItem>
                   <MenuItem value="popular">Popular</MenuItem>

@@ -130,11 +130,11 @@ const sendInviteEmail = async (email: string, teamId: string, token: string, inv
  */
 async function getUserOrganizationContext(userId: string) {
   // Get user data to find current organization
-  const firestore = getFirebaseFirestore();
-  if (!firestore) {
-    return NextResponse.json({ error: 'Database not configured' }, { status: 500 });
+  const db = getFirebaseFirestore();
+  if (!db) {
+    throw new Error('Database not configured');
   }
-  const userDoc = await getDoc(doc(firestore, 'users', userId));
+  const userDoc = await getDoc(doc(db, 'users', userId));
   if (!userDoc.exists()) {
     throw new Error('User not found');
   }
@@ -145,16 +145,16 @@ async function getUserOrganizationContext(userId: string) {
   if (!organizationId) {
     throw new Error('User has no organization context');
   }
-  
+
   // Get organization data
-  const orgDoc = await getDoc(doc(firestore, 'organizations', organizationId));
+  const orgDoc = await getDoc(doc(db, 'organizations', organizationId));
   if (!orgDoc.exists()) {
     throw new Error('Organization not found');
   }
-  
+
   // Get organization members
-  const membersDoc = await getDoc(doc(firestore, 'organizations', organizationId, 'members', 'data'));
-  const teamsDoc = await getDoc(doc(firestore, 'organizations', organizationId, 'teams', 'data'));
+  const membersDoc = await getDoc(doc(db, 'organizations', organizationId, 'members', 'data'));
+  const teamsDoc = await getDoc(doc(db, 'organizations', organizationId, 'teams', 'data'));
   
   const orgData = orgDoc.data() as FirestoreOrganization;
   const membersData = membersDoc.exists() ? membersDoc.data() : {};
@@ -299,12 +299,12 @@ export async function GET(req: NextRequest) {
     
     // If we created a new team, save it to the organization
     if (!organization.teams?.[teamId]) {
-      await runTransaction(firestore, async (transaction) => {
-  const firestore = getFirebaseFirestore();
-  if (!firestore) throw new Error('Database not configured');
+      const db = getFirebaseFirestore();
+      if (!db) throw new Error('Database not configured');
 
-        const orgRef = doc(firestore, 'organizations', organizationId);
-        const teamsRef = doc(firestore, 'organizations', organizationId, 'teams', 'data');
+      await runTransaction(db, async (transaction) => {
+        const orgRef = doc(db, 'organizations', organizationId);
+        const teamsRef = doc(db, 'organizations', organizationId, 'teams', 'data');
         
         // Update organization teams
         const updatedOrg = {
@@ -319,9 +319,12 @@ export async function GET(req: NextRequest) {
         transaction.set(teamsRef, teams);
       });
     }
-    
+
     // Get pending invites (stored separately for now)
-    const invitesDoc = await getDoc(doc(firestore, 'team_invites', teamId));
+    const db = getFirebaseFirestore();
+    if (!db) throw new Error('Database not configured');
+
+    const invitesDoc = await getDoc(doc(db, 'team_invites', teamId));
     const pendingInvites = invitesDoc.exists() ? invitesDoc.data().invites || [] : [];
     
     const teamResponse = formatTeamResponse(teamId, team, organization, pendingInvites);
@@ -382,12 +385,12 @@ export async function POST(req: NextRequest) {
     
     // Get user's default team
     const { team, teamId } = getOrCreateDefaultTeam(organization, user.id);
-    
-    // Check if email is already invited
-  const firestore = getFirebaseFirestore();
-  if (!firestore) throw new Error('Database not configured');
 
-    const invitesDoc = await getDoc(doc(firestore, 'team_invites', teamId));
+    // Check if email is already invited
+    const db = getFirebaseFirestore();
+    if (!db) throw new Error('Database not configured');
+
+    const invitesDoc = await getDoc(doc(db, 'team_invites', teamId));
     const existingInvites = invitesDoc.exists() ? invitesDoc.data().invites || [] : [];
     const existingInvite = existingInvites.find((inv: any) => inv.email === email);
     
@@ -411,9 +414,9 @@ export async function POST(req: NextRequest) {
       teamId,
       organizationId
     };
-    
+
     // Save invite
-    await setDoc(doc(firestore, 'team_invites', teamId), {
+    await setDoc(doc(db, 'team_invites', teamId), {
       invites: [...existingInvites, invite]
     }, { merge: true });
     
@@ -485,12 +488,12 @@ export async function DELETE(req: NextRequest) {
     
     if (memberToRemove) {
       // Remove from organization (this will handle team removal too)
-      await runTransaction(firestore, async (transaction) => {
-  const firestore = getFirebaseFirestore();
-  if (!firestore) throw new Error('Database not configured');
+      const db = getFirebaseFirestore();
+      if (!db) throw new Error('Database not configured');
 
-        const membersRef = doc(firestore, 'organizations', organizationId, 'members', 'data');
-        const teamsRef = doc(firestore, 'organizations', organizationId, 'teams', 'data');
+      await runTransaction(db, async (transaction) => {
+        const membersRef = doc(db, 'organizations', organizationId, 'members', 'data');
+        const teamsRef = doc(db, 'organizations', organizationId, 'teams', 'data');
         
         // Remove member from organization
         const updatedMembers = { ...organization.members };
@@ -511,12 +514,15 @@ export async function DELETE(req: NextRequest) {
       });
     } else {
       // Remove from pending invites
-      const invitesDoc = await getDoc(doc(firestore, 'team_invites', teamId));
+      const db = getFirebaseFirestore();
+      if (!db) throw new Error('Database not configured');
+
+      const invitesDoc = await getDoc(doc(db, 'team_invites', teamId));
       if (invitesDoc.exists()) {
         const invites = invitesDoc.data().invites || [];
         const updatedInvites = invites.filter((inv: any) => inv.email !== email);
-        
-        await setDoc(doc(firestore, 'team_invites', teamId), {
+
+        await setDoc(doc(db, 'team_invites', teamId), {
           invites: updatedInvites
         });
       }

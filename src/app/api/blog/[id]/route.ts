@@ -90,7 +90,11 @@ export async function GET(
   { params }: { params: { id: string } }
 ) {
   try {
-    const postDoc = await getDoc(doc(firestore, 'blogPosts', params.id));
+    const db = getFirebaseFirestore();
+    if (!db) {
+      return NextResponse.json({ error: 'Database not configured' }, { status: 500 });
+    }
+    const postDoc = await getDoc(doc(db, 'blogPosts', params.id));
     
     if (!postDoc.exists()) {
       return NextResponse.json(
@@ -134,9 +138,13 @@ export async function PUT(
     }
 
     // Check if post exists
-    const postRef = doc(firestore, 'blogPosts', params.id);
+    const db = getFirebaseFirestore();
+    if (!db) {
+      return NextResponse.json({ error: 'Database not configured' }, { status: 500 });
+    }
+    const postRef = doc(db, 'blogPosts', params.id);
     const postDoc = await getDoc(postRef);
-    
+
     if (!postDoc.exists()) {
       return NextResponse.json(
         { error: 'Blog post not found' },
@@ -233,9 +241,13 @@ export async function DELETE(
     }
 
     // Check if post exists
-    const postRef = doc(firestore, 'blogPosts', params.id);
+    const db = getFirebaseFirestore();
+    if (!db) {
+      return NextResponse.json({ error: 'Database not configured' }, { status: 500 });
+    }
+    const postRef = doc(db, 'blogPosts', params.id);
     const postDoc = await getDoc(postRef);
-    
+
     if (!postDoc.exists()) {
       return NextResponse.json(
         { error: 'Blog post not found' },

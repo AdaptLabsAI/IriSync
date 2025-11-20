@@ -434,7 +434,7 @@ const SmartContentCreator: React.FC<SmartContentCreatorProps> = ({
                 <InputLabel>Primary Platform</InputLabel>
                 <Select
                   value={selectedPlatform}
-                  onChange={(e) => setSelectedPlatform(e.target.value)}
+                  onChange={(e: any) => setSelectedPlatform(e.target.value)}
                   label="Primary Platform"
                 >
                   <MenuItem value="twitter">Twitter</MenuItem>
@@ -450,7 +450,7 @@ const SmartContentCreator: React.FC<SmartContentCreatorProps> = ({
                 control={
                   <Switch
                     checked={enablePerformancePrediction}
-                    onChange={(e) => setEnablePerformancePrediction(e.target.checked)}
+                    onChange={(e: any) => setEnablePerformancePrediction(e.target.checked)}
                   />
                 }
                 label="Performance Prediction"
@@ -462,7 +462,7 @@ const SmartContentCreator: React.FC<SmartContentCreatorProps> = ({
                 control={
                   <Switch
                     checked={enableABTesting}
-                    onChange={(e) => setEnableABTesting(e.target.checked)}
+                    onChange={(e: any) => setEnableABTesting(e.target.checked)}
                   />
                 }
                 label="A/B Test Variations"
@@ -474,7 +474,7 @@ const SmartContentCreator: React.FC<SmartContentCreatorProps> = ({
                 control={
                   <Switch
                     checked={enableRepurposing}
-                    onChange={(e) => setEnableRepurposing(e.target.checked)}
+                    onChange={(e: any) => setEnableRepurposing(e.target.checked)}
                   />
                 }
                 label="Content Repurposing"
@@ -496,7 +496,7 @@ const SmartContentCreator: React.FC<SmartContentCreatorProps> = ({
             multiline
             rows={3}
             value={intent}
-            onChange={(e) => setIntent(e.target.value)}
+            onChange={(e: any) => setIntent(e.target.value)}
             placeholder="E.g., I want to announce our new product launch that helps small businesses manage their social media more effectively..."
             sx={{ mb: 2 }}
           />
@@ -573,7 +573,7 @@ const SmartContentCreator: React.FC<SmartContentCreatorProps> = ({
                     multiline
                     rows={6}
                     value={content}
-                    onChange={(e) => setContent(e.target.value)}
+                    onChange={(e: any) => setContent(e.target.value)}
                     sx={{ mb: 2 }}
                   />
                   

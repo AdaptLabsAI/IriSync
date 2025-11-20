@@ -432,7 +432,7 @@ export default function ContentCreationForm({
             fullWidth
             placeholder="Add hashtags separated by spaces (e.g. Marketing Social AI)"
             value={hashtags}
-            onChange={(e) => setHashtags(e.target.value)}
+            onChange={(e: any) => setHashtags(e.target.value)}
           />
         </Box>
         
@@ -467,7 +467,7 @@ export default function ContentCreationForm({
                   fullWidth
                   placeholder="https://example.com"
                   value={linkUrl}
-                  onChange={(e) => setLinkUrl(e.target.value)}
+                  onChange={(e: any) => setLinkUrl(e.target.value)}
                   size="small"
                 />
                 <Button 
@@ -583,7 +583,7 @@ export default function ContentCreationForm({
               type="datetime-local"
               fullWidth
               value={scheduledTime}
-              onChange={(e) => setScheduledTime(e.target.value)}
+              onChange={(e: any) => setScheduledTime(e.target.value)}
               InputLabelProps={{
                 shrink: true,
               }}

@@ -263,7 +263,7 @@ const CustomReportButton: React.FC<CustomReportButtonProps> = ({
                   <Input
                     id="report-name"
                     value={newReport.name}
-                    onChange={(e) => setNewReport({ ...newReport, name: e.target.value })}
+                    onChange={(e: any) => setNewReport({ ...newReport, name: e.target.value })}
                     placeholder="Monthly Performance Report"
                   />
                 </div>
@@ -273,7 +273,7 @@ const CustomReportButton: React.FC<CustomReportButtonProps> = ({
                   <Input
                     id="report-description"
                     value={newReport.description || ''}
-                    onChange={(e) => setNewReport({ ...newReport, description: e.target.value })}
+                    onChange={(e: any) => setNewReport({ ...newReport, description: e.target.value })}
                     placeholder="Track monthly performance across all platforms"
                   />
                 </div>
@@ -294,7 +294,7 @@ const CustomReportButton: React.FC<CustomReportButtonProps> = ({
                                 <Checkbox
                                   id={`metric-${metric.id}`}
                                   checked={newReport.metrics.includes(metric.id)}
-                                  onCheckedChange={(checked) => 
+                                  onCheckedChange={(checked: any) => 
                                     !isDisabled && handleToggleMetric(metric.id, checked as boolean)
                                   }
                                   disabled={isDisabled}
@@ -324,7 +324,7 @@ const CustomReportButton: React.FC<CustomReportButtonProps> = ({
                           <Checkbox
                             id={`column-${column.id}`}
                             checked={newReport.columns.includes(column.id)}
-                            onCheckedChange={(checked) => 
+                            onCheckedChange={(checked: any) => 
                               handleToggleColumn(column.id, checked as boolean)
                             }
                           />
@@ -344,7 +344,7 @@ const CustomReportButton: React.FC<CustomReportButtonProps> = ({
                   <Checkbox
                     id="share-report"
                     checked={newReport.isShared}
-                    onCheckedChange={(checked) => 
+                    onCheckedChange={(checked: any) => 
                       setNewReport({ ...newReport, isShared: checked as boolean })
                     }
                   />

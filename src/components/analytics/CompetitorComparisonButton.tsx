@@ -290,7 +290,7 @@ const CompetitorComparisonButton: React.FC<CompetitorComparisonButtonProps> = ({
                               <Checkbox
                                 id={`competitor-${competitor.id}`}
                                 checked={isCompetitorSelected(competitor.id)}
-                                onCheckedChange={(checked) => 
+                                onCheckedChange={(checked: any) => 
                                   handleToggleCompetitor(competitor, checked as boolean)
                                 }
                                 disabled={!isCompetitorSelected(competitor.id) && remainingSelections <= 0}
@@ -331,7 +331,7 @@ const CompetitorComparisonButton: React.FC<CompetitorComparisonButtonProps> = ({
                       <Input
                         placeholder="Search by name or social handle"
                         value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
+                        onChange={(e: any) => setSearchQuery(e.target.value)}
                         onKeyDown={handleKeyPress}
                       />
                       <Button
@@ -358,7 +358,7 @@ const CompetitorComparisonButton: React.FC<CompetitorComparisonButtonProps> = ({
                               <Checkbox
                                 id={`search-competitor-${competitor.id}`}
                                 checked={isCompetitorSelected(competitor.id)}
-                                onCheckedChange={(checked) => 
+                                onCheckedChange={(checked: any) => 
                                   handleToggleCompetitor(competitor, checked as boolean)
                                 }
                                 disabled={!isCompetitorSelected(competitor.id) && remainingSelections <= 0}

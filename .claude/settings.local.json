@@ -14,7 +14,8 @@
       "Bash(npm install:*)",
       "Bash(source ~/.bashrc)",
       "Bash(node:*)",
-      "Bash(cat:*)"
+      "Bash(cat:*)",
+      "Bash(src/components/ui/button.tsx)"
     ],
     "deny": [],
     "ask": []

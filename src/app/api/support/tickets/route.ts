@@ -94,17 +94,17 @@ async function logTicketEvent(userId: string, organizationId: string | undefined
 
 async function autoEscalateOldTickets() {
   const now = Date.now();
-  const firestore = getFirebaseFirestore();
-  if (!firestore) {
-    return NextResponse.json({ error: 'Database not configured' }, { status: 500 });
+  const db = getFirebaseFirestore();
+  if (!db) {
+    throw new Error('Database not configured');
   }
-  const ticketsQuery = query(collection(firestore, TICKETS_COLLECTION), where('status', '==', 'open'));
+  const ticketsQuery = query(collection(db, TICKETS_COLLECTION), where('status', '==', 'open'));
   const snapshot = await getDocs(ticketsQuery);
   for (const docSnap of snapshot.docs) {
     const tData = docSnap.data();
     const created = tData.createdAt?.seconds ? tData.createdAt.seconds * 1000 : Date.parse(tData.createdAt);
     if (!tData.firstResponseAt && !tData.closedAt && now - created > 48 * 3600 * 1000 && !tData.escalated) {
-      await updateDoc(doc(firestore, TICKETS_COLLECTION, docSnap.id), {
+      await updateDoc(doc(db, TICKETS_COLLECTION, docSnap.id), {
         escalated: true,
         escalationLevel: 1,
         assignedTo: 'escalation_team',
@@ -161,13 +161,13 @@ export const GET = async (request: NextRequest) => {
     if (assignedTo) filters.push(where('assignedTo', '==', assignedTo));
     // For tag, we filter after fetch (Firestore doesn't support array-contains-any for dynamic tags)
     // For subject, we filter after fetch (Firestore doesn't support contains on string fields)
-    if (isAdmin) {
-  const firestore = getFirebaseFirestore();
-  if (!firestore) throw new Error('Database not configured');
+    const db = getFirebaseFirestore();
+    if (!db) throw new Error('Database not configured');
 
-      ticketsQuery = query(collection(firestore, TICKETS_COLLECTION), ...filters, orderBy('createdAt', 'desc'));
+    if (isAdmin) {
+      ticketsQuery = query(collection(db, TICKETS_COLLECTION), ...filters, orderBy('createdAt', 'desc'));
     } else if (user) {
-      ticketsQuery = query(collection(firestore, TICKETS_COLLECTION), where('userId', '==', user.id), ...filters, orderBy('createdAt', 'desc'));
+      ticketsQuery = query(collection(db, TICKETS_COLLECTION), where('userId', '==', user.id), ...filters, orderBy('createdAt', 'desc'));
     } else {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
@@ -226,10 +226,10 @@ export const PATCH = async (request: NextRequest) => {
     if (!validation.success) {
       return NextResponse.json({ error: 'Validation error', details: validation.error.format() }, { status: 400 });
     }
-  const firestore = getFirebaseFirestore();
-  if (!firestore) throw new Error('Database not configured');
+    const db = getFirebaseFirestore();
+    if (!db) throw new Error('Database not configured');
 
-    const ticketRef = doc(firestore, TICKETS_COLLECTION, ticketId);
+    const ticketRef = doc(db, TICKETS_COLLECTION, ticketId);
     const ticketSnap = await getDoc(ticketRef);
     if (!ticketSnap.exists()) {
       return NextResponse.json({ error: 'Ticket not found' }, { status: 404 });
@@ -277,7 +277,7 @@ export const PATCH = async (request: NextRequest) => {
           await logAdminAction(user, 'CONFIRM_AI_RESOLUTION', { ticketId });
       }
       // Send notification that ticket is now closed by user confirmation
-      const userDoc = await getDoc(doc(firestore, 'users', ticket.userId));
+      const userDoc = await getDoc(doc(db, 'users', ticket.userId));
       const userEmail = userDoc.exists() ? userDoc.data().email : '';
       if (userEmail) {
           await sendTicketClosedEmail(userEmail, { subject: ticket.subject, id: ticketId });
@@ -309,7 +309,7 @@ export const PATCH = async (request: NextRequest) => {
       let authorName = ticket.displayName;
       if (!authorName) {
         // Fetch user profile
-        const userDocRef = doc(firestore, 'users', ticket.userId);
+        const userDocRef = doc(db, 'users', ticket.userId);
         const userDoc = await getDoc(userDocRef);
         authorName = userDoc.exists() ? userDoc.data().firstName + ' ' + userDoc.data().lastName : 'Anonymous';
       }
@@ -340,7 +340,7 @@ export const PATCH = async (request: NextRequest) => {
       }
       // Send notification (email and/or in-app)
       try {
-        const userDocRef = doc(firestore, 'users', ticket.userId);
+        const userDocRef = doc(db, 'users', ticket.userId);
         const userDoc = await getDoc(userDocRef);
         const userEmail = userDoc.exists() ? userDoc.data().email : '';
         if (userEmail) {
@@ -407,7 +407,7 @@ export const PATCH = async (request: NextRequest) => {
 
     if (updatedTicketData) {
         // Fetch user email
-        const ticketUserDoc = await getDoc(doc(firestore, 'users', updatedTicketData.userId));
+        const ticketUserDoc = await getDoc(doc(db, 'users', updatedTicketData.userId));
         const ticketUserData = ticketUserDoc.exists() ? ticketUserDoc.data() : null;
         const ticketUserEmail = ticketUserData ? ticketUserData.email : (user ? user.email : '');
 
@@ -459,10 +459,10 @@ export const DELETE = withAdmin(async (request: NextRequest, adminUser: AuthUser
     if (!ticketId) {
       return NextResponse.json({ error: 'ticketId required' }, { status: 400 });
     }
-  const firestore = getFirebaseFirestore();
-  if (!firestore) throw new Error('Database not configured');
+    const db = getFirebaseFirestore();
+    if (!db) throw new Error('Database not configured');
 
-    const ticketRef = doc(firestore, TICKETS_COLLECTION, ticketId);
+    const ticketRef = doc(db, TICKETS_COLLECTION, ticketId);
     const ticketSnap = await getDoc(ticketRef);
     if (!ticketSnap.exists()) {
       return NextResponse.json({ error: 'Ticket not found' }, { status: 404 });
@@ -505,12 +505,12 @@ export const POST = async (request: NextRequest) => {
       // Bulk actions
       if (body.action && Array.isArray(body.ticketIds)) {
         const { action, ticketIds, assignedTo } = body;
+        const db = getFirebaseFirestore();
+        if (!db) throw new Error('Database not configured');
+
         let results = [];
         for (const ticketId of ticketIds) {
-  const firestore = getFirebaseFirestore();
-  if (!firestore) throw new Error('Database not configured');
-
-          const ticketRef = doc(firestore, TICKETS_COLLECTION, ticketId);
+          const ticketRef = doc(db, TICKETS_COLLECTION, ticketId);
           const ticketSnap = await getDoc(ticketRef);
           if (!ticketSnap.exists()) continue;
           if (action === 'close') {
@@ -526,8 +526,11 @@ export const POST = async (request: NextRequest) => {
       }
       // Duplicate detection
       if (body.duplicateCheck) {
+        const db = getFirebaseFirestore();
+        if (!db) throw new Error('Database not configured');
+
         const { subject, message } = body;
-        const ticketsQuery = query(collection(firestore, TICKETS_COLLECTION), orderBy('createdAt', 'desc'));
+        const ticketsQuery = query(collection(db, TICKETS_COLLECTION), orderBy('createdAt', 'desc'));
         const snapshot = await getDocs(ticketsQuery);
         const tickets = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
         const possibleDuplicates = tickets.filter((t: any) =>
@@ -538,9 +541,12 @@ export const POST = async (request: NextRequest) => {
       }
       // Merge tickets
       if (body.mergeTickets && Array.isArray(body.ticketIds) && body.ticketIds.length === 2) {
+        const db = getFirebaseFirestore();
+        if (!db) throw new Error('Database not configured');
+
         const [primaryId, duplicateId] = body.ticketIds;
-        const primaryRef = doc(firestore, TICKETS_COLLECTION, primaryId);
-        const duplicateRef = doc(firestore, TICKETS_COLLECTION, duplicateId);
+        const primaryRef = doc(db, TICKETS_COLLECTION, primaryId);
+        const duplicateRef = doc(db, TICKETS_COLLECTION, duplicateId);
         const primarySnap = await getDoc(primaryRef);
         const duplicateSnap = await getDoc(duplicateRef);
         if (!primarySnap.exists() || !duplicateSnap.exists()) {
@@ -577,8 +583,11 @@ export const POST = async (request: NextRequest) => {
       if (!validation.success) {
         return NextResponse.json({ error: 'Validation error', details: validation.error.format() }, { status: 400 });
       }
+      const db = getFirebaseFirestore();
+      if (!db) throw new Error('Database not configured');
+
       const now = Timestamp.now();
-      const ticketRef = doc(collection(firestore, TICKETS_COLLECTION));
+      const ticketRef = doc(collection(db, TICKETS_COLLECTION));
       const ticketData = {
         userId: user.id,
         subject: validation.data.subject,
@@ -600,16 +609,17 @@ export const POST = async (request: NextRequest) => {
       await logTicketEvent(user.id, orgId, ticketRef.id, 'CREATE_TICKET', { subject: ticketData.subject, priority: ticketData.priority });
 
       // Fetch user email
-      const userDoc = await getDoc(doc(firestore, 'users', user.id));
+      const userDoc = await getDoc(doc(db, 'users', user.id));
       const userData = userDoc.exists() ? userDoc.data() : null;
       const userEmail = userData ? userData.email : user.email;
 
       // Get organization data
       let userTier: UserTier = UserTier.CREATOR; // Default tier
-      
+
+
       if (orgId) {
         try {
-          const orgDoc = await getDoc(doc(firestore, 'organizations', orgId));
+          const orgDoc = await getDoc(doc(db, 'organizations', orgId));
           const orgData = orgDoc.exists() ? orgDoc.data() : null;
           
           if (orgData && orgData.billing && orgData.billing.subscriptionTier) {
@@ -757,10 +767,10 @@ export const POST = async (request: NextRequest) => {
 // Ticket analytics endpoint
 export async function GET_analytics(request: NextRequest) {
   try {
-  const firestore = getFirebaseFirestore();
-  if (!firestore) throw new Error('Database not configured');
+    const db = getFirebaseFirestore();
+    if (!db) throw new Error('Database not configured');
 
-    const ticketsQuery = query(collection(firestore, TICKETS_COLLECTION));
+    const ticketsQuery = query(collection(db, TICKETS_COLLECTION));
     const snapshot = await getDocs(ticketsQuery);
     const tickets: Ticket[] = snapshot.docs.map(doc => convertFirestoreTicket(doc.data(), doc.id));
     const total = tickets.length;
@@ -801,10 +811,10 @@ export async function POST_gdpr_delete_request(request: NextRequest) {
     let user: AuthUser | null = null;
     if (typeof token === 'string' && token.length > 0) {
       const decoded = await auth.verifyIdToken(token);
-  const firestore = getFirebaseFirestore();
-  if (!firestore) throw new Error('Database not configured');
+      const db = getFirebaseFirestore();
+      if (!db) throw new Error('Database not configured');
 
-      const userDoc = await getDoc(doc(firestore, 'users', decoded.uid));
+      const userDoc = await getDoc(doc(db, 'users', decoded.uid));
       const userData = userDoc.exists() ? userDoc.data() : null;
       
       user = {
@@ -818,11 +828,15 @@ export async function POST_gdpr_delete_request(request: NextRequest) {
       };
     }
     if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+
+    const db = getFirebaseFirestore();
+    if (!db) throw new Error('Database not configured');
+
     // Mark all user's tickets as deletionRequested
-    const ticketsQuery = query(collection(firestore, TICKETS_COLLECTION), where('userId', '==', user.id));
+    const ticketsQuery = query(collection(db, TICKETS_COLLECTION), where('userId', '==', user.id));
     const snapshot = await getDocs(ticketsQuery);
     for (const docSnap of snapshot.docs) {
-      await updateDoc(doc(firestore, TICKETS_COLLECTION, docSnap.id), { deletionRequested: true, updatedAt: Timestamp.now() });
+      await updateDoc(doc(db, TICKETS_COLLECTION, docSnap.id), { deletionRequested: true, updatedAt: Timestamp.now() });
     }
     return NextResponse.json({ message: 'Deletion request submitted' });
   } catch (error) {
@@ -852,10 +866,10 @@ export async function GET_gdpr_requests(request: NextRequest) {
       };
     }
     if (!user || (user.role !== 'admin' && user.role !== 'super_admin')) return NextResponse.json({ error: 'Admin only' }, { status: 403 });
-  const firestore = getFirebaseFirestore();
-  if (!firestore) throw new Error('Database not configured');
+    const db = getFirebaseFirestore();
+    if (!db) throw new Error('Database not configured');
 
-    const ticketsQuery = query(collection(firestore, TICKETS_COLLECTION), where('deletionRequested', '==', true));
+    const ticketsQuery = query(collection(db, TICKETS_COLLECTION), where('deletionRequested', '==', true));
     const snapshot = await getDocs(ticketsQuery);
     const requests = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
     return NextResponse.json({ requests });
@@ -889,13 +903,13 @@ export async function DELETE_gdpr_delete(request: NextRequest) {
     const url = new URL(request.url as string, 'http://localhost');
     const userId = url.searchParams.get('userId');
     if (!userId) return NextResponse.json({ error: 'userId required' }, { status: 400 });
-  const firestore = getFirebaseFirestore();
-  if (!firestore) throw new Error('Database not configured');
+    const db = getFirebaseFirestore();
+    if (!db) throw new Error('Database not configured');
 
-    const ticketsQuery = query(collection(firestore, TICKETS_COLLECTION), where('userId', '==', userId));
+    const ticketsQuery = query(collection(db, TICKETS_COLLECTION), where('userId', '==', userId));
     const snapshot = await getDocs(ticketsQuery);
     for (const docSnap of snapshot.docs) {
-      await deleteDoc(doc(firestore, TICKETS_COLLECTION, docSnap.id));
+      await deleteDoc(doc(db, TICKETS_COLLECTION, docSnap.id));
     }
     return NextResponse.json({ message: 'User tickets deleted' });
   } catch (error) {
@@ -947,10 +961,10 @@ export async function GET_export(request: NextRequest) {
     if (priority) filters.push(where('priority', '==', priority));
     if (userId) filters.push(where('userId', '==', userId));
     if (assignedTo) filters.push(where('assignedTo', '==', assignedTo));
-  const firestore = getFirebaseFirestore();
-  if (!firestore) throw new Error('Database not configured');
+    const db = getFirebaseFirestore();
+    if (!db) throw new Error('Database not configured');
 
-    ticketsQuery = query(collection(firestore, TICKETS_COLLECTION), ...filters, orderBy('createdAt', 'desc'));
+    ticketsQuery = query(collection(db, TICKETS_COLLECTION), ...filters, orderBy('createdAt', 'desc'));
     const snapshot = await getDocs(ticketsQuery);
     let tickets: Ticket[] = snapshot.docs.map(doc => convertFirestoreTicket(doc.data(), doc.id));
     if (subject) {

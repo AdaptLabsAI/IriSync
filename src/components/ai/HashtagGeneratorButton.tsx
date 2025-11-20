@@ -267,7 +267,7 @@ const HashtagGeneratorButton: React.FC<HashtagGeneratorButtonProps> = ({
       
       <Dialog
         open={isOpen}
-        onOpenChange={(open) => {
+        onOpenChange={(open: any) => {
           setIsOpen(open);
         }}
       >
@@ -287,7 +287,7 @@ const HashtagGeneratorButton: React.FC<HashtagGeneratorButtonProps> = ({
               <label className="text-sm font-medium">Content</label>
               <Textarea
                 value={contentToAnalyze}
-                onChange={(e) => setContentToAnalyze(e.target.value)}
+                onChange={(e: any) => setContentToAnalyze(e.target.value)}
                 placeholder="Enter content to generate hashtags for..."
                 rows={3}
               />
@@ -324,7 +324,7 @@ const HashtagGeneratorButton: React.FC<HashtagGeneratorButtonProps> = ({
                   max={Math.min(maxHashtags, 15)} 
                   step={1}
                   value={[hashtagCount]}
-                  onValueChange={(value) => setHashtagCount(value[0])}
+                  onValueChange={(value: any) => setHashtagCount(value[0])}
                 />
               </div>
             </div>
@@ -443,7 +443,7 @@ const HashtagGeneratorButton: React.FC<HashtagGeneratorButtonProps> = ({
                 <Input
                   placeholder="Add custom hashtag..."
                   value={customHashtag}
-                  onChange={(e) => setCustomHashtag(e.target.value)}
+                  onChange={(e: any) => setCustomHashtag(e.target.value)}
                   onKeyDown={(e) => {
                     if (e.key === 'Enter') {
                       e.preventDefault();

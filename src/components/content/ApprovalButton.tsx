@@ -254,7 +254,7 @@ export const ApprovalButton: React.FC<ApprovalButtonProps> = ({
                 placeholder="Add any context or specific requests for the approvers..."
                 rows={3}
                 value={note}
-                onChange={(e) => setNote(e.target.value)}
+                onChange={(e: any) => setNote(e.target.value)}
               />
             </div>
             

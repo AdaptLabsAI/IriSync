@@ -234,7 +234,7 @@ export const DateRangeSelector: React.FC<DateRangeSelectorProps> = ({
                 from: date.from,
                 to: date.to
               }}
-              onSelect={(range) => {
+              onSelect={(range: any) => {
                 if (range?.from) {
                   handleDateSelect(range.from);
                 }
@@ -290,7 +290,7 @@ export const DateRangeSelector: React.FC<DateRangeSelectorProps> = ({
               from: date.from,
               to: date.to
             }}
-            onSelect={(range) => {
+            onSelect={(range: any) => {
               if (range?.from) {
                 handleDateSelect(range.from);
               }

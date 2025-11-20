@@ -303,7 +303,7 @@ export const QueueButton: React.FC<QueueButtonProps> = ({
               
               <RadioGroup 
                 value={queuePosition} 
-                onValueChange={(val) => setQueuePosition(val as QueuePosition)}
+                onValueChange={(val: any) => setQueuePosition(val as QueuePosition)}
                 className="space-y-3"
               >
                 <div className="flex items-start space-x-2">

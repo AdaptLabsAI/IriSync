@@ -378,7 +378,7 @@ export function AIOptimalTimePicker({
                   <div className="mt-2">
                     <h6 className="font-medium text-gray-700 text-xs mb-1">Platform Tips:</h6>
                     <ul className="text-xs text-gray-500 space-y-0.5">
-                      {recommendation.contentTypeOptimization.platformSpecificTips.slice(0, 2).map((tip, index) => (
+                      {recommendation.contentTypeOptimization.platformSpecificTips.slice(0, 2).map((tip: any, index: any) => (
                         <li key={index}>• {tip}</li>
                       ))}
                     </ul>

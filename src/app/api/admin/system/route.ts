@@ -188,11 +188,11 @@ export const GET = withSuperAdmin(async (request: NextRequest, adminUser: any) =
     
     // Get system settings if requested
     if (section === 'all' || section === 'settings') {
-      const firestore = getFirebaseFirestore();
-      if (!firestore) {
+      const db = getFirebaseFirestore();
+      if (!db) {
         return NextResponse.json({ error: 'Database not configured' }, { status: 500 });
       }
-      const settingsDoc = await getDoc(doc(firestore, SYSTEM_SETTINGS_COLLECTION, 'general'));
+      const settingsDoc = await getDoc(doc(db, SYSTEM_SETTINGS_COLLECTION, 'general'));
       
       if (settingsDoc.exists()) {
         response.settings = formatSettingsForResponse(settingsDoc.data());
@@ -226,26 +226,26 @@ export const GET = withSuperAdmin(async (request: NextRequest, adminUser: any) =
     // Get logs if requested
     if (section === 'all' || section === 'logs') {
       let logsCollection = AUDIT_LOGS_COLLECTION;
-      
+
       if (logsType === 'system') {
         logsCollection = SYSTEM_LOGS_COLLECTION;
       } else if (logsType === 'error') {
         logsCollection = SYSTEM_LOGS_COLLECTION;
       }
-      
-  const firestore = getFirebaseFirestore();
-  if (!firestore) throw new Error('Database not configured');
+
+      const db = getFirebaseFirestore();
+      if (!db) throw new Error('Database not configured');
 
       let logsQuery = query(
-        collection(firestore, logsCollection),
+        collection(db, logsCollection),
         orderBy('timestamp', 'desc'),
         limit(logsLimit)
       );
-      
+
       // Add level filter for error logs
       if (logsType === 'error') {
         logsQuery = query(
-          collection(firestore, logsCollection),
+          collection(db, logsCollection),
           where('level', '==', 'error'),
           orderBy('timestamp', 'desc'),
           limit(logsLimit)
@@ -271,8 +271,8 @@ export const GET = withSuperAdmin(async (request: NextRequest, adminUser: any) =
     
     // Get system stats if requested
     if (section === 'all' || section === 'stats') {
-      const firestore = getFirebaseFirestore();
-      if (!firestore) throw new Error('Database not configured');
+      const db = getFirebaseFirestore();
+      if (!db) throw new Error('Database not configured');
 
       // Get analytics data for active users
       const now = new Date();
@@ -280,54 +280,54 @@ export const GET = withSuperAdmin(async (request: NextRequest, adminUser: any) =
       const weekStart = new Date(now);
       weekStart.setDate(now.getDate() - now.getDay()); // Start of current week (Sunday)
       const monthStart = new Date(now.getFullYear(), now.getMonth(), 1); // Start of current month
-      
+
       // Get daily, weekly, and monthly active users
       const [dailyUsers, weeklyUsers, monthlyUsers] = await Promise.all([
         // Daily active users - users who logged in today
         getDocs(query(
-          collection(firestore, USERS_COLLECTION),
+          collection(db, USERS_COLLECTION),
           where('lastLoginAt', '>=', Timestamp.fromDate(dayStart))
         )),
-        
+
         // Weekly active users - users who logged in this week
         getDocs(query(
-          collection(firestore, USERS_COLLECTION),
+          collection(db, USERS_COLLECTION),
           where('lastLoginAt', '>=', Timestamp.fromDate(weekStart))
         )),
-        
+
         // Monthly active users - users who logged in this month
         getDocs(query(
-          collection(firestore, USERS_COLLECTION),
+          collection(db, USERS_COLLECTION),
           where('lastLoginAt', '>=', Timestamp.fromDate(monthStart))
         ))
       ]);
-      
+
       // Get content counts from respective collections
       const [posts, media, knowledge] = await Promise.all([
         // Count posts
         getDocs(query(
-          collection(firestore, 'posts'),
+          collection(db, 'posts'),
           where('deleted', '==', false)
         )),
-        
+
         // Count media items
         getDocs(query(
-          collection(firestore, 'media')
+          collection(db, 'media')
         )),
-        
+
         // Count knowledge base articles
         getDocs(query(
-          collection(firestore, 'knowledgeBase')
+          collection(db, 'knowledgeBase')
         ))
       ]);
-      
+
       // Get API usage from the last 24 hours
-      const apiUsageCollection = collection(firestore, 'apiUsage');
+      const apiUsageCollection = collection(db, 'apiUsage');
       const dayAgo = new Date();
       dayAgo.setDate(dayAgo.getDate() - 1);
-      
+
       // First check if we have pre-aggregated stats
-      const apiStatsRef = doc(firestore, 'systemStats', 'apiUsage');
+      const apiStatsRef = doc(db, 'systemStats', 'apiUsage');
       const apiStatsDoc = await getDoc(apiStatsRef);
       
       let totalApiUsage = 0;
@@ -550,18 +550,18 @@ export const POST = withSuperAdmin(async (request: NextRequest, adminUser: any) 
           }
           
           // Query for logs older than the max age
-  const firestore = getFirebaseFirestore();
-  if (!firestore) throw new Error('Database not configured');
+          const db = getFirebaseFirestore();
+          if (!db) throw new Error('Database not configured');
 
           const logsQuery = query(
-            collection(firestore, logsCollection),
+            collection(db, logsCollection),
             where('timestamp', '<', maxTimestamp),
             orderBy('timestamp', 'asc')
           );
-          
+
           // Get logs to delete
           const logsSnapshot = await getDocs(logsQuery);
-          
+
           if (logsSnapshot.empty) {
             return NextResponse.json({
               message: `No ${body.logType} logs found older than ${maxAge} days`,
@@ -573,14 +573,14 @@ export const POST = withSuperAdmin(async (request: NextRequest, adminUser: any) 
               }
             });
           }
-          
+
           // Delete logs in batches (Firestore has a limit of 500 operations per batch)
           let totalDeleted = 0;
           const batchSize = 450; // Slightly below the limit for safety
           const docs = logsSnapshot.docs;
-          
+
           for (let i = 0; i < docs.length; i += batchSize) {
-            const batch = writeBatch(firestore);
+            const batch = writeBatch(db);
             const batchDocs = docs.slice(i, i + batchSize);
             
             batchDocs.forEach(doc => {
@@ -753,21 +753,21 @@ export const POST = withSuperAdmin(async (request: NextRequest, adminUser: any) 
               });
               
               // Get total document count
-              const countSnapshot = await getDocs(query(collection(firestore, collectionName), limit(0)));
+              const countSnapshot = await getDocs(query(collection(db, collectionName), limit(0)));
               const totalDocs = countSnapshot.size;
-              
+
               // Update job with total
               await adminFirestore.collection('jobs').doc(jobRef.id).update({
                 total: totalDocs
               });
-              
+
               // Process in batches
               let processed = 0;
               let lastDoc: any = null;
-              
+
               while (processed < totalDocs) {
                 let q = query(
-                  collection(firestore, collectionName),
+                  collection(db, collectionName),
                   orderBy('createdAt', 'asc'),
                   limit(batchSize)
                 );
@@ -1000,10 +1000,10 @@ export const PATCH = withSuperAdmin(async (request: NextRequest, adminUser: any)
     const settingsData = validationResult.data;
     
     // Get existing settings
-  const firestore = getFirebaseFirestore();
-  if (!firestore) throw new Error('Database not configured');
+    const db = getFirebaseFirestore();
+    if (!db) throw new Error('Database not configured');
 
-    const settingsDocRef = doc(firestore, SYSTEM_SETTINGS_COLLECTION, 'general');
+    const settingsDocRef = doc(db, SYSTEM_SETTINGS_COLLECTION, 'general');
     const settingsDoc = await getDoc(settingsDocRef);
     
     // Convert planned end time to Timestamp if provided

@@ -209,7 +209,7 @@ const SentimentAnalysisButton: React.FC<SentimentAnalysisButtonProps> = ({
       
       <Dialog
         open={isOpen}
-        onOpenChange={(open) => {
+        onOpenChange={(open: any) => {
           setIsOpen(open);
           if (!open) {
             // Reset state when dialog closes
@@ -265,7 +265,7 @@ const SentimentAnalysisButton: React.FC<SentimentAnalysisButtonProps> = ({
             
             <Textarea
               value={contentToAnalyze}
-              onChange={(e) => setContentToAnalyze(e.target.value)}
+              onChange={(e: any) => setContentToAnalyze(e.target.value)}
               placeholder="Enter content to analyze sentiment..."
               rows={5}
             />
