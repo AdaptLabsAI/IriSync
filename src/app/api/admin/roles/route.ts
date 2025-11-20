@@ -3,7 +3,7 @@ import { systemRoles, createRole, Role, Permission } from '@/lib/features/team/r
 import { RoleService } from '@/lib/features/team/role-service';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/features/auth';
-import auditLogger from '@/lib/features/team/activity/audit-logger';
+import TeamAuditLogger from '@/lib/features/team/activity/audit-logger';
 import { withAdmin } from '@/lib/features/auth/route-handlers';
 
 // Force dynamic rendering - required for Firebase/database access
@@ -81,6 +81,7 @@ export const POST = withAdmin(async (req: NextRequest, adminUser: any) => {
     );
 
     // Log admin action
+    const auditLogger = new TeamAuditLogger();
     await auditLogger.logUserManagementEvent(
       adminUser.id,
       'create_role',
