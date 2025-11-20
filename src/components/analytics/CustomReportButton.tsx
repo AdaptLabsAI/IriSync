@@ -186,7 +186,7 @@ const CustomReportButton: React.FC<CustomReportButtonProps> = ({
   // Get the name of a metric from its ID
   const getMetricName = (metricId: string): string => {
     for (const group of availableMetrics) {
-      const metric = group.metrics.find(m => m.id === metricId);
+      const metric = group.metrics.find((m: any) => m.id === metricId);
       if (metric) return metric.name;
     }
     return metricId;
@@ -285,7 +285,7 @@ const CustomReportButton: React.FC<CustomReportButtonProps> = ({
                       <div key={group.id} className="mb-3">
                         <h4 className="font-medium text-sm mb-1">{group.name}</h4>
                         <div className="ml-2 space-y-1">
-                          {group.metrics.map((metric) => {
+                          {group.metrics.map((metric: any) => {
                             const isAdvanced = metric.tier === 'enterprise';
                             const isDisabled = isAdvanced && !isAdvancedMetricAvailable;
                             

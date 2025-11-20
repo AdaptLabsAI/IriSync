@@ -512,7 +512,7 @@ const TodoList: React.FC = () => {
 
   return (
     <div className="overflow-auto h-full">
-      {filteredTodos.map(todo => (
+      {filteredTodos.map((todo: any) => (
         <TodoItem 
           key={todo.id} 
           todo={todo} 
@@ -583,8 +583,8 @@ const TodoApp: React.FC = () => {
 
   // Calculate counts
   const totalTodos = todos.length;
-  const activeTodos = todos.filter(todo => !todo.completed).length;
-  const completedTodos = todos.filter(todo => todo.completed).length;
+  const activeTodos = todos.filter((todo: any) => !todo.completed).length;
+  const completedTodos = todos.filter((todo: any) => todo.completed).length;
 
   return (
     <div className="flex flex-col h-full">
@@ -716,7 +716,7 @@ const TodoApp: React.FC = () => {
             </div>
           ) : (
             <ul className="divide-y divide-gray-200">
-              {filteredTodos.map(todo => (
+              {filteredTodos.map((todo: any) => (
                 <TodoItem
                   key={todo.id}
                   todo={todo}

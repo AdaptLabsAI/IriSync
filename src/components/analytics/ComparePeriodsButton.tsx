@@ -266,7 +266,7 @@ const ComparePeriodsButton: React.FC<ComparePeriodsButtonProps> = ({
                     </div>
                     <DatePicker
                       selectedRange={customPeriod}
-                      onChange={(range) => {
+                      onChange={(range: any) => {
                         handleCustomDateChange(range);
                         setComparisonType('custom_period');
                       }}

@@ -452,7 +452,10 @@ export const BlogCategoryRepository = {
   },
 
   async update(id: string, categoryData: Partial<BlogCategory>): Promise<BlogCategory> {
-    const docRef = doc(firestore, CATEGORY_COLLECTION, id);
+    const db = getFirebaseFirestore();
+    if (!db) throw new Error('Database not configured');
+
+    const docRef = doc(db, CATEGORY_COLLECTION, id);
     const currentCategory = await this.getById(id);
     
     if (!currentCategory) {
@@ -479,12 +482,18 @@ export const BlogCategoryRepository = {
   },
 
   async delete(id: string): Promise<void> {
-    const docRef = doc(firestore, CATEGORY_COLLECTION, id);
+    const db = getFirebaseFirestore();
+    if (!db) throw new Error('Database not configured');
+
+    const docRef = doc(db, CATEGORY_COLLECTION, id);
     await deleteDoc(docRef);
   },
 
   async getById(id: string): Promise<BlogCategory | null> {
-    const docRef = doc(firestore, CATEGORY_COLLECTION, id);
+    const db = getFirebaseFirestore();
+    if (!db) throw new Error('Database not configured');
+
+    const docRef = doc(db, CATEGORY_COLLECTION, id);
     const docSnap = await getDoc(docRef);
     
     if (!docSnap.exists()) return null;
@@ -492,14 +501,20 @@ export const BlogCategoryRepository = {
   },
 
   async incrementPostCount(id: string): Promise<void> {
-    const docRef = doc(firestore, CATEGORY_COLLECTION, id);
+    const db = getFirebaseFirestore();
+    if (!db) throw new Error('Database not configured');
+
+    const docRef = doc(db, CATEGORY_COLLECTION, id);
     await updateDoc(docRef, {
       postCount: increment(1)
     });
   },
 
   async decrementPostCount(id: string): Promise<void> {
-    const docRef = doc(firestore, CATEGORY_COLLECTION, id);
+    const db = getFirebaseFirestore();
+    if (!db) throw new Error('Database not configured');
+
+    const docRef = doc(db, CATEGORY_COLLECTION, id);
     
     // Get current count to avoid negative values
     const category = await this.getById(id);
