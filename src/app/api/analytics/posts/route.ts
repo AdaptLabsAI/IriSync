@@ -10,7 +10,7 @@ import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/lib/features/auth';
 import { postAnalyticsService } from '@/lib/features/analytics/PostAnalyticsService';
 import { logger } from '@/lib/core/logging/logger';
-import { PlatformType } from '@/lib/features/platforms/PlatformProvider';
+import { PlatformType, PlatformFilter } from '@/lib/features/platforms/PlatformProvider';
 
 // Force dynamic rendering
 export const dynamic = 'force-dynamic';
@@ -52,7 +52,7 @@ export async function GET(request: NextRequest) {
 
     // Get query parameters
     const searchParams = request.nextUrl.searchParams;
-    const platformType = searchParams.get('platform') as PlatformType | null;
+    const platformFilter = searchParams.get('platform') as PlatformFilter | null;
     const startDateParam = searchParams.get('startDate');
     const endDateParam = searchParams.get('endDate');
     const limitParam = searchParams.get('limit');
@@ -60,8 +60,9 @@ export async function GET(request: NextRequest) {
     // Build options
     const options: any = {};
 
-    if (platformType && platformType !== 'all') {
-      options.platformType = platformType;
+    if (platformFilter && platformFilter !== 'all') {
+      // TypeScript now knows platformFilter is PlatformType here (not 'all')
+      options.platformType = platformFilter;
     }
 
     if (startDateParam) {
@@ -97,7 +98,7 @@ export async function GET(request: NextRequest) {
       success: true,
       analytics,
       filters: {
-        platform: platformType || 'all',
+        platform: platformFilter || 'all',
         startDate: startDateParam,
         endDate: endDateParam,
         limit: limitParam

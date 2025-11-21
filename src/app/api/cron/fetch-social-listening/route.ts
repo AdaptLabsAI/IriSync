@@ -36,7 +36,7 @@ async function fetchSocialListeningData(): Promise<{
     // Get all monitoring configs that are enabled
     const firestore = getFirebaseFirestore();
     if (!firestore) {
-      return NextResponse.json({ error: 'Database not configured' }, { status: 500 });
+      throw new Error('Database not configured');
     }
     const configsSnapshot = await getDocs(collection(firestore, 'monitoringConfigs'));
 

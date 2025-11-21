@@ -1,9 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/lib/features/auth';
-import { AIProvider } from '@/lib/features/ai/providers';
+import { AIProvider } from '@/lib/features/ai/providers/AIProvider';
+import { AIProviderFactory } from '@/lib/features/ai/providers/AIProviderFactory';
+import { ProviderType } from '@/lib/features/ai/providers/ProviderType';
 import { ChatbotService, UserTier } from '@/lib/features/support/chatbot-service';
 import { TokenService } from '@/lib/features/tokens/token-service';
+import { TokenRepository } from '@/lib/features/tokens/token-repository';
+import { NotificationService } from '@/lib/core/notifications/NotificationService';
 import { firestore } from '@/lib/core/firebase/admin';
 import { logger } from '@/lib/core/logging/logger';
 import { config } from '@/lib/config';
@@ -26,8 +30,10 @@ interface SessionUser {
 export async function POST(request: NextRequest) {
   try {
     // Initialize services
-    const aiProvider = new AIProvider();
-    const tokenService = new TokenService();
+    const aiProvider: AIProvider = AIProviderFactory.createProvider(ProviderType.OPENAI, { modelId: 'gpt-3.5-turbo' });
+    const tokenRepository = new TokenRepository(firestore);
+    const notificationService = new NotificationService();
+    const tokenService = new TokenService(tokenRepository, notificationService);
     const chatbotService = new ChatbotService(aiProvider, tokenService);
     
     // Get user from session if authenticated
@@ -50,9 +56,8 @@ export async function POST(request: NextRequest) {
     if (user?.id) {
       // Get user's subscription tier
       try {
-        const subscriptionData = await getUserSubscriptionTier(user.id);
-        userTier = subscriptionData.tier as UserTier;
-        organizationId = subscriptionData.organizationId;
+        const subscriptionTier = await getUserSubscriptionTier(user.id);
+        userTier = subscriptionTier as unknown as UserTier;
       } catch (error) {
         logger.warn('Error getting user subscription tier, defaulting to anonymous', {
           userId: user.id,

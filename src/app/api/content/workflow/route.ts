@@ -143,7 +143,7 @@ export async function POST(request: NextRequest) {
       const hasPermission = await hasOrganizationRole(
         user.id,
         organizationId,
-        [OrganizationRole.OWNER, OrganizationRole.ORG_ADMIN]
+        [OrganizationRole.OWNER, OrganizationRole.ADMIN]
       );
       
       if (!hasPermission) {
@@ -357,7 +357,7 @@ async function getCurrentUserOrganizationRole(userId: string, organizationId: st
     return TeamRole.TEAM_ADMIN;
   }
 
-  const hasAdminRole = await hasOrganizationRole(userId, organizationId, [OrganizationRole.ORG_ADMIN]);
+  const hasAdminRole = await hasOrganizationRole(userId, organizationId, [OrganizationRole.ADMIN]);
   if (hasAdminRole) {
     return TeamRole.TEAM_ADMIN;
   }

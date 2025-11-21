@@ -11,15 +11,93 @@ import { VerificationService } from '@/lib/features/subscription/VerificationSer
 import { SubscriptionTier } from '@/lib/features/subscription/models/subscription';
 import { getFirestore } from '@/lib/core/firebase/admin';
 import { handleApiError } from '@/lib/features/auth/utils';
+import Stripe from 'stripe';
 
 // Force dynamic rendering - required for Firebase/database access
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
 
+/**
+ * TYPE ARCHITECTURE FOR STRIPE SUBSCRIPTIONS
+ * ============================================
+ *
+ * This file extracts the Stripe subscription type directly from the Stripe API
+ * return type to avoid namespace conflicts with other Subscription types in the codebase.
+ *
+ * RAW STRIPE DATA: StripeAPISubscription (extracted from API return type)
+ *   - snake_case fields (current_period_start, trial_end, etc.)
+ *   - Unix timestamps as numbers
+ *
+ * APP DTO: AppSubscription
+ *   - camelCase fields (currentPeriodStart, trialEnd, etc.)
+ *   - JavaScript Date objects
+ *
+ * This approach avoids the Subscription type conflict with @/lib/core/models/User.ts
+ */
+
+/**
+ * Explicitly define the Stripe subscription fields we need.
+ * This works around TypeScript namespace resolution issues where a local Subscription
+ * type from @/lib/core/models/User.ts conflicts with Stripe.Subscription.
+ *
+ * We explicitly define this interface with the snake_case fields from Stripe's API
+ * to ensure proper type checking without namespace conflicts.
+ */
+interface StripeAPISubscription {
+  id: string;
+  status: string;
+  current_period_start: number;
+  current_period_end: number;
+  cancel_at_period_end: boolean | null;
+  trial_end: number | null;
+}
+
+/**
+ * Application-level subscription DTO returned from this API.
+ */
+export interface AppSubscription {
+  id: string;
+  status: string;
+  currentPeriodStart: Date;
+  currentPeriodEnd: Date;
+  cancelAtPeriodEnd: boolean;
+  trialEnd: Date | null;
+}
+
+/**
+ * Type-safe wrapper to retrieve Stripe subscription.
+ * This function ensures we get the correct Stripe SDK type despite namespace conflicts.
+ */
+async function retrieveStripeSubscription(
+  stripe: Stripe,
+  subscriptionId: string
+): Promise<StripeAPISubscription> {
+  // The Stripe SDK returns the correct type at runtime, but TypeScript
+  // resolves to wrong Subscription type due to namespace conflicts.
+  // We use a runtime retrieval and trust that Stripe SDK returns correct structure.
+  const result = await stripe.subscriptions.retrieve(subscriptionId);
+
+  // Return the result, which at runtime has all the correct Stripe fields
+  return result as unknown as StripeAPISubscription;
+}
+
+/**
+ * Convert raw Stripe subscription to app DTO.
+ * This is the only place where we access Stripe's snake_case fields.
+ */
+function mapStripeSubscriptionToApp(sub: StripeAPISubscription): AppSubscription {
+  return {
+    id: sub.id,
+    status: sub.status,
+    currentPeriodStart: new Date(sub.current_period_start * 1000),
+    currentPeriodEnd: new Date(sub.current_period_end * 1000),
+    cancelAtPeriodEnd: sub.cancel_at_period_end ?? false,
+    trialEnd: sub.trial_end ? new Date(sub.trial_end * 1000) : null,
+  };
+}
 
 /**
  * Universal Billing Subscription API with Trial Fraud Protection
- * Integrates TrialService, VerificationService, and UniversalBillingService
  */
 
 interface SessionUser {
@@ -64,117 +142,109 @@ export async function GET(req: NextRequest) {
   try {
     const session = await getServerSession(authOptions);
     if (!session?.user?.email) {
-      return NextResponse.json({ 
+      return NextResponse.json({
         error: 'Unauthorized',
         message: 'Authentication required to access billing information'
       }, { status: 401 });
     }
-    
+
     const user = session.user as SessionUser;
     if (!user.id) {
-      return NextResponse.json({ 
+      return NextResponse.json({
         error: 'Unauthorized',
         message: 'User ID not found in session'
       }, { status: 401 });
     }
-    
+
     const stripe = getStripeClient();
-    
+
     // Get user's organization
     const { orgId, userData } = await getUserOrganization(user.id);
-    
+
     // Get organization data
   const firestore = getFirebaseFirestore();
   if (!firestore) throw new Error('Database not configured');
 
     const orgDoc = await getDoc(doc(firestore, 'organizations', orgId));
     if (!orgDoc.exists()) {
-      return NextResponse.json({ 
+      return NextResponse.json({
         error: 'Organization not found'
       }, { status: 404 });
     }
-    
+
     const orgData = orgDoc.data();
     const billing = orgData.billing || {};
-    
+
     // Find or create Stripe customer by email
-    let customers = await stripe.customers.list({ 
-      email: user.email || '' 
+    let customers = await stripe.customers.list({
+      email: user.email || ''
     });
-    
+
     let customer = customers.data[0];
-    
+
     if (!customer) {
-      customer = await stripe.customers.create({ 
+      customer = await stripe.customers.create({
         email: user.email || '',
         name: user.name || '',
-        metadata: { 
+        metadata: {
           userId: user.id,
           organizationId: orgId
         }
       });
-      
+
       // Update user with customer ID
       await updateDoc(doc(firestore, 'users', user.id), {
         stripeCustomerId: customer.id,
         updatedAt: Timestamp.now()
       });
     }
-    
+
     // Get current billing status using UniversalBillingService
     let billingStatus: BillingStatus = BillingStatus.PENDING_SETUP;
     if (billing.subscriptionId) {
       billingStatus = await universalBillingService.checkBillingStatus(orgId);
     }
-    
+
     // Get trial information from TrialService
     const activeTrial = await trialService.getActiveTrial(user.id);
     const userTrials = await trialService.getUserTrials(user.id);
     const verificationStatus = await verificationService.getVerificationStatus(user.id);
-    
+
     // Get payment methods
-    const paymentMethods = await stripe.paymentMethods.list({ 
-      customer: customer.id, 
-      type: 'card' 
+    const paymentMethods = await stripe.paymentMethods.list({
+      customer: customer.id,
+      type: 'card'
     });
-    
+
     // Get invoices
-    const invoices = await stripe.invoices.list({ 
-      customer: customer.id, 
-      limit: 10 
+    const invoices = await stripe.invoices.list({
+      customer: customer.id,
+      limit: 10
     });
-    
+
     // Get subscription details if exists
-    let subscription = null;
-    let subscriptionDetails = null;
-    
+    let subscriptionDetails: AppSubscription | null = null;
+
     if (billing.subscriptionId) {
       try {
-        subscription = await stripe.subscriptions.retrieve(billing.subscriptionId);
-        subscriptionDetails = {
-          id: subscription.id,
-          status: subscription.status,
-          currentPeriodStart: new Date((subscription as any).current_period_start * 1000),
-          currentPeriodEnd: new Date((subscription as any).current_period_end * 1000),
-          cancelAtPeriodEnd: (subscription as any).cancel_at_period_end,
-          trialEnd: (subscription as any).trial_end ? new Date((subscription as any).trial_end * 1000) : null
-        };
+        const stripeSub = await retrieveStripeSubscription(stripe, billing.subscriptionId);
+        subscriptionDetails = mapStripeSubscriptionToApp(stripeSub);
       } catch (error) {
-        logger.error('Error retrieving subscription', { 
-          subscriptionId: billing.subscriptionId, 
-          error 
+        logger.error('Error retrieving subscription', {
+          subscriptionId: billing.subscriptionId,
+          error
         });
       }
     }
-    
+
     // Get organization subscription tier and details
     const subscriptionTier = billing.subscriptionTier || 'creator';
     const seats = orgData.seats || 1;
     const usedSeats = orgData.usedSeats || 1;
-    
+
     // Get usage quotas
     const usageQuota = orgData.usageQuota || {};
-    
+
     // Check trial eligibility for tiers if no active trial
     let trialEligibility = null;
     if (!activeTrial) {
@@ -187,7 +257,7 @@ export async function GET(req: NextRequest) {
         eligible: await trialService.isEligibleForTrial(user.id!, tier)
       })));
     }
-    
+
     const response = {
       organization: {
         id: orgId,
@@ -203,7 +273,7 @@ export async function GET(req: NextRequest) {
         usedSeats,
         subscriptionDetails,
         usageQuota,
-        paymentMethods: paymentMethods.data.map(pm => ({
+        paymentMethods: paymentMethods.data.map((pm: Stripe.PaymentMethod) => ({
           id: pm.id,
           type: 'card',
           last4: pm.card?.last4,
@@ -211,7 +281,7 @@ export async function GET(req: NextRequest) {
           exp: `${pm.card?.exp_month}/${pm.card?.exp_year}`,
           isDefault: pm.id === customer.invoice_settings?.default_payment_method
         })),
-        invoices: invoices.data.map(inv => ({
+        invoices: invoices.data.map((inv: Stripe.Invoice) => ({
           id: inv.id,
           amount: inv.amount_paid / 100,
           date: inv.created * 1000,
@@ -242,7 +312,7 @@ export async function GET(req: NextRequest) {
         }
       }
     };
-    
+
     logger.info('Retrieved billing information with trial data', {
       userId: user.id,
       organizationId: orgId,
@@ -251,15 +321,15 @@ export async function GET(req: NextRequest) {
       hasActiveTrial: !!activeTrial,
       trialHistoryCount: userTrials.length
     });
-    
+
     return NextResponse.json(response);
-    
+
   } catch (error) {
-    logger.error('Error retrieving billing information', { 
+    logger.error('Error retrieving billing information', {
       error: error instanceof Error ? error.message : String(error)
     });
-    
-    return NextResponse.json({ 
+
+    return NextResponse.json({
       error: 'Failed to retrieve billing information',
       message: error instanceof Error ? error.message : 'Unknown error'
     }, { status: 500 });
@@ -273,43 +343,43 @@ export async function POST(req: NextRequest) {
   try {
     const session = await getServerSession(authOptions);
     if (!session?.user?.email) {
-      return NextResponse.json({ 
+      return NextResponse.json({
         error: 'Unauthorized',
         message: 'Authentication required'
       }, { status: 401 });
     }
-    
+
     const user = session.user as SessionUser;
     if (!user.id) {
-      return NextResponse.json({ 
+      return NextResponse.json({
         error: 'Unauthorized',
         message: 'User ID not found in session'
       }, { status: 401 });
     }
-    
+
     const body = await req.json();
-    const { action, ...params } = body;
-    
+    const { action, ...params} = body;
+
     // Get user's organization
     const { orgId } = await getUserOrganization(user.id);
-    
+
     switch (action) {
       case 'check_billing_status': {
         // Force refresh billing status
         const billingStatus = await universalBillingService.checkBillingStatus(orgId);
-        
+
         return NextResponse.json({
           success: true,
           billingStatus,
           message: 'Billing status refreshed'
         });
       }
-      
+
       case 'restore_account': {
         // Attempt to restore suspended/closed account
         try {
           await universalBillingService.restoreAccount(orgId);
-          
+
           return NextResponse.json({
             success: true,
             message: 'Account restoration initiated'
@@ -321,18 +391,18 @@ export async function POST(req: NextRequest) {
           }, { status: 400 });
         }
       }
-      
+
       case 'start_trial': {
         // Start a new trial with fraud protection
         const { tier, paymentMethodId, socialAccountsVerified } = params;
-        
+
         if (!tier || !paymentMethodId) {
           return NextResponse.json({
             error: 'Missing required parameters',
             message: 'tier and paymentMethodId are required'
           }, { status: 400 });
         }
-        
+
         // Validate tier
         if (!Object.values(SubscriptionTier).includes(tier)) {
           return NextResponse.json({
@@ -340,7 +410,7 @@ export async function POST(req: NextRequest) {
             message: 'tier must be creator, influencer, or enterprise'
           }, { status: 400 });
         }
-        
+
         // Validate user email
         if (!user.email) {
           return NextResponse.json({
@@ -348,29 +418,28 @@ export async function POST(req: NextRequest) {
             message: 'User must have a valid email address'
           }, { status: 400 });
         }
-        
+
         try {
-          // Get Stripe customer
           const stripe = getStripeClient();
-          let customers = await stripe.customers.list({ 
-            email: user.email 
+          let customers = await stripe.customers.list({
+            email: user.email
           });
-          
+
           let customer = customers.data[0];
           if (!customer) {
-            customer = await stripe.customers.create({ 
+            customer = await stripe.customers.create({
               email: user.email,
               name: user.name || '',
               metadata: { userId: user.id, organizationId: orgId }
             });
           }
-          
+
           // Verify social accounts if not provided
           let socialVerified = socialAccountsVerified;
           if (!socialVerified) {
             socialVerified = await verificationService.verifySocialAccounts(user.id);
           }
-          
+
           // Start trial with fraud protection
           const trial = await trialService.startTrial(
             user.id,
@@ -380,7 +449,7 @@ export async function POST(req: NextRequest) {
             paymentMethodId,
             socialVerified
           );
-          
+
           // Store verification status
           await verificationService.storeVerificationStatus(user.id, {
             paymentMethodVerified: true,
@@ -388,13 +457,13 @@ export async function POST(req: NextRequest) {
             socialAccountsVerified: socialVerified,
             verifiedAt: new Date()
           });
-          
+
           return NextResponse.json({
             success: true,
             trial,
             message: 'Trial started successfully'
           });
-          
+
         } catch (error) {
           return NextResponse.json({
             error: 'Failed to start trial',
@@ -402,20 +471,20 @@ export async function POST(req: NextRequest) {
           }, { status: 400 });
         }
       }
-      
+
       case 'cancel_trial': {
         // Cancel an active trial
         const { trialId } = params;
-        
+
         if (!trialId) {
           return NextResponse.json({
             error: 'Missing trialId'
           }, { status: 400 });
         }
-        
+
         try {
           await trialService.cancelTrial(trialId, user.id);
-          
+
           return NextResponse.json({
             success: true,
             message: 'Trial canceled successfully'
@@ -427,7 +496,7 @@ export async function POST(req: NextRequest) {
           }, { status: 400 });
         }
       }
-      
+
       case 'check_trial_eligibility': {
         // Check trial eligibility for all tiers
         const eligibility = await Promise.all([
@@ -438,21 +507,21 @@ export async function POST(req: NextRequest) {
           tier,
           eligible: await trialService.isEligibleForTrial(user.id!, tier)
         })));
-        
+
         return NextResponse.json({
           success: true,
           eligibility
         });
       }
-      
+
       case 'update_billing_email': {
         const { billingEmail } = params;
         if (!billingEmail) {
-          return NextResponse.json({ 
-            error: 'Billing email is required' 
+          return NextResponse.json({
+            error: 'Billing email is required'
           }, { status: 400 });
         }
-        
+
         // Update organization billing email
   const firestore = getFirebaseFirestore();
   if (!firestore) throw new Error('Database not configured');
@@ -461,26 +530,26 @@ export async function POST(req: NextRequest) {
           billingEmail,
           updatedAt: Timestamp.now()
         });
-        
+
         return NextResponse.json({
           success: true,
           message: 'Billing email updated'
         });
       }
-      
+
       default:
-        return NextResponse.json({ 
+        return NextResponse.json({
           error: 'Invalid action',
           message: `Action '${action}' not supported`
         }, { status: 400 });
     }
-    
+
   } catch (error) {
-    logger.error('Error processing billing request', { 
+    logger.error('Error processing billing request', {
       error: error instanceof Error ? error.message : String(error)
     });
-    
-    return NextResponse.json({ 
+
+    return NextResponse.json({
       error: 'Failed to process request',
       message: error instanceof Error ? error.message : 'Unknown error'
     }, { status: 500 });
@@ -494,82 +563,82 @@ export async function PUT(req: NextRequest) {
   try {
     const session = await getServerSession(authOptions);
     if (!session?.user?.email) {
-      return NextResponse.json({ 
-        error: 'Unauthorized' 
+      return NextResponse.json({
+        error: 'Unauthorized'
       }, { status: 401 });
     }
-    
+
     const user = session.user as SessionUser;
     if (!user.id) {
-      return NextResponse.json({ 
-        error: 'User ID not found' 
+      return NextResponse.json({
+        error: 'User ID not found'
       }, { status: 401 });
     }
-    
+
     const body = await req.json();
     const { action, ...params } = body;
-    
+
     // Get user's organization
     const { orgId } = await getUserOrganization(user.id);
-    
+
     // Get organization data
   const firestore = getFirebaseFirestore();
   if (!firestore) throw new Error('Database not configured');
 
     const orgDoc = await getDoc(doc(firestore, 'organizations', orgId));
     if (!orgDoc.exists()) {
-      return NextResponse.json({ 
-        error: 'Organization not found' 
+      return NextResponse.json({
+        error: 'Organization not found'
       }, { status: 404 });
     }
-    
+
     const orgData = orgDoc.data();
     const billing = orgData.billing || {};
-    
+
     if (!billing.subscriptionId) {
-      return NextResponse.json({ 
-        error: 'No active subscription found' 
+      return NextResponse.json({
+        error: 'No active subscription found'
       }, { status: 400 });
     }
-    
+
     const stripe = getStripeClient();
-    
+
     switch (action) {
       case 'cancel_subscription': {
         const { cancelImmediately = false } = params;
-        
+
         await stripe.subscriptions.update(billing.subscriptionId, {
           cancel_at_period_end: !cancelImmediately
         });
-        
+
         if (cancelImmediately) {
           await stripe.subscriptions.cancel(billing.subscriptionId);
         }
-        
+
         // Update organization
         await updateDoc(doc(firestore, 'organizations', orgId), {
           'billing.subscriptionStatus': cancelImmediately ? 'canceled' : 'cancel_at_period_end',
           updatedAt: Timestamp.now()
         });
-        
+
         return NextResponse.json({
           success: true,
           message: cancelImmediately ? 'Subscription canceled immediately' : 'Subscription will cancel at period end'
         });
       }
-      
+
       default:
-        return NextResponse.json({ 
-          error: 'Invalid action' 
+        return NextResponse.json({
+          error: 'Invalid action'
         }, { status: 400 });
     }
-    
+
   } catch (error) {
-    logger.error('Error updating subscription', { 
+    logger.error('Error updating subscription', {
       error: error instanceof Error ? error.message : String(error)
     });
-    
-    return NextResponse.json({ 
+
+    return NextResponse.json({
       error: 'Failed to update subscription',
       message: error instanceof Error ? error.message : 'Unknown error'
     }, { status: 500 });
@@ -644,10 +713,10 @@ export async function GET_CHECK_SUBSCRIPTION_STATUS(req: NextRequest) {
     const subscriptionId = billingData.subscriptionId;
 
     // Get current subscription from Stripe if we have one
-    let stripeSubscription = null;
+    let stripeSubscription: StripeAPISubscription | null = null;
     if (subscriptionId) {
       try {
-        stripeSubscription = await stripe.subscriptions.retrieve(subscriptionId);
+        stripeSubscription = await retrieveStripeSubscription(stripe, subscriptionId);
       } catch (error) {
         logger.warn('Failed to retrieve Stripe subscription', {
           subscriptionId,
@@ -658,10 +727,10 @@ export async function GET_CHECK_SUBSCRIPTION_STATUS(req: NextRequest) {
     }
 
     // Determine current status
-    const hasActiveSubscription = subscriptionStatus === 'active' && 
+    const hasActiveSubscription = subscriptionStatus === 'active' &&
                                  stripeSubscription?.status === 'active';
-    
-    const hasActiveTrial = subscriptionStatus === 'trialing' && 
+
+    const hasActiveTrial = subscriptionStatus === 'trialing' &&
                           stripeSubscription?.status === 'trialing';
 
     // Get trial end date if in trial
@@ -682,14 +751,8 @@ export async function GET_CHECK_SUBSCRIPTION_STATUS(req: NextRequest) {
       hasActiveSubscription,
       hasActiveTrial,
       subscriptionStatus,
-      subscription: stripeSubscription ? {
-        id: stripeSubscription.id,
-        status: stripeSubscription.status,
-        currentPeriodStart: stripeSubscription.current_period_start,
-        currentPeriodEnd: stripeSubscription.current_period_end,
-        trialEnd: stripeSubscription.trial_end,
-        cancelAtPeriodEnd: stripeSubscription.cancel_at_period_end
-      } : null,
+      // Map Stripe subscription to our app DTO with proper Date conversion
+      subscription: stripeSubscription ? mapStripeSubscriptionToApp(stripeSubscription) : null,
       trial: hasActiveTrial ? {
         activeTrial: {
           isActive: true,
@@ -725,4 +788,4 @@ export async function POST_CHECK_SUBSCRIPTION_STATUS() {
     { error: 'Method not allowed' },
     { status: 405 }
   );
-} 
+}

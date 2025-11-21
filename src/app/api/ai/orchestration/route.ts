@@ -3,7 +3,7 @@ import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/lib/features/auth';
 import { TokenService } from '../../../../lib/tokens/token-service';
 import { AIOrchestrationFactory } from '../../../../lib/features/ai/orchestration/AIOrchestrationFactory';
-import { AITaskConfig } from '../../../../lib/ai/orchestration/AIOrchestrator';
+import { AITaskConfig } from '../../../../lib/features/ai/orchestration/AIOrchestrator';
 import { AIFactory } from '../../../../lib/features/ai/factory';
 import { logger } from '../../../../lib/core/logging/logger';
 import { ProviderType } from '../../../../lib/features/ai/models';
@@ -33,7 +33,7 @@ export async function POST(req: NextRequest) {
     // Check authentication
     const session = await getServerSession(authOptions);
     
-    if (!session?.user) {
+    if (!session?.user?.id) {
       return NextResponse.json(
         { error: 'Authentication required' },
         { status: 401 }
@@ -130,7 +130,7 @@ export async function PUT(req: NextRequest) {
     // Check authentication
     const session = await getServerSession(authOptions);
     
-    if (!session?.user) {
+    if (!session?.user?.id) {
       return NextResponse.json(
         { error: 'Authentication required' },
         { status: 401 }
@@ -235,7 +235,7 @@ export async function PATCH(req: NextRequest) {
     // Check authentication
     const session = await getServerSession(authOptions);
     
-    if (!session?.user) {
+    if (!session?.user?.id) {
       return NextResponse.json(
         { error: 'Authentication required' },
         { status: 401 }

@@ -20,7 +20,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Test the permission check that's failing
-    const hasAdminAccess = hasPermission(token || { role: '' }, 'platform-settings', 'read', systemRoles);
+    const hasAdminAccess = hasPermission({ role: token?.role || '' }, 'platform-settings', 'read', systemRoles);
     
     return NextResponse.json({
       session: {

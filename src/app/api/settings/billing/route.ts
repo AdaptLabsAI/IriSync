@@ -57,24 +57,28 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    // Get billing status from universal billing service
-    const billingStatus = await universalBillingService.getBillingStatus(orgId);
+    // Get billing status enum from universal billing service
+    const billingStatusEnum = await universalBillingService.checkBillingStatus(orgId);
 
-    // Get organization details
+    // Get organization details for additional billing info
     const orgDoc = await getDoc(doc(firestore, 'organizations', orgId));
     const orgData = orgDoc.exists() ? orgDoc.data() : {};
+
+    // Get billing document for more detailed info
+    const billingDoc = await getDoc(doc(firestore, 'billing', orgId));
+    const billingData = billingDoc.exists() ? billingDoc.data() : {};
 
     return NextResponse.json({
       success: true,
       billing: {
-        status: billingStatus.status,
-        tier: billingStatus.tier,
-        provider: billingStatus.provider,
-        expiresAt: billingStatus.expiresAt?.toISOString(),
-        credits: billingStatus.credits,
-        features: billingStatus.features,
-        limits: billingStatus.limits,
-        trialInfo: billingStatus.trialInfo
+        status: billingStatusEnum,
+        tier: billingData.tier || orgData.subscriptionTier || 'free',
+        provider: billingData.provider || 'stripe',
+        expiresAt: billingData.expiresAt?.toDate?.()?.toISOString() || null,
+        credits: billingData.credits || 0,
+        features: billingData.features || [],
+        limits: billingData.limits || {},
+        trialInfo: billingData.trialInfo || null
       },
       organization: {
         id: orgId,

@@ -31,7 +31,7 @@ interface SessionUser {
 async function getUserOrganizationContext(userId: string) {
   const firestore = getFirebaseFirestore();
   if (!firestore) {
-    return NextResponse.json({ error: 'Database not configured' }, { status: 500 });
+    throw new Error('Database not configured');
   }
   const userDoc = await getDoc(doc(firestore, 'users', userId));
   if (!userDoc.exists()) {
@@ -168,12 +168,13 @@ export async function POST(req: NextRequest) {
     
     // Map role to organization role
     const newOrgRole = mapRoleToOrganizationRole(role);
-    
+
+    // Get firestore instance for transaction
+    const firestore = getFirebaseFirestore();
+    if (!firestore) throw new Error('Database not configured');
+
     // Update member role in organization
     await runTransaction(firestore, async (transaction) => {
-  const firestore = getFirebaseFirestore();
-  if (!firestore) throw new Error('Database not configured');
-
       const membersRef = doc(firestore, 'organizations', organizationId, 'members', 'data');
       
       // Update member role
