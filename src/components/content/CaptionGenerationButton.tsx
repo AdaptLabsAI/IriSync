@@ -250,12 +250,10 @@ export const CaptionGenerationButton: React.FC<CaptionGenerationButtonProps> = (
       
       <Dialog
         isOpen={isOpen}
-        onClose={() => {(open: any) => {
-          setIsOpen(open);
-          if (!open) {
-            // Reset state when dialog closes
-            setSelectedCaptionIndex(null);
-          }
+        onClose={() => {
+          setIsOpen(false);
+          // Reset state when dialog closes
+          setSelectedCaptionIndex(null);
         }}
       >
         <DialogContent className="sm:max-w-[600px]">
