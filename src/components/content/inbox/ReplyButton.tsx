@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button, ButtonVariant, ButtonSize } from '../../ui/button';
 import { Reply, Loader2, X, Send, FileImage, Smile, PaperclipIcon, FileText } from 'lucide-react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from '../../ui/dialog';
-import { TextArea } from '../../ui/textarea';
+import { Textarea } from '../../ui/textarea';
 import { Avatar } from '../../ui/avatar';
 import { Popover, PopoverContent, PopoverTrigger } from '../../ui/popover';
 
@@ -285,12 +285,11 @@ export const ReplyButton: React.FC<ReplyButtonProps> = ({
               </div>
             </div>
             
-            <TextArea
+            <Textarea
               value={replyContent}
               onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setReplyContent(e.target.value)}
               placeholder="Write your reply..."
               rows={4}
-              maxRows={8}
               className="w-full"
             />
             
