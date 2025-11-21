@@ -215,6 +215,8 @@ export class SocialInboxController {
     pageId?: string;
     parentId?: string;
     verb?: 'add' | 'edit' | 'remove';
+    attachments?: any;
+    payload?: any;
   }): Promise<void> {
     try {
       logger.info('Processing webhook message', { platform: webhookData.platform, type: webhookData.type });
