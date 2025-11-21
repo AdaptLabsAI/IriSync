@@ -9,7 +9,7 @@ import { Providers as AuthProviders } from '../providers';
 import { GlobalErrorBoundary } from '../components/common/GlobalErrorBoundary';
 import { useAuth } from '../providers/AuthProvider';
 import { TeamProvider } from '../context/TeamContext';
-import { ToastProvider } from '../components/ui/use-toast'; // Replace NotificationProvider with ToastProvider
+import { ToastProvider } from '../components/ui/use-toast'; // MUI-based toast provider
 import Link from 'next/link';
 
 // Define theme customizations based on the brand guidelines
