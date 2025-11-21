@@ -224,6 +224,12 @@ export class SocialInboxController {
     mentionUrn?: string;
     commentary?: string;
     isUpdate?: boolean;
+    senderUsername?: string;
+    senderProfilePicture?: string;
+    senderVerified?: boolean;
+    senderFollowerCount?: number;
+    metrics?: any;
+    conversationId?: string;
   }): Promise<void> {
     try {
       logger.info('Processing webhook message', { platform: webhookData.platform, type: webhookData.type });
