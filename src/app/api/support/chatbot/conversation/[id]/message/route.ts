@@ -4,6 +4,9 @@ import { authOptions } from '@/lib/features/auth';
 import { AIProvider } from '@/lib/features/ai/providers';
 import { ChatbotService } from '@/lib/features/support/chatbot-service';
 import { TokenService } from '@/lib/features/tokens/token-service';
+import { TokenRepository } from '@/lib/features/tokens/token-repository';
+import { NotificationService } from '@/lib/core/notifications/NotificationService';
+import { firestore as adminFirestore } from '@/lib/core/firebase/admin';
 import { logger } from '@/lib/core/logging/logger';
 import { config } from '@/lib/config';
 
@@ -27,7 +30,9 @@ export async function POST(
   try {
     // Initialize services
     const aiProvider = new AIProvider();
-    const tokenService = new TokenService();
+    const tokenRepository = new TokenRepository(adminFirestore);
+    const notificationService = new NotificationService();
+    const tokenService = new TokenService(tokenRepository, notificationService);
     const chatbotService = new ChatbotService(aiProvider, tokenService);
     
     // Get user from session if authenticated
