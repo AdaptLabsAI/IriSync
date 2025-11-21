@@ -23,29 +23,24 @@ export const runtime = 'nodejs';
  *
  * This file deals with two distinct subscription concepts:
  *
- * 1. STRIPE SUBSCRIPTION (StripeSubscription):
+ * 1. STRIPE SUBSCRIPTION (Stripe.Subscription):
  *    - Raw subscription objects from Stripe API
  *    - Uses snake_case field names (current_period_start, trial_end, etc.)
  *    - Contains Unix timestamps as numbers (seconds since epoch)
  *    - Source: stripe.subscriptions.retrieve(), .list(), etc.
+ *    - ALWAYS use Stripe.Subscription directly, not aliases, to avoid type resolution issues
  *
- * 2. APP SUBSCRIPTION DTO (AppSubscriptionDetails):
+ * 2. APP SUBSCRIPTION DTO (AppSubscription):
  *    - Application-level Data Transfer Object
  *    - Uses camelCase field names (currentPeriodStart, trialEnd, etc.)
  *    - Contains JavaScript Date objects (converted from timestamps)
  *    - Returned in API responses to clients
  *
  * The mapStripeSubscriptionToApp() function converts between these types.
- */
-
-/**
- * Type alias for Stripe subscription objects.
  *
- * We use a simple type alias (not an intersection) to directly reference
- * the official Stripe.Subscription type. This ensures TypeScript uses the
- * exact type returned by stripe.subscriptions.retrieve() and related methods.
+ * IMPORTANT: We do NOT use a bare "Subscription" type in this file to avoid
+ * conflicts with other Subscription types in the codebase.
  */
-type StripeSubscription = Stripe.Subscription;
 
 /**
  * Application-level subscription DTO.
@@ -53,13 +48,13 @@ type StripeSubscription = Stripe.Subscription;
  * This represents the subscription data shape we return from our API,
  * completely distinct from Stripe's raw Subscription type.
  *
- * Key differences from StripeSubscription:
+ * Key differences from Stripe.Subscription:
  * - Uses Date objects instead of Unix timestamps (numbers)
  * - Uses camelCase (currentPeriodStart) instead of snake_case (current_period_start)
  * - Only includes fields we expose in our API responses
  * - No Stripe-internal fields that clients don't need
  */
-interface AppSubscriptionDetails {
+export interface AppSubscription {
   id: string;
   status: string;
   currentPeriodStart: Date;
@@ -84,10 +79,13 @@ interface AppSubscriptionDetails {
  * Unix timestamps are multiplied by 1000 to convert from seconds to milliseconds
  * before creating Date objects.
  *
- * @param subscription - Raw subscription object from Stripe API
- * @returns AppSubscriptionDetails - Our application DTO with converted dates
+ * IMPORTANT: Parameter is explicitly typed as Stripe.Subscription (not an alias)
+ * to ensure TypeScript correctly resolves the Stripe SDK types in all build environments.
+ *
+ * @param subscription - Raw subscription object from Stripe API (Stripe.Subscription)
+ * @returns AppSubscription - Our application DTO with converted dates
  */
-function mapStripeSubscriptionToApp(subscription: StripeSubscription): AppSubscriptionDetails {
+function mapStripeSubscriptionToApp(subscription: Stripe.Subscription): AppSubscription {
   return {
     id: subscription.id,
     status: subscription.status,
@@ -229,9 +227,9 @@ export async function GET(req: NextRequest) {
     });
     
     // Get subscription details if exists
-    // Using explicit StripeSubscription type to avoid confusion with other Subscription types
-    let subscription: StripeSubscription | null = null;
-    let subscriptionDetails: AppSubscriptionDetails | null = null;
+    // Using explicit Stripe.Subscription type (not an alias) to avoid type resolution issues
+    let subscription: Stripe.Subscription | null = null;
+    let subscriptionDetails: AppSubscription | null = null;
 
     if (billing.subscriptionId) {
       try {
@@ -725,8 +723,8 @@ export async function GET_CHECK_SUBSCRIPTION_STATUS(req: NextRequest) {
     const subscriptionId = billingData.subscriptionId;
 
     // Get current subscription from Stripe if we have one
-    // Using explicit StripeSubscription type to avoid confusion with other Subscription types
-    let stripeSubscription: StripeSubscription | null = null;
+    // Using explicit Stripe.Subscription type (not an alias) to avoid type resolution issues
+    let stripeSubscription: Stripe.Subscription | null = null;
     if (subscriptionId) {
       try {
         stripeSubscription = await stripe.subscriptions.retrieve(subscriptionId);
