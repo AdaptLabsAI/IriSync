@@ -18,9 +18,21 @@ export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
 
 /**
+ * Explicit type alias for Stripe's Subscription type.
+ * This prevents confusion with any other "Subscription" types that might be in scope
+ * (e.g., from DOM types, RxJS, or our own application models).
+ */
+type StripeSubscription = Stripe.Subscription;
+
+/**
  * Application-level subscription DTO
  * This represents the subscription data shape we return from our API,
- * distinct from Stripe's raw Subscription type
+ * distinct from Stripe's raw Subscription type.
+ *
+ * Key differences:
+ * - Uses Date objects instead of Unix timestamps (numbers)
+ * - Uses camelCase (currentPeriodStart) instead of snake_case (current_period_start)
+ * - Only includes fields we expose in our API responses
  */
 interface AppSubscriptionDetails {
   id: string;
@@ -33,11 +45,19 @@ interface AppSubscriptionDetails {
 
 /**
  * Helper function to convert Stripe.Subscription to AppSubscriptionDetails
+ *
+ * This provides a single point of conversion from Stripe's raw subscription data
+ * (with Unix timestamps and snake_case fields) to our app's DTO format
+ * (with Date objects and camelCase fields).
+ *
+ * @param subscription - Raw subscription object from Stripe API
+ * @returns AppSubscriptionDetails - Our app-level DTO with converted dates
  */
-function mapStripeSubscriptionToApp(subscription: Stripe.Subscription): AppSubscriptionDetails {
+function mapStripeSubscriptionToApp(subscription: StripeSubscription): AppSubscriptionDetails {
   return {
     id: subscription.id,
     status: subscription.status,
+    // Convert Unix timestamps (seconds) to JavaScript Date objects
     currentPeriodStart: new Date(subscription.current_period_start * 1000),
     currentPeriodEnd: new Date(subscription.current_period_end * 1000),
     cancelAtPeriodEnd: subscription.cancel_at_period_end,
@@ -174,7 +194,8 @@ export async function GET(req: NextRequest) {
     });
     
     // Get subscription details if exists
-    let subscription: Stripe.Subscription | null = null;
+    // Using explicit StripeSubscription type to avoid confusion with other Subscription types
+    let subscription: StripeSubscription | null = null;
     let subscriptionDetails: AppSubscriptionDetails | null = null;
 
     if (billing.subscriptionId) {
@@ -667,7 +688,8 @@ export async function GET_CHECK_SUBSCRIPTION_STATUS(req: NextRequest) {
     const subscriptionId = billingData.subscriptionId;
 
     // Get current subscription from Stripe if we have one
-    let stripeSubscription: Stripe.Subscription | null = null;
+    // Using explicit StripeSubscription type to avoid confusion with other Subscription types
+    let stripeSubscription: StripeSubscription | null = null;
     if (subscriptionId) {
       try {
         stripeSubscription = await stripe.subscriptions.retrieve(subscriptionId);
