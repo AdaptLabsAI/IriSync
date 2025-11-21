@@ -39,6 +39,10 @@ export interface RadioGroupProps {
    */
   onChange?: (value: string) => void;
   /**
+   * Alias for onChange (Radix-style API)
+   */
+  onValueChange?: (value: string) => void;
+  /**
    * Group orientation
    */
   orientation?: 'horizontal' | 'vertical';
@@ -76,6 +80,7 @@ export const RadioGroup: React.FC<RadioGroupProps> = ({
   value,
   defaultValue,
   onChange,
+  onValueChange,
   orientation = 'vertical',
   name,
   label,

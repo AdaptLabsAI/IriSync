@@ -283,15 +283,15 @@ export default function SEOContentGenerator({
         </div>
       )}
       
-      <Tabs 
-        value={activeTab === 'create' ? 0 : 1}
-        onChange={(_: any, value: any) => setActiveTab(value === 0 ? 'create' : 'analyze')}
+      <Tabs
+        value={activeTab}
+        onChange={(_: any, value: string) => setActiveTab(value as 'create' | 'analyze')}
         className="mb-6"
       >
-        <TabsTrigger label="Create Content" />
-        <TabsTrigger label="Analyze Content" disabled={!canUseEnterpriseFeatures} />
-        
-        <TabsContent value={0} index={0}>
+        <TabsTrigger label="Create Content" value="create" />
+        <TabsTrigger label="Analyze Content" value="analyze" disabled={!canUseEnterpriseFeatures} />
+
+        <TabsContent value="create">
           <form onSubmit={handleSubmit} className="mb-6">
             <div className="mb-4">
               <label className="block text-gray-700 mb-2" htmlFor="keywords">
@@ -438,7 +438,7 @@ export default function SEOContentGenerator({
           </form>
         </TabsContent>
         
-        <TabsContent value={1} index={1}>
+        <TabsContent value="analyze">
           <div className="space-y-4">
             {!keywordAnalysis ? (
               <div className="bg-gray-50 p-4 rounded">

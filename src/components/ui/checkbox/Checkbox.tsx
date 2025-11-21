@@ -1,7 +1,7 @@
 import React, { forwardRef, InputHTMLAttributes } from 'react';
 import cn from 'classnames';
 
-export interface CheckboxProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type'> {
+export interface CheckboxProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type' | 'onChange'> {
   /**
    * Label for the checkbox
    */
@@ -18,6 +18,14 @@ export interface CheckboxProps extends Omit<InputHTMLAttributes<HTMLInputElement
    * Custom classes for the checkbox wrapper
    */
   className?: string;
+  /**
+   * Standard onChange handler
+   */
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  /**
+   * Radix-style onCheckedChange handler (receives boolean)
+   */
+  onCheckedChange?: (checked: boolean) => void;
 }
 
 /**
@@ -33,11 +41,22 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
     disabled,
     checked,
     onChange,
+    onCheckedChange,
     ...props
   }, ref) => {
     // Generate a unique ID if one is not provided
     const uniqueId = id || `checkbox-${Math.random().toString(36).substring(2, 11)}`;
-    
+
+    // Handle both onChange and onCheckedChange
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+      if (onChange) {
+        onChange(event);
+      }
+      if (onCheckedChange) {
+        onCheckedChange(event.target.checked);
+      }
+    };
+
     return (
       <div className={cn("flex items-start gap-2", className)}>
         <div className="flex items-center h-5 mt-1">
@@ -51,7 +70,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
             )}
             disabled={disabled}
             checked={checked}
-            onChange={onChange}
+            onChange={handleChange}
             aria-invalid={error ? "true" : undefined}
             {...props}
           />
