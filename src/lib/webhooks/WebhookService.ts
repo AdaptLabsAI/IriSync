@@ -1,21 +1,22 @@
 import { getFirebaseFirestore } from '../core/firebase';
 import { getFirestore } from '../core/firebase/admin';
-import { 
-  doc, 
-  collection, 
-  getDoc, 
-  getDocs, 
-  setDoc, 
-  updateDoc, 
-  deleteDoc, 
-  query, 
-  where, 
+import {
+  doc,
+  collection,
+  getDoc,
+  getDocs,
+  setDoc,
+  updateDoc,
+  deleteDoc,
+  query,
+  where,
   Timestamp,
   limit
 } from 'firebase/firestore';
 import axios from 'axios';
 import crypto from 'crypto';
 import { logger } from '../core/logging/logger';
+import { NextResponse } from 'next/server';
 
 const adminFirestore = getFirestore();
 

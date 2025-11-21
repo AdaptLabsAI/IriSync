@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { Button, ButtonVariant, ButtonSize } from '../../ui/button/Button';
+import { Button, ButtonVariant, ButtonSize } from '../ui/button/Button';
 import { Filter, Check, X, ChevronDown, RefreshCw } from 'lucide-react';
-import { Popover, PopoverContent, PopoverTrigger } from '../../ui/popover';
-import { Badge } from '../../ui/Badge';
-import { Checkbox } from '../../ui/checkbox';
-import { Label } from '../../ui/label';
-import { Separator } from '../../ui/separator';
+import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
+import { Badge } from '../ui/Badge';
+import { Checkbox } from '../ui/checkbox';
+import { Label } from '../ui/label';
+import { Separator } from '../ui/separator';
 
 export type MessageStatus = 'read' | 'unread' | 'starred' | 'responded' | 'assigned' | 'needs_response';
 export type MessageType = 'comment' | 'mention' | 'dm' | 'review' | 'support' | 'other';

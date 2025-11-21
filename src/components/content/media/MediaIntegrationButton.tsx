@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { Button } from '../../ui/button';
+import { Button } from '../ui/button';
 import { 
   Link, Upload, Download, Loader2, Check, X, ExternalLink, Image, Video, FileText, Music,
   Lock, AlertCircle, RefreshCw, Link2
 } from 'lucide-react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from '../../ui/dialog';
-import { Badge } from '../../ui/Badge';
-import { Separator } from '../../ui/separator';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from '../ui/dialog';
+import { Badge } from '../ui/Badge';
+import { Separator } from '../ui/separator';
 
 // Simple tabs implementation for this component
 const SimpleTabs: React.FC<{

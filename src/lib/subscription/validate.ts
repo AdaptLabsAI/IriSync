@@ -3,6 +3,7 @@ import { doc, getDoc } from 'firebase/firestore';
 import { logger } from '../core/logging/logger';
 import { firebaseAdmin } from '../core/firebase/admin';
 import { database as prisma } from '../core/database';
+import { NextResponse } from 'next/server';
 
 /**
  * Supported feature keys for subscription validation

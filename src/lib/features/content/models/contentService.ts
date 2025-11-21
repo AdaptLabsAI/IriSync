@@ -1,4 +1,4 @@
-import { getFirebaseFirestore } from '../../core/firebase';
+import { getFirebaseFirestore, firestore } from '../../core/firebase';
 import { collection, query, where, orderBy, getDocs, Timestamp } from 'firebase/firestore';
 
 interface PostQueryParams {

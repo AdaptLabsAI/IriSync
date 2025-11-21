@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Button } from '../../ui/button/Button';
-import Dialog from '../../ui/dialog';
+import { Button } from '../ui/button/Button';
+import Dialog from '../ui/dialog';
 import { PinturaEditor } from '@pqina/react-pintura';
 import '@pqina/pintura/pintura.css';
 

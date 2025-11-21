@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { Button, ButtonProps } from '../../ui/button';
+import { Button, ButtonProps } from '../ui/button';
 
 export interface UploadMediaButtonProps extends Omit<ButtonProps, 'onClick'> {
   /**

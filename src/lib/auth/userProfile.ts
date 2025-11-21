@@ -1,6 +1,7 @@
 import { getAuth, User } from 'firebase/auth';
 import { doc, getDoc, setDoc, serverTimestamp } from 'firebase/firestore';
 import { getFirebaseFirestore, firestore } from '@/lib/core/firebase';
+import { NextResponse } from 'next/server';
 
 /**
  * Validates that a user has a profile in Firestore.

@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Search, X, Clock, MoveDown, MoveUp, Loader2, Filter } from 'lucide-react';
-import { Button } from '../../ui/button';
-import { Input } from '../../ui/input';
-import { Popover, PopoverContent, PopoverTrigger } from '../../ui/popover';
-import { Badge } from '../../ui/Badge';
-import { Separator } from '../../ui/separator';
+import { Button } from '../ui/button';
+import { Input } from '../ui/input';
+import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
+import { Badge } from '../ui/Badge';
+import { Separator } from '../ui/separator';
 
 export interface SearchQuery {
   /**

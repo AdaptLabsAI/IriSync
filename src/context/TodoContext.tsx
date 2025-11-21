@@ -3,7 +3,7 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { useToast } from '@/components/ui/use-toast';
 import { collection, doc, query, getDocs, addDoc, updateDoc, deleteDoc, where, orderBy, writeBatch, serverTimestamp, getDoc, setDoc } from 'firebase/firestore';
-import { getFirebaseFirestore, auth } from '@/lib/core/firebase/client';
+import { getFirebaseFirestore, auth, firestore } from '@/lib/core/firebase/client';
 import { logger } from '@/lib/core/logging/logger';
 
 export interface TodoItem {

@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { Button } from '../../ui/button';
+import { Button } from '../ui/button';
 import { AtSign, Search, UserCheck, Users, Loader2 } from 'lucide-react';
-import { Popover, PopoverContent, PopoverTrigger } from '../../ui/popover';
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator } from '../../ui/command';
-import { Avatar } from '../../ui/avatar';
-import { Badge } from '../../ui/Badge';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../../ui/tooltip';
+import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator } from '../ui/command';
+import { Avatar } from '../ui/avatar';
+import { Badge } from '../ui/Badge';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../ui/tooltip';
 
 export interface UserProfile {
   /**

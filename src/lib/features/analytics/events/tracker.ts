@@ -6,6 +6,7 @@ import { validateEvent } from './validator';
 import { getEventSchema } from './schemas';
 import { User } from '../../models/User';
 import { firestore } from '@/lib/core/firebase';
+import { NextResponse } from 'next/server';
 
 // Collection reference
 const EVENTS_COLLECTION = 'analyticsEvents';

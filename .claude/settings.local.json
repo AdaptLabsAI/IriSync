@@ -29,7 +29,9 @@
       "Bash(card.tsx)",
       "Bash(alert.tsx)",
       "Bash(command.ts)",
-      "Bash(git mv:*)"
+      "Bash(git mv:*)",
+      "Bash(fi:*)",
+      "Bash(find:*)"
     ],
     "deny": [],
     "ask": []

@@ -15,6 +15,10 @@ export class TokenRefreshScheduler {
 
   private constructor() {}
 
+  private getFirestore(): Firestore {
+    return firestore;
+  }
+
   static getInstance(): TokenRefreshScheduler {
     if (!TokenRefreshScheduler.instance) {
       TokenRefreshScheduler.instance = new TokenRefreshScheduler();

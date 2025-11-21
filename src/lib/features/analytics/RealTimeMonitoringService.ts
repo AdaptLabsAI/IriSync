@@ -1,6 +1,6 @@
 import { getFirebaseFirestore } from '../core/firebase';
 import { v4 as uuidv4 } from 'uuid';
-import { Timestamp } from 'firebase/firestore';
+import { Timestamp, collection, doc, setDoc, getDoc, updateDoc, deleteDoc, getDocs, query, where, orderBy, limit as firestoreLimit, Firestore } from 'firebase/firestore';
 import { EventEmitter } from 'events';
 import { firestore } from '@/lib/core/firebase';
 
@@ -189,6 +189,11 @@ export class RealTimeMonitoringService extends EventEmitter {
     super();
     this.initializeMonitoring();
   }
+
+  private getFirestore(): Firestore {
+    if (!firestore) throw new Error('Firestore not configured');
+    return firestore;
+  }
   
   /**
    * Initialize monitoring service
@@ -218,14 +223,11 @@ export class RealTimeMonitoringService extends EventEmitter {
       updatedAt: now
     };
     
-    await firestore
-      .collection(this.CONFIGS_COLLECTION)
-      .doc(configId)
-      .set({
-        ...newConfig,
-        createdAt: Timestamp.fromDate(newConfig.createdAt),
-        updatedAt: Timestamp.fromDate(newConfig.updatedAt)
-      });
+    await setDoc(doc(this.getFirestore(), this.CONFIGS_COLLECTION, configId), {
+      ...newConfig,
+      createdAt: Timestamp.fromDate(newConfig.createdAt),
+      updatedAt: Timestamp.fromDate(newConfig.updatedAt)
+    });
     
     if (newConfig.isActive) {
       this.activeConfigs.set(configId, newConfig);
@@ -243,10 +245,7 @@ export class RealTimeMonitoringService extends EventEmitter {
       updatedAt: Timestamp.fromDate(new Date())
     };
     
-    await firestore
-      .collection(this.CONFIGS_COLLECTION)
-      .doc(configId)
-      .update(updateData);
+    await updateDoc(doc(this.getFirestore(), this.CONFIGS_COLLECTION, configId), updateData);
     
     // Update active configs cache
     if (this.activeConfigs.has(configId)) {
@@ -265,10 +264,7 @@ export class RealTimeMonitoringService extends EventEmitter {
    * Delete monitoring configuration
    */
   async deleteConfig(configId: string): Promise<void> {
-    await firestore
-      .collection(this.CONFIGS_COLLECTION)
-      .doc(configId)
-      .delete();
+    await deleteDoc(doc(this.getFirestore(), this.CONFIGS_COLLECTION, configId));
     
     this.activeConfigs.delete(configId);
     this.eventBuffer.delete(configId);
@@ -278,16 +274,13 @@ export class RealTimeMonitoringService extends EventEmitter {
    * Get monitoring configuration
    */
   async getConfig(configId: string): Promise<MonitoringConfig | null> {
-    const doc = await firestore
-      .collection(this.CONFIGS_COLLECTION)
-      .doc(configId)
-      .get();
-    
-    if (!doc.exists) {
+    const docSnap = await getDoc(doc(this.getFirestore(), this.CONFIGS_COLLECTION, configId));
+
+    if (!docSnap.exists()) {
       return null;
     }
-    
-    const data = doc.data()!;
+
+    const data = docSnap.data()!;
     return {
       ...data,
       createdAt: data.createdAt.toDate(),
@@ -299,11 +292,13 @@ export class RealTimeMonitoringService extends EventEmitter {
    * Get monitoring configurations for an organization
    */
   async getConfigs(organizationId: string): Promise<MonitoringConfig[]> {
-    const snapshot = await firestore
-      .collection(this.CONFIGS_COLLECTION)
-      .where('organizationId', '==', organizationId)
-      .orderBy('createdAt', 'desc')
-      .get();
+    const snapshot = await getDocs(
+      query(
+        collection(this.getFirestore(), this.CONFIGS_COLLECTION),
+        where('organizationId', '==', organizationId),
+        orderBy('createdAt', 'desc')
+      )
+    );
     
     return snapshot.docs.map((doc: any) => {
       const data = doc.data();

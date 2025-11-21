@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Button, ButtonVariant, ButtonSize } from '../../ui/button/Button';
+import { Button, ButtonVariant, ButtonSize } from '../ui/button/Button';
 import { MessageSquare, ChevronDown, Eye, EyeOff, ArrowUp, ArrowDown, Clock, User } from 'lucide-react';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '../../ui/dropdown-menu';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '../ui/dropdown-menu';
 
 export type ThreadViewMode = 'conversation' | 'flat' | 'grouped';
 

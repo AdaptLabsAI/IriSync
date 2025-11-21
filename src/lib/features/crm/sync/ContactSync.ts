@@ -3,6 +3,7 @@
 
 import { logger } from '@/lib/core/logging/logger';
 import { collection, addDoc, updateDoc, doc, query, where, getDocs } from 'firebase/firestore';
+import { firestore } from '@/lib/core/firebase';
 
 import {
   CRMDataType,

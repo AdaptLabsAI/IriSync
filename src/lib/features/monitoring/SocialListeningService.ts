@@ -13,7 +13,7 @@
  * - Historical mention storage and analytics
  */
 
-import { getFirebaseFirestore  } from '@/lib/core/firebase';
+import { getFirebaseFirestore, firestore } from '@/lib/core/firebase';
 import {
   collection,
   doc,

@@ -13,6 +13,7 @@ export enum SocialPlatform {
   REDDIT = 'reddit',
   MASTODON = 'mastodon',
   THREADS = 'threads',
+  PINTEREST = 'pinterest',
   OTHER = 'other'
 }
 
@@ -314,6 +315,20 @@ export function getDefaultPlatformFeatures(platform: SocialPlatform): PlatformFe
         maxImagesPerPost: 1,
         characterLimit: 500
       };
+    case SocialPlatform.PINTEREST:
+      return {
+        supportsScheduling: true,
+        supportsVideoUpload: true,
+        supportsCarousel: false,
+        supportsStories: true, // Pinterest has Story Pins
+        supportsDrafts: true,
+        supportsReels: false,
+        maxVideoLength: 15 * 60, // 15 minutes for video pins
+        maxImageSize: 32 * 1024 * 1024, // 32MB
+        maxVideoSize: 2 * 1024 * 1024 * 1024, // 2GB
+        maxImagesPerPost: 1,
+        characterLimit: 500 // Pin description limit
+      };
     default:
       // Default values for any other platform
       return {
@@ -347,6 +362,8 @@ export function getPlatformIcon(platform: SocialPlatform): string {
       return '🐘';
     case SocialPlatform.THREADS:
       return '🧵';
+    case SocialPlatform.PINTEREST:
+      return '📌';
     case SocialPlatform.OTHER:
       return '🌐';
     default:

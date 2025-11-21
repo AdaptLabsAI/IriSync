@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Select } from '../../ui/select/Select';
+import { Select } from '../ui/select/Select';
 
 export interface TimezoneSelectorProps {
   /**

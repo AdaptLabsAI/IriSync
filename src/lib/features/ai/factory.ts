@@ -64,12 +64,18 @@ export class AIFactory {
     this.modelManager = modelManager || new LanguageModels();
     this.tokenService = tokenService;
     this.tokenTracker = tokenTracker;
-    
+
     // Initialize cache for provider instances
     this.cache = new Cache('ai-factory', {
       ttl: 60 * 60, // 1 hour
       maxSize: 100
     });
+  }
+
+  private getFirestore(): Firestore {
+    const firestore = getFirebaseFirestore();
+    if (!firestore) throw new Error('Firestore not configured');
+    return firestore;
   }
 
   /**

@@ -1,6 +1,7 @@
 import { User } from '../../../core/models/User';
 import { logger } from '../../../core/logging/logger';
 import { collection, getDocs, query, where } from 'firebase/firestore';
+import { firestore } from '../../../core/firebase';
 // Import error class directly instead of from a module
 /**
  * Error class for feature access restrictions based on subscription tier

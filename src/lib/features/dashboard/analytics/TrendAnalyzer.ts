@@ -3,6 +3,7 @@
 
 import { logger } from '@/lib/core/logging/logger';
 import { collection, query, where, getDocs, orderBy, Timestamp } from 'firebase/firestore';
+import { firestore } from '@/lib/core/firebase';
 
 import {
   MetricType,

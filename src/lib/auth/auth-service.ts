@@ -60,10 +60,14 @@ export interface AuthResponse {
  * use a subcollection (e.g., refreshTokens/{userId}/sessions/{sessionId}) or an array of sessions per user.
  */
 export class AuthService {
-  private getFirestore() {
+  private static getFirestore() {
     const firestore = getFirebaseFirestore();
     if (!firestore) throw new Error('Firestore not configured');
     return firestore;
+  }
+
+  private getFirestoreInstance() {
+    return AuthService.getFirestore();
   }
 
   private readonly JWT_SECRET: string;
@@ -87,7 +91,7 @@ export class AuthService {
   async login(email: string, password: string, deviceInfo?: { ip?: string; userAgent?: string }): Promise<AuthResponse | null> {
     try {
       // Find user by email
-      const userSnapshot = await getDoc(doc(this.getFirestore(), 'users', email));
+      const userSnapshot = await getDoc(doc(this.getFirestoreInstance(), 'users', email));
       if (!userSnapshot.exists()) {
         return null;
       }
@@ -108,7 +112,7 @@ export class AuthService {
           errors: orgValidation.errors 
         });
         
-        await updateDoc(doc(this.getFirestore(), 'users', userSnapshot.id), {
+        await updateDoc(doc(this.getFirestoreInstance(), 'users', userSnapshot.id), {
           personalOrganizationId: orgValidation.personalOrganizationId,
           currentOrganizationId: orgValidation.currentOrganizationId,
           updatedAt: Timestamp.fromDate(new Date())
@@ -163,7 +167,7 @@ export class AuthService {
   ): Promise<AuthResponse | null> {
     try {
       // Check if user already exists
-      const userSnapshot = await getDoc(doc(this.getFirestore(), 'users', email));
+      const userSnapshot = await getDoc(doc(this.getFirestoreInstance(), 'users', email));
       if (userSnapshot.exists()) {
         return null;
       }
@@ -184,7 +188,7 @@ export class AuthService {
       const creatorTokenAllocation = getTokenAllocationForTier(SubscriptionTierValues.CREATOR, 1);
       
       // Set up the personal organization with default Creator tier
-      await setDoc(doc(this.getFirestore(), 'organizations', personalOrgId), {
+      await setDoc(doc(this.getFirestoreInstance(), 'organizations', personalOrgId), {
         name: `${firstName}'s Workspace`,
         owner: email,
         members: [email],
@@ -219,7 +223,7 @@ export class AuthService {
       };
       
       // Save user to database
-      await setDoc(doc(this.getFirestore(), 'users', email), userData);
+      await setDoc(doc(this.getFirestoreInstance(), 'users', email), userData);
       
       // Create user object
       const user: AuthUser = {
@@ -265,7 +269,7 @@ export class AuthService {
       const userId = payload.userId;
 
       // Check if refresh token exists in database and is valid
-      const tokenDocRef = doc(this.getFirestore(), 'refreshTokens', userId);
+      const tokenDocRef = doc(this.getFirestoreInstance(), 'refreshTokens', userId);
       const tokenSnapshot = await getDoc(tokenDocRef);
       if (!tokenSnapshot.exists()) {
         // Log suspicious activity
@@ -286,7 +290,7 @@ export class AuthService {
         return null;
       }
       // Get user data
-      const userSnapshot = await getDoc(doc(this.getFirestore(), 'users', userId));
+      const userSnapshot = await getDoc(doc(this.getFirestoreInstance(), 'users', userId));
       if (!userSnapshot.exists()) {
         return null;
       }
@@ -302,7 +306,7 @@ export class AuthService {
           errors: orgValidation.errors 
         });
         
-        await updateDoc(doc(this.getFirestore(), 'users', userId), {
+        await updateDoc(doc(this.getFirestoreInstance(), 'users', userId), {
           personalOrganizationId: orgValidation.personalOrganizationId,
           currentOrganizationId: orgValidation.currentOrganizationId,
           updatedAt: Timestamp.fromDate(new Date())
@@ -346,7 +350,7 @@ export class AuthService {
   async logout(userId: string): Promise<void> {
     try {
       // Delete refresh token document for the user (invalidate all sessions)
-      await setDoc(doc(this.getFirestore(), 'refreshTokens', userId), {
+      await setDoc(doc(this.getFirestoreInstance(), 'refreshTokens', userId), {
         token: null,
         updatedAt: Timestamp.fromDate(new Date()),
         expiresAt: Timestamp.fromDate(new Date()),
@@ -423,7 +427,7 @@ export class AuthService {
         userAgent: deviceInfo?.userAgent || null,
       };
       // Overwrite or create new token document
-      await setDoc(doc(this.getFirestore(), 'refreshTokens', userId), {
+      await setDoc(doc(this.getFirestoreInstance(), 'refreshTokens', userId), {
         userId,
         token: refreshToken,
         createdAt: Timestamp.fromDate(now),

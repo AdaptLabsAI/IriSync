@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Button } from '../../ui/button';
+import { Button } from '../ui/button';
 import { RefreshCw, Loader2, CheckCircle, AlertCircle } from 'lucide-react';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../../ui/tooltip';
-import { useToast } from '../../ui/use-toast';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../ui/tooltip';
+import { useToast } from '../ui/use-toast';
 
 export interface PlatformRefreshButtonProps {
   /**

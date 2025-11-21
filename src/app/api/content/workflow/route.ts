@@ -143,7 +143,7 @@ export async function POST(request: NextRequest) {
       const hasPermission = await hasOrganizationRole(
         user.id,
         organizationId,
-        [OrganizationRole.OWNER, OrganizationRole.ADMIN]
+        [OrganizationRole.OWNER, OrganizationRole.ORG_ADMIN]
       );
       
       if (!hasPermission) {
@@ -354,23 +354,23 @@ async function getCurrentUserOrganizationRole(userId: string, organizationId: st
   // Check each role in order of precedence
   const hasOwnerRole = await hasOrganizationRole(userId, organizationId, [OrganizationRole.OWNER]);
   if (hasOwnerRole) {
-    return TeamRole.ORG_ADMIN;
+    return TeamRole.TEAM_ADMIN;
   }
-  
-  const hasAdminRole = await hasOrganizationRole(userId, organizationId, [OrganizationRole.ADMIN]);
+
+  const hasAdminRole = await hasOrganizationRole(userId, organizationId, [OrganizationRole.ORG_ADMIN]);
   if (hasAdminRole) {
-    return TeamRole.ORG_ADMIN;
+    return TeamRole.TEAM_ADMIN;
   }
-  
+
   const hasMemberRole = await hasOrganizationRole(userId, organizationId, [OrganizationRole.MEMBER]);
   if (hasMemberRole) {
     return TeamRole.EDITOR;
   }
-  
+
   const hasViewerRole = await hasOrganizationRole(userId, organizationId, [OrganizationRole.VIEWER]);
   if (hasViewerRole) {
-    return TeamRole.VIEWER;
+    return TeamRole.OBSERVER;
   }
-  
-  return TeamRole.VIEWER; // Default fallback
+
+  return TeamRole.OBSERVER; // Default fallback
 } 

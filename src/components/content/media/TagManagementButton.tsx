@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Button } from '../../ui/button';
+import { Button } from '../ui/button';
 import { Tag, Plus, X, PlusCircle, Check, Trash2, AlertTriangle } from 'lucide-react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from '../../ui/dialog';
-import { Input } from '../../ui/input';
-import { Badge } from '../../ui/Badge';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from '../ui/dialog';
+import { Input } from '../ui/input';
+import { Badge } from '../ui/Badge';
 
 export interface TagData {
   /**

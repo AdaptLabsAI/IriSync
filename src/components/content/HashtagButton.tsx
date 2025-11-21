@@ -1,11 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Button } from '../../ui/button';
+import { Button } from '../ui/button';
 import { Hash, Plus, X, Loader2, CheckCircle2, Info } from 'lucide-react';
-import { Popover, PopoverContent, PopoverTrigger } from '../../ui/popover';
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator } from '../../ui/command';
-import { Badge } from '../../ui/Badge';
-import { useToast } from '../../ui/use-toast';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../../ui/tooltip';
+import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator } from '../ui/command';
+import { Badge } from '../ui/Badge';
+import { useToast } from '../ui/use-toast';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../ui/tooltip';
 import { useSubscription } from '../../hooks/useSubscription';
 
 export interface Hashtag {

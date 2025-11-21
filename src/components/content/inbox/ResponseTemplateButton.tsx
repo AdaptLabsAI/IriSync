@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { Button, ButtonVariant, ButtonSize } from '../../ui/button/Button';
+import { Button, ButtonVariant, ButtonSize } from '../ui/button/Button';
 import { Clipboard, Search, Star, Plus, Clock, Loader2, Check, Lock, X, Edit, Trash2 } from 'lucide-react';
-import { Popover, PopoverContent, PopoverTrigger } from '../../ui/popover';
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator } from '../../ui/command';
+import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator } from '../ui/command';
 import { useSubscription } from '../../../hooks/useSubscription';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../../ui/tooltip';
-import { Input } from '../../ui/input';
-import { Badge } from '../../ui/Badge';
-import { Separator } from '../../ui/separator';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from '../../ui/dialog';
-import { TextArea } from '../../ui/textarea';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../ui/tooltip';
+import { Input } from '../ui/input';
+import { Badge } from '../ui/Badge';
+import { Separator } from '../ui/separator';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from '../ui/dialog';
+import { TextArea } from '../ui/textarea';
 
 export interface ResponseTemplate {
   /**

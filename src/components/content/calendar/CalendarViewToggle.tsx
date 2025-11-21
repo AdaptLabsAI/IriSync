@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from '../../ui/button/Button';
+import { Button } from '../ui/button/Button';
 
 export type CalendarViewType = 'day' | 'week' | 'month' | 'year' | 'list';
 

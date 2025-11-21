@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
-import { Button } from '../../ui/button';
+import { Button } from '../ui/button';
 import { Sparkles, RefreshCw, Copy, ThumbsUp, ThumbsDown, Loader2, PencilLine } from 'lucide-react';
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '../../ui/dialog';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../../ui/tooltip';
-import { useToast } from '../../ui/use-toast';
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '../ui/dialog';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../ui/tooltip';
+import { useToast } from '../ui/use-toast';
 import { useSubscription } from '../../hooks/useSubscription';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../ui/tabs';
-import { Textarea } from '../../ui/textarea';
-import { RadioGroup, RadioGroupItem } from '../../ui/radio-group';
-import { Label } from '../../ui/label';
-import { Separator } from '../../ui/separator';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs';
+import { Textarea } from '../ui/textarea';
+import { RadioGroup, RadioGroupItem } from '../ui/radio-group';
+import { Label } from '../ui/label';
+import { Separator } from '../ui/separator';
 
 export type CaptionTone = 
   | 'professional'

@@ -54,6 +54,7 @@ export interface EmbeddingModelConfig {
  * Vector database service for RAG implementation
  */
 export class VectorDatabase {
+  private static instance: VectorDatabase | null = null;
   private _client: Pinecone | null = null;
   private indexName: string;
   private namespace: string;
@@ -72,6 +73,24 @@ export class VectorDatabase {
       });
     }
     return this._client;
+  }
+
+  /**
+   * Get singleton instance of VectorDatabase
+   */
+  private static getInstance(): VectorDatabase {
+    if (!VectorDatabase.instance) {
+      VectorDatabase.instance = new VectorDatabase();
+    }
+    return VectorDatabase.instance;
+  }
+
+  /**
+   * Static search method for convenience
+   */
+  static async search(params: VectorSearchParams): Promise<VectorSearchResult[]> {
+    const instance = VectorDatabase.getInstance();
+    return instance.search(params);
   }
 
   constructor() {

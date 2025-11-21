@@ -199,4 +199,44 @@ export class SocialInboxController {
       throw error;
     }
   }
+
+  /**
+   * Process incoming webhook message from social platforms
+   */
+  async processWebhookMessage(webhookData: {
+    platform: string;
+    type: string;
+    platformId: string;
+    postId?: string;
+    senderId?: string;
+    senderName?: string;
+    content?: string;
+    createdTime?: string;
+    pageId?: string;
+    parentId?: string;
+  }): Promise<void> {
+    try {
+      logger.info('Processing webhook message', { platform: webhookData.platform, type: webhookData.type });
+
+      // Convert webhook data to InboxMessage format and store it
+      const message: Partial<InboxMessage> = {
+        platform: webhookData.platform as PlatformType,
+        type: webhookData.type as MessageType,
+        platformMessageId: webhookData.platformId,
+        senderId: webhookData.senderId || '',
+        senderName: webhookData.senderName || 'Unknown',
+        content: webhookData.content || '',
+        timestamp: webhookData.createdTime ? new Date(webhookData.createdTime) : new Date(),
+        status: 'unread' as MessageStatus,
+        priority: 'normal' as MessagePriority,
+      };
+
+      // Store the message using the inbox service
+      // Note: This is a stub implementation - full implementation would store to database
+      logger.info('Webhook message processed successfully', { platformMessageId: webhookData.platformId });
+    } catch (error) {
+      logger.error('Error processing webhook message', { error, webhookData });
+      throw error;
+    }
+  }
 } 

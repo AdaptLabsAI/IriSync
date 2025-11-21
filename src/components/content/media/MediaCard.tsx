@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Checkbox } from '../../ui/checkbox/Checkbox';
+import { Checkbox } from '../ui/checkbox/Checkbox';
 
 export interface MediaItem {
   /**

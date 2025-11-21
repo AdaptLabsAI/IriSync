@@ -44,7 +44,7 @@ export interface SocialAccount {
  * Extensible for additional providers.
  */
 export class SocialAuthService {
-  private getFirestore() {
+  private static getFirestore() {
     const firestore = getFirebaseFirestore();
     if (!firestore) throw new Error('Firestore not configured');
     return firestore;

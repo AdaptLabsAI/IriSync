@@ -1,6 +1,7 @@
 import { User } from '../../models/User';
 import { getDoc, doc } from 'firebase/firestore';
 import { getFirebaseFirestore } from '../../core/firebase';
+import { NextResponse } from 'next/server';
 
 // Define the event mapping from our system to GA4
 const eventMapping: Record<string, string> = {

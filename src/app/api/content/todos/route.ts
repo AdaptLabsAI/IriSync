@@ -17,7 +17,7 @@ import {
   limit,
   startAfter
 } from 'firebase/firestore';
-import { firestore } from '../../../../lib/core/firebase';
+import { firestore, getFirebaseFirestore } from '../../../../lib/core/firebase';
 import { handleApiError } from '../../../../lib/auth/utils';
 import { 
   TeamTodoItem, 
