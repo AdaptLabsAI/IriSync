@@ -92,7 +92,7 @@ export interface HashtagButtonProps {
   /**
    * Button variant
    */
-  variant?: 'default' | 'outline' | 'ghost';
+  variant?: 'primary' | 'outline' | 'ghost';
   /**
    * Optional class name for additional styling
    */
