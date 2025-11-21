@@ -16,7 +16,21 @@ export async function POST(req: NextRequest) {
     const { UserService } = await import('@/lib/features/auth/user-service');
     const { auth: clientAuth } = await import('@/lib/core/firebase');
     const { auth: adminAuth } = await import('@/lib/core/firebase/admin');
-    
+
+    // Guard: Ensure Firebase client auth is initialized
+    // Note: This is a server-side API route using client SDK (architectural issue)
+    // TODO: Refactor to use Firebase Admin SDK's auth.createUser() instead
+    if (!clientAuth) {
+      logger.error('Firebase client auth not initialized in registration route');
+      return NextResponse.json(
+        {
+          error: 'Authentication service is not available',
+          message: 'Firebase is not properly configured. Please contact support.'
+        },
+        { status: 503 }
+      );
+    }
+
     // Service instances
     const userService = new UserService();
     
