@@ -305,7 +305,7 @@ export class RealTimeMonitoringService extends EventEmitter {
       .orderBy('createdAt', 'desc')
       .get();
     
-    return snapshot.docs.map(doc => {
+    return snapshot.docs.map((doc: any) => {
       const data = doc.data();
       return {
         ...data,
@@ -378,7 +378,7 @@ export class RealTimeMonitoringService extends EventEmitter {
     
     const snapshot = await query.get();
     
-    return snapshot.docs.map(doc => {
+    return snapshot.docs.map((doc: any) => {
       const data = doc.data();
       return {
         ...data,
@@ -412,7 +412,7 @@ export class RealTimeMonitoringService extends EventEmitter {
     
     const snapshot = await query.get();
     
-    return snapshot.docs.map(doc => {
+    return snapshot.docs.map((doc: any) => {
       const data = doc.data();
       return {
         ...data,
@@ -499,7 +499,7 @@ export class RealTimeMonitoringService extends EventEmitter {
       .where('isActive', '==', true)
       .get();
     
-    snapshot.docs.forEach(doc => {
+    snapshot.docs.forEach((doc: any) => {
       const data = doc.data();
       const config = {
         ...data,
@@ -795,7 +795,7 @@ export class RealTimeMonitoringService extends EventEmitter {
       const cutoff = new Date(Date.now() - 24 * 60 * 60 * 1000);
       
       for (const [configId, events] of this.eventBuffer) {
-        const filteredEvents = events.filter(event => event.timestamp > cutoff);
+        const filteredEvents = events.filter((event: any) => event.timestamp > cutoff);
         this.eventBuffer.set(configId, filteredEvents);
       }
     }, 300000); // Every 5 minutes

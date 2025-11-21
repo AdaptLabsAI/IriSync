@@ -635,12 +635,12 @@ export class TokenLimiter {
       const startDate = new Date();
       startDate.setDate(startDate.getDate() - days);
       
-      const filteredHistory = usageHistory.filter(record => 
+      const filteredHistory = usageHistory.filter((record: any) => 
         new Date(record.timestamp) >= startDate
       );
       
       // Calculate total tokens used
-      const totalTokensUsed = filteredHistory.reduce((sum, record) => 
+      const totalTokensUsed = filteredHistory.reduce((sum: any, record: any) => 
         sum + record.amount, 0);
       
       // Calculate breakdown by task type

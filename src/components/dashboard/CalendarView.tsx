@@ -129,7 +129,7 @@ export default function CalendarView({ posts }: CalendarViewProps) {
           endAccessor="end"
           defaultView={Views.MONTH}
           views={['month', 'week', 'day']}
-          tooltipAccessor={(event) => `${event.title} - ${event.platform}`}
+          tooltipAccessor={(event: any) => `${event.title} - ${event.platform}`}
           components={{
             event: EventComponent,
           }}

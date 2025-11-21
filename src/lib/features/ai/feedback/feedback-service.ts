@@ -157,7 +157,7 @@ export class FeedbackService {
       .get();
     
     const feedback: Feedback[] = [];
-    querySnapshot.forEach(doc => {
+    querySnapshot.forEach((doc: any) => {
       feedback.push(doc.data() as Feedback);
     });
     
@@ -193,7 +193,7 @@ export class FeedbackService {
       .get();
     
     const feedback: Feedback[] = [];
-    querySnapshot.forEach(doc => {
+    querySnapshot.forEach((doc: any) => {
       feedback.push(doc.data() as Feedback);
     });
     

@@ -434,7 +434,7 @@ export const TagManagementButton: React.FC<TagManagementButtonProps> = ({
       {tagToDelete && (
         <Dialog
           open={!!tagToDelete}
-          onOpenChange={(open) => !open && setTagToDelete(null)}
+          onOpenChange={(open: any) => !open && setTagToDelete(null)}
         >
           <DialogContent className="sm:max-w-md">
             <DialogHeader>

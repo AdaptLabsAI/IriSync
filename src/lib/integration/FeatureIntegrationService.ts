@@ -273,7 +273,7 @@ export class FeatureIntegrationService {
         }
       },
       goals: campaignData.goals,
-      platforms: storyProject.platforms.map(p => p.toString()),
+      platforms: storyProject.platforms.map((p: any) => p.toString()),
       contentIds: [storyProject.id],
       status: 'active'
     });
@@ -295,7 +295,7 @@ export class FeatureIntegrationService {
       name: `Story Monitoring: ${storyProject.name}`,
       description: `Real-time monitoring for story project ${storyProject.id}`,
       isActive: true,
-      platforms: storyProject.platforms.map(p => p.toString()),
+      platforms: storyProject.platforms.map((p: any) => p.toString()),
       keywords,
       hashtags,
       mentions: [],

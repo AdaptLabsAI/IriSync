@@ -24,7 +24,12 @@
       "Bash(do sed -i 's/onChange={(_, value)/onChange={(_: any, value: any)/g' \"$file\")",
       "Bash(done)",
       "Bash(src/lib/tokens/token-service.ts)",
-      "Bash(src/lib/tokens/token-repository.ts)"
+      "Bash(src/lib/tokens/token-repository.ts)",
+      "Bash(dialog.tsx)",
+      "Bash(card.tsx)",
+      "Bash(alert.tsx)",
+      "Bash(command.ts)",
+      "Bash(git mv:*)"
     ],
     "deny": [],
     "ask": []

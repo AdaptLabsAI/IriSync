@@ -276,7 +276,7 @@ export class BulkSchedulingService {
       for (let i = 0; i < results.successItemIds.length; i += 10) {
         const batchIds = results.successItemIds.slice(i, i + 10);
         const contentDocs = await Promise.all(
-          batchIds.map(id => getDoc(doc(this.getFirestore(), 'content', id)))
+          batchIds.map((id: any) => getDoc(doc(this.getFirestore(), 'content', id)))
         );
         
         contentDocs.forEach(doc => {

@@ -37,7 +37,7 @@ export const TeamProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
           if (orgDoc.exists()) {
             const orgData = orgDoc.data() as Organization;
-            const userTeams = orgData.teams.filter(team => team.memberIds.includes(user.uid));
+            const userTeams = orgData.teams.filter((team: any) => team.memberIds.includes(user.uid));
             setTeams(userTeams);
 
             if (user.currentTeamId && userTeams.some((team: any) => team.id === user.currentTeamId)) {

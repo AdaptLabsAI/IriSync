@@ -377,8 +377,8 @@ Format: #hashtag (without the # symbol in response)`;
       // Parse hashtags from response
       const hashtags = aiResponse.output
         .split('\n')
-        .map(line => line.trim().replace(/^#/, ''))
-        .filter(tag => tag.length > 0 && tag.length <= 30)
+        .map((line: any) => line.trim().replace(/^#/, ''))
+        .filter((tag: any) => tag.length > 0 && tag.length <= 30)
         .slice(0, maxHashtags);
 
       return hashtags;
@@ -523,8 +523,8 @@ Generate only the alternative captions, no explanations.`;
 
       const alternatives = aiResponse.output
         .split('---')
-        .map(alt => alt.trim())
-        .filter(alt => alt.length > 0 && alt !== originalCaption)
+        .map((alt: any) => alt.trim())
+        .filter((alt: any) => alt.length > 0 && alt !== originalCaption)
         .slice(0, 2);
 
       return alternatives;
@@ -658,7 +658,7 @@ Example: socialmedia|high|high|high|marketing`;
 
       const suggestions: HashtagSuggestion[] = aiResponse.output
         .split('\n')
-        .map(line => {
+        .map((line: any) => {
           const parts = line.split('|');
           if (parts.length !== 5) return null;
 
@@ -676,7 +676,7 @@ Example: socialmedia|high|high|high|marketing`;
             category: parts[4].trim()
           };
         })
-        .filter((suggestion): suggestion is HashtagSuggestion => suggestion !== null)
+        .filter((suggestion: any): suggestion is HashtagSuggestion => suggestion !== null)
         .slice(0, count);
 
       return suggestions;

@@ -240,7 +240,7 @@ export class ROITrackingService {
     
     const snapshot = await query.orderBy('createdAt', 'desc').get();
     
-    return snapshot.docs.map(doc => {
+    return snapshot.docs.map((doc: any) => {
       const data = doc.data();
       return {
         ...data,
@@ -365,7 +365,7 @@ export class ROITrackingService {
     
     const snapshot = await query.get();
     
-    return snapshot.docs.map(doc => {
+    return snapshot.docs.map((doc: any) => {
       const data = doc.data();
       return {
         ...data,
@@ -494,7 +494,7 @@ export class ROITrackingService {
       .where('timestamp', '<=', Timestamp.fromDate(endDate))
       .get();
     
-    return snapshot.docs.map(doc => {
+    return snapshot.docs.map((doc: any) => {
       const data = doc.data();
       return {
         ...data,

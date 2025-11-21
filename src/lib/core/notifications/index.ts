@@ -289,8 +289,8 @@ async function sendInAppNotification(options: InAppNotificationOptions): Promise
         };
         
         // Send to all user devices
-        const tokens = devices.docs.map(device => device.data().fcmToken);
-        const validTokens = tokens.filter(token => token && typeof token === 'string');
+        const tokens = devices.docs.map((device: any) => device.data().fcmToken);
+        const validTokens = tokens.filter((token: any) => token && typeof token === 'string');
         
         if (validTokens.length > 0) {
           const messaging = admin.messaging();
