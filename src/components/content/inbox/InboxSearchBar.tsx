@@ -310,7 +310,7 @@ export const InboxSearchBar: React.FC<InboxSearchBarProps> = ({
           
           <Button
             type="submit"
-            variant="default"
+            variant="primary"
             className={`rounded-none ${getInputSizeClasses()}`}
             disabled={!localQuery.text.trim() || isLoading || isSearching}
           >

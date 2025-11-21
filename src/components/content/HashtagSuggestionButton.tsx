@@ -431,7 +431,7 @@ export const HashtagSuggestionButton: React.FC<HashtagSuggestionButtonProps> = (
                     Cancel
                   </Button>
                   <Button
-                    variant="default" 
+                    variant="primary" 
                     size="sm"
                     onClick={handleApplySuggestions}
                     disabled={selectedSuggestions.length === 0}

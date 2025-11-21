@@ -629,7 +629,7 @@ const ContentGenerationButton: React.FC<ContentGenerationButtonProps> = ({
                 and brand voice consistency tools.
               </p>
               <Button
-                variant="default"
+                variant="primary"
                 className="bg-amber-600 hover:bg-amber-700"
                 onClick={() => window.location.href = '/dashboard/settings/billing'}
               >
@@ -659,7 +659,7 @@ const ContentGenerationButton: React.FC<ContentGenerationButtonProps> = ({
         isOpen={isDialogOpen}
         onClose={handleClose}
         title="AI Content Generator"
-        maxWidth="2xl"
+        size="xl"
       >
         <div className="flex justify-between mb-4">
           <div className="flex space-x-2">
