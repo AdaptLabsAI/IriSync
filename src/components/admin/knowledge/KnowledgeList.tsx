@@ -160,14 +160,14 @@ export default function KnowledgeList({ items, isLoading, onRefresh }: Knowledge
                       <Chip 
                         key={tag} 
                         label={tag} 
-                        size="small" 
+                        size="sm" 
                         sx={{ height: 20, fontSize: '0.7rem' }} 
                       />
                     ))}
                     {item.tags.length > 3 && (
                       <Chip 
                         label={`+${item.tags.length - 3}`} 
-                        size="small" 
+                        size="sm" 
                         variant="outlined"
                         sx={{ height: 20, fontSize: '0.7rem' }} 
                       />
@@ -179,14 +179,14 @@ export default function KnowledgeList({ items, isLoading, onRefresh }: Knowledge
               <TableCell>
                 <Chip 
                   label={item.status} 
-                  size="small" 
+                  size="sm" 
                   color={getStatusColor(item.status) as any}
                 />
               </TableCell>
               <TableCell>
                 <Chip 
                   label={item.accessLevel} 
-                  size="small" 
+                  size="sm" 
                   color={getAccessLevelColor(item.accessLevel) as any}
                 />
               </TableCell>
@@ -195,14 +195,14 @@ export default function KnowledgeList({ items, isLoading, onRefresh }: Knowledge
                 <Stack direction="row" spacing={1} justifyContent="flex-end">
                   <Tooltip title="Edit">
                     <IconButton 
-                      size="small" 
+                      size="sm" 
                       onClick={() => handleEdit(item.id)}
                     >
                       <EditIcon fontSize="small" />
                     </IconButton>
                   </Tooltip>
                   <IconButton 
-                    size="small" 
+                    size="sm" 
                     aria-label="more"
                     onClick={(e) => handleOpenMenu(e, item)}
                   >
