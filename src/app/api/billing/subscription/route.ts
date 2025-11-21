@@ -18,21 +18,72 @@ export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
 
 /**
- * Explicit type alias for Stripe's Subscription type.
- * This prevents confusion with any other "Subscription" types that might be in scope
- * (e.g., from DOM types, RxJS, or our own application models).
+ * TYPE ARCHITECTURE FOR STRIPE SUBSCRIPTIONS
+ * ============================================
+ *
+ * This file deals with two distinct subscription concepts:
+ *
+ * 1. STRIPE SUBSCRIPTION (StripeSubscription):
+ *    - Raw subscription objects from Stripe API
+ *    - Uses snake_case field names (current_period_start, trial_end, etc.)
+ *    - Contains Unix timestamps as numbers (seconds since epoch)
+ *    - Source: stripe.subscriptions.retrieve(), .list(), etc.
+ *
+ * 2. APP SUBSCRIPTION DTO (AppSubscriptionDetails):
+ *    - Application-level Data Transfer Object
+ *    - Uses camelCase field names (currentPeriodStart, trialEnd, etc.)
+ *    - Contains JavaScript Date objects (converted from timestamps)
+ *    - Returned in API responses to clients
+ *
+ * The mapStripeSubscriptionToApp() function converts between these types.
  */
-type StripeSubscription = Stripe.Subscription;
 
 /**
- * Application-level subscription DTO
- * This represents the subscription data shape we return from our API,
- * distinct from Stripe's raw Subscription type.
+ * Explicit interface defining the Stripe subscription fields we use.
  *
- * Key differences:
+ * This interface explicitly declares the snake_case fields from Stripe's API.
+ * We define this separately to ensure TypeScript can ALWAYS resolve these fields,
+ * even if the full Stripe module types are not available during type-checking
+ * (e.g., when 'stripe' module resolution fails in build environments).
+ *
+ * These are the raw fields as they come from Stripe's API:
+ * - current_period_start: Unix timestamp (seconds) when current period started
+ * - current_period_end: Unix timestamp (seconds) when current period ends
+ * - trial_end: Unix timestamp (seconds) when trial ends, or null
+ * - cancel_at_period_end: Boolean indicating if subscription cancels at period end
+ */
+interface StripeSubscriptionFields {
+  id: string;
+  status: string;
+  current_period_start: number;
+  current_period_end: number;
+  trial_end: number | null;
+  cancel_at_period_end: boolean;
+}
+
+/**
+ * Type for raw Stripe subscription objects.
+ *
+ * This uses an intersection type to combine:
+ * 1. Stripe.Subscription - the full Stripe type (when available)
+ * 2. StripeSubscriptionFields - our explicit field declarations
+ *
+ * This ensures TypeScript knows about the fields we need, regardless of
+ * whether the Stripe module is fully resolved or not.
+ */
+type StripeSubscription = Stripe.Subscription & StripeSubscriptionFields;
+
+/**
+ * Application-level subscription DTO.
+ *
+ * This represents the subscription data shape we return from our API,
+ * completely distinct from Stripe's raw Subscription type.
+ *
+ * Key differences from StripeSubscription:
  * - Uses Date objects instead of Unix timestamps (numbers)
  * - Uses camelCase (currentPeriodStart) instead of snake_case (current_period_start)
  * - Only includes fields we expose in our API responses
+ * - No Stripe-internal fields that clients don't need
  */
 interface AppSubscriptionDetails {
   id: string;
@@ -44,20 +95,29 @@ interface AppSubscriptionDetails {
 }
 
 /**
- * Helper function to convert Stripe.Subscription to AppSubscriptionDetails
+ * Convert a raw Stripe subscription to our application DTO.
  *
- * This provides a single point of conversion from Stripe's raw subscription data
- * (with Unix timestamps and snake_case fields) to our app's DTO format
- * (with Date objects and camelCase fields).
+ * This function provides the single point of conversion from Stripe's API format
+ * (snake_case fields, Unix timestamps) to our application's DTO format
+ * (camelCase fields, Date objects).
+ *
+ * Conversion details:
+ * - current_period_start (number) → currentPeriodStart (Date)
+ * - current_period_end (number) → currentPeriodEnd (Date)
+ * - trial_end (number | null) → trialEnd (Date | null)
+ * - cancel_at_period_end (boolean) → cancelAtPeriodEnd (boolean)
+ *
+ * Unix timestamps are multiplied by 1000 to convert from seconds to milliseconds
+ * before creating Date objects.
  *
  * @param subscription - Raw subscription object from Stripe API
- * @returns AppSubscriptionDetails - Our app-level DTO with converted dates
+ * @returns AppSubscriptionDetails - Our application DTO with converted dates
  */
 function mapStripeSubscriptionToApp(subscription: StripeSubscription): AppSubscriptionDetails {
   return {
     id: subscription.id,
     status: subscription.status,
-    // Convert Unix timestamps (seconds) to JavaScript Date objects
+    // Convert Unix timestamps (seconds) to JavaScript Date objects (milliseconds)
     currentPeriodStart: new Date(subscription.current_period_start * 1000),
     currentPeriodEnd: new Date(subscription.current_period_end * 1000),
     cancelAtPeriodEnd: subscription.cancel_at_period_end,
