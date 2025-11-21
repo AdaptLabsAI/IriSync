@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/lib/features/auth';
 import { AIProvider } from '@/lib/features/ai/providers/AIProvider';
+import { AIProviderFactory } from '@/lib/features/ai/providers/AIProviderFactory';
+import { ProviderType } from '@/lib/features/ai/providers/ProviderType';
 import { ChatbotService, UserTier } from '@/lib/features/support/chatbot-service';
 import { TokenService } from '@/lib/features/tokens/token-service';
 import { TokenRepository } from '@/lib/features/tokens/token-repository';
@@ -28,7 +30,7 @@ interface SessionUser {
 export async function POST(request: NextRequest) {
   try {
     // Initialize services
-    const aiProvider = new AIProvider();
+    const aiProvider: AIProvider = AIProviderFactory.createProvider(ProviderType.OPENAI, { modelId: 'gpt-3.5-turbo' });
     const tokenRepository = new TokenRepository(firestore);
     const notificationService = new NotificationService();
     const tokenService = new TokenService(tokenRepository, notificationService);
