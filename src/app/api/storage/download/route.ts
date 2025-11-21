@@ -289,7 +289,11 @@ export async function POST(request: NextRequest) {
       });
       
       // Create response with file data
-      const response = new NextResponse(fileData.data);
+      // Convert Buffer/ArrayBuffer to Uint8Array which is a valid BodyInit type
+      const bodyData = fileData.data instanceof ArrayBuffer
+        ? new Uint8Array(fileData.data)
+        : fileData.data;
+      const response = new NextResponse(bodyData as BodyInit);
       response.headers.set('Content-Type', fileData.mimeType);
       response.headers.set('Content-Disposition', `attachment; filename="${encodeURIComponent(fileData.name)}"`);
       
@@ -363,9 +367,13 @@ export async function POST(request: NextRequest) {
               }
               
               fileData = await adapter.downloadFile(refreshResult.tokens.access_token, fileId);
-              
+
               // Create response with file data
-              const response = new NextResponse(fileData.data);
+              // Convert Buffer/ArrayBuffer to Uint8Array which is a valid BodyInit type
+              const bodyData = fileData.data instanceof ArrayBuffer
+                ? new Uint8Array(fileData.data)
+                : fileData.data;
+              const response = new NextResponse(bodyData as BodyInit);
               response.headers.set('Content-Type', fileData.mimeType);
               response.headers.set('Content-Disposition', `attachment; filename="${encodeURIComponent(fileData.name)}"`);
               response.headers.set('X-Token-Refreshed', 'true');
