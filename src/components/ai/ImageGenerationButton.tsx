@@ -282,7 +282,6 @@ const ImageGenerationButton: React.FC<ImageGenerationButtonProps> = ({
       <Dialog
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
-        }
       >
         <DialogContent className="sm:max-w-[700px]">
           <DialogHeader>
