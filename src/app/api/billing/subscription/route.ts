@@ -181,13 +181,14 @@ export async function GET(req: NextRequest) {
     
     const user = session.user as SessionUser;
     if (!user.id) {
-      return NextResponse.json({ 
+      return NextResponse.json({
         error: 'Unauthorized',
         message: 'User ID not found in session'
       }, { status: 401 });
     }
-    
-    const stripe = getStripeClient();
+
+    // Explicitly type stripe to ensure proper Stripe SDK type resolution
+    const stripe: Stripe = getStripeClient();
     
     // Get user's organization
     const { orgId, userData } = await getUserOrganization(user.id);
@@ -307,7 +308,7 @@ export async function GET(req: NextRequest) {
         usedSeats,
         subscriptionDetails,
         usageQuota,
-        paymentMethods: paymentMethods.data.map(pm => ({
+        paymentMethods: paymentMethods.data.map((pm: Stripe.PaymentMethod) => ({
           id: pm.id,
           type: 'card',
           last4: pm.card?.last4,
@@ -315,7 +316,7 @@ export async function GET(req: NextRequest) {
           exp: `${pm.card?.exp_month}/${pm.card?.exp_year}`,
           isDefault: pm.id === customer.invoice_settings?.default_payment_method
         })),
-        invoices: invoices.data.map(inv => ({
+        invoices: invoices.data.map((inv: Stripe.Invoice) => ({
           id: inv.id,
           amount: inv.amount_paid / 100,
           date: inv.created * 1000,
@@ -454,8 +455,8 @@ export async function POST(req: NextRequest) {
         }
         
         try {
-          // Get Stripe customer
-          const stripe = getStripeClient();
+          // Get Stripe customer - explicitly type to ensure proper Stripe SDK type resolution
+          const stripe: Stripe = getStripeClient();
           let customers = await stripe.customers.list({ 
             email: user.email 
           });
@@ -631,12 +632,13 @@ export async function PUT(req: NextRequest) {
     const billing = orgData.billing || {};
     
     if (!billing.subscriptionId) {
-      return NextResponse.json({ 
-        error: 'No active subscription found' 
+      return NextResponse.json({
+        error: 'No active subscription found'
       }, { status: 400 });
     }
-    
-    const stripe = getStripeClient();
+
+    // Explicitly type stripe to ensure proper Stripe SDK type resolution
+    const stripe: Stripe = getStripeClient();
     
     switch (action) {
       case 'cancel_subscription': {
@@ -696,7 +698,8 @@ export async function GET_CHECK_SUBSCRIPTION_STATUS(req: NextRequest) {
     }
 
     const firestore = getFirestore();
-    const stripe = getStripeClient();
+    // Explicitly type stripe to ensure proper Stripe SDK type resolution
+    const stripe: Stripe = getStripeClient();
 
     // Get user data (using admin SDK firestore from above)
 
