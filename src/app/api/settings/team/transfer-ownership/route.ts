@@ -161,11 +161,12 @@ export async function POST(req: NextRequest) {
       }, { status: 400 });
     }
     
+    // Get firestore instance for transaction
+    const firestore = getFirebaseFirestore();
+    if (!firestore) throw new Error('Database not configured');
+
     // Perform the ownership transfer
     await runTransaction(firestore, async (transaction) => {
-  const firestore = getFirebaseFirestore();
-  if (!firestore) throw new Error('Database not configured');
-
       const orgRef = doc(firestore, 'organizations', organizationId);
       const membersRef = doc(firestore, 'organizations', organizationId, 'members', 'data');
       const teamsRef = doc(firestore, 'organizations', organizationId, 'teams', 'data');
