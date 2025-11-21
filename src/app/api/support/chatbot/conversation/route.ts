@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/lib/features/auth';
-import { AIProvider } from '@/lib/features/ai/providers';
+import { AIProvider } from '@/lib/features/ai/providers/AIProvider';
 import { ChatbotService, UserTier } from '@/lib/features/support/chatbot-service';
 import { TokenService } from '@/lib/features/tokens/token-service';
 import { TokenRepository } from '@/lib/features/tokens/token-repository';
