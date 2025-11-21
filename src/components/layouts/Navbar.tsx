@@ -77,7 +77,7 @@ export default function Navbar() {
           {/* Mobile Menu */}
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
-              size="lg"
+              size="large"
               aria-label="menu"
               aria-controls="menu-appbar"
               aria-haspopup="true"

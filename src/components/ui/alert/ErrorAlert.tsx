@@ -65,7 +65,7 @@ export function ErrorAlert({
             <div className="mt-4">
               <Button 
                 variant="outline" 
-                size="sm" 
+                size="small" 
                 onClick={handleFixPermissions}
                 disabled={isFixing}
               >
@@ -90,7 +90,7 @@ export function ErrorAlert({
         {onRetry && !isPermissionDenied && (
           <Button 
             variant="outline" 
-            size="sm" 
+            size="small" 
             onClick={onRetry} 
             className="mt-2"
           >

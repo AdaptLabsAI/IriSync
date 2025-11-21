@@ -529,7 +529,7 @@ export default function AssetPicker({ onSelect, onClose }: AssetPickerProps) {
                 onChange={e => setGdSearch(e.target.value)}
                 onKeyDown={e => { if (e.key === 'Enter') fetchGdFiles(gdTokens, gdSearch); }}
                 fullWidth
-                size="sm"
+                size="small"
                 sx={{ mb: 2 }}
               />
               <Button onClick={() => fetchGdFiles(gdTokens, gdSearch)} disabled={gdLoading} sx={{ mb: 2 }}>Search</Button>
@@ -566,7 +566,7 @@ export default function AssetPicker({ onSelect, onClose }: AssetPickerProps) {
                 onChange={e => setDbxPath(e.target.value)}
                 onKeyDown={e => { if (e.key === 'Enter') fetchDbxFiles(dbxTokens.access_token, dbxPath); }}
                 fullWidth
-                size="sm"
+                size="small"
                 sx={{ mb: 2 }}
               />
               <Button onClick={() => fetchDbxFiles(dbxTokens.access_token, dbxPath)} disabled={dbxLoading} sx={{ mb: 2 }}>Browse</Button>
@@ -647,8 +647,8 @@ export default function AssetPicker({ onSelect, onClose }: AssetPickerProps) {
             ) : airtableError ? <Alert severity="error">{airtableError}</Alert> : null
           ) : (
             <>
-              <TextField label="Base ID" value={airtableBaseId} onChange={e => setAirtableBaseId(e.target.value)} fullWidth size="sm" sx={{ mb: 2 }} />
-              <TextField label="Table ID" value={airtableTableId} onChange={e => setAirtableTableId(e.target.value)} fullWidth size="sm" sx={{ mb: 2 }} />
+              <TextField label="Base ID" value={airtableBaseId} onChange={e => setAirtableBaseId(e.target.value)} fullWidth size="small" sx={{ mb: 2 }} />
+              <TextField label="Table ID" value={airtableTableId} onChange={e => setAirtableTableId(e.target.value)} fullWidth size="small" sx={{ mb: 2 }} />
               <Button onClick={() => fetchAirtableFiles(airtableTokens, airtableBaseId, airtableTableId)} disabled={airtableLoading || !airtableBaseId || !airtableTableId} sx={{ mb: 2 }}>Browse</Button>
               {airtableLoading ? <CircularProgress /> : airtableError ? <Alert severity="error">{airtableError}</Alert> : (
                 <List>

@@ -271,7 +271,7 @@ const AIAssistantButton: React.FC<AIAssistantButtonProps> = ({
               src={isUserMessage ? '' : '/icons/assistant-avatar.png'}
               alt={isUserMessage ? 'You' : 'AI Assistant'}
               fallback={isUserMessage ? 'U' : 'AI'}
-              size="sm"
+              size="small"
             />
           </div>
           <div
@@ -337,7 +337,7 @@ const AIAssistantButton: React.FC<AIAssistantButtonProps> = ({
               <div className="flex items-center space-x-2">
                 <Button
                   variant="ghost"
-                  size="sm"
+                  size="small"
                   className="h-8 w-8 p-0"
                   onClick={handleToggleExpand}
                 >
@@ -352,7 +352,7 @@ const AIAssistantButton: React.FC<AIAssistantButtonProps> = ({
                 </Button>
                 <Button
                   variant="ghost"
-                  size="sm"
+                  size="small"
                   className="h-8 w-8 p-0"
                   onClick={handleMinimize}
                 >
@@ -380,7 +380,7 @@ const AIAssistantButton: React.FC<AIAssistantButtonProps> = ({
                 <div className="flex space-x-2">
                   <Button
                     variant="ghost"
-                    size="sm"
+                    size="small"
                     onClick={handleClearChat}
                     disabled={isProcessing || messages.length <= 1}
                   >
@@ -390,7 +390,7 @@ const AIAssistantButton: React.FC<AIAssistantButtonProps> = ({
                   {hasAdvancedCapabilities && (
                     <Button
                       variant="ghost"
-                      size="sm"
+                      size="small"
                       onClick={handleSaveChat}
                       disabled={isProcessing || messages.length <= 1}
                     >
@@ -402,7 +402,7 @@ const AIAssistantButton: React.FC<AIAssistantButtonProps> = ({
                 {!isExpanded && (
                   <Button
                     variant="ghost"
-                    size="sm"
+                    size="small"
                     onClick={handleToggleExpand}
                   >
                     Show Chat
@@ -423,7 +423,7 @@ const AIAssistantButton: React.FC<AIAssistantButtonProps> = ({
                 <Button
                   onClick={handleSendMessage}
                   disabled={!currentMessage.trim() || isProcessing}
-                  size="sm"
+                  size="small"
                   className="mb-1"
                 >
                   {isProcessing ? (

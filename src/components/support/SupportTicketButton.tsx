@@ -508,7 +508,7 @@ const SupportTicketButton: React.FC<SupportTicketButtonProps> = ({
                   {(selectedTicket.status === 'resolved' || selectedTicket.status === 'closed') ? (
                     <Button
                       variant="outline"
-                      size="sm"
+                      size="small"
                       onClick={() => handleReopenTicket(selectedTicket.id)}
                     >
                       Reopen Ticket
@@ -516,7 +516,7 @@ const SupportTicketButton: React.FC<SupportTicketButtonProps> = ({
                   ) : (
                     <Button
                       variant="outline"
-                      size="sm"
+                      size="small"
                       onClick={() => handleCloseTicket(selectedTicket.id)}
                     >
                       Close Ticket

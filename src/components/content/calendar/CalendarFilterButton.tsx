@@ -304,21 +304,21 @@ const CalendarFilterButton: React.FC<CalendarFilterButtonProps> = ({
         <DialogActions>
           <Button
             variant="outline"
-            size="sm"
+            size="small"
             onClick={handleClearFilters}
           >
             Clear All
           </Button>
           <Button
             variant="outline"
-            size="sm"
+            size="small"
             onClick={handleCloseDialog}
           >
             Cancel
           </Button>
           <Button
             variant="primary"
-            size="sm"
+            size="small"
             onClick={handleApplyFilters}
           >
             Apply Filters

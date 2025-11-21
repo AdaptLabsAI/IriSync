@@ -176,7 +176,7 @@ const PlatformCard: React.FC<PlatformCardProps> = ({ platform, onConnect }) => {
     >
       <Box sx={{ position: 'absolute', top: 10, right: 10 }}>
         <Chip
-          size="sm"
+          size="small"
           label={statusInfo.label}
           color={statusInfo.color as any}
         />
@@ -274,7 +274,7 @@ export default function PlatformIntegrationPanel() {
                 {category.label}
                 {category.value === activeTab && (
                   <Chip 
-                    size="sm" 
+                    size="small" 
                     label={`${currentStats?.complete || 0}/${currentStats?.total || 0}`} 
                     sx={{ ml: 1, height: 20 }} 
                   />
@@ -291,9 +291,9 @@ export default function PlatformIntegrationPanel() {
           <Paper sx={{ p: 2 }}>
             <Typography variant="subtitle1" gutterBottom>Implementation Status</Typography>
             <Box sx={{ display: 'flex', gap: 2 }}>
-              <Chip color="success" size="sm" label={`Ready: ${currentStats.complete}`} />
-              <Chip color="warning" size="sm" label={`Beta: ${currentStats.partial}`} />
-              <Chip color="info" size="sm" label={`Coming Soon: ${currentStats.planned}`} />
+              <Chip color="success" size="small" label={`Ready: ${currentStats.complete}`} />
+              <Chip color="warning" size="small" label={`Beta: ${currentStats.partial}`} />
+              <Chip color="info" size="small" label={`Coming Soon: ${currentStats.planned}`} />
             </Box>
           </Paper>
         </Box>

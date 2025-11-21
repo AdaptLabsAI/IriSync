@@ -161,7 +161,7 @@ export const ImageEditorButton: React.FC<ImageEditorButtonProps> = ({
         Edit Image
       </Button>
       
-      <Dialog isOpen={isOpen} onClose={handleClose} title="Image Editor" size="lg">
+      <Dialog isOpen={isOpen} onClose={handleClose} title="Image Editor" size="large">
         <div className="flex flex-col min-h-[500px]">
           {error && (
             <div className="m-2 p-3 bg-red-50 border border-red-200 text-red-700 rounded text-sm">

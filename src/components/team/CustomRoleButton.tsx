@@ -269,7 +269,7 @@ const CustomRoleButton: React.FC<CustomRoleButtonProps> = ({
             <div className="flex justify-between">
               <Button
                 variant="ghost"
-                size="sm"
+                size="small"
                 onClick={() => setSelectedRole(null)}
                 leftIcon={<X className="h-4 w-4" />}
                 className="text-gray-500"
@@ -281,7 +281,7 @@ const CustomRoleButton: React.FC<CustomRoleButtonProps> = ({
                 <div className="flex gap-2">
                   <Button
                     variant="outline"
-                    size="sm"
+                    size="small"
                     onClick={() => setIsEditMode(true)}
                     leftIcon={<Pencil className="h-4 w-4" />}
                   >
@@ -290,7 +290,7 @@ const CustomRoleButton: React.FC<CustomRoleButtonProps> = ({
                   
                   <Button
                     variant="outline"
-                    size="sm"
+                    size="small"
                     onClick={() => handleDeleteRole(selectedRole.id)}
                     leftIcon={<Trash2 className="h-4 w-4" />}
                     className="text-red-500 hover:bg-red-50"
@@ -370,7 +370,7 @@ const CustomRoleButton: React.FC<CustomRoleButtonProps> = ({
             <div className="flex justify-between">
               <Button
                 variant="ghost"
-                size="sm"
+                size="small"
                 onClick={() => {
                   setIsEditMode(false);
                   setNewRole({
@@ -557,7 +557,7 @@ const CustomRoleButton: React.FC<CustomRoleButtonProps> = ({
                     {onCreateRole && (
                       <Button
                         variant="outline"
-                        size="sm"
+                        size="small"
                         className="mt-3"
                         onClick={() => setActiveTab('create')}
                         leftIcon={<Plus className="h-4 w-4" />}

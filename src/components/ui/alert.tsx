@@ -53,7 +53,7 @@ const Alert: React.FC<AlertProps> = ({
           <IconButton
             aria-label="close"
             color="inherit"
-            size="sm"
+            size="small"
             onClick={onClose}
           >
             <CloseIcon fontSize="inherit" />

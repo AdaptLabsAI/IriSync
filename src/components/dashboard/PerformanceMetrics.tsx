@@ -78,7 +78,7 @@ export default function PerformanceMetrics({ data }: PerformanceMetricsProps) {
           Top Performing Posts
         </Typography>
         <TableContainer>
-          <Table size="sm">
+          <Table size="small">
             <TableHead>
               <TableRow>
                 <TableCell>Title</TableCell>
@@ -109,7 +109,7 @@ export default function PerformanceMetrics({ data }: PerformanceMetricsProps) {
                   <TableCell>
                     <Chip
                       label={post.platform}
-                      size="sm"
+                      size="small"
                       sx={{
                         backgroundColor: platformColors[post.platform] || '#673ab7',
                         color: 'white',

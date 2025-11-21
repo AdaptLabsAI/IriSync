@@ -90,7 +90,7 @@ export default function PlatformComparison({ platforms }: PlatformComparisonProp
   return (
     <Box>
       <TableContainer>
-        <Table size="sm">
+        <Table size="small">
           <TableHead>
             <TableRow>
               <TableCell>Platform</TableCell>
@@ -152,7 +152,7 @@ export default function PlatformComparison({ platforms }: PlatformComparisonProp
                 <TableCell align="right">
                   <Tooltip title={`${platform.growth}% growth in followers`}>
                     <Chip
-                      size="sm"
+                      size="small"
                       icon={<ArrowUpwardIcon style={{ fontSize: 12 }} />}
                       label={`${platform.growth}%`}
                       sx={{

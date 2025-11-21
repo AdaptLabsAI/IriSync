@@ -137,7 +137,7 @@ const BillingHistoryItem: React.FC<BillingHistoryItemProps> = ({
           invoiceNumber={invoiceNumber}
           onDownload={onDownload}
           onView={onView}
-          size="sm"
+          size="small"
           variant="ghost"
         />
       </div>

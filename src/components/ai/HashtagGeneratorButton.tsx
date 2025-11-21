@@ -350,7 +350,7 @@ const HashtagGeneratorButton: React.FC<HashtagGeneratorButtonProps> = ({
                   <div className="flex gap-2">
                     <Button 
                       variant="ghost" 
-                      size="sm"
+                      size="small"
                       onClick={() => handleHashtagFeedback(true)}
                       className="h-8 px-2"
                     >
@@ -359,7 +359,7 @@ const HashtagGeneratorButton: React.FC<HashtagGeneratorButtonProps> = ({
                     </Button>
                     <Button 
                       variant="ghost" 
-                      size="sm"
+                      size="small"
                       onClick={() => handleHashtagFeedback(false)}
                       className="h-8 px-2"
                     >
@@ -390,7 +390,7 @@ const HashtagGeneratorButton: React.FC<HashtagGeneratorButtonProps> = ({
                 <div className="flex gap-2">
                   <Button 
                     variant="ghost" 
-                    size="sm"
+                    size="small"
                     onClick={handleClearHashtags}
                     disabled={selectedHashtags.length === 0}
                     className="h-8 w-8 p-0"
@@ -400,7 +400,7 @@ const HashtagGeneratorButton: React.FC<HashtagGeneratorButtonProps> = ({
                   </Button>
                   <Button 
                     variant="ghost" 
-                    size="sm"
+                    size="small"
                     onClick={handleCopyHashtags}
                     disabled={selectedHashtags.length === 0}
                     className="h-8 w-8 p-0"
@@ -421,7 +421,7 @@ const HashtagGeneratorButton: React.FC<HashtagGeneratorButtonProps> = ({
                       {hashtag}
                       <Button 
                         variant="ghost" 
-                        size="sm" 
+                        size="small" 
                         onClick={() => handleRemoveHashtag(hashtag)}
                         className="h-4 w-4 p-0 hover:bg-transparent"
                       >

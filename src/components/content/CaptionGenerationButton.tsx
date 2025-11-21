@@ -489,7 +489,7 @@ export const CaptionGenerationButton: React.FC<CaptionGenerationButtonProps> = (
               {generatedCaptions.length > 0 && (
                 <Button
                   variant="ghost" 
-                  size="sm"
+                  size="small"
                   onClick={handleGenerateCaptions}
                   disabled={isGenerating}
                 >

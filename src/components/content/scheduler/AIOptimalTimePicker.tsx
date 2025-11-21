@@ -151,7 +151,7 @@ export function AIOptimalTimePicker({
             }
           }}
           variant={showRecommendations ? "default" : "outline"}
-          size="sm"
+          size="small"
           disabled={disabled || loading}
         >
           {loading ? 'Analyzing...' : showRecommendations ? 'Hide AI Times' : 'Show AI Times'}
@@ -176,7 +176,7 @@ export function AIOptimalTimePicker({
               <Button
                 onClick={clearError}
                 variant="outline"
-                size="sm"
+                size="small"
                 className="mt-2 text-red-600 border-red-300"
               >
                 Dismiss
@@ -311,7 +311,7 @@ export function AIOptimalTimePicker({
                       .catch(err => console.error('Failed to fetch optimal day/time:', err));
                   }}
                   variant="outline"
-                  size="sm"
+                  size="small"
                   disabled={fetchingOptimalDayTime}
                   className="w-full"
                 >
@@ -395,7 +395,7 @@ export function AIOptimalTimePicker({
         <div className="flex flex-wrap gap-2">
           <Button
             onClick={() => handleOptimalTimeSelect(bestOverallTime)}
-            size="sm"
+            size="small"
             className="flex-1 bg-[#00CC44] hover:bg-[#00CC44]"
           >
             Use Best Time
@@ -405,7 +405,7 @@ export function AIOptimalTimePicker({
             <Button
               onClick={() => handleOptimalTimeSelect(optimalTimes[1])}
               variant="outline"
-              size="sm"
+              size="small"
               className="flex-1"
             >
               Use Alternative

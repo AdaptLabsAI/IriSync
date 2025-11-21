@@ -116,7 +116,7 @@ const ProfileRoleInfo = () => {
             <Chip 
               label={getRoleLabel()} 
               color={getRoleColor() as any}
-              size="sm"
+              size="small"
               icon={isSuperAdmin || isAdmin ? <Security fontSize="small" /> : undefined}
             />
           </Box>

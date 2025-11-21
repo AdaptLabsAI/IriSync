@@ -466,7 +466,7 @@ export default function RegisterForm() {
             value={referralCode}
             onChange={handleReferralCodeChange}
             variant="outlined"
-            size="sm"
+            size="small"
             sx={{ minWidth: 150 }}
             InputProps={{
               style: { 
@@ -484,16 +484,16 @@ export default function RegisterForm() {
                 icon={<CheckIcon />}
                 label={`From ${referralValidation.referrerName}`}
                 color="success"
-                size="sm"
+                size="small"
               />
             )}
-            
+
             {referralValidation && !referralValidation.isValid && (
               <Tooltip title={referralValidation.error}>
                 <Chip
                   label="Invalid"
                   color="error"
-                  size="sm"
+                  size="small"
                 />
               </Tooltip>
             )}

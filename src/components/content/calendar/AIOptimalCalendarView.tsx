@@ -275,7 +275,7 @@ export function AIOptimalCalendarView({
             <Button
               onClick={goToToday}
               variant="outline"
-              size="sm"
+              size="small"
             >
               Today
             </Button>
@@ -286,7 +286,7 @@ export function AIOptimalCalendarView({
             <Button
               onClick={() => setShowAIOverlay(!showAIOverlay)}
               variant={showAIOverlay ? "default" : "outline"}
-              size="sm"
+              size="small"
               className="flex items-center space-x-2"
             >
               {showAIOverlay ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
@@ -297,7 +297,7 @@ export function AIOptimalCalendarView({
             <Button
               onClick={goToPreviousMonth}
               variant="outline"
-              size="sm"
+              size="small"
             >
               <ChevronLeft className="w-4 h-4" />
             </Button>
@@ -305,7 +305,7 @@ export function AIOptimalCalendarView({
             <Button
               onClick={goToNextMonth}
               variant="outline"
-              size="sm"
+              size="small"
             >
               <ChevronRight className="w-4 h-4" />
             </Button>
@@ -333,7 +333,7 @@ export function AIOptimalCalendarView({
             <Button
               onClick={clearError}
               variant="outline"
-              size="sm"
+              size="small"
               className="ml-2"
             >
               Dismiss

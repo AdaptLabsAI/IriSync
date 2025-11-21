@@ -159,7 +159,7 @@ export const MobileReplyModal: React.FC<MobileReplyModalProps> = ({
             onClick={handleSend}
             disabled={!replyText.trim() || loading}
             variant="contained"
-            size="sm"
+            size="small"
             startIcon={loading ? <CircularProgress size={16} /> : <SendIcon />}
           >
             {loading ? 'Sending...' : 'Send'}
@@ -190,7 +190,7 @@ export const MobileReplyModal: React.FC<MobileReplyModalProps> = ({
                 <Box sx={{ display: 'flex', gap: 0.5 }}>
                   <Chip
                     label={message.platformType}
-                    size="sm"
+                    size="small"
                     sx={{
                       backgroundColor: getPlatformColor(message.platformType),
                       color: 'white',
@@ -200,7 +200,7 @@ export const MobileReplyModal: React.FC<MobileReplyModalProps> = ({
                   />
                   <Chip
                     label={message.type}
-                    size="sm"
+                    size="small"
                     variant="outlined"
                     sx={{ fontSize: '0.7rem', height: 18 }}
                   />
@@ -248,15 +248,15 @@ export const MobileReplyModal: React.FC<MobileReplyModalProps> = ({
           {/* Action Buttons */}
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 2 }}>
             <Box sx={{ display: 'flex', gap: 1 }}>
-              <IconButton size="sm" disabled={loading}>
+              <IconButton size="small" disabled={loading}>
                 <AttachIcon />
               </IconButton>
-              <IconButton size="sm" disabled={loading}>
+              <IconButton size="small" disabled={loading}>
                 <EmojiIcon />
               </IconButton>
               {onAIAssist && (
                 <IconButton 
-                  size="sm" 
+                  size="small" 
                   onClick={handleAIAssist}
                   disabled={loading || isAILoading}
                   sx={{ 

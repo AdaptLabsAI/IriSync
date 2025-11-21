@@ -469,14 +469,14 @@ const CalendarEventCard: React.FC<CalendarEventCardProps> = ({
           <p className="text-xs text-red-700 mb-2">Are you sure you want to delete this event?</p>
           <div className="flex justify-end space-x-2">
             <Button
-              size="sm"
+              size="small"
               variant="ghost"
               onClick={cancelDelete}
             >
               Cancel
             </Button>
             <Button
-              size="sm"
+              size="small"
               variant="danger"
               onClick={handleDelete}
             >

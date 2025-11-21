@@ -340,7 +340,7 @@ export const QueueButton: React.FC<QueueButtonProps> = ({
                         <PopoverTrigger asChild>
                           <Button 
                             variant="outline" 
-                            size="sm" 
+                            size="small" 
                             className="flex items-center text-xs h-8"
                             disabled={queuePosition !== 'specified'}
                           >

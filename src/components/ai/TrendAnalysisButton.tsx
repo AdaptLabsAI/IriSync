@@ -355,7 +355,7 @@ const TrendAnalysisButton: React.FC<TrendAnalysisButtonProps> = ({
                     <div className="flex gap-2">
                       <Button
                         variant="outline"
-                        size="sm"
+                        size="small"
                         onClick={() => handleExportTrends('pdf')}
                         className="h-8"
                       >
@@ -364,7 +364,7 @@ const TrendAnalysisButton: React.FC<TrendAnalysisButtonProps> = ({
                       </Button>
                       <Button
                         variant="outline"
-                        size="sm"
+                        size="small"
                         onClick={() => handleExportTrends('csv')}
                         className="h-8"
                       >
@@ -418,7 +418,7 @@ const TrendAnalysisButton: React.FC<TrendAnalysisButtonProps> = ({
                     <div className="flex gap-2">
                       <Button
                         variant="ghost"
-                        size="sm"
+                        size="small"
                         className="h-8"
                         onClick={() => handleTrendFeedback(true)}
                       >
@@ -426,7 +426,7 @@ const TrendAnalysisButton: React.FC<TrendAnalysisButtonProps> = ({
                       </Button>
                       <Button
                         variant="ghost"
-                        size="sm"
+                        size="small"
                         className="h-8"
                         onClick={() => handleTrendFeedback(false)}
                       >
@@ -448,7 +448,7 @@ const TrendAnalysisButton: React.FC<TrendAnalysisButtonProps> = ({
                     <div className="flex gap-2">
                       <Button
                         variant="outline"
-                        size="sm"
+                        size="small"
                         onClick={() => handleExportTrends('pdf')}
                         className="h-8"
                       >

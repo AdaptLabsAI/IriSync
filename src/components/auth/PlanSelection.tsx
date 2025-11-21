@@ -148,11 +148,11 @@ export default function PlanSelection({ selectedTier, onTierSelect, isSignUp = f
                         <Typography variant="h6" component="div">
                           {plan.name}
                           {plan.isPopular && (
-                            <Chip 
-                              size="sm" 
-                              label="Popular" 
-                              color="secondary" 
-                              sx={{ ml: 1 }} 
+                            <Chip
+                              size="small"
+                              label="Popular"
+                              color="secondary"
+                              sx={{ ml: 1 }}
                             />
                           )}
                         </Typography>

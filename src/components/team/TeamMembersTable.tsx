@@ -163,7 +163,7 @@ export default function TeamMembersTable({
                     ) : (
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                          <Button variant="outline" size="sm">
+                          <Button variant="outline" size="small">
                             {member.role.name || 'Unknown Role'}
                           </Button>
                         </DropdownMenuTrigger>

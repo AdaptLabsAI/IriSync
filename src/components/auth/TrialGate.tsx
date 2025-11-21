@@ -180,7 +180,7 @@ export const TrialGate: React.FC<TrialGateProps> = ({
 
           <Button
             variant="contained"
-            size="lg"
+            size="large"
             fullWidth
             onClick={startTrial}
             disabled={startingTrial}

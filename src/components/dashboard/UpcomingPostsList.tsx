@@ -129,7 +129,7 @@ export default function UpcomingPostsList({ posts }: UpcomingPostsListProps) {
                   <Box sx={{ mt: 0.5 }}>
                     <Chip
                       label={post.platform}
-                      size="sm"
+                      size="small"
                       sx={{ 
                         bgcolor: `${getPlatformColor(post.platform)}20`,
                         color: getPlatformColor(post.platform),
@@ -138,7 +138,7 @@ export default function UpcomingPostsList({ posts }: UpcomingPostsListProps) {
                     />
                     <Chip
                       label={post.status}
-                      size="sm"
+                      size="small"
                       sx={{ 
                         bgcolor: post.status === 'ready' ? 'success.light' : 'grey.300',
                         color: post.status === 'ready' ? 'success.dark' : 'text.secondary'

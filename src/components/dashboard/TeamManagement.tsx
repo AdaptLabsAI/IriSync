@@ -52,7 +52,7 @@ interface InviteMemberFormProps {
 // Mock component to be replaced with real import
 const InviteMemberForm = ({ roles, onInvite }: InviteMemberFormProps) => {
   return (
-    <Button size="sm" onClick={() => alert('This is a placeholder. Implement real form')}>
+    <Button size="small" onClick={() => alert('This is a placeholder. Implement real form')}>
       <UserPlus className="mr-2 h-4 w-4" />
       Invite Member
     </Button>
@@ -225,7 +225,7 @@ export default function TeamManagement({ teamId }: TeamManagementProps) {
         {canAddMoreMembers() ? (
           <InviteMemberForm roles={roles} onInvite={handleInvite} />
         ) : (
-          <Button disabled variant="outlined" size="sm">
+          <Button disabled variant="outlined" size="small">
             <UserPlus className="mr-2 h-4 w-4" />
             Seat Limit Reached
           </Button>
@@ -312,7 +312,7 @@ export default function TeamManagement({ teamId }: TeamManagementProps) {
                     </Badge>
                   </TableCell>
                   <TableCell className="text-right">
-                    <Button variant="text" size="sm">Manage</Button>
+                    <Button variant="text" size="small">Manage</Button>
                   </TableCell>
                 </TableRow>
               ))

@@ -330,7 +330,7 @@ const AudienceInsightButton: React.FC<AudienceInsightButtonProps> = ({
                     <div className="flex gap-2">
                       <Button
                         variant="outline"
-                        size="sm"
+                        size="small"
                         onClick={() => handleExportInsights('pdf')}
                         className="h-8"
                       >
@@ -339,7 +339,7 @@ const AudienceInsightButton: React.FC<AudienceInsightButtonProps> = ({
                       </Button>
                       <Button
                         variant="outline"
-                        size="sm"
+                        size="small"
                         onClick={() => handleExportInsights('csv')}
                         className="h-8"
                       >
@@ -360,7 +360,7 @@ const AudienceInsightButton: React.FC<AudienceInsightButtonProps> = ({
                           <div className="flex gap-1">
                             <Button
                               variant="ghost"
-                              size="sm"
+                              size="small"
                               onClick={() => handleInsightFeedback(insight.id, true)}
                               className="h-7 w-7 p-0"
                             >
@@ -368,7 +368,7 @@ const AudienceInsightButton: React.FC<AudienceInsightButtonProps> = ({
                             </Button>
                             <Button
                               variant="ghost"
-                              size="sm"
+                              size="small"
                               onClick={() => handleInsightFeedback(insight.id, false)}
                               className="h-7 w-7 p-0"
                             >
@@ -418,7 +418,7 @@ const AudienceInsightButton: React.FC<AudienceInsightButtonProps> = ({
                         <div className="flex gap-1">
                           <Button
                             variant="ghost"
-                            size="sm"
+                            size="small"
                             onClick={() => handleInsightFeedback(insight.id, true)}
                             className="h-7 w-7 p-0"
                           >
@@ -426,7 +426,7 @@ const AudienceInsightButton: React.FC<AudienceInsightButtonProps> = ({
                           </Button>
                           <Button
                             variant="ghost"
-                            size="sm"
+                            size="small"
                             onClick={() => handleInsightFeedback(insight.id, false)}
                             className="h-7 w-7 p-0"
                           >

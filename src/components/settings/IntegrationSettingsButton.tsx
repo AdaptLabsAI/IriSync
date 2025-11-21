@@ -307,49 +307,49 @@ const IntegrationSettingsButton: React.FC<IntegrationSettingsButtonProps> = ({
               <div className="flex flex-wrap gap-2">
                 <Button
                   variant={selectedIntegrationType === 'all' ? 'default' : 'outline'}
-                  size="sm"
+                  size="small"
                   onClick={() => setSelectedIntegrationType('all')}
                 >
                   All
                 </Button>
                 <Button
                   variant={selectedIntegrationType === 'analytics' ? 'default' : 'outline'}
-                  size="sm"
+                  size="small"
                   onClick={() => setSelectedIntegrationType('analytics')}
                 >
                   Analytics
                 </Button>
                 <Button
                   variant={selectedIntegrationType === 'crm' ? 'default' : 'outline'}
-                  size="sm"
+                  size="small"
                   onClick={() => setSelectedIntegrationType('crm')}
                 >
                   CRM
                 </Button>
                 <Button
                   variant={selectedIntegrationType === 'content' ? 'default' : 'outline'}
-                  size="sm"
+                  size="small"
                   onClick={() => setSelectedIntegrationType('content')}
                 >
                   Content
                 </Button>
                 <Button
                   variant={selectedIntegrationType === 'media' ? 'default' : 'outline'}
-                  size="sm"
+                  size="small"
                   onClick={() => setSelectedIntegrationType('media')}
                 >
                   Media
                 </Button>
                 <Button
                   variant={selectedIntegrationType === 'communication' ? 'default' : 'outline'}
-                  size="sm"
+                  size="small"
                   onClick={() => setSelectedIntegrationType('communication')}
                 >
                   Communication
                 </Button>
                 <Button
                   variant={selectedIntegrationType === 'automation' ? 'default' : 'outline'}
-                  size="sm"
+                  size="small"
                   onClick={() => setSelectedIntegrationType('automation')}
                 >
                   Automation
@@ -359,7 +359,7 @@ const IntegrationSettingsButton: React.FC<IntegrationSettingsButtonProps> = ({
               <div className="flex justify-end">
                 <Button
                   variant="primary"
-                  size="sm"
+                  size="small"
                   className="flex items-center"
                   onClick={() => {
                     window.open('/dashboard/settings/connections', '_blank');
@@ -455,7 +455,7 @@ const IntegrationSettingsButton: React.FC<IntegrationSettingsButtonProps> = ({
                         <div className="mt-3 flex justify-end space-x-2">
                           <Button
                             variant="outline"
-                            size="sm"
+                            size="small"
                             className="text-xs"
                             onClick={(e) => {
                               e.stopPropagation();
@@ -472,7 +472,7 @@ const IntegrationSettingsButton: React.FC<IntegrationSettingsButtonProps> = ({
                           </Button>
                           <Button
                             variant="outline"
-                            size="sm"
+                            size="small"
                             className="text-xs text-red-500 hover:text-red-600"
                             onClick={(e) => {
                               e.stopPropagation();

@@ -307,7 +307,7 @@ const ImageGenerationButton: React.FC<ImageGenerationButtonProps> = ({
               <div className="flex justify-end">
                 <Button
                   variant="ghost"
-                  size="sm"
+                  size="small"
                   onClick={handleCopyPrompt}
                   disabled={!promptText.trim()}
                   className="h-8"
@@ -421,7 +421,7 @@ const ImageGenerationButton: React.FC<ImageGenerationButtonProps> = ({
                   <div className="flex items-center space-x-2">
                     <Button
                       variant="ghost"
-                      size="sm"
+                      size="small"
                       onClick={() => handleImageFeedback(true)}
                       className="h-8 w-8 p-0"
                     >
@@ -429,7 +429,7 @@ const ImageGenerationButton: React.FC<ImageGenerationButtonProps> = ({
                     </Button>
                     <Button
                       variant="ghost"
-                      size="sm"
+                      size="small"
                       onClick={() => handleImageFeedback(false)}
                       className="h-8 w-8 p-0"
                     >
@@ -456,7 +456,7 @@ const ImageGenerationButton: React.FC<ImageGenerationButtonProps> = ({
                   <div>
                     <Button
                       variant="outline"
-                      size="sm"
+                      size="small"
                       onClick={handleRegenerateImage}
                       disabled={isGenerating || regenerateCount >= maxRegenerations}
                     >
@@ -466,7 +466,7 @@ const ImageGenerationButton: React.FC<ImageGenerationButtonProps> = ({
                     
                     <Button
                       variant="ghost"
-                      size="sm"
+                      size="small"
                       onClick={handleDownloadImage}
                       disabled={isGenerating}
                       className="ml-2"

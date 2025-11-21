@@ -112,37 +112,37 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
     >
       <Stack direction="row" spacing={2}>
         <Stack direction="row">
-          <Button size="sm" onClick={handleBold} sx={{ fontWeight: 'bold' }}>B</Button>
-          <Button size="sm" onClick={handleItalic} sx={{ fontStyle: 'italic' }}>I</Button>
-          <Button size="sm" onClick={handleUnderline} sx={{ textDecoration: 'underline' }}>U</Button>
+          <Button size="small" onClick={handleBold} sx={{ fontWeight: 'bold' }}>B</Button>
+          <Button size="small" onClick={handleItalic} sx={{ fontStyle: 'italic' }}>I</Button>
+          <Button size="small" onClick={handleUnderline} sx={{ textDecoration: 'underline' }}>U</Button>
         </Stack>
-        
+
         <Stack direction="row">
           <Tooltip title="Insert link">
-            <IconButton 
-              size="sm"
-              aria-label="Insert link" 
-              onClick={handleLink} 
+            <IconButton
+              size="small"
+              aria-label="Insert link"
+              onClick={handleLink}
             >
               <LinkIcon className="w-4 h-4" />
             </IconButton>
           </Tooltip>
-          
+
           <Tooltip title="Insert code">
-            <IconButton 
-              size="sm"
-              aria-label="Insert code" 
-              onClick={handleCode} 
+            <IconButton
+              size="small"
+              aria-label="Insert code"
+              onClick={handleCode}
             >
               <CodeIcon className="w-4 h-4" />
             </IconButton>
           </Tooltip>
-          
+
           <Tooltip title="Insert image">
-            <IconButton 
-              size="sm"
-              aria-label="Insert image" 
-              onClick={handleImageUpload} 
+            <IconButton
+              size="small"
+              aria-label="Insert image"
+              onClick={handleImageUpload}
             >
               <PhotographIcon className="w-4 h-4" />
             </IconButton>

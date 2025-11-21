@@ -350,7 +350,7 @@ const SecuritySettingsButton: React.FC<SecuritySettingsButtonProps> = ({
                   <Button
                     onClick={handleChangePassword}
                     disabled={isSaving}
-                    size="sm"
+                    size="small"
                   >
                     {isSaving ? (
                       <>
@@ -454,7 +454,7 @@ const SecuritySettingsButton: React.FC<SecuritySettingsButtonProps> = ({
                 </p>
                 <Button
                   variant="outline"
-                  size="sm"
+                  size="small"
                   className="mt-2"
                   disabled={!localSettings.twoFactorEnabled}
                 >
@@ -527,7 +527,7 @@ const SecuritySettingsButton: React.FC<SecuritySettingsButtonProps> = ({
                   </div>
                   <Button
                     variant="outline"
-                    size="sm"
+                    size="small"
                   >
                     <History className="h-4 w-4 mr-2" />
                     View Full History

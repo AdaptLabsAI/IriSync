@@ -159,7 +159,7 @@ export const PlatformCard: React.FC<PlatformCardProps> = ({
             <ConnectionStatusBadge 
               platform={platform}
               status={actualStatus}
-              size="sm"
+              size="small"
               errorMessage={errorMessage}
               expiresAt={expiresAt}
             />
@@ -233,7 +233,7 @@ export const PlatformCard: React.FC<PlatformCardProps> = ({
                 onConnect={onConnect}
                 isConnecting={isLoading}
                 variant="primary"
-                size="sm"
+                size="small"
                 branded={false}
                 fullWidth
                 disabled={!hasAccess}

@@ -200,7 +200,7 @@ const TodoEditor: React.FC<{
           >
             {saving ? (
               <>
-                <Spinner size="sm" className="mr-2" />
+                <Spinner size="small" className="mr-2" />
                 {todo ? 'Updating...' : 'Adding...'}
               </>
             ) : (
@@ -451,7 +451,7 @@ const TodoItem: React.FC<{
             >
               {isDeleting ? (
                 <>
-                  <Spinner size="sm" className="w-3 h-3 mr-1" />
+                  <Spinner size="small" className="w-3 h-3 mr-1" />
                   <span>Deleting...</span>
                 </>
               ) : (
@@ -487,7 +487,7 @@ const TodoList: React.FC = () => {
   if (loading) {
     return (
       <div className="flex flex-col items-center justify-center h-64">
-        <Spinner size="lg" />
+        <Spinner size="large" />
         <p className="mt-4 text-gray-500">Loading tasks...</p>
       </div>
     );
@@ -645,7 +645,7 @@ const TodoApp: React.FC = () => {
           >
             {syncingData ? (
               <>
-                <Spinner size="sm" className="mr-1" />
+                <Spinner size="small" className="mr-1" />
                 Syncing...
               </>
             ) : (
@@ -671,7 +671,7 @@ const TodoApp: React.FC = () => {
         {completedTodos > 0 && (
           <Button
             variant="outline"
-            size="sm"
+            size="small"
             onClick={clearCompleted}
             className="text-red-500 hover:text-red-700"
             aria-label="Clear completed tasks"
@@ -694,7 +694,7 @@ const TodoApp: React.FC = () => {
               {filter.status !== 'all' || filter.category || filter.search ? (
                 <Button
                   variant="outline"
-                  size="sm"
+                  size="small"
                   onClick={() => {
                     setFilter({ status: 'all', category: null, search: '' });
                     setSearchTerm('');
@@ -706,7 +706,7 @@ const TodoApp: React.FC = () => {
               ) : (
                 <Button
                   variant="primary"
-                  size="sm"
+                  size="small"
                   onClick={() => setShowEditor(true)}
                   aria-label="Add your first task"
                 >

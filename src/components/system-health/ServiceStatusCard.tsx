@@ -74,7 +74,7 @@ const ServiceStatusCard: React.FC<ServiceStatusCardProps> = ({ name, health, ico
           <Chip
             icon={statusConfig.icon}
             label={statusConfig.label}
-            size="sm"
+            size="small"
             sx={{
               bgcolor: statusConfig.bgcolor,
               color: statusConfig.color,

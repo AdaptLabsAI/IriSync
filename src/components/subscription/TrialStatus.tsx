@@ -99,7 +99,7 @@ export const TrialStatus: React.FC<TrialStatusProps> = ({
             <Chip 
               label={trialInfo.tier.toUpperCase()} 
               color="primary" 
-              size="sm" 
+              size="small" 
             />
           </Box>
           <Chip 

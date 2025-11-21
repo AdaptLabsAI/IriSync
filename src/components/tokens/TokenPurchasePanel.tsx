@@ -232,7 +232,7 @@ export default function TokenPurchasePanel({
       <Box display="flex" justifyContent="center" mb={4}>
         <Button 
           variant="contained" 
-          size="lg"
+          size="large"
           disabled={!selectedPackage || isPurchasing}
           onClick={handlePurchase}
           startIcon={isPurchasing ? <CircularProgress size={20} color="inherit" /> : null}
@@ -270,7 +270,7 @@ export default function TokenPurchasePanel({
                     <TableCell align="right">{formatCurrency(purchase.price, purchase.currency)}</TableCell>
                     <TableCell>
                       <Chip 
-                        size="sm" 
+                        size="small" 
                         label={purchase.isProcessed ? "Completed" : "Processing"} 
                         color={purchase.isProcessed ? "success" : "warning"}
                       />

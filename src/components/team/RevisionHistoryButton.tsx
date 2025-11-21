@@ -145,7 +145,7 @@ const RevisionHistoryButton: React.FC<RevisionHistoryButtonProps> = ({
           <div className="space-y-4">
             <Button
               variant="ghost"
-              size="sm"
+              size="small"
               onClick={() => setSelectedRevision(null)}
               leftIcon={<ArrowLeft className="h-4 w-4" />}
               className="mb-2"
@@ -158,7 +158,7 @@ const RevisionHistoryButton: React.FC<RevisionHistoryButtonProps> = ({
                 src={selectedRevision.userAvatar} 
                 alt={selectedRevision.userName} 
                 fallback={selectedRevision.userName.charAt(0)} 
-                size="sm"
+                size="small"
               />
               <div>
                 <div className="font-medium text-sm">{selectedRevision.userName}</div>
@@ -201,7 +201,7 @@ const RevisionHistoryButton: React.FC<RevisionHistoryButtonProps> = ({
             <div className="flex justify-end pt-3 border-t">
               <Button
                 variant="primary"
-                size="sm"
+                size="small"
                 onClick={() => handleRestoreRevision(selectedRevision.id)}
                 loading={isLoading}
                 requiredPermission="content:restore_revisions"
@@ -225,7 +225,7 @@ const RevisionHistoryButton: React.FC<RevisionHistoryButtonProps> = ({
                           src={revision.userAvatar} 
                           alt={revision.userName} 
                           fallback={revision.userName.charAt(0)} 
-                          size="sm"
+                          size="small"
                         />
                         <div>
                           <div className="font-medium text-sm">Revision #{revision.revisionNumber}</div>
@@ -237,7 +237,7 @@ const RevisionHistoryButton: React.FC<RevisionHistoryButtonProps> = ({
                       
                       <Button
                         variant="ghost"
-                        size="sm"
+                        size="small"
                         onClick={() => handleViewRevision(revision.id)}
                         rightIcon={<ExternalLink className="h-3.5 w-3.5" />}
                       >

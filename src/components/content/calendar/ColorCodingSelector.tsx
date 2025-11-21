@@ -206,14 +206,14 @@ const ColorCodingSelector: React.FC<ColorCodingSelectorProps> = ({
         <DialogActions>
           <Button
             variant="outline"
-            size="sm"
+            size="small"
             onClick={handleCloseDialog}
           >
             Cancel
           </Button>
           <Button
             variant="primary"
-            size="sm"
+            size="small"
             onClick={handleApply}
           >
             Apply

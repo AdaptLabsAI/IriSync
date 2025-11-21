@@ -122,7 +122,7 @@ export default function AIToolkitStatus() {
     <Box>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
         <Typography variant="h5">AI Toolkit</Typography>
-        <Button variant="outlined" size="sm" onClick={() => router.push('/dashboard/ai-toolkit')}>
+        <Button variant="outlined" size="small" onClick={() => router.push('/dashboard/ai-toolkit')}>
           View All Tools
         </Button>
       </Box>
@@ -147,9 +147,9 @@ export default function AIToolkitStatus() {
         </Box>
         
         <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap', mt: 2 }}>
-          <Chip color="success" size="sm" label={`Available: ${completeCount}`} />
-          <Chip color="warning" size="sm" label={`Beta: ${partialCount}`} />
-          <Chip color="info" size="sm" label={`Coming Soon: ${plannedCount}`} />
+          <Chip color="success" size="small" label={`Available: ${completeCount}`} />
+          <Chip color="warning" size="small" label={`Beta: ${partialCount}`} />
+          <Chip color="info" size="small" label={`Coming Soon: ${plannedCount}`} />
         </Box>
       </Paper>
       
@@ -179,7 +179,7 @@ export default function AIToolkitStatus() {
             >
               <Box sx={{ position: 'absolute', top: 10, right: 10 }}>
                 <Chip
-                  size="sm"
+                  size="small"
                   label={StatusLabels[tool.status].label}
                   color={StatusLabels[tool.status].color as any}
                 />
@@ -198,7 +198,7 @@ export default function AIToolkitStatus() {
                   </Typography>
                   
                   {tool.tier !== 'all' && tool.tier !== userTier && (
-                    <Chip size="sm" label={`${tool.tier} tier`} color="secondary" />
+                    <Chip size="small" label={`${tool.tier} tier`} color="secondary" />
                   )}
                 </Box>
               )}

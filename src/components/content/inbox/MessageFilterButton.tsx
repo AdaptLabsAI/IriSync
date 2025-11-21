@@ -259,7 +259,7 @@ export const MessageFilterButton: React.FC<MessageFilterButtonProps> = ({
             {countActiveFilters(localFilters) > 0 && (
               <Button 
                 variant="ghost" 
-                size="sm" 
+                size="small" 
                 onClick={resetFilters}
                 className="h-7 text-xs px-2"
               >
@@ -453,14 +453,14 @@ export const MessageFilterButton: React.FC<MessageFilterButtonProps> = ({
           <div className="pt-2 flex justify-end space-x-2">
             <Button
               variant="outline"
-              size="sm"
+              size="small"
               onClick={() => setOpen(false)}
             >
               <X className="h-4 w-4 mr-1" />
               Cancel
             </Button>
             <Button
-              size="sm"
+              size="small"
               onClick={applyFilters}
             >
               <Check className="h-4 w-4 mr-1" />

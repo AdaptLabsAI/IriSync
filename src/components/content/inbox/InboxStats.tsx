@@ -275,7 +275,7 @@ export const InboxStats: React.FC<InboxStatsProps> = ({
                   Platform Distribution
                 </Typography>
                 <Tooltip title="Messages by social media platform">
-                  <IconButton size="sm">
+                  <IconButton size="small">
                     <InfoIcon fontSize="small" />
                   </IconButton>
                 </Tooltip>
@@ -286,7 +286,7 @@ export const InboxStats: React.FC<InboxStatsProps> = ({
                     key={platform}
                     label={`${platform}: ${count}`}
                     variant="outlined"
-                    size="sm"
+                    size="small"
                   />
                 ))}
               </Box>
@@ -303,7 +303,7 @@ export const InboxStats: React.FC<InboxStatsProps> = ({
                   Team Performance
                 </Typography>
                 <Tooltip title="Response rates by team member">
-                  <IconButton size="sm">
+                  <IconButton size="small">
                     <InfoIcon fontSize="small" />
                   </IconButton>
                 </Tooltip>

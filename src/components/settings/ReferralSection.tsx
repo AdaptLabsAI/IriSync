@@ -176,7 +176,7 @@ export const ReferralSection: React.FC<ReferralSectionProps> = ({ className = ''
             value={stats?.referralCode || ''}
             label="Referral Code"
             variant="outlined"
-            size="sm"
+            size="small"
             InputProps={{
               readOnly: true,
               style: { 
@@ -203,7 +203,7 @@ export const ReferralSection: React.FC<ReferralSectionProps> = ({ className = ''
             value={shareUrl}
             label="Share Link"
             variant="outlined"
-            size="sm"
+            size="small"
             fullWidth
             InputProps={{
               readOnly: true,
@@ -224,7 +224,7 @@ export const ReferralSection: React.FC<ReferralSectionProps> = ({ className = ''
         <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
           <Button
             variant="outlined"
-            size="sm"
+            size="small"
             startIcon={<EmailIcon />}
             onClick={shareViaEmail}
           >
@@ -232,7 +232,7 @@ export const ReferralSection: React.FC<ReferralSectionProps> = ({ className = ''
           </Button>
           <Button
             variant="outlined"
-            size="sm"
+            size="small"
             startIcon={<TwitterIcon />}
             onClick={() => shareOnSocial('twitter')}
           >
@@ -240,7 +240,7 @@ export const ReferralSection: React.FC<ReferralSectionProps> = ({ className = ''
           </Button>
           <Button
             variant="outlined"
-            size="sm"
+            size="small"
             startIcon={<FacebookIcon />}
             onClick={() => shareOnSocial('facebook')}
           >
@@ -248,7 +248,7 @@ export const ReferralSection: React.FC<ReferralSectionProps> = ({ className = ''
           </Button>
           <Button
             variant="outlined"
-            size="sm"
+            size="small"
             startIcon={<WhatsAppIcon />}
             onClick={() => shareOnSocial('whatsapp')}
           >
