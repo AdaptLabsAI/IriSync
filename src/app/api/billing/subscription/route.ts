@@ -11,6 +11,7 @@ import { VerificationService } from '@/lib/features/subscription/VerificationSer
 import { SubscriptionTier } from '@/lib/features/subscription/models/subscription';
 import { getFirestore } from '@/lib/core/firebase/admin';
 import { handleApiError } from '@/lib/features/auth/utils';
+import Stripe from 'stripe';
 
 // Force dynamic rendering - required for Firebase/database access
 export const dynamic = 'force-dynamic';
@@ -145,24 +146,24 @@ export async function GET(req: NextRequest) {
     });
     
     // Get subscription details if exists
-    let subscription = null;
+    let subscription: Stripe.Subscription | null = null;
     let subscriptionDetails = null;
-    
+
     if (billing.subscriptionId) {
       try {
         subscription = await stripe.subscriptions.retrieve(billing.subscriptionId);
         subscriptionDetails = {
           id: subscription.id,
           status: subscription.status,
-          currentPeriodStart: new Date((subscription as any).current_period_start * 1000),
-          currentPeriodEnd: new Date((subscription as any).current_period_end * 1000),
-          cancelAtPeriodEnd: (subscription as any).cancel_at_period_end,
-          trialEnd: (subscription as any).trial_end ? new Date((subscription as any).trial_end * 1000) : null
+          currentPeriodStart: new Date(subscription.current_period_start * 1000),
+          currentPeriodEnd: new Date(subscription.current_period_end * 1000),
+          cancelAtPeriodEnd: subscription.cancel_at_period_end,
+          trialEnd: subscription.trial_end ? new Date(subscription.trial_end * 1000) : null
         };
       } catch (error) {
-        logger.error('Error retrieving subscription', { 
-          subscriptionId: billing.subscriptionId, 
-          error 
+        logger.error('Error retrieving subscription', {
+          subscriptionId: billing.subscriptionId,
+          error
         });
       }
     }
@@ -644,7 +645,7 @@ export async function GET_CHECK_SUBSCRIPTION_STATUS(req: NextRequest) {
     const subscriptionId = billingData.subscriptionId;
 
     // Get current subscription from Stripe if we have one
-    let stripeSubscription = null;
+    let stripeSubscription: Stripe.Subscription | null = null;
     if (subscriptionId) {
       try {
         stripeSubscription = await stripe.subscriptions.retrieve(subscriptionId);
