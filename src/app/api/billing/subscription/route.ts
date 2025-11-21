@@ -17,6 +17,34 @@ import Stripe from 'stripe';
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
 
+/**
+ * Application-level subscription DTO
+ * This represents the subscription data shape we return from our API,
+ * distinct from Stripe's raw Subscription type
+ */
+interface AppSubscriptionDetails {
+  id: string;
+  status: string;
+  currentPeriodStart: Date;
+  currentPeriodEnd: Date;
+  cancelAtPeriodEnd: boolean;
+  trialEnd: Date | null;
+}
+
+/**
+ * Helper function to convert Stripe.Subscription to AppSubscriptionDetails
+ */
+function mapStripeSubscriptionToApp(subscription: Stripe.Subscription): AppSubscriptionDetails {
+  return {
+    id: subscription.id,
+    status: subscription.status,
+    currentPeriodStart: new Date(subscription.current_period_start * 1000),
+    currentPeriodEnd: new Date(subscription.current_period_end * 1000),
+    cancelAtPeriodEnd: subscription.cancel_at_period_end,
+    trialEnd: subscription.trial_end ? new Date(subscription.trial_end * 1000) : null
+  };
+}
+
 
 /**
  * Universal Billing Subscription API with Trial Fraud Protection
@@ -147,19 +175,13 @@ export async function GET(req: NextRequest) {
     
     // Get subscription details if exists
     let subscription: Stripe.Subscription | null = null;
-    let subscriptionDetails = null;
+    let subscriptionDetails: AppSubscriptionDetails | null = null;
 
     if (billing.subscriptionId) {
       try {
         subscription = await stripe.subscriptions.retrieve(billing.subscriptionId);
-        subscriptionDetails = {
-          id: subscription.id,
-          status: subscription.status,
-          currentPeriodStart: new Date(subscription.current_period_start * 1000),
-          currentPeriodEnd: new Date(subscription.current_period_end * 1000),
-          cancelAtPeriodEnd: subscription.cancel_at_period_end,
-          trialEnd: subscription.trial_end ? new Date(subscription.trial_end * 1000) : null
-        };
+        // Map Stripe subscription to our app DTO
+        subscriptionDetails = mapStripeSubscriptionToApp(subscription);
       } catch (error) {
         logger.error('Error retrieving subscription', {
           subscriptionId: billing.subscriptionId,
@@ -683,14 +705,8 @@ export async function GET_CHECK_SUBSCRIPTION_STATUS(req: NextRequest) {
       hasActiveSubscription,
       hasActiveTrial,
       subscriptionStatus,
-      subscription: stripeSubscription ? {
-        id: stripeSubscription.id,
-        status: stripeSubscription.status,
-        currentPeriodStart: stripeSubscription.current_period_start,
-        currentPeriodEnd: stripeSubscription.current_period_end,
-        trialEnd: stripeSubscription.trial_end,
-        cancelAtPeriodEnd: stripeSubscription.cancel_at_period_end
-      } : null,
+      // Map Stripe subscription to our app DTO with proper Date conversion
+      subscription: stripeSubscription ? mapStripeSubscriptionToApp(stripeSubscription) : null,
       trial: hasActiveTrial ? {
         activeTrial: {
           isActive: true,
