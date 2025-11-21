@@ -56,10 +56,8 @@ export async function POST(request: NextRequest) {
     if (user?.id) {
       // Get user's subscription tier
       try {
-        const subscriptionData = await getUserSubscriptionTier(user.id);
-        userTier = subscriptionData.tier as UserTier;
-        organizationId = subscriptionData.organizationId;
-      } catch (error) {
+        const subscriptionTier = await getUserSubscriptionTier(user.id);
+        userTier = subscriptionTier as unknown as UserTier;
         logger.warn('Error getting user subscription tier, defaulting to anonymous', {
           userId: user.id,
           error: error instanceof Error ? error.message : String(error)
