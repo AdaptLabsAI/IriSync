@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Button } from '../ui/button';
+import { Button } from '../../ui/button';
 import { Hash, Sparkles, Plus, X, Loader2, BrainCircuit } from 'lucide-react';
-import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
-import { Badge } from '../ui/Badge';
-import { Toggle } from '../ui/toggle';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../ui/tooltip';
+import { Popover, PopoverContent, PopoverTrigger } from '../../ui/popover';
+import { Badge } from '../../ui/Badge';
+import { Toggle } from '../../ui/toggle';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../../ui/tooltip';
 import { useSubscription } from '../../hooks/useSubscription';
-import { Card } from '../ui/card';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs';
-import { Slider } from '../ui/slider';
+import { Card } from '../../ui/card';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../ui/tabs';
+import { Slider } from '../../ui/slider';
 
 // Import Hashtag type from HashtagButton component
 import { Hashtag } from './HashtagButton';

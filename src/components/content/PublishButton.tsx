@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { Button } from '../ui/button';
+import { Button } from '../../ui/button';
 import { Send, AlertCircle, CheckCircle, AlertTriangle, Globe } from 'lucide-react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from '../ui/dialog';
-import { Checkbox } from '../ui/checkbox';
-import { Badge } from '../ui/Badge';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from '../../ui/dialog';
+import { Checkbox } from '../../ui/checkbox';
+import { Badge } from '../../ui/Badge';
 
 export interface PlatformStatus {
   /**

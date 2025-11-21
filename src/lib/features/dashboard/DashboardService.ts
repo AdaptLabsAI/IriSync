@@ -1,7 +1,7 @@
 // Dashboard Service - Main orchestrator for all dashboard operations
 // Production-ready service following existing codebase patterns
 
-import { firestore } from '@/lib/core/firebase/client';
+import { firestore, getFirebaseFirestore } from '@/lib/core/firebase/client';
 import { getFirestore } from '@/lib/core/firebase/admin';
 import { logger } from '@/lib/core/logging/logger';
 import { Firestore, 

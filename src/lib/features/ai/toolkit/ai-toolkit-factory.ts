@@ -17,6 +17,7 @@ import { AnthropicProvider } from '../providers/AnthropicProvider';
 import { GoogleAIProvider } from '../providers/GoogleAIProvider';
 import { AIProvider, AIProviderConfig } from '../providers/AIProvider';
 import { firestore } from '@/lib/core/firebase';
+import { NextResponse } from 'next/server';
 
 /**
  * @fileoverview AI Toolkit Factory for creating AI tools with token validation

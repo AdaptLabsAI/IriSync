@@ -1,4 +1,5 @@
 import { getFirebaseFirestore, firestore } from '../../core/firebase';
+import { NextResponse } from 'next/server';
 import { 
   doc, 
   getDoc, 

@@ -1,5 +1,5 @@
 import { logger } from '@/lib/core/logging/logger';
-import { firestore } from '@/lib/core/firebase/config';
+import { firestore, getFirebaseFirestore } from '@/lib/core/firebase/config';
 import { Firestore, 
   collection, 
   doc, 

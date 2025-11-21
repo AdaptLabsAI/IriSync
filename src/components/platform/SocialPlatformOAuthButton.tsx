@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button } from '../ui/button/Button';
+import { Button } from '../../ui/button/Button';
 import { ExternalLink, Loader2 } from 'lucide-react';
 
 // Platform categories

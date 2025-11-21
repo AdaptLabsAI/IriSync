@@ -3,7 +3,7 @@ import { HubspotAdapter } from '../../../../../lib/integrations/HubspotAdapter';
 import { SalesforceAdapter } from '../../../../../lib/integrations/SalesforceAdapter';
 import { ZohoCRMAdapter } from '../../../../../lib/integrations/ZohoCRMAdapter';
 import { getServerSession } from 'next-auth';
-import { firestore } from '@/lib/core/firebase/client';
+import { firestore, getFirebaseFirestore } from '@/lib/core/firebase/client';
 import { doc, collection, setDoc, updateDoc, serverTimestamp, arrayUnion } from 'firebase/firestore';
 import { logger } from '@/lib/core/logging/logger';
 

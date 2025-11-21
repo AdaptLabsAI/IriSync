@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button } from '../ui/button';
+import { Button } from '../../ui/button';
 import { Unlink, Loader2, AlertTriangle } from 'lucide-react';
 import {
   Dialog,
@@ -8,7 +8,7 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from '../ui/dialog';
+} from '../../ui/dialog';
 
 export interface PlatformDisconnectButtonProps {
   /**

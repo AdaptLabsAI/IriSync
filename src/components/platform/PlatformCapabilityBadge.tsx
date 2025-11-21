@@ -1,5 +1,5 @@
 import React from 'react';
-import { Badge } from '../ui/Badge';
+import { Badge } from '../../ui/Badge';
 import { 
   SendHorizontal, 
   MessageSquare, 
@@ -12,7 +12,7 @@ import {
   Lock, 
   AlertTriangle 
 } from 'lucide-react';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../ui/tooltip';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../../ui/tooltip';
 
 export type CapabilityType = 
   | 'posting'

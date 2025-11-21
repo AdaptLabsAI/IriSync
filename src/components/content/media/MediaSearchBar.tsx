@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Input } from '../ui/input';
+import { Input } from '../../ui/input';
 import { Search, X, Loader2 } from 'lucide-react';
-import { Button } from '../ui/button';
+import { Button } from '../../ui/button';
 
 export interface MediaSearchBarProps {
   /**

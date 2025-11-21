@@ -1,4 +1,4 @@
-import { firestore } from '../core/firebase/admin';
+import { firestore, getFirebaseFirestore } from '../firebase/admin';
 import { Firestore, collection, query, where, orderBy, limit, getDocs, doc, getDoc } from 'firebase/firestore';
 import { ProviderType, SubscriptionTier, TaskCategory } from '../ai/models';
 import { TieredModelRouter } from '../ai/models/tiered-model-router';

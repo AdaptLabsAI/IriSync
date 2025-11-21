@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
-import { Button, ButtonVariant, ButtonSize } from '../ui/button/Button';
+import { Button, ButtonVariant, ButtonSize } from '../../ui/button/Button';
 import { Filter, Check } from 'lucide-react';
-import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
-import { Badge } from '../ui/Badge';
-import { Separator } from '../ui/separator';
+import { Popover, PopoverContent, PopoverTrigger } from '../../ui/popover';
+import { Badge } from '../../ui/Badge';
+import { Separator } from '../../ui/separator';
 
 export interface SocialPlatform {
   /**

@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { Button, ButtonVariant, ButtonSize } from '../ui/button/Button';
+import { Button, ButtonVariant, ButtonSize } from '../../ui/button/Button';
 import { UserPlus, Users, Loader2, Check, X, Search, Clock } from 'lucide-react';
-import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
-import { Avatar } from '../ui/avatar';
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '../ui/command';
-import { Separator } from '../ui/separator';
-import { Badge, BadgeVariant } from '../ui/Badge';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../ui/tooltip';
+import { Popover, PopoverContent, PopoverTrigger } from '../../ui/popover';
+import { Avatar } from '../../ui/avatar';
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '../../ui/command';
+import { Separator } from '../../ui/separator';
+import { Badge, BadgeVariant } from '../../ui/Badge';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../../ui/tooltip';
 
 export interface TeamMember {
   /**

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Button } from '../ui/button/Button';
+import { Button } from '../../ui/button/Button';
 import { Dialog, DialogContent, DialogTitle, DialogActions } from '@mui/material';
-import { Checkbox } from '../ui/checkbox/Checkbox';
+import { Checkbox } from '../../ui/checkbox/Checkbox';
 
 export interface CalendarFilterOptions {
   /**

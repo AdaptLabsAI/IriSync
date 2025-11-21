@@ -1,8 +1,8 @@
 import React, { useState, useCallback } from 'react';
-import { Button } from '../ui/button';
+import { Button } from '../../ui/button';
 import { Link as LinkIcon, ExternalLink, Loader2 } from 'lucide-react';
 import { useSubscription } from '@/hooks/useSubscription';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../ui/tooltip';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../../ui/tooltip';
 
 // Social platform types
 export type SocialPlatform = 

@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { Button } from '../ui/button';
+import { Button } from '../../ui/button';
 import { Filter, Check, ChevronDown } from 'lucide-react';
-import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
-import { Separator } from '../ui/separator';
-import { RadioGroup, RadioGroupItem } from '../ui/radio-group';
-import { Label } from '../ui/label';
-import { Checkbox } from '../ui/checkbox';
+import { Popover, PopoverContent, PopoverTrigger } from '../../ui/popover';
+import { Separator } from '../../ui/separator';
+import { RadioGroup, RadioGroupItem } from '../../ui/radio-group';
+import { Label } from '../../ui/label';
+import { Checkbox } from '../../ui/checkbox';
 
 export interface MediaFilters {
   /**

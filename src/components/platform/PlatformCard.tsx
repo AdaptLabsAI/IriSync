@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, CardBody } from '../ui/card';
+import { Card, CardBody } from '../../ui/card';
 import { SocialPlatform } from './PlatformConnectButton';
 import { ConnectionStatus, ConnectionStatusBadge } from './ConnectionStatusBadge';
 import { PlatformConnectButton } from './PlatformConnectButton';

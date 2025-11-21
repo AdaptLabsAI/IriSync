@@ -1,6 +1,6 @@
 // Schedule Post Button Component
 import * as React from 'react';
-import { Button } from '../ui/Button';
+import { Button } from '../../ui/Button';
 
 export interface SchedulePostButtonProps {
   onSchedule?: () => void;

@@ -32,4 +32,18 @@ export class TokenService {
     // Stub implementation
     return true;
   }
+
+  /**
+   * Check if organization has sufficient tokens (alias for hasEnoughTokens)
+   */
+  async hasSufficientTokens(organizationId: string, tokensNeeded: number): Promise<boolean> {
+    return this.hasEnoughTokens(organizationId, tokensNeeded);
+  }
+
+  /**
+   * Use tokens from an organization's balance
+   */
+  async useTokens(organizationId: string, tokensUsed: number, context?: any): Promise<void> {
+    await this.trackUsage(organizationId, tokensUsed, context);
+  }
 }

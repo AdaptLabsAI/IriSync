@@ -1,15 +1,15 @@
 import React from 'react';
 import { formatDistanceToNow } from 'date-fns';
-import { Avatar } from '../ui/avatar';
-import { Badge } from '../ui/Badge';
-import { Button } from '../ui/button';
+import { Avatar } from '../../ui/avatar';
+import { Badge } from '../../ui/Badge';
+import { Button } from '../../ui/button';
 import { MarkReadButton } from './MarkReadButton';
 import { ReplyButton } from './ReplyButton';
 import { AssignMessageButton } from './AssignMessageButton';
 import { Star, MoreHorizontal, MessageSquare, RefreshCw, AlertTriangle, AlertCircle, Trash2 } from 'lucide-react';
-import { Card, CardBody } from '../ui/card';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../ui/tooltip';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, DropdownMenuSeparator } from '../ui/dropdown-menu';
+import { Card, CardBody } from '../../ui/card';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../../ui/tooltip';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, DropdownMenuSeparator } from '../../ui/dropdown-menu';
 import { MessageStatus } from '../../../lib/features/content/SocialInboxService';
 
 export type MessagePriority = 'low' | 'normal' | 'high' | 'urgent';

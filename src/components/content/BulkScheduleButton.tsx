@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, ButtonProps } from '../ui/button';
+import { Button, ButtonProps } from '../../ui/button';
 import { useRouter } from 'next/navigation';
 
 export interface BulkScheduleButtonProps extends Omit<ButtonProps, 'onClick'> {

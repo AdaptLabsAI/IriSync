@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Card } from '../ui/card';
-import { Button } from '../ui/button/Button';
+import { Card } from '../../ui/card';
+import { Button } from '../../ui/button/Button';
 
 export interface CalendarEventCardProps {
   /**

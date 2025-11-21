@@ -16,6 +16,7 @@ import {
   writeBatch
 } from 'firebase/firestore';
 import { getFirebaseFirestore, firestore } from '@/lib/core/firebase';
+import { NextResponse } from 'next/server';
 import { Logger } from '@/lib/core/logging';
 import { Cache } from '@/lib/core/cache';
 import {

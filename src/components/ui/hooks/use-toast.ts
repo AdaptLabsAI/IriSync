@@ -181,4 +181,36 @@ function useToast() {
   };
 }
 
+// Add convenience methods for common toast types
+toast.success = (props: ToastOptions) => {
+  return toast({
+    ...props,
+    variant: 'default',
+  });
+};
+
+toast.error = (props: ToastOptions) => {
+  return toast({
+    ...props,
+    variant: 'destructive',
+  });
+};
+
+// For backward compatibility with showSuccessToast/showErrorToast
+toast.showSuccessToast = (message: string) => {
+  return toast({
+    title: 'Success',
+    description: message,
+    variant: 'default',
+  });
+};
+
+toast.showErrorToast = (message: string) => {
+  return toast({
+    title: 'Error',
+    description: message,
+    variant: 'destructive',
+  });
+};
+
 export { useToast, toast };

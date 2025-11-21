@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { Button } from '../ui/button';
+import { Button } from '../../ui/button';
 import { ListPlus, Info, Clock, Calendar, CircleAlert, X, Check } from 'lucide-react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from '../ui/dialog';
-import { RadioGroup, RadioGroupItem } from '../ui/radio-group';
-import { Label } from '../ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
-import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from '../../ui/dialog';
+import { RadioGroup, RadioGroupItem } from '../../ui/radio-group';
+import { Label } from '../../ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../../ui/select';
+import { Popover, PopoverContent, PopoverTrigger } from '../../ui/popover';
 
 export type QueuePosition = 'first' | 'last' | 'optimal' | 'specified';
 export type TimeSlot = { day: string; time: string };

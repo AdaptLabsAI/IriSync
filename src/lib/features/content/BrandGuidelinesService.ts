@@ -12,7 +12,7 @@ import { Firestore,
   orderBy,
   limit
 } from 'firebase/firestore';
-import { firestore } from '@/lib/core/firebase/config';
+import { firestore, getFirebaseFirestore } from '@/lib/core/firebase/config';
 import { AIProviderFactory } from '../ai/providers/factory';
 import { TieredModelRouter, TaskType } from '@/lib/features/ai/models/tiered-model-router';
 import { User } from '@/lib/core/models/User';

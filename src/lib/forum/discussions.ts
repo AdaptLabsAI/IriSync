@@ -1,5 +1,5 @@
 import { collection, getDocs, limit, orderBy, query } from 'firebase/firestore';
-import { firestore as db } from '@/lib/core/firebase';
+import { firestore as db, getFirebaseFirestore } from '@/lib/core/firebase';
 import { logger } from '@/lib/core/logging/logger';
 
 export interface ForumDiscussion {

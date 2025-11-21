@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
-import { Button } from '../ui/button';
+import { Button } from '../../ui/button';
 import { Repeat, Calendar, ChevronDown, Lock, Info, Check } from 'lucide-react';
-import { Switch } from '../ui/switch';
-import { Label } from '../ui/label';
-import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
-import { RadioGroup, RadioGroupItem } from '../ui/radio-group';
-import { Input } from '../ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
-import { Badge } from '../ui/Badge';
-import { Separator } from '../ui/separator';
+import { Switch } from '../../ui/switch';
+import { Label } from '../../ui/label';
+import { Popover, PopoverContent, PopoverTrigger } from '../../ui/popover';
+import { RadioGroup, RadioGroupItem } from '../../ui/radio-group';
+import { Input } from '../../ui/input';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../../ui/select';
+import { Badge } from '../../ui/Badge';
+import { Separator } from '../../ui/separator';
 import { useSubscription } from '../../hooks/useSubscription';
 
 export type RecurrencePattern = 'daily' | 'weekly' | 'monthly' | 'custom';

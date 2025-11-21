@@ -1,4 +1,5 @@
 import { getFirebaseFirestore, firestore } from '@/lib/core/firebase';
+import { NextResponse } from 'next/server';
 import { doc, setDoc, getDoc, query, where, orderBy, limit, getDocs, collection, deleteDoc } from 'firebase/firestore';
 import { 
   UserConfig, 
