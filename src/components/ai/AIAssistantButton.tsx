@@ -331,42 +331,46 @@ const AIAssistantButton: React.FC<AIAssistantButtonProps> = ({
           onClose={() => setIsOpen(false)}
         >
           <DialogContent className="sm:max-w-[500px] max-h-[90vh] flex flex-col">
-            <DialogHeader className="flex-shrink-0 flex items-center justify-between">
-              <div className="flex items-center">
-                <Bot className="h-5 w-5 text-blue-500 mr-2" />
-                <DialogTitle>AI Assistant</DialogTitle>
-              </div>
-              <div className="flex items-center space-x-2">
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="h-8 w-8 p-0"
-                  onClick={handleToggleExpand}
-                >
-                  {isExpanded ? (
-                    <ChevronUp className="h-4 w-4" />
-                  ) : (
-                    <ChevronDown className="h-4 w-4" />
-                  )}
-                  <span className="sr-only">
-                    {isExpanded ? 'Collapse' : 'Expand'}
-                  </span>
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="h-8 w-8 p-0"
-                  onClick={handleMinimize}
-                >
-                  <X className="h-4 w-4" />
-                  <span className="sr-only">Minimize</span>
-                </Button>
+            <DialogHeader>
+              <div className="flex-shrink-0 flex items-center justify-between">
+                <div className="flex items-center">
+                  <Bot className="h-5 w-5 text-blue-500 mr-2" />
+                  <DialogTitle>AI Assistant</DialogTitle>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="h-8 w-8 p-0"
+                    onClick={handleToggleExpand}
+                  >
+                    {isExpanded ? (
+                      <ChevronUp className="h-4 w-4" />
+                    ) : (
+                      <ChevronDown className="h-4 w-4" />
+                    )}
+                    <span className="sr-only">
+                      {isExpanded ? 'Collapse' : 'Expand'}
+                    </span>
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="h-8 w-8 p-0"
+                    onClick={handleMinimize}
+                  >
+                    <X className="h-4 w-4" />
+                    <span className="sr-only">Minimize</span>
+                  </Button>
+                </div>
               </div>
             </DialogHeader>
-            
+
             {isExpanded && (
-              <DialogDescription className="flex-shrink-0">
-                Ask me anything about social media management, content creation, or how to use IriSync
+              <DialogDescription>
+                <div className="flex-shrink-0">
+                  Ask me anything about social media management, content creation, or how to use IriSync
+                </div>
               </DialogDescription>
             )}
             
