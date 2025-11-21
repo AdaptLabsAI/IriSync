@@ -37,23 +37,23 @@ const verificationService = new VerificationService();
 /**
  * Get user's organization for billing operations
  */
-async function getUserOrganization(userId: string) {
+async function getUserOrganization(userId: string): Promise<{ orgId: string; userData: any }> {
   const firestore = getFirebaseFirestore();
   if (!firestore) {
-    return NextResponse.json({ error: 'Database not configured' }, { status: 500 });
+    throw new Error('Database not configured');
   }
   const userDoc = await getDoc(doc(firestore, 'users', userId));
   if (!userDoc.exists()) {
     throw new Error('User not found');
   }
-  
+
   const userData = userDoc.data();
   const orgId = userData.currentOrganizationId || userData.personalOrganizationId;
-  
+
   if (!orgId) {
     throw new Error('No organization found for user');
   }
-  
+
   return { orgId, userData };
 }
 

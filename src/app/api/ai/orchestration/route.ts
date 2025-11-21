@@ -86,7 +86,7 @@ export async function POST(req: NextRequest) {
       metadata: {
         ...config.metadata,
         source: 'api',
-        ipAddress: req.ip
+        ipAddress: req.headers.get('x-forwarded-for') || req.headers.get('x-real-ip') || 'unknown'
       }
     };
     
@@ -192,7 +192,7 @@ export async function PUT(req: NextRequest) {
       metadata: {
         ...config.metadata,
         source: 'api',
-        ipAddress: req.ip
+        ipAddress: req.headers.get('x-forwarded-for') || req.headers.get('x-real-ip') || 'unknown'
       }
     };
     
@@ -287,7 +287,7 @@ export async function PATCH(req: NextRequest) {
       metadata: {
         ...config.metadata,
         source: 'api',
-        ipAddress: req.ip
+        ipAddress: req.headers.get('x-forwarded-for') || req.headers.get('x-real-ip') || 'unknown'
       }
     };
     

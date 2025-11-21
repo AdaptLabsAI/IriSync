@@ -31,7 +31,9 @@
       "Bash(command.ts)",
       "Bash(git mv:*)",
       "Bash(fi:*)",
-      "Bash(find:*)"
+      "Bash(find:*)",
+      "Bash(while read dir)",
+      "Bash(do find \"$dir\" -maxdepth 1 -name \"*.ts\" -type f -exec sed -i \"s|from ''''../../core/|from ''''../../../core/|g\" {} +)"
     ],
     "deny": [],
     "ask": []

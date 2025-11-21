@@ -12,7 +12,7 @@ import {
   Timestamp, 
   writeBatch
 } from 'firebase/firestore';
-import { Team, FirestoreTeam } from '../core/models/Organization';
+import { Team, FirestoreTeam } from '../models/Organization';
 
 /**
  * Repository for team data in Firestore

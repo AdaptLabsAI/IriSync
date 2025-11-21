@@ -19,8 +19,8 @@ import {
   FirestoreTeam,
   firestoreToOrganization,
   organizationToFirestore
-} from '../core/models/Organization';
-import { SubscriptionTier } from '../core/models/User';
+} from '../models/Organization';
+import { SubscriptionTier } from '../models/User';
 
 /**
  * Repository for organization data in Firestore

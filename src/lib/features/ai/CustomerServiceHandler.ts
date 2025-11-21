@@ -5,7 +5,7 @@
 
 import { AIService, AIServiceType } from './AIService';
 import { AITaskType } from './models/AITask';
-import { logger } from '../../core/logging/logger';
+import { logger } from '../../../core/logging/logger';
 
 export interface CustomerServiceRequest {
   userId: string;

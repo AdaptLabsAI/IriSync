@@ -10,7 +10,7 @@
  * - Tone and style adjustments
  */
 
-import { aiService } from '../ai/AIService';
+import { aiService } from '../../ai/AIService';
 import { PlatformType } from '../platforms/PlatformProvider';
 import { postAnalyticsService } from '../analytics/PostAnalyticsService';
 import { logger } from '../../core/logging/logger';

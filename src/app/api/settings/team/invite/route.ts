@@ -96,10 +96,10 @@ const sendInviteEmail = async (email: string, teamId: string, token: string, inv
 /**
  * Get user's current organization and team context
  */
-async function getUserOrganizationContext(userId: string) {
+async function getUserOrganizationContext(userId: string): Promise<{ organization: Organization; organizationId: string }> {
   const firestore = getFirebaseFirestore();
   if (!firestore) {
-    return NextResponse.json({ error: 'Database not configured' }, { status: 500 });
+    throw new Error('Database not configured');
   }
   const userDoc = await getDoc(doc(firestore, 'users', userId));
   if (!userDoc.exists()) {

@@ -93,15 +93,14 @@ async function formatUserForResponse(userId: string, userData: any) {
   if (orgId) {
     try {
       const firestore = getFirebaseFirestore();
-      if (!firestore) {
-        return NextResponse.json({ error: 'Database not configured' }, { status: 500 });
-      }
-      const orgDoc = await getDoc(doc(firestore, 'organizations', orgId));
-      if (orgDoc.exists()) {
-        organizationData = {
-          id: orgId,
-          billing: orgDoc.data().billing || {}
-        };
+      if (firestore) {
+        const orgDoc = await getDoc(doc(firestore, 'organizations', orgId));
+        if (orgDoc.exists()) {
+          organizationData = {
+            id: orgId,
+            billing: orgDoc.data().billing || {}
+          };
+        }
       }
     } catch (error) {
       logger.warn('Failed to get organization data for user', { userId, orgId, error });

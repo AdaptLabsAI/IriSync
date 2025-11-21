@@ -13,7 +13,7 @@ import {
   Timestamp,
   serverTimestamp
 } from 'firebase/firestore';
-import { getFirebaseFirestore, firestore } from '../../core/firebase';
+import { getFirebaseFirestore, firestore } from '../../../core/firebase';
 import { NextResponse } from 'next/server';
 import { 
   Permission, 
@@ -28,7 +28,7 @@ import {
 import { 
   User, 
   UserUtils 
-} from '../../core/models/User';
+} from '../../../core/models/User';
 import { 
   UserError, 
   UserErrorType, 

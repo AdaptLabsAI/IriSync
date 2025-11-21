@@ -4,7 +4,7 @@ import { SocialInboxService, InboxMessage, MessageType, MessageStatus, MessagePr
 import { PlatformType } from '../platforms/PlatformProvider';
 import { logger } from '../../core/logging/logger';
 import { v4 as uuidv4 } from 'uuid';
-import { tieredModelRouter, TaskType } from '../ai/models/tiered-model-router';
+import { tieredModelRouter, TaskType } from '../../ai/models/tiered-model-router';
 import { User } from '../../core/models/User';
 
 /**

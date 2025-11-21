@@ -1,5 +1,5 @@
 import { Timestamp } from 'firebase/firestore';
-import logger from '../../../lib/logging/logger';
+import logger from '../../../core/logging/logger';
 
 /**
  * Trend direction

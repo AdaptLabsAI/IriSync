@@ -106,7 +106,7 @@ export async function POST(req: NextRequest) {
             {
               type: 'password_changed',
               timestamp: new Date().toISOString(),
-              ipAddress: req.headers.get('x-forwarded-for') || req.ip
+              ipAddress: req.headers.get('x-forwarded-for') || req.headers.get('x-real-ip') || 'unknown'
             }
           ]
         });

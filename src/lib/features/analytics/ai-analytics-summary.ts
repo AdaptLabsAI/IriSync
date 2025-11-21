@@ -1,8 +1,8 @@
-import { tieredModelRouter, TaskType } from '../ai/models/tiered-model-router';
+import { tieredModelRouter, TaskType } from '../../ai/models/tiered-model-router';
 import { User } from '../../core/models/User';
 import { logger } from '../../core/logging/logger';
-import { AnalyticsSummary, EngagementMetrics } from '../models/Analytics';
-import { SocialPlatform } from '../models/SocialAccount';
+import { AnalyticsSummary, EngagementMetrics } from '../../core/models/Analytics';
+import { SocialPlatform } from '../../core/models/SocialAccount';
 import { CompetitiveComparison } from './competitive/comparator';
 import { createTokenService } from '../tokens';
 

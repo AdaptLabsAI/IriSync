@@ -8,8 +8,8 @@ import {
   limit,
   doc
 } from 'firebase/firestore';
-import { firestore as db } from '../../../lib/core/firebase';
-import logger from '../../../lib/logging/logger';
+import { firestore as db } from '../../../core/firebase';
+import logger from '../../../core/logging/logger';
 import { TimeSeriesPoint, TrendDirection, analyzeTrend, compareTrends } from './trend-detector';
 import { CompetitorData } from '../models/benchmarking';
 import { CompetitorSnapshot } from './tracker';

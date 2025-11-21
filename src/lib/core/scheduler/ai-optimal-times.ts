@@ -4,7 +4,7 @@ import { ProviderType, SubscriptionTier, TaskCategory } from '../ai/models';
 import { TieredModelRouter } from '../ai/models/tiered-model-router';
 import { TokenService } from '../../tokens/token-service';
 import { TokenRepository } from '../../tokens/token-repository';
-import { NotificationService } from '../core/notifications/NotificationService';
+import { NotificationService } from '../notifications/NotificationService';
 import { logger } from '../logging/logger';
 import { SocialPlatform } from '../models/SocialAccount';
 import { PlatformType } from '../platforms/models';

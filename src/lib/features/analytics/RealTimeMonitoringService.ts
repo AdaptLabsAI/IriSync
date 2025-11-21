@@ -1,4 +1,4 @@
-import { getFirebaseFirestore } from '../core/firebase';
+import { getFirebaseFirestore } from '../../core/firebase';
 import { v4 as uuidv4 } from 'uuid';
 import { Timestamp, collection, doc, setDoc, getDoc, updateDoc, deleteDoc, getDocs, query, where, orderBy, limit as firestoreLimit, Firestore } from 'firebase/firestore';
 import { EventEmitter } from 'events';

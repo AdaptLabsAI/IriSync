@@ -1,4 +1,4 @@
-import { getFirebaseFirestore } from '../../core/firebase';
+import { getFirebaseFirestore } from '../../../core/firebase';
 import { collection, query, where, getDocs } from 'firebase/firestore';
 
 /**

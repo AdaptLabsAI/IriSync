@@ -12,8 +12,8 @@ import { Firestore,
   serverTimestamp,
   Timestamp
 } from 'firebase/firestore';
-import { getFirebaseFirestore } from '../core/firebase';
-import { tieredModelRouter, TaskType } from '../ai/models/tiered-model-router';
+import { getFirebaseFirestore } from '../../core/firebase';
+import { tieredModelRouter, TaskType } from '../../ai/models/tiered-model-router';
 import { User } from '../../core/models/User';
 import { logger } from '../../core/logging/logger';
 

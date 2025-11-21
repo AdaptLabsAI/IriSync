@@ -3,7 +3,7 @@
 
 import { StorageError, StorageErrorType } from '../types';
 import { Logger } from '../../logging';
-import { encrypt, decrypt } from '../../security/encryption';
+import { encrypt, decrypt } from '../../../core/security/encryption';
 
 export class SecurityUtils {
   private static logger = new Logger('SecurityUtils');

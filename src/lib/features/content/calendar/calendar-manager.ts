@@ -14,8 +14,8 @@ import {
   endAt,
   getDoc
 } from 'firebase/firestore';
-import { firestore as db } from '../../../lib/core/firebase';
-import logger from '../../../lib/logging/logger';
+import { firestore as db } from '../../../core/firebase';
+import logger from '../../../core/logging/logger';
 import { PlatformAdapter } from '../../platforms/adapters';
 import { PlatformType, PlatformAuthData } from '../../platforms/models';
 

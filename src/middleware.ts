@@ -126,7 +126,7 @@ export async function middleware(req: NextRequest) {
       if (isRedisConfigured()) {
         const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
         const isPremium = (token as any)?.subscriptionTier === 'premium' || (token as any)?.subscriptionTier === 'enterprise';
-        const identifier = token?.sub || req.ip || 'anonymous';
+        const identifier = token?.sub || req.headers.get('x-forwarded-for') || req.headers.get('x-real-ip') || 'anonymous';
         
         const limiter = isPremium ? premiumRatelimit : ratelimit;
         

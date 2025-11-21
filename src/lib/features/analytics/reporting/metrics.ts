@@ -10,7 +10,7 @@ import {
   endAt,
   QueryConstraint
 } from 'firebase/firestore';
-import { db } from '../../core/firebase';
+import { db } from '../../../core/firebase';
 import { 
   MetricDefinition, 
   MetricValue, 
