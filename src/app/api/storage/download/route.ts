@@ -105,7 +105,14 @@ const StorageAdapters: Record<string, StorageAdapterDownload> = {
   },
   'canva': {
     downloadFile: async (accessToken: string, fileId: string) => {
-      return CanvaAdapter.downloadFile(accessToken, fileId);
+      const result = await CanvaAdapter.downloadFile(accessToken, fileId);
+      // Canva returns downloadUrl instead of data, so we need to convert it
+      return {
+        data: Buffer.from(''),
+        name: result.filename,
+        mimeType: result.mimeType,
+        viewLink: result.downloadUrl
+      } as FileData;
     }
   },
   'adobe-express': {

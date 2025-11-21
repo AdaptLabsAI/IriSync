@@ -60,15 +60,20 @@ export const TodoProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const fetchTodosAndCategories = async () => {
     try {
       setLoading(true);
-      
+
+      const db = getFirebaseFirestore();
+      if (!db) {
+        throw new Error('Database not configured');
+      }
+
       // Get current user
       const currentUser = auth.currentUser;
       if (!currentUser) {
         throw new Error('You must be logged in to access tasks');
       }
-      
+
       // Query todos for current user
-      const todosRef = collection(firestore, 'todos');
+      const todosRef = collection(db, 'todos');
       const todosQuery = query(
         todosRef,
         where('userId', '==', currentUser.uid),
@@ -80,17 +85,17 @@ export const TodoProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         id: doc.id,
         ...doc.data() as Omit<TodoItem, 'id'>
       }));
-      
+
       // Query categories for current user
-      const categoriesRef = collection(firestore, 'todoCategories');
+      const categoriesRef = collection(db, 'todoCategories');
       const categoriesQuery = query(
         categoriesRef,
         where('userId', '==', currentUser.uid)
       );
-      
+
       const categoriesSnapshot = await getDocs(categoriesQuery);
       const categoriesList: string[] = categoriesSnapshot.docs.map(doc => doc.data().name);
-      
+
       setTodos(todosList);
       setCategories(categoriesList);
     } catch (error) {
