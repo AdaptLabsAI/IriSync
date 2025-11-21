@@ -57,7 +57,7 @@ export interface ImageGenerationButtonProps extends Omit<ButtonProps, 'onClick'>
   /**
    * Button variant
    */
-  variant?: 'default' | 'outline' | 'ghost' | 'secondary';
+  variant?: 'primary' | 'outline' | 'ghost' | 'secondary';
   /**
    * Optional class name for additional styling
    */
@@ -171,7 +171,7 @@ const ImageGenerationButton: React.FC<ImageGenerationButtonProps> = ({
       console.error('Error generating image:', err);
       toast({
         title: "Generation failed",
-        description: error || "Failed to generate image. Please try again.",
+        description: typeof error === 'string' ? error : error?.message || "Failed to generate image. Please try again.",
         variant: "destructive"
       });
     } finally {
@@ -201,7 +201,7 @@ const ImageGenerationButton: React.FC<ImageGenerationButtonProps> = ({
       console.error('Error regenerating image:', err);
       toast({
         title: "Regeneration failed",
-        description: error || "Failed to regenerate image. Please try again.",
+        description: typeof error === 'string' ? error : error?.message || "Failed to regenerate image. Please try again.",
         variant: "destructive"
       });
     } finally {
@@ -280,10 +280,9 @@ const ImageGenerationButton: React.FC<ImageGenerationButtonProps> = ({
       </Button>
       
       <Dialog
-        open={isOpen}
-        onOpenChange={(open: any) => {
-          setIsOpen(open);
-        }}
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        }
       >
         <DialogContent className="sm:max-w-[700px]">
           <DialogHeader>

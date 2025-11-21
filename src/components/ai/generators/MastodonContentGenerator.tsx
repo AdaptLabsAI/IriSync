@@ -86,7 +86,7 @@ export default function MastodonContentGenerator({
       console.error('Error generating Mastodon content:', err);
       toast({
         title: "Generation failed",
-        description: error || "Failed to generate content. Please try again.",
+        description: typeof error === 'string' ? error : error?.message || "Failed to generate content. Please try again.",
         variant: "destructive"
       });
     }

@@ -52,7 +52,7 @@ export interface HashtagGeneratorButtonProps extends Omit<ButtonProps, 'onClick'
   /**
    * Button variant
    */
-  variant?: 'default' | 'outline' | 'ghost' | 'secondary';
+  variant?: 'primary' | 'outline' | 'ghost' | 'secondary';
   /**
    * Optional class name for additional styling
    */
@@ -152,7 +152,7 @@ const HashtagGeneratorButton: React.FC<HashtagGeneratorButtonProps> = ({
       console.error('Error generating hashtags:', err);
       toast({
         title: "Generation failed",
-        description: error || "Failed to generate hashtags. Please try again.",
+        description: typeof error === 'string' ? error : error?.message || "Failed to generate hashtags. Please try again.",
         variant: "destructive"
       });
     } finally {
@@ -266,10 +266,8 @@ const HashtagGeneratorButton: React.FC<HashtagGeneratorButtonProps> = ({
       </Button>
       
       <Dialog
-        open={isOpen}
-        onOpenChange={(open: any) => {
-          setIsOpen(open);
-        }}
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
       >
         <DialogContent className="sm:max-w-[600px]">
           <DialogHeader>

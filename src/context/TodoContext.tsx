@@ -339,18 +339,23 @@ export const TodoProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   const clearCompleted = async () => {
     try {
+      const db = getFirebaseFirestore();
+      if (!db) {
+        throw new Error('Database not configured');
+      }
+
       const currentUser = auth.currentUser;
       if (!currentUser) {
         throw new Error('You must be logged in to clear tasks');
       }
-      
+
       const completedTodos = todos.filter(todo => todo.completed);
       if (completedTodos.length === 0) return;
-      
-      const batch = writeBatch(firestore);
-      
+
+      const batch = writeBatch(db);
+
       completedTodos.forEach(todo => {
-        const todoRef = doc(firestore, 'todos', todo.id);
+        const todoRef = doc(db, 'todos', todo.id);
         batch.delete(todoRef);
       });
       
@@ -382,7 +387,12 @@ export const TodoProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   const updateTodo = async (id: string, updates: Partial<TodoItem>) => {
     try {
-      const todoRef = doc(firestore, 'todos', id);
+      const db = getFirebaseFirestore();
+      if (!db) {
+        throw new Error('Database not configured');
+      }
+
+      const todoRef = doc(db, 'todos', id);
       
       const updatedFields = {
         ...updates,
@@ -421,17 +431,22 @@ export const TodoProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   const addCategory = async (category: string) => {
     try {
+      const db = getFirebaseFirestore();
+      if (!db) {
+        throw new Error('Database not configured');
+      }
+
       const currentUser = auth.currentUser;
       if (!currentUser) {
         throw new Error('You must be logged in to create categories');
       }
-      
+
       if (categories.includes(category)) {
         // Category already exists, just return
         return;
       }
-      
-      const categoriesRef = collection(firestore, 'todoCategories');
+
+      const categoriesRef = collection(db, 'todoCategories');
       await addDoc(categoriesRef, {
         name: category,
         userId: currentUser.uid,
@@ -460,34 +475,39 @@ export const TodoProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   const deleteCategory = async (category: string) => {
     try {
+      const db = getFirebaseFirestore();
+      if (!db) {
+        throw new Error('Database not configured');
+      }
+
       const currentUser = auth.currentUser;
       if (!currentUser) {
         throw new Error('You must be logged in to delete categories');
       }
-      
+
       // First, find the category document
-      const categoriesRef = collection(firestore, 'todoCategories');
+      const categoriesRef = collection(db, 'todoCategories');
       const q = query(
         categoriesRef,
         where('userId', '==', currentUser.uid),
         where('name', '==', category)
       );
-      
+
       const querySnapshot = await getDocs(q);
-      
+
       if (querySnapshot.empty) {
         throw new Error(`Category not found: ${category}`);
       }
-      
-      const batch = writeBatch(firestore);
-      
+
+      const batch = writeBatch(db);
+
       // Delete the category document
       querySnapshot.forEach(doc => {
         batch.delete(doc.ref);
       });
-      
+
       // Update all todos with this category to have no category
-      const todosRef = collection(firestore, 'todos');
+      const todosRef = collection(db, 'todos');
       const todosQuery = query(
         todosRef,
         where('userId', '==', currentUser.uid),

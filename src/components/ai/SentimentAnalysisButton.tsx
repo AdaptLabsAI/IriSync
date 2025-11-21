@@ -59,7 +59,7 @@ export interface SentimentAnalysisButtonProps extends Omit<ButtonProps, 'onClick
   /**
    * Button variant
    */
-  variant?: 'default' | 'outline' | 'ghost' | 'secondary';
+  variant?: 'primary' | 'outline' | 'ghost' | 'secondary';
   /**
    * Optional class name for additional styling
    */
@@ -134,7 +134,7 @@ const SentimentAnalysisButton: React.FC<SentimentAnalysisButtonProps> = ({
       console.error('Error analyzing sentiment:', err);
       toast({
         title: "Analysis failed",
-        description: error || "Failed to analyze sentiment. Please try again.",
+        description: typeof error === 'string' ? error : error?.message || "Failed to analyze sentiment. Please try again.",
         variant: "destructive"
       });
     } finally {
@@ -208,14 +208,13 @@ const SentimentAnalysisButton: React.FC<SentimentAnalysisButtonProps> = ({
       </Button>
       
       <Dialog
-        open={isOpen}
-        onOpenChange={(open: any) => {
-          setIsOpen(open);
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
           if (!open) {
             // Reset state when dialog closes
             setAnalysisResult(null);
           }
-        }}
+        }
       >
         <DialogContent className="sm:max-w-[600px]">
           <DialogHeader>

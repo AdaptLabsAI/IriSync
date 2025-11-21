@@ -86,7 +86,7 @@ export default function TikTokContentGenerator({
       console.error('Error generating TikTok content:', err);
       toast({
         title: "Generation failed",
-        description: error || "Failed to generate content. Please try again.",
+        description: typeof error === 'string' ? error : error?.message || "Failed to generate content. Please try again.",
         variant: "destructive"
       });
     }

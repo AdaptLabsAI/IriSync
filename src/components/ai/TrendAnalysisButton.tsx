@@ -68,7 +68,7 @@ export interface TrendAnalysisButtonProps extends Omit<ButtonProps, 'onClick'> {
   /**
    * Button variant
    */
-  variant?: 'default' | 'outline' | 'ghost' | 'secondary';
+  variant?: 'primary' | 'outline' | 'ghost' | 'secondary';
   /**
    * Optional class name for additional styling
    */
@@ -240,10 +240,9 @@ const TrendAnalysisButton: React.FC<TrendAnalysisButtonProps> = ({
       </Button>
       
       <Dialog
-        open={isOpen}
-        onOpenChange={(open: any) => {
-          setIsOpen(open);
-        }}
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        }
       >
         <DialogContent className="sm:max-w-[700px]">
           <DialogHeader>

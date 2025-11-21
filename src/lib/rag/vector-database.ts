@@ -93,6 +93,20 @@ export class VectorDatabase {
     return instance.search(params);
   }
 
+  static async storeDocument(
+    content: string,
+    metadata: Record<string, any>,
+    collection?: string
+  ): Promise<void> {
+    const instance = VectorDatabase.getInstance();
+    return instance.storeDocument(content, metadata, collection);
+  }
+
+  static async deleteDocument(id: string, collection?: string): Promise<void> {
+    const instance = VectorDatabase.getInstance();
+    return instance.deleteDocument(id, collection);
+  }
+
   constructor() {
     this.indexName = config.pinecone.indexName;
     this.namespace = config.pinecone.namespace;
