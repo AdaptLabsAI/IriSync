@@ -74,7 +74,7 @@ export const Select = forwardRef<HTMLDivElement, RadixSelectProps>(
           value={value || ''}
           onChange={handleChange}
           displayEmpty={!!placeholder}
-          size="small"
+          size="sm"
         >
           {placeholder && !value && (
             <MenuItem value="" disabled>

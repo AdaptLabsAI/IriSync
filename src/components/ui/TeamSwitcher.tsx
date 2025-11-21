@@ -62,7 +62,7 @@ export const TeamSwitcher = () => {
   }
 
   return (
-    <FormControl variant="outlined" size="small" sx={{ minWidth: 200 }}>
+    <FormControl variant="outlined" size="sm" sx={{ minWidth: 200 }}>
       <InputLabel id="team-select-label">Team</InputLabel>
       <Select
         labelId="team-select-label"
@@ -77,7 +77,7 @@ export const TeamSwitcher = () => {
           <MenuItem key={team.id} value={team.id}>
             <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '100%', alignItems: 'center' }}>
               <span className="truncate">{team.name}</span>
-              <Chip label={`${team.memberIds.length} members`} size="small" />
+              <Chip label={`${team.memberIds.length} members`} size="sm" />
             </Box>
           </MenuItem>
         ))}
