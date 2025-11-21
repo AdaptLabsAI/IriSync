@@ -39,39 +39,13 @@ export const runtime = 'nodejs';
  */
 
 /**
- * Explicit interface defining the Stripe subscription fields we use.
+ * Type alias for Stripe subscription objects.
  *
- * This interface explicitly declares the snake_case fields from Stripe's API.
- * We define this separately to ensure TypeScript can ALWAYS resolve these fields,
- * even if the full Stripe module types are not available during type-checking
- * (e.g., when 'stripe' module resolution fails in build environments).
- *
- * These are the raw fields as they come from Stripe's API:
- * - current_period_start: Unix timestamp (seconds) when current period started
- * - current_period_end: Unix timestamp (seconds) when current period ends
- * - trial_end: Unix timestamp (seconds) when trial ends, or null
- * - cancel_at_period_end: Boolean indicating if subscription cancels at period end
+ * We use a simple type alias (not an intersection) to directly reference
+ * the official Stripe.Subscription type. This ensures TypeScript uses the
+ * exact type returned by stripe.subscriptions.retrieve() and related methods.
  */
-interface StripeSubscriptionFields {
-  id: string;
-  status: string;
-  current_period_start: number;
-  current_period_end: number;
-  trial_end: number | null;
-  cancel_at_period_end: boolean;
-}
-
-/**
- * Type for raw Stripe subscription objects.
- *
- * This uses an intersection type to combine:
- * 1. Stripe.Subscription - the full Stripe type (when available)
- * 2. StripeSubscriptionFields - our explicit field declarations
- *
- * This ensures TypeScript knows about the fields we need, regardless of
- * whether the Stripe module is fully resolved or not.
- */
-type StripeSubscription = Stripe.Subscription & StripeSubscriptionFields;
+type StripeSubscription = Stripe.Subscription;
 
 /**
  * Application-level subscription DTO.
