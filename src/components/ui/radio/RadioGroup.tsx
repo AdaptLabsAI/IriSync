@@ -105,12 +105,27 @@ export const RadioGroup: React.FC<RadioGroupProps> = ({
   
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.value;
-    
+
     // Update internal state if uncontrolled
     if (!isControlled) {
       setSelectedValue(newValue);
     }
-    
+
+    // Notify parent component (support both onChange and onValueChange)
+    if (onChange) {
+      onChange(newValue);
+    }
+    if (onValueChange) {
+      onValueChange(newValue);
+    }
+  };
+
+  // Handle direct value change (for compatibility)
+  const handleDirectChange = (newValue: string) => {
+    if (!isControlled) {
+      setSelectedValue(newValue);
+    }
+
     // Notify parent component
     if (onChange) {
       onChange(newValue);
