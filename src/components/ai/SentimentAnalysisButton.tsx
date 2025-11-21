@@ -209,12 +209,11 @@ const SentimentAnalysisButton: React.FC<SentimentAnalysisButtonProps> = ({
       
       <Dialog
         isOpen={isOpen}
-        onClose={() => setIsOpen(false)}
-          if (!open) {
-            // Reset state when dialog closes
-            setAnalysisResult(null);
-          }
-        }
+        onClose={() => {
+          setIsOpen(false);
+          // Reset state when dialog closes
+          setAnalysisResult(null);
+        }}
       >
         <DialogContent className="sm:max-w-[600px]">
           <DialogHeader>
