@@ -62,13 +62,12 @@ async function verifyFirebaseToken(req: NextRequest): Promise<string | null> {
     }
 
     const idToken = authHeader.substring(7);
-    const admin = await firebaseAdmin();
-    if (!admin) {
+    if (!firebaseAdmin) {
       console.error('Firebase Admin not initialized');
       return null;
     }
 
-    const decodedToken = await admin.auth().verifyIdToken(idToken);
+    const decodedToken = await firebaseAdmin.auth().verifyIdToken(idToken);
     return decodedToken.uid;
   } catch (error) {
     console.error('Error verifying Firebase token:', error);
