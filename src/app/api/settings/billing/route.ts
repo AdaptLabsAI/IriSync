@@ -58,7 +58,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Get billing status from universal billing service
-    const billingStatus = await universalBillingService.getBillingStatus(orgId);
+    const billingStatus = await universalBillingService.checkBillingStatus(orgId);
 
     // Get organization details
     const orgDoc = await getDoc(doc(firestore, 'organizations', orgId));
