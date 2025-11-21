@@ -21,30 +21,23 @@ export const runtime = 'nodejs';
  * TYPE ARCHITECTURE FOR STRIPE SUBSCRIPTIONS
  * ============================================
  *
- * This file deals with two distinct subscription concepts:
+ * This file uses Stripe.Subscription directly from the Stripe SDK for all raw
+ * subscription data, and maps it to AppSubscription DTO for API responses.
  *
- * 1. STRIPE SUBSCRIPTION (StripeSubscription):
- *    - Raw subscription objects from Stripe API
- *    - Uses snake_case field names (current_period_start, trial_end, etc.)
- *    - Contains Unix timestamps as numbers (seconds since epoch)
- *    - Source: stripe.subscriptions.retrieve(), .list(), etc.
+ * RAW STRIPE DATA: Stripe.Subscription
+ *   - snake_case fields (current_period_start, trial_end, etc.)
+ *   - Unix timestamps as numbers
  *
- * 2. APP SUBSCRIPTION DTO (AppSubscription):
- *    - Application-level Data Transfer Object
- *    - Uses camelCase field names (currentPeriodStart, trialEnd, etc.)
- *    - Contains JavaScript Date objects (converted from timestamps)
- *    - Returned in API responses to clients
+ * APP DTO: AppSubscription
+ *   - camelCase fields (currentPeriodStart, trialEnd, etc.)
+ *   - JavaScript Date objects
  *
- * The mapStripeSubscriptionToApp() function converts between these types.
- *
- * IMPORTANT: We do NOT use a bare "Subscription" type in this file to avoid
- * conflicts with other Subscription types in the codebase.
+ * NO bare "Subscription" type is used to avoid conflicts.
  */
 
-// Raw Stripe subscription object (snake_case fields)
-export type StripeSubscription = Stripe.Subscription;
-
-// DTO we return from this API (camelCase fields, JS Dates)
+/**
+ * Application-level subscription DTO returned from this API.
+ */
 export interface AppSubscription {
   id: string;
   status: Stripe.Subscription.Status | string;
@@ -55,30 +48,22 @@ export interface AppSubscription {
 }
 
 /**
- * Convert a raw Stripe subscription to our application DTO.
- *
- * This is the single point of conversion from Stripe's API format
- * (snake_case fields, Unix timestamps) to our application's DTO format
- * (camelCase fields, Date objects).
+ * Convert raw Stripe subscription to app DTO.
+ * This is the only place where we access Stripe's snake_case fields.
  */
-function mapStripeSubscriptionToApp(subscription: StripeSubscription): AppSubscription {
+function mapStripeSubscriptionToApp(sub: Stripe.Subscription): AppSubscription {
   return {
-    id: subscription.id,
-    status: subscription.status,
-    // Convert Unix timestamps (seconds) to JavaScript Date objects (milliseconds)
-    currentPeriodStart: new Date(subscription.current_period_start * 1000),
-    currentPeriodEnd: new Date(subscription.current_period_end * 1000),
-    cancelAtPeriodEnd: subscription.cancel_at_period_end ?? false,
-    trialEnd: subscription.trial_end
-      ? new Date(subscription.trial_end * 1000)
-      : null,
+    id: sub.id,
+    status: sub.status,
+    currentPeriodStart: new Date(sub.current_period_start * 1000),
+    currentPeriodEnd: new Date(sub.current_period_end * 1000),
+    cancelAtPeriodEnd: sub.cancel_at_period_end ?? false,
+    trialEnd: sub.trial_end ? new Date(sub.trial_end * 1000) : null,
   };
 }
 
-
 /**
  * Universal Billing Subscription API with Trial Fraud Protection
- * Integrates TrialService, VerificationService, and UniversalBillingService
  */
 
 interface SessionUser {
@@ -204,14 +189,12 @@ export async function GET(req: NextRequest) {
     });
 
     // Get subscription details if exists
-    let subscription: StripeSubscription | null = null;
     let subscriptionDetails: AppSubscription | null = null;
 
     if (billing.subscriptionId) {
       try {
-        subscription = await stripe.subscriptions.retrieve(billing.subscriptionId) as unknown as StripeSubscription;
-        // Map Stripe subscription to our app DTO
-        subscriptionDetails = mapStripeSubscriptionToApp(subscription);
+        const stripeSub: Stripe.Subscription = await stripe.subscriptions.retrieve(billing.subscriptionId);
+        subscriptionDetails = mapStripeSubscriptionToApp(stripeSub);
       } catch (error) {
         logger.error('Error retrieving subscription', {
           subscriptionId: billing.subscriptionId,
@@ -341,7 +324,7 @@ export async function POST(req: NextRequest) {
     }
 
     const body = await req.json();
-    const { action, ...params } = body;
+    const { action, ...params} = body;
 
     // Get user's organization
     const { orgId } = await getUserOrganization(user.id);
@@ -696,10 +679,10 @@ export async function GET_CHECK_SUBSCRIPTION_STATUS(req: NextRequest) {
     const subscriptionId = billingData.subscriptionId;
 
     // Get current subscription from Stripe if we have one
-    let stripeSubscription: StripeSubscription | null = null;
+    let stripeSubscription: Stripe.Subscription | null = null;
     if (subscriptionId) {
       try {
-        stripeSubscription = await stripe.subscriptions.retrieve(subscriptionId) as unknown as StripeSubscription;
+        stripeSubscription = await stripe.subscriptions.retrieve(subscriptionId);
       } catch (error) {
         logger.warn('Failed to retrieve Stripe subscription', {
           subscriptionId,
