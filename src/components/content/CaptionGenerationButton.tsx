@@ -250,7 +250,7 @@ export const CaptionGenerationButton: React.FC<CaptionGenerationButtonProps> = (
       
       <Dialog
         isOpen={isOpen}
-        onOpenChange={(open: any) => {
+        onClose={() => {(open: any) => {
           setIsOpen(open);
           if (!open) {
             // Reset state when dialog closes
