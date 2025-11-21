@@ -250,7 +250,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
             <IconButton 
               color="inherit" 
               onClick={handleNotificationsOpen}
-              size="large"
+              size="lg"
             >
               <Badge badgeContent={4} color="error">
                 <NotificationsIcon />
@@ -262,7 +262,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
           <Tooltip title="Account">
             <IconButton
               onClick={handleUserMenuOpen}
-              size="large"
+              size="lg"
               color="inherit"
               sx={{ ml: 1 }}
             >

@@ -292,7 +292,7 @@ export default function PricingSection() {
                   onClick={() => openPlanModal(plan)}
                   variant={plan.highlight ? "contained" : "outlined"}
                   fullWidth
-                  size="large"
+                  size="lg"
                   sx={{
                     py: 1.5,
                     background: plan.highlight ? "linear-gradient(45deg, #00FF6A, #00CC44)" : "transparent",
@@ -423,7 +423,7 @@ export default function PricingSection() {
               <TextField
                 value={numberOfUsers}
                 onChange={(e) => setNumberOfUsers(e.target.value)}
-                size="small"
+                size="sm"
                 sx={{ width: 80 }}
                 inputProps={{ style: { textAlign: "center" } }}
               />
