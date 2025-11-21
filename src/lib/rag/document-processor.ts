@@ -338,7 +338,7 @@ export class DocumentProcessor {
       
       // First check if the user has access to delete the document
       if (userId) {
-        const docRef = doc(this.getFirestore(), 'ragDocuments', documentId);
+        const docRef = doc(getFirebaseFirestore(), 'ragDocuments', documentId);
         const docSnap = await getDoc(docRef);
         
         if (docSnap.exists()) {
@@ -352,7 +352,7 @@ export class DocumentProcessor {
           // If org document, check if user is in that org
           if (docData.organizationId) {
             const orgMemberQuery = query(
-              collection(this.getFirestore(), 'organizationMembers'),
+              collection(getFirebaseFirestore(), 'organizationMembers'),
               where('userId', '==', userId),
               where('organizationId', '==', docData.organizationId)
             );
@@ -368,7 +368,7 @@ export class DocumentProcessor {
       
       // Get all chunk IDs for the document
       const chunksQuery = query(
-        collection(this.getFirestore(), 'ragChunks'),
+        collection(getFirebaseFirestore(), 'ragChunks'),
         where('documentId', '==', documentId)
       );
       
@@ -385,7 +385,7 @@ export class DocumentProcessor {
         
         // Also delete from Firestore if we're tracking chunks there
         try {
-          await deleteDoc(doc(this.getFirestore(), 'ragChunks', chunkId));
+          await deleteDoc(doc(getFirebaseFirestore(), 'ragChunks', chunkId));
         } catch (err) {
           const errorMessage = err instanceof Error ? err.message : String(err);
           logger.warn(`Error deleting chunk ${chunkId} from Firestore: ${errorMessage}`);
@@ -396,7 +396,7 @@ export class DocumentProcessor {
       await VectorDatabase.deleteDocument(`${documentId}-full`, collectionName);
       
       // Delete the document metadata from Firestore
-      await deleteDoc(doc(this.getFirestore(), 'ragDocuments', documentId));
+      await deleteDoc(doc(getFirebaseFirestore(), 'ragDocuments', documentId));
       
       logger.info(`Successfully deleted document ${documentId} with ${chunkIds.length} chunks`, { userId });
     } catch (error) {
@@ -444,7 +444,7 @@ export class DocumentProcessor {
   private async storeDocumentMetadata(document: Document): Promise<string> {
     try {
       const docId = document.id || uuidv4();
-      const docRef = doc(this.getFirestore(), 'ragDocuments', docId);
+      const docRef = doc(getFirebaseFirestore(), 'ragDocuments', docId);
       
       const docData = {
         id: docId,
@@ -481,7 +481,7 @@ export class DocumentProcessor {
    */
   private async updateDocumentMetadata(documentId: string, updates: Record<string, any>): Promise<void> {
     try {
-      const docRef = doc(this.getFirestore(), 'ragDocuments', documentId);
+      const docRef = doc(getFirebaseFirestore(), 'ragDocuments', documentId);
       
       await updateDoc(docRef, {
         ...updates,
@@ -534,7 +534,7 @@ export class DocumentProcessor {
   private async validateDocumentSize(document: Document, userId: string): Promise<void> {
     try {
       // Get user's data and organization
-      const userDoc = await getDoc(doc(this.getFirestore(), 'users', userId));
+      const userDoc = await getDoc(doc(getFirebaseFirestore(), 'users', userId));
       if (!userDoc.exists()) {
         throw new Error(`User ${userId} not found`);
       }
@@ -548,7 +548,7 @@ export class DocumentProcessor {
       
       if (orgId) {
         // Get organization subscription tier
-        const orgDoc = await getDoc(doc(this.getFirestore(), 'organizations', orgId));
+        const orgDoc = await getDoc(doc(getFirebaseFirestore(), 'organizations', orgId));
         if (orgDoc.exists()) {
           const orgData = orgDoc.data();
           if (orgData.billing?.subscriptionTier) {

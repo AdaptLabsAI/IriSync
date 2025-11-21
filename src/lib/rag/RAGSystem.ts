@@ -315,7 +315,7 @@ export class RAGSystem {
       const documentEmbeddings = await this.generateEmbeddings(document.content);
       
       // Store document in Firestore
-      const docRef = doc(collection(this.getFirestore(), this.config.documentsCollection), documentId);
+      const docRef = doc(collection(getFirebaseFirestore(), this.config.documentsCollection), documentId);
       
       await setDoc(docRef, {
         ...newDocument,
@@ -332,7 +332,7 @@ export class RAGSystem {
       
       // Store chunks in Firestore
       for (const chunk of chunks) {
-        await addDoc(collection(this.getFirestore(), this.config.chunksCollection), {
+        await addDoc(collection(getFirebaseFirestore(), this.config.chunksCollection), {
           ...chunk,
           documentId: chunk.documentId
         });
@@ -383,7 +383,7 @@ export class RAGSystem {
       }
       
       // Fetch from Firestore
-      const docRef = doc(this.getFirestore(), this.config.documentsCollection, documentId);
+      const docRef = doc(getFirebaseFirestore(), this.config.documentsCollection, documentId);
       const docSnap = await getDoc(docRef);
       
       if (!docSnap.exists()) {
@@ -448,7 +448,7 @@ export class RAGSystem {
       };
       
       // Update document in Firestore
-      const docRef = doc(this.getFirestore(), this.config.documentsCollection, documentId);
+      const docRef = doc(getFirebaseFirestore(), this.config.documentsCollection, documentId);
       
       const updateData: Record<string, any> = {
         ...updates,
@@ -459,7 +459,7 @@ export class RAGSystem {
       if (updates.content) {
         // Delete old chunks
         const chunksQuery = firestoreQuery(
-          collection(this.getFirestore(), this.config.chunksCollection),
+          collection(getFirebaseFirestore(), this.config.chunksCollection),
           where('documentId', '==', documentId)
         );
         
@@ -480,7 +480,7 @@ export class RAGSystem {
         
         // Store new chunks
         for (const chunk of chunks) {
-          await addDoc(collection(this.getFirestore(), this.config.chunksCollection), {
+          await addDoc(collection(getFirebaseFirestore(), this.config.chunksCollection), {
             ...chunk,
             documentId: chunk.documentId
           });
@@ -540,11 +540,11 @@ export class RAGSystem {
       }
       
       // Delete document from Firestore
-      await deleteDoc(doc(this.getFirestore(), this.config.documentsCollection, documentId));
+      await deleteDoc(doc(getFirebaseFirestore(), this.config.documentsCollection, documentId));
       
       // Delete all chunks for this document
       const chunksQuery = firestoreQuery(
-        collection(this.getFirestore(), this.config.chunksCollection),
+        collection(getFirebaseFirestore(), this.config.chunksCollection),
         where('documentId', '==', documentId)
       );
       
@@ -591,7 +591,7 @@ export class RAGSystem {
       const startTime = Date.now();
       
       // Build query
-      let docsQuery: any = collection(this.getFirestore(), this.config.documentsCollection);
+      let docsQuery: any = collection(getFirebaseFirestore(), this.config.documentsCollection);
       
       // Add filters
       const filters: any[] = [];
@@ -724,20 +724,20 @@ export class RAGSystem {
       if (documentIds.length > 0) {
         // Filter by document IDs
         chunksQuery = firestoreQuery(
-          collection(this.getFirestore(), this.config.chunksCollection),
+          collection(getFirebaseFirestore(), this.config.chunksCollection),
           where('documentId', 'in', documentIds.slice(0, 10)) // Firestore 'in' limit is 10
         );
       } else if (options.publicOnly) {
         // Get public chunks only
         chunksQuery = firestoreQuery(
-          collection(this.getFirestore(), this.config.chunksCollection),
+          collection(getFirebaseFirestore(), this.config.chunksCollection),
           where('isPublic', '==', true),
           firestoreLimit(100)
         );
       } else {
         // Get user chunks and public chunks
         chunksQuery = firestoreQuery(
-          collection(this.getFirestore(), this.config.chunksCollection),
+          collection(getFirebaseFirestore(), this.config.chunksCollection),
           where('userId', '==', userId),
           firestoreLimit(100)
         );

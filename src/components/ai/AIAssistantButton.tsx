@@ -51,7 +51,7 @@ export interface AIAssistantButtonProps extends Omit<ButtonProps, 'onClick'> {
   /**
    * Button variant
    */
-  variant?: 'default' | 'outline' | 'ghost' | 'secondary';
+  variant?: 'primary' | 'outline' | 'ghost' | 'secondary';
   /**
    * Optional class name for additional styling
    */
@@ -164,7 +164,7 @@ const AIAssistantButton: React.FC<AIAssistantButtonProps> = ({
       
       toast({
         title: "Message failed",
-        description: error || "Failed to get a response. Please try again.",
+        description: typeof error === 'string' ? error : error?.message || "Failed to get a response. Please try again.",
         variant: "destructive"
       });
       
@@ -325,10 +325,8 @@ const AIAssistantButton: React.FC<AIAssistantButtonProps> = ({
         renderMinimizedChat()
       ) : (
         <Dialog
-          open={isOpen}
-          onOpenChange={(open: any) => {
-            setIsOpen(open);
-          }}
+          isOpen={isOpen}
+          onClose={() => setIsOpen(false)}
         >
           <DialogContent className="sm:max-w-[500px] max-h-[90vh] flex flex-col">
             <DialogHeader className="flex-shrink-0 flex items-center justify-between">

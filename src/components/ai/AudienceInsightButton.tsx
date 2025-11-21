@@ -63,7 +63,7 @@ export interface AudienceInsightButtonProps extends Omit<ButtonProps, 'onClick'>
   /**
    * Button variant
    */
-  variant?: 'default' | 'outline' | 'ghost' | 'secondary';
+  variant?: 'primary' | 'outline' | 'ghost' | 'secondary';
   /**
    * Optional class name for additional styling
    */
@@ -147,7 +147,7 @@ const AudienceInsightButton: React.FC<AudienceInsightButtonProps> = ({
       console.error('Error generating audience insights:', err);
       toast({
         title: "Generation failed",
-        description: error || "Failed to generate audience insights. Please try again.",
+        description: typeof error === 'string' ? error : error?.message || "Failed to generate audience insights. Please try again.",
         variant: "destructive"
       });
     } finally {
@@ -226,10 +226,8 @@ const AudienceInsightButton: React.FC<AudienceInsightButtonProps> = ({
       </Button>
       
       <Dialog
-        open={isOpen}
-        onOpenChange={(open: any) => {
-          setIsOpen(open);
-        }}
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
       >
         <DialogContent className="sm:max-w-[700px]">
           <DialogHeader>

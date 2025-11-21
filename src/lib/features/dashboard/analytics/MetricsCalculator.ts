@@ -228,7 +228,7 @@ export class MetricsCalculator {
   ): Promise<number> {
     try {
       // Get engagement data from posts
-      const postsRef = collection(this.getFirestore(), 'users', userId, 'posts');
+      const postsRef = collection(firestore, 'users', userId, 'posts');
       const q = query(
         postsRef,
         where('publishedAt', '>=', Timestamp.fromDate(startDate)),
@@ -263,7 +263,7 @@ export class MetricsCalculator {
   ): Promise<number> {
     try {
       // Get reach data from posts
-      const postsRef = collection(this.getFirestore(), 'users', userId, 'posts');
+      const postsRef = collection(firestore, 'users', userId, 'posts');
       const q = query(
         postsRef,
         where('publishedAt', '>=', Timestamp.fromDate(startDate)),
@@ -298,7 +298,7 @@ export class MetricsCalculator {
   ): Promise<number> {
     try {
       // Get impressions data from posts
-      const postsRef = collection(this.getFirestore(), 'users', userId, 'posts');
+      const postsRef = collection(firestore, 'users', userId, 'posts');
       const q = query(
         postsRef,
         where('publishedAt', '>=', Timestamp.fromDate(startDate)),
@@ -332,7 +332,7 @@ export class MetricsCalculator {
   ): Promise<number> {
     try {
       // Get latest follower counts from platform stats
-      const statsRef = collection(this.getFirestore(), 'users', userId, 'platformStats');
+      const statsRef = collection(firestore, 'users', userId, 'platformStats');
       const q = query(
         statsRef,
         where('timestamp', '<=', Timestamp.fromDate(endDate)),
@@ -377,7 +377,7 @@ export class MetricsCalculator {
     platforms?: Platform[]
   ): Promise<number> {
     try {
-      const postsRef = collection(this.getFirestore(), 'users', userId, 'posts');
+      const postsRef = collection(firestore, 'users', userId, 'posts');
       const q = query(
         postsRef,
         where('publishedAt', '>=', Timestamp.fromDate(startDate)),
@@ -411,7 +411,7 @@ export class MetricsCalculator {
     platforms?: Platform[]
   ): Promise<number> {
     try {
-      const postsRef = collection(this.getFirestore(), 'users', userId, 'posts');
+      const postsRef = collection(firestore, 'users', userId, 'posts');
       const q = query(
         postsRef,
         where('publishedAt', '>=', Timestamp.fromDate(startDate)),
@@ -445,7 +445,7 @@ export class MetricsCalculator {
     platforms?: Platform[]
   ): Promise<number> {
     try {
-      const postsRef = collection(this.getFirestore(), 'users', userId, 'posts');
+      const postsRef = collection(firestore, 'users', userId, 'posts');
       const q = query(
         postsRef,
         where('publishedAt', '>=', Timestamp.fromDate(startDate)),
@@ -479,7 +479,7 @@ export class MetricsCalculator {
     platforms?: Platform[]
   ): Promise<number> {
     try {
-      const postsRef = collection(this.getFirestore(), 'users', userId, 'posts');
+      const postsRef = collection(firestore, 'users', userId, 'posts');
       const q = query(
         postsRef,
         where('publishedAt', '>=', Timestamp.fromDate(startDate)),
@@ -603,7 +603,7 @@ export class MetricsCalculator {
     platforms?: Platform[]
   ): Promise<number> {
     try {
-      const postsRef = collection(this.getFirestore(), 'users', userId, 'posts');
+      const postsRef = collection(firestore, 'users', userId, 'posts');
       const q = query(
         postsRef,
         where('publishedAt', '>=', Timestamp.fromDate(startDate)),
@@ -631,7 +631,7 @@ export class MetricsCalculator {
   ): Promise<number> {
     try {
       // Get response times from social inbox data
-      const inboxRef = collection(this.getFirestore(), 'users', userId, 'socialInbox');
+      const inboxRef = collection(firestore, 'users', userId, 'socialInbox');
       const q = query(
         inboxRef,
         where('timestamp', '>=', Timestamp.fromDate(startDate)),
@@ -670,7 +670,7 @@ export class MetricsCalculator {
   ): Promise<number> {
     try {
       // Get sentiment scores from posts and comments
-      const postsRef = collection(this.getFirestore(), 'users', userId, 'posts');
+      const postsRef = collection(firestore, 'users', userId, 'posts');
       const q = query(
         postsRef,
         where('publishedAt', '>=', Timestamp.fromDate(startDate)),

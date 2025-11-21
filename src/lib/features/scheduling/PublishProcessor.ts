@@ -15,7 +15,7 @@ import { scheduledPostService, ScheduledPost, PublishResult } from './ScheduledP
 import { PlatformProviderFactory } from '../platforms/providers/PlatformProviderFactory';
 import { PlatformType } from '../platforms/PlatformProvider';
 import { getFirebaseFirestore } from '../../core/firebase';
-import { doc, getDoc } from 'firebase/firestore';
+import { collection, query, where, getDocs } from 'firebase/firestore';
 import { firestore } from '@/lib/core/firebase';
 
 /**
@@ -251,13 +251,15 @@ export class PublishProcessor {
   ): Promise<PlatformConnection[]> {
     try {
       // Get connected accounts from Firebase
-      const accountsSnapshot = await firestore
-        .collection('connectedAccounts')
-        .where('userId', '==', userId)
-        .where('organizationId', '==', organizationId)
-        .where('platformType', '==', platformType)
-        .where('isActive', '==', true)
-        .get();
+      const accountsQuery = query(
+        collection(firestore, 'connectedAccounts'),
+        where('userId', '==', userId),
+        where('organizationId', '==', organizationId),
+        where('platformType', '==', platformType),
+        where('isActive', '==', true)
+      );
+
+      const accountsSnapshot = await getDocs(accountsQuery);
 
       const connections: PlatformConnection[] = [];
 

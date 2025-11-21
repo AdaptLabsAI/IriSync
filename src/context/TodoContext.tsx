@@ -188,11 +188,16 @@ export const TodoProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   const addTodo = async (text: string, category?: string, dueDate?: string, priority: 'low' | 'medium' | 'high' = 'medium') => {
     try {
+      const db = getFirebaseFirestore();
+      if (!db) {
+        throw new Error('Database not configured');
+      }
+
       const currentUser = auth.currentUser;
       if (!currentUser) {
         throw new Error('You must be logged in to create tasks');
       }
-      
+
       const todoData = {
         text,
         completed: false,
@@ -203,8 +208,8 @@ export const TodoProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         userId: currentUser.uid,
         updatedAt: serverTimestamp()
       };
-      
-      const todosRef = collection(firestore, 'todos');
+
+      const todosRef = collection(db, 'todos');
       const docRef = await addDoc(todosRef, todoData);
       
       const newTodo: TodoItem = {
@@ -248,10 +253,15 @@ export const TodoProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   const toggleTodo = async (id: string) => {
     try {
+      const db = getFirebaseFirestore();
+      if (!db) {
+        throw new Error('Database not configured');
+      }
+
       const todo = todos.find(t => t.id === id);
       if (!todo) return;
-      
-      const todoRef = doc(firestore, 'todos', id);
+
+      const todoRef = doc(db, 'todos', id);
       await updateDoc(todoRef, {
         completed: !todo.completed,
         updatedAt: serverTimestamp()
@@ -299,7 +309,12 @@ export const TodoProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   const deleteTodo = async (id: string) => {
     try {
-      const todoRef = doc(firestore, 'todos', id);
+      const db = getFirebaseFirestore();
+      if (!db) {
+        throw new Error('Database not configured');
+      }
+
+      const todoRef = doc(db, 'todos', id);
       await deleteDoc(todoRef);
       
       setTodos(todos.filter(todo => todo.id !== id));

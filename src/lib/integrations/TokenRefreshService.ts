@@ -1,4 +1,5 @@
 import { firestore } from '@/lib/core/firebase/client';
+import { getFirebaseFirestore } from '@/lib/core/firebase';
 import { Firestore, doc, getDoc, updateDoc } from 'firebase/firestore';
 import { HubspotAdapter } from './HubspotAdapter';
 import { SalesforceAdapter } from './SalesforceAdapter';
