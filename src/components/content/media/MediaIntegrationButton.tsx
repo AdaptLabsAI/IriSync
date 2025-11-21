@@ -139,7 +139,7 @@ export interface MediaIntegrationButtonProps {
   /**
    * Button variant
    */
-  variant?: 'default' | 'outline' | 'ghost';
+  variant?: 'primary' | 'outline' | 'ghost';
 }
 
 /**
