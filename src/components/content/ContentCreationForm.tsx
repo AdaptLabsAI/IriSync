@@ -468,7 +468,7 @@ export default function ContentCreationForm({
                   placeholder="https://example.com"
                   value={linkUrl}
                   onChange={(e: any) => setLinkUrl(e.target.value)}
-                  size="small"
+                  size="sm"
                 />
                 <Button 
                   variant="contained" 
@@ -531,7 +531,7 @@ export default function ContentCreationForm({
                       </Box>
                     )}
                     <IconButton
-                      size="small"
+                      size="sm"
                       sx={{
                         position: 'absolute',
                         top: 8,

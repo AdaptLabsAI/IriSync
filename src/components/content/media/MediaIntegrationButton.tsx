@@ -264,7 +264,7 @@ export const MediaIntegrationButton: React.FC<MediaIntegrationButtonProps> = ({
             <div className="space-x-2 flex items-center">
               <Button
                 variant="text"
-                size="small"
+                size="sm"
                 onClick={() => handleDisconnect(integration.id)}
                 disabled={isLoading || !hasAccess}
                 className="h-8 text-xs"
@@ -277,7 +277,7 @@ export const MediaIntegrationButton: React.FC<MediaIntegrationButtonProps> = ({
               
               <Button
                 variant="contained"
-                size="small"
+                size="sm"
                 onClick={() => onBrowseFiles(integration.id)}
                 disabled={isLoading || !hasAccess || integration.connectionStatus === 'error'}
                 className="h-8 text-xs"
@@ -289,7 +289,7 @@ export const MediaIntegrationButton: React.FC<MediaIntegrationButtonProps> = ({
           ) : (
             <Button
               variant="outlined"
-              size="small"
+              size="sm"
               onClick={() => handleConnect(integration.id)}
               disabled={isLoading || !hasAccess}
               className="h-8 text-xs"
@@ -384,7 +384,7 @@ export const MediaIntegrationButton: React.FC<MediaIntegrationButtonProps> = ({
                     </p>
                     <Button 
                       variant="text" 
-                      size="small" 
+                      size="sm" 
                       onClick={() => setActiveTab('available')}
                       className="mt-3"
                     >
