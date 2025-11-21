@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, ButtonSize } from '../../ui/button/Button';
+import { Button, ButtonSize } from '../../ui/button';
 import { Mail, MailOpen, Loader2, Check, X } from 'lucide-react';
 import { Badge } from '../../ui/Badge';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../../ui/tooltip';

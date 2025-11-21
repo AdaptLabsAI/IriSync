@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, ButtonVariant, ButtonSize } from '../../ui/button/Button';
+import { Button, ButtonVariant, ButtonSize } from '../../ui/button';
 import { Reply, Loader2, X, Send, FileImage, Smile, PaperclipIcon, FileText } from 'lucide-react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from '../../ui/dialog';
 import { TextArea } from '../../ui/textarea';

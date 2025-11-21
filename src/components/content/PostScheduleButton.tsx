@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Button } from '../../ui/button/Button';
+import { Button } from '../../ui/button';
 import { Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
 import { DateTimePicker } from '../../ui/datepicker';
-import { Select } from '../../ui/select/Select';
+import { Select } from '../../ui/select';
 import { SocialPlatform } from '../platform/PlatformConnectButton';
 
 export interface ScheduledPost {

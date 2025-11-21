@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { Button, ButtonVariant, ButtonSize } from '../../ui/button/Button';
+import { Button, ButtonVariant, ButtonSize } from '../../ui/button';
 import { Filter, Check, X, ChevronDown, RefreshCw } from 'lucide-react';
 import { Popover, PopoverContent, PopoverTrigger } from '../../ui/popover';
 import { Badge } from '../../ui/Badge';

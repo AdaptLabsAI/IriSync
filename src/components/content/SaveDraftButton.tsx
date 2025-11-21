@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button } from '../../ui/button/Button';
+import { Button } from '../../ui/button';
 import { useToast } from '../../ui/use-toast';
 
 interface SaveDraftButtonProps {

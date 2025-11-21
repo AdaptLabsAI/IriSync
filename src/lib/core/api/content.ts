@@ -1,5 +1,5 @@
-import type { MediaContent } from '../content/models/media';
-import type { InboxMessage } from '../content/SocialInboxService';
+import type { MediaContent } from '../../content/models/media';
+import type { InboxMessage } from '../../content/SocialInboxService';
 
 export async function getMediaContent(folderId?: string): Promise<MediaContent[]> {
   const params = new URLSearchParams();
@@ -198,7 +198,7 @@ export async function uploadMedia(params: UploadMediaParams): Promise<MediaConte
 }
 
 // Folder API
-import type { MediaFolder } from '../content/models/media';
+import type { MediaFolder } from '../../content/models/media';
 
 export async function listMediaFolders(parentId?: string | null): Promise<MediaFolder[]> {
   const params = new URLSearchParams();

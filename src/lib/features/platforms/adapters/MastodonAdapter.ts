@@ -3,7 +3,7 @@ import { PlatformAccountInfo, PlatformAuthData } from '../models';
 import axios from 'axios';
 import crypto from 'crypto';
 import { logger } from '../../../core/logging/logger';
-import { PlatformType } from '../models/PlatformType';
+import { PlatformType } from '../PlatformProvider';
 
 interface MastodonPost {
   status: string;

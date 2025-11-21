@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button } from '../../ui/button/Button';
+import { Button } from '../../ui/button';
 import Dialog from '../../ui/dialog';
 import { DialogContent, DialogTitle } from '@mui/material';
 import { useSubscription } from '../../hooks/useSubscription';

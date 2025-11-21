@@ -1,13 +1,13 @@
 import { firestore, getFirebaseFirestore } from '../firebase/admin';
 import { Firestore, collection, query, where, orderBy, limit, getDocs, doc, getDoc } from 'firebase/firestore';
-import { ProviderType, SubscriptionTier, TaskCategory } from '../ai/models';
-import { TieredModelRouter } from '../ai/models/tiered-model-router';
+import { ProviderType, SubscriptionTier, TaskCategory } from '../../ai/models';
+import { TieredModelRouter } from '../../ai/models/tiered-model-router';
 import { TokenService } from '../../tokens/token-service';
 import { TokenRepository } from '../../tokens/token-repository';
 import { NotificationService } from '../notifications/NotificationService';
 import { logger } from '../logging/logger';
 import { SocialPlatform } from '../models/SocialAccount';
-import { PlatformType } from '../platforms/models';
+import { PlatformType } from '../../platforms/models';
 
 /**
  * Interface for AI-analyzed optimal posting time

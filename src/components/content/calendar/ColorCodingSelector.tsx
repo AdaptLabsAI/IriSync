@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button } from '../../ui/button/Button';
+import { Button } from '../../ui/button';
 import { Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
 import { RadioGroup } from '../../ui/radio/RadioGroup';
 

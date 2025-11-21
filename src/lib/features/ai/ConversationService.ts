@@ -12,7 +12,7 @@
  * - Privacy controls
  */
 
-import { getFirebaseFirestore } from '../../../core/firebase';
+import { getFirebaseFirestore } from '../../core/firebase';
 import {
   collection,
   doc,
@@ -29,7 +29,7 @@ import {
   DocumentReference,
   Firestore
 } from 'firebase/firestore';
-import { logger } from '../../../core/logging/logger';
+import { logger } from '../../core/logging/logger';
 
 /**
  * Message role types

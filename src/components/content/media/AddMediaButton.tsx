@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Button } from '../../ui/button/Button';
+import { Button } from '../../ui/button';
 import Dialog from '../../ui/dialog';
 import { Dialog as MuiDialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
 import { useSubscription } from '../../../hooks/useSubscription';
