@@ -31,7 +31,12 @@ export enum PlatformType {
 }
 
 /**
- * Platform capabilities 
+ * Platform filter type for queries - includes 'all' as a sentinel for no platform filtering
+ */
+export type PlatformFilter = PlatformType | 'all';
+
+/**
+ * Platform capabilities
  */
 export interface PlatformCapabilities {
   supportsImagePosts: boolean;
