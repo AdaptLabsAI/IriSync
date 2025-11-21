@@ -214,6 +214,20 @@ export const DialogHeader = ({ children, ...props }: { children: React.ReactNode
   <MuiDialogTitle {...props}>{children}</MuiDialogTitle>
 );
 export const DialogTitle = MuiDialogTitle;
+export const DialogDescription = ({ children, className, ...props }: { children: React.ReactNode; className?: string }) => (
+  <Box
+    sx={{
+      fontSize: '0.875rem',
+      color: 'text.secondary',
+      mb: 2,
+      mt: -0.5
+    }}
+    className={className}
+    {...props}
+  >
+    {children}
+  </Box>
+);
 export const DialogFooter = MuiDialogActions;
 
 export default Dialog; 
