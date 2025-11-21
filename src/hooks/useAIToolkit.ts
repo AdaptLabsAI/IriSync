@@ -267,11 +267,33 @@ export function useAIToolkit() {
   }, [callToolkitApi]);
 
   /**
+   * Send a chat message to the AI assistant
+   * @param message - The user's message
+   * @param history - Previous chat messages for context
+   * @param context - Additional context information
+   * @returns The AI assistant's response
+   */
+  const sendChatMessage = useCallback(async (
+    message: string,
+    history?: Array<{ role: 'user' | 'assistant'; content: string }>,
+    context?: Record<string, any>
+  ): Promise<string> => {
+    const result = await callToolkitApi('chat', {
+      message,
+      history,
+      context
+    });
+
+    // Return the response text or a default error message
+    return result?.response || result?.content || result?.text || 'I apologize, but I encountered an issue processing your request.';
+  }, [callToolkitApi]);
+
+  /**
    * Check if the user can perform an AI operation (has enough tokens)
    */
   const canPerformOperation = useCallback(async (operation: string) => {
     if (!user) return { allowed: false, reason: 'Not authenticated' };
-    
+
     // Map operation to task type
     const taskTypeMap: Record<string, string> = {
       'analyzeContent': 'analyze_sentiment',
@@ -286,14 +308,15 @@ export function useAIToolkit() {
       'analyzeHashtags': 'generate_hashtags',
       'generateMediaRecommendations': 'generate_post',
       'analyzeSEO': 'analyze_sentiment',
-      'generateCampaign': 'generate_post'
+      'generateCampaign': 'generate_post',
+      'chat': 'generate_post'
     };
-    
+
     const taskType = taskTypeMap[operation];
     if (!taskType) {
       return { allowed: false, reason: 'Invalid operation' };
     }
-    
+
     return await canPerformTask(taskType as any);
   }, [user, canPerformTask]);
 
@@ -313,6 +336,7 @@ export function useAIToolkit() {
     generateMediaRecommendations,
     analyzeSEO,
     generateCampaign,
+    sendChatMessage,
     canPerformOperation
   };
 } 
