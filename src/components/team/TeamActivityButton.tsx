@@ -184,7 +184,7 @@ const TeamActivityButton: React.FC<TeamActivityButtonProps> = ({
               src={item.userAvatar} 
               alt={item.userName} 
               fallback={item.userName.charAt(0)} 
-              size="xs"
+              size="sm"
             />
             <span className="font-medium text-sm">{item.userName}</span>
             <span className="text-gray-500 text-xs">•</span>

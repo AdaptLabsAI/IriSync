@@ -202,7 +202,7 @@ export default function InviteMemberForm({ roles, onInvite }: InviteMemberFormPr
     <>
       <Button 
         variant="contained" 
-        size="small" 
+        size="sm" 
         startIcon={<UserPlus />}
         onClick={() => setIsOpen(true)}
       >
