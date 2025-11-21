@@ -68,7 +68,7 @@ export interface ApprovalButtonProps {
   /**
    * Optional variant for the button
    */
-  variant?: 'default' | 'outline' | 'ghost';
+  variant?: 'primary' | 'outline' | 'ghost';
   /**
    * Optional size for the button
    */

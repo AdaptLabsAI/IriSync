@@ -433,7 +433,7 @@ export const TagManagementButton: React.FC<TagManagementButtonProps> = ({
       {/* Delete confirmation dialog */}
       {tagToDelete && (
         <Dialog
-          open={!!tagToDelete}
+          isOpen={!!tagToDelete}
           onOpenChange={(open: any) => !open && setTagToDelete(null)}
         >
           <DialogContent className="sm:max-w-md">
@@ -462,7 +462,7 @@ export const TagManagementButton: React.FC<TagManagementButtonProps> = ({
                 Cancel
               </Button>
               <Button
-                variant="destructive"
+                variant="danger"
                 onClick={() => handleDeleteTag(tagToDelete)}
                 disabled={isDeletingTag}
               >

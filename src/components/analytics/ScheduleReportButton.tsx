@@ -440,7 +440,7 @@ const ScheduleReportButton: React.FC<ScheduleReportButtonProps> = ({
               <div className="flex justify-between mt-4">
                 {currentSchedule && onDelete ? (
                   <Button
-                    variant="destructive"
+                    variant="danger"
                     onClick={handleDelete}
                     disabled={isSubmitting}
                   >

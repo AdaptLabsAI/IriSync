@@ -278,7 +278,7 @@ const ComparePeriodsButton: React.FC<ComparePeriodsButtonProps> = ({
               <div className="flex justify-between mt-6">
                 {isComparisonActive ? (
                   <Button
-                    variant="destructive"
+                    variant="danger"
                     onClick={handleRemoveComparison}
                   >
                     Remove Comparison

@@ -74,7 +74,7 @@ export interface CaptionGenerationButtonProps {
   /**
    * Button variant
    */
-  variant?: 'default' | 'outline' | 'ghost' | 'secondary';
+  variant?: 'primary' | 'outline' | 'ghost' | 'secondary';
   /**
    * Optional class name for additional styling
    */
@@ -249,7 +249,7 @@ export const CaptionGenerationButton: React.FC<CaptionGenerationButtonProps> = (
       </Button>
       
       <Dialog
-        open={isOpen}
+        isOpen={isOpen}
         onOpenChange={(open: any) => {
           setIsOpen(open);
           if (!open) {

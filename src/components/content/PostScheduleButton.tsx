@@ -159,7 +159,7 @@ export const PostScheduleButton: React.FC<PostScheduleButtonProps> = ({
       </Button>
 
       <Dialog
-        open={isOpen}
+        isOpen={isOpen}
         onClose={handleCloseDialog}
       >
         <DialogTitle>Schedule Post</DialogTitle>

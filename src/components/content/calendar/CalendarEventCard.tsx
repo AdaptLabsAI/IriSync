@@ -477,7 +477,7 @@ const CalendarEventCard: React.FC<CalendarEventCardProps> = ({
             </Button>
             <Button
               size="sm"
-              variant="destructive"
+              variant="danger"
               onClick={handleDelete}
             >
               Delete
