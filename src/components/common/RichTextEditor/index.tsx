@@ -112,15 +112,15 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
     >
       <Stack direction="row" spacing={2}>
         <Stack direction="row">
-          <Button size="small" onClick={handleBold} sx={{ fontWeight: 'bold' }}>B</Button>
-          <Button size="small" onClick={handleItalic} sx={{ fontStyle: 'italic' }}>I</Button>
-          <Button size="small" onClick={handleUnderline} sx={{ textDecoration: 'underline' }}>U</Button>
+          <Button size="sm" onClick={handleBold} sx={{ fontWeight: 'bold' }}>B</Button>
+          <Button size="sm" onClick={handleItalic} sx={{ fontStyle: 'italic' }}>I</Button>
+          <Button size="sm" onClick={handleUnderline} sx={{ textDecoration: 'underline' }}>U</Button>
         </Stack>
         
         <Stack direction="row">
           <Tooltip title="Insert link">
             <IconButton 
-              size="small"
+              size="sm"
               aria-label="Insert link" 
               onClick={handleLink} 
             >
@@ -130,7 +130,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
           
           <Tooltip title="Insert code">
             <IconButton 
-              size="small"
+              size="sm"
               aria-label="Insert code" 
               onClick={handleCode} 
             >
@@ -140,7 +140,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
           
           <Tooltip title="Insert image">
             <IconButton 
-              size="small"
+              size="sm"
               aria-label="Insert image" 
               onClick={handleImageUpload} 
             >

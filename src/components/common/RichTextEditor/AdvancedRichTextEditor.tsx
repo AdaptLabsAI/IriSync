@@ -409,7 +409,7 @@ const AdvancedRichTextEditor: React.FC<AdvancedRichTextEditorProps> = ({
             <>
               <Tooltip title="AI Assistance">
                 <IconButton
-                  size="small"
+                  size="sm"
                   onClick={(e) => setAiMenuAnchor(e.currentTarget)}
                   disabled={isAIProcessing}
                   color="primary"
@@ -447,7 +447,7 @@ const AdvancedRichTextEditor: React.FC<AdvancedRichTextEditorProps> = ({
           {onSave && (
             <Tooltip title="Save">
               <IconButton
-                size="small"
+                size="sm"
                 onClick={handleManualSave}
                 disabled={isSaving}
                 color="primary"
@@ -461,7 +461,7 @@ const AdvancedRichTextEditor: React.FC<AdvancedRichTextEditorProps> = ({
 
           {/* Quick Actions */}
           <Tooltip title="Insert Link">
-            <IconButton size="small" onClick={() => setLinkDialogOpen(true)}>
+            <IconButton size="sm" onClick={() => setLinkDialogOpen(true)}>
               <Link />
             </IconButton>
           </Tooltip>
@@ -585,10 +585,10 @@ const AdvancedRichTextEditor: React.FC<AdvancedRichTextEditorProps> = ({
                 Brand Guidelines (will be applied automatically):
               </Typography>
               <Stack direction="row" spacing={1} flexWrap="wrap">
-                {brandGuidelines.tone && <Chip label={`Tone: ${brandGuidelines.tone}`} size="small" />}
-                {brandGuidelines.style && <Chip label={`Style: ${brandGuidelines.style}`} size="small" />}
+                {brandGuidelines.tone && <Chip label={`Tone: ${brandGuidelines.tone}`} size="sm" />}
+                {brandGuidelines.style && <Chip label={`Style: ${brandGuidelines.style}`} size="sm" />}
                 {brandGuidelines.keywords?.map((keyword, index) => (
-                  <Chip key={index} label={keyword} size="small" variant="outlined" />
+                  <Chip key={index} label={keyword} size="sm" variant="outlined" />
                 ))}
               </Stack>
             </Box>
