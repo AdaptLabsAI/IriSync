@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Button, ButtonProps } from '../ui/button/Button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '../ui/dialog';
 import { useToast } from '../ui/use-toast';
-import { useSubscription } from '../../hooks/useSubscription';
+import { useSubscription, type SubscriptionTier } from '../../hooks/useSubscription';
 import { useAIToolkit } from '../../hooks/useAIToolkit';
 import { TextArea } from '../ui/textarea/TextArea';
 import { Loader2, Bot, Lock, Send, ChevronDown, ChevronUp, X } from 'lucide-react';
@@ -86,12 +86,14 @@ const AIAssistantButton: React.FC<AIAssistantButtonProps> = ({
   const { toast } = useToast();
   const { subscription } = useSubscription();
   const { sendChatMessage, loading, error } = useAIToolkit();
-  
-  const userTier = subscription?.tier || 'creator';
-  
-  // Check feature availability based on subscription tier
-  const canUseAIAssistant = userTier !== 'free';
-  
+
+  // Explicitly type userTier to match the subscription tier union
+  const userTier: SubscriptionTier = subscription?.tier || 'creator';
+
+  // Check feature availability - all subscription tiers (creator, influencer, enterprise) can use AI Assistant
+  // Users with a subscription can access the AI Assistant
+  const canUseAIAssistant = !!subscription;
+
   // Different capabilities based on tier
   const hasAdvancedCapabilities = userTier === 'enterprise' || userTier === 'influencer';
   

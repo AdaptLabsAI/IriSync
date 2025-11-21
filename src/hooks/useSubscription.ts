@@ -3,9 +3,11 @@ import { useSession } from 'next-auth/react';
 import axios from 'axios';
 import { useOrganization } from './useOrganization';
 
-interface Subscription {
+export type SubscriptionTier = 'creator' | 'influencer' | 'enterprise';
+
+export interface Subscription {
   id: string;
-  tier: 'creator' | 'influencer' | 'enterprise';
+  tier: SubscriptionTier;
   status: 'active' | 'canceled' | 'past_due' | 'trialing';
   currentPeriodEnd: string;
   currentPeriodStart: string;
