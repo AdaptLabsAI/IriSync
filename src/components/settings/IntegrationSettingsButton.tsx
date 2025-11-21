@@ -358,7 +358,7 @@ const IntegrationSettingsButton: React.FC<IntegrationSettingsButtonProps> = ({
               
               <div className="flex justify-end">
                 <Button
-                  variant="default"
+                  variant="primary"
                   size="sm"
                   className="flex items-center"
                   onClick={() => {
