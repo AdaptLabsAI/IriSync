@@ -340,6 +340,22 @@ export function useAIToolkit() {
   }, [callToolkitApi]);
 
   /**
+   * Analyze trends for topics, keywords, or platforms
+   */
+  const analyzeTrends = useCallback(
+    async (params: {
+      topic?: string;
+      keywords?: string[];
+      platforms?: SocialPlatform[];
+      timeframe?: string;
+      options?: any;
+    }) => {
+      return callToolkitApi('analyzeTrends', params);
+    },
+    [callToolkitApi]
+  );
+
+  /**
    * Check if the user can perform an AI operation (has enough tokens)
    */
   const canPerformOperation = useCallback(async (operation: string) => {
@@ -363,7 +379,8 @@ export function useAIToolkit() {
       'generateCampaign': 'generate_post',
       'chat': 'generate_post',
       'generateAudienceInsights': 'analyze_sentiment',
-      'generateImage': 'analyze_image'
+      'generateImage': 'analyze_image',
+      'analyzeTrends': 'analyze_sentiment'
     };
 
     const taskType = taskTypeMap[operation];
@@ -394,6 +411,7 @@ export function useAIToolkit() {
     sendChatMessage,
     generateAudienceInsights,
     generateImage,
+    analyzeTrends,
     canPerformOperation
   };
 } 
