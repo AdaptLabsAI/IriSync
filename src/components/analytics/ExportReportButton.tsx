@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button } from '../ui/button';
 import { Download, FileText, Image, Loader, Lock } from 'lucide-react';
-import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from '../ui/dropdown';
+import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from '../ui/dropdown';
 
 export type ExportFormat = 'pdf' | 'csv' | 'excel' | 'image';
 
@@ -149,8 +149,8 @@ export const ExportReportButton: React.FC<ExportReportButtonProps> = ({
 
   // Otherwise show dropdown with format options
   return (
-    <Dropdown>
-      <DropdownTrigger asChild>
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
         <Button
           variant={variant}
           size={size}
@@ -164,19 +164,19 @@ export const ExportReportButton: React.FC<ExportReportButtonProps> = ({
           )}
           {!iconOnly && (
             <span>
-              {exporting && exportFormat 
-                ? `Exporting ${formatLabels[exportFormat].split(' ')[0]}...` 
+              {exporting && exportFormat
+                ? `Exporting ${formatLabels[exportFormat].split(' ')[0]}...`
                 : 'Export'}
             </span>
           )}
         </Button>
-      </DropdownTrigger>
-      <DropdownMenu>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent>
         <div className="p-2 text-xs text-gray-500">Export {reportName}</div>
         {availableFormats.map((format) => {
           const hasAccess = hasAccessToFormat(format);
           return (
-            <DropdownItem
+            <DropdownMenuItem
               key={format}
               disabled={!hasAccess}
               onClick={() => hasAccess && handleExport(format)}
@@ -185,11 +185,11 @@ export const ExportReportButton: React.FC<ExportReportButtonProps> = ({
               {getFormatIcon(format)}
               <span>{formatLabels[format]}</span>
               {!hasAccess && <Lock className="h-3 w-3 ml-2 opacity-70" />}
-            </DropdownItem>
+            </DropdownMenuItem>
           );
         })}
-      </DropdownMenu>
-    </Dropdown>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 };
 

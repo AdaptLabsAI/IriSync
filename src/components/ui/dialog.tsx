@@ -230,8 +230,8 @@ export const ConfirmDialog: React.FC<{
 
 // Export individual dialog components for compatibility
 export const DialogContent = MuiDialogContent;
-export const DialogHeader = ({ children, ...props }: { children: React.ReactNode }) => (
-  <MuiDialogTitle {...props}>{children}</MuiDialogTitle>
+export const DialogHeader = ({ children, className, ...props }: { children: React.ReactNode; className?: string }) => (
+  <MuiDialogTitle className={className} {...props}>{children}</MuiDialogTitle>
 );
 export const DialogTitle = MuiDialogTitle;
 export const DialogDescription = ({ children, className, ...props }: { children: React.ReactNode; className?: string }) => (

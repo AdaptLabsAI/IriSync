@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, ButtonProps } from '../ui/button';
 import { Download, FileText, Printer, LoaderCircle, Mail } from 'lucide-react';
-import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from '../ui/dropdown';
+import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from '../ui/dropdown';
 
 export interface InvoiceButtonProps extends Omit<ButtonProps, 'onClick'> {
   /**
@@ -93,8 +93,8 @@ const InvoiceButton: React.FC<InvoiceButtonProps> = ({
 
   // Otherwise, render a dropdown with options
   return (
-    <Dropdown>
-      <DropdownTrigger asChild>
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
         <Button
           variant={variant}
           size={size}
@@ -109,46 +109,46 @@ const InvoiceButton: React.FC<InvoiceButtonProps> = ({
           )}
           {!iconOnly && (
             <span>
-              {activeAction 
-                ? `${activeAction.charAt(0).toUpperCase() + activeAction.slice(1)}ing...` 
+              {activeAction
+                ? `${activeAction.charAt(0).toUpperCase() + activeAction.slice(1)}ing...`
                 : `Invoice ${invoiceNumber}`}
             </span>
           )}
         </Button>
-      </DropdownTrigger>
-      <DropdownMenu>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent>
         {onView && (
-          <DropdownItem onClick={() => handleAction('view', onView)}>
+          <DropdownMenuItem onClick={() => handleAction('view', onView)}>
             <FileText className="h-4 w-4 mr-2" />
             View Invoice
-          </DropdownItem>
+          </DropdownMenuItem>
         )}
         {onDownload && (
           <>
-            <DropdownItem onClick={() => handleAction('download', onDownload, 'pdf')}>
+            <DropdownMenuItem onClick={() => handleAction('download', onDownload, 'pdf')}>
               <Download className="h-4 w-4 mr-2" />
               Download PDF
-            </DropdownItem>
-            <DropdownItem onClick={() => handleAction('download', onDownload, 'csv')}>
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => handleAction('download', onDownload, 'csv')}>
               <Download className="h-4 w-4 mr-2" />
               Download CSV
-            </DropdownItem>
+            </DropdownMenuItem>
           </>
         )}
         {showExtendedOptions && onPrint && (
-          <DropdownItem onClick={() => handleAction('print', onPrint)}>
+          <DropdownMenuItem onClick={() => handleAction('print', onPrint)}>
             <Printer className="h-4 w-4 mr-2" />
             Print Invoice
-          </DropdownItem>
+          </DropdownMenuItem>
         )}
         {showExtendedOptions && onEmail && (
-          <DropdownItem onClick={() => handleAction('email', onEmail)}>
+          <DropdownMenuItem onClick={() => handleAction('email', onEmail)}>
             <Mail className="h-4 w-4 mr-2" />
             Email Invoice
-          </DropdownItem>
+          </DropdownMenuItem>
         )}
-      </DropdownMenu>
-    </Dropdown>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 };
 
