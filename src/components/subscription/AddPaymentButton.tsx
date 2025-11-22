@@ -5,7 +5,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, Dialog
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs';
 import { Input } from '../ui/input';
 import { Label } from '../ui/label';
-import { FormField, FormItem, FormLabel, FormControl, FormMessage, Form } from '../ui/form';
+import { FormField, FormItem, FormLabel, FormControl, FormMessage, Form } from '../ui/label';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';

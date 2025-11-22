@@ -6,7 +6,7 @@ import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '.
 import { Checkbox } from '../ui/checkbox';
 import { Input } from '../ui/input';
 import { RadioGroup, RadioGroupItem } from '../ui/radio';
-import { Label } from '../ui/form';
+import { Label } from '../ui/label';
 
 export type ReportFrequency = 'daily' | 'weekly' | 'monthly' | 'quarterly';
 export type ReportFormat = 'pdf' | 'csv' | 'excel';

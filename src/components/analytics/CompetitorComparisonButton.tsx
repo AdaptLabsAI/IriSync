@@ -5,7 +5,7 @@ import { Dialog, DialogContent, DialogTitle, DialogClose } from '../ui/dialog';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs';
 import { Input } from '../ui/input';
 import { Checkbox } from '../ui/checkbox';
-import { Label } from '../ui/form';
+import { Label } from '../ui/label';
 
 export interface Competitor {
   /**
