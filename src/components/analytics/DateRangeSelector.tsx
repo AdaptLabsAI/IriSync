@@ -7,7 +7,7 @@ import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
 import { Calendar as CalendarComponent } from '../ui/calendar';
 import { cn } from '../../lib/utils';
 
-interface DateRange {
+export interface DateRange {
   from: Date;
   to: Date;
 }
