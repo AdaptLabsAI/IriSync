@@ -5,7 +5,7 @@ import { useToast } from '../ui/use-toast';
 import { useSubscription } from '../../hooks/useSubscription';
 import { useAIToolkit } from '../../hooks/useAIToolkit';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs';
-import { Textarea } from '../ui/textarea/Textarea';
+import { Textarea } from '../ui/textarea';
 import { Loader2, BarChart, Lock, ThumbsUp, ThumbsDown } from 'lucide-react';
 
 export interface SentimentResult {
