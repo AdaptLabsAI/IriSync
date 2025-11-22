@@ -228,7 +228,7 @@ const AdvancedRichTextEditor: React.FC<AdvancedRichTextEditorProps> = ({
         });
       }
     }
-  }, [showSuccessToast]);
+  }, [toast]);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
