@@ -253,8 +253,9 @@ const ContentGenerationButton: React.FC<ContentGenerationButtonProps> = ({
   };
 
   const handleContentGenerated = (content: string, metadata?: any) => {
-    let platform = SocialPlatform.GENERAL;
-    
+    // Use a typed variable with proper fallback to OTHER instead of non-existent GENERAL
+    let platform: SocialPlatform;
+
     // Determine platform based on active tab
     switch (activeTab) {
       case 'instagram':
@@ -281,10 +282,18 @@ const ContentGenerationButton: React.FC<ContentGenerationButtonProps> = ({
       case 'reddit':
         platform = SocialPlatform.REDDIT;
         break;
+      case 'threads':
+        platform = SocialPlatform.THREADS;
+        break;
+      case 'pinterest':
+        platform = SocialPlatform.PINTEREST;
+        break;
       default:
-        platform = SocialPlatform.GENERAL;
+        // Fallback: use metadata platform if provided, otherwise use OTHER
+        platform = (metadata?.platform as SocialPlatform) ?? SocialPlatform.OTHER;
+        break;
     }
-    
+
     setGeneratedContent(content);
     setActiveTab('history');
   };
