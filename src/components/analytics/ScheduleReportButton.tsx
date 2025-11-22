@@ -233,9 +233,10 @@ const ScheduleReportButton: React.FC<ScheduleReportButtonProps> = ({
                   <Label>Frequency</Label>
                   <Select
                     value={schedule.frequency}
-                    onValueChange={(value: ReportFrequency) => {
-                      if (isFrequencyAvailable(value)) {
-                        setSchedule({ ...schedule, frequency: value });
+                    onValueChange={(value) => {
+                      const freq = value as ReportFrequency;
+                      if (isFrequencyAvailable(freq)) {
+                        setSchedule({ ...schedule, frequency: freq });
                       }
                     }}
                   >
