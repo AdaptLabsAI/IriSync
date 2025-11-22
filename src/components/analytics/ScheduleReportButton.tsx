@@ -5,8 +5,8 @@ import { Dialog, DialogTrigger, DialogContent, DialogTitle, DialogClose } from '
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '../ui/select';
 import { Checkbox } from '../ui/checkbox';
 import { Input } from '../ui/input';
-import { RadioGroup, RadioGroupItem } from '../ui/radio';
-import { Label } from '../ui/form';
+import { RadioGroup, RadioGroupItem } from '../ui/radio-group';
+import { Label } from '../ui/label';
 
 export type ReportFrequency = 'daily' | 'weekly' | 'monthly' | 'quarterly';
 export type ReportFormat = 'pdf' | 'csv' | 'excel';
@@ -233,9 +233,10 @@ const ScheduleReportButton: React.FC<ScheduleReportButtonProps> = ({
                   <Label>Frequency</Label>
                   <Select
                     value={schedule.frequency}
-                    onValueChange={(value: ReportFrequency) => {
-                      if (isFrequencyAvailable(value)) {
-                        setSchedule({ ...schedule, frequency: value });
+                    onValueChange={(value) => {
+                      const freq = value as ReportFrequency;
+                      if (isFrequencyAvailable(freq)) {
+                        setSchedule({ ...schedule, frequency: freq });
                       }
                     }}
                   >
@@ -398,7 +399,7 @@ const ScheduleReportButton: React.FC<ScheduleReportButtonProps> = ({
                     />
                     <Button 
                       variant="outline" 
-                      size="small"
+                      size="sm"
                       onClick={(e: any) => {
                         const input = e.currentTarget.previousSibling as HTMLInputElement;
                         const email = input.value.trim();

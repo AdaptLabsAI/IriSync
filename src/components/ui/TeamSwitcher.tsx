@@ -45,7 +45,7 @@ export const TeamSwitcher = () => {
 
   if (loading) {
     return (
-      <Button variant="outline" size="small" disabled>
+      <Button variant="outlined" size="sm" disabled>
         <Loader2 className="h-4 w-4 mr-2 animate-spin" />
         Loading Teams...
       </Button>
@@ -62,7 +62,7 @@ export const TeamSwitcher = () => {
   }
 
   return (
-    <FormControl variant="outlined" size="small" sx={{ minWidth: 200 }}>
+    <FormControl variant="outlined" size="sm" sx={{ minWidth: 200 }}>
       <InputLabel id="team-select-label">Team</InputLabel>
       <Select
         labelId="team-select-label"

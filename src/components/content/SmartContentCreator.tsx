@@ -430,7 +430,7 @@ const SmartContentCreator: React.FC<SmartContentCreatorProps> = ({
           
           <MuiGrid container spacing={2}>
             <MuiGrid item xs={12} sm={6} md={3} {...({} as any)}>
-              <FormControl fullWidth size="small">
+              <FormControl fullWidth size="sm">
                 <InputLabel>Primary Platform</InputLabel>
                 <Select
                   value={selectedPlatform}
@@ -501,7 +501,7 @@ const SmartContentCreator: React.FC<SmartContentCreatorProps> = ({
             sx={{ mb: 2 }}
           />
           <Button
-            variant="contained"
+            variant="primary"
             onClick={generateSuggestions}
             disabled={isGenerating || intent.trim().length < 10}
             startIcon={isGenerating ? <CircularProgress size={20} /> : <AIIcon />}
@@ -585,7 +585,7 @@ const SmartContentCreator: React.FC<SmartContentCreatorProps> = ({
                       <Chip 
                         key={index} 
                         label={`#${tag}`} 
-                        size="small" 
+                        size="sm" 
                         onDelete={() => {
                           setHashtags(prev => prev.filter((_, i) => i !== index));
                         }}
@@ -599,7 +599,7 @@ const SmartContentCreator: React.FC<SmartContentCreatorProps> = ({
 
                   <Stack direction="row" spacing={2}>
                     <Button
-                      variant="contained"
+                      variant="primary"
                       onClick={createContent}
                       disabled={isGenerating || !content.trim()}
                       startIcon={isGenerating ? <CircularProgress size={20} /> : <SendIcon />}
@@ -668,17 +668,17 @@ const SmartContentCreator: React.FC<SmartContentCreatorProps> = ({
                       <Stack direction="row" spacing={2}>
                         <Chip 
                           label={`👍 ${performancePrediction.predictedLikes} likes`} 
-                          size="small" 
+                          size="sm" 
                           variant="outlined" 
                         />
                         <Chip 
                           label={`💬 ${performancePrediction.predictedComments} comments`} 
-                          size="small" 
+                          size="sm" 
                           variant="outlined" 
                         />
                         <Chip 
                           label={`🔄 ${performancePrediction.predictedShares} shares`} 
-                          size="small" 
+                          size="sm" 
                           variant="outlined" 
                         />
                       </Stack>

@@ -9,6 +9,12 @@ export interface Metric {
   requiredTier: 'creator' | 'influencer' | 'enterprise';
 }
 
+export interface MetricGroup {
+  id: string;
+  name: string;
+  metrics: Metric[];
+}
+
 interface MetricFilterToggleProps {
   /**
    * Available metrics to filter

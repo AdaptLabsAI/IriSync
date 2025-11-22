@@ -113,7 +113,7 @@ export const OrganizationSwitcher = () => {
 
   if (fetchingOrgs || loading) {
     return (
-      <Button variant="outline" size="small" disabled>
+      <Button variant="outlined" size="sm" disabled>
         <Loader2 className="h-4 w-4 mr-2 animate-spin" />
         Loading...
       </Button>
@@ -133,7 +133,7 @@ export const OrganizationSwitcher = () => {
   }
 
   return (
-    <FormControl variant="outlined" size="small" sx={{ minWidth: 200 }}>
+    <FormControl variant="outlined" size="sm" sx={{ minWidth: 200 }}>
       <InputLabel id="org-select-label">Organization</InputLabel>
       <Select
         labelId="org-select-label"

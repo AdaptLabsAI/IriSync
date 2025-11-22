@@ -139,20 +139,22 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
           </Tooltip>
 
           <Tooltip title="Insert image">
-            <IconButton
-              size="small"
-              aria-label="Insert image"
-              onClick={handleImageUpload}
-            >
-              <PhotographIcon className="w-4 h-4" />
-            </IconButton>
-            <input
-              type="file"
-              accept="image/*"
-              style={{ display: 'none' }}
-              ref={fileInputRef}
-              onChange={onImageSelected}
-            />
+            <Box>
+              <IconButton
+                size="small"
+                aria-label="Insert image"
+                onClick={handleImageUpload}
+              >
+                <PhotographIcon className="w-4 h-4" />
+              </IconButton>
+              <input
+                type="file"
+                accept="image/*"
+                style={{ display: 'none' }}
+                ref={fileInputRef}
+                onChange={onImageSelected}
+              />
+            </Box>
           </Tooltip>
         </Stack>
       </Stack>

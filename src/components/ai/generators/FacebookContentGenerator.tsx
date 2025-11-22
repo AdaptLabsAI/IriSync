@@ -4,7 +4,7 @@ import { SocialPlatform } from '../../../lib/models/SocialAccount';
 import { AITaskType } from '../../../lib/ai/models';
 import AITokenAlert from '../toolkit/AITokenAlert';
 import { useSubscription } from '../../../hooks/useSubscription';
-import Tabs, { Tab, TabPanel } from '../../ui/tabs';
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '../../ui/tabs';
 import { useToast } from '../../ui/use-toast';
 
 interface FacebookContentGeneratorProps {
@@ -126,14 +126,19 @@ export default function FacebookContentGenerator({
         </div>
       )}
       
-      <Tabs 
-        value={activeTab === 'create' ? 0 : 1}
-        onChange={(_: any, value: any) => setActiveTab(value === 0 ? 'create' : 'advanced')}
+      <Tabs
+        defaultValue="create"
+        value={activeTab}
+        onValueChange={(value) => setActiveTab(value as 'create' | 'advanced')}
       >
-        <Tab label="Create Content" />
-        <Tab label="Advanced Options" disabled={!canUseAdvancedFeatures} />
-        
-        <TabPanel value={activeTab === 'create' ? 0 : 1} index={0}>
+        <TabsList className="mb-4">
+          <TabsTrigger value="create">Create Content</TabsTrigger>
+          <TabsTrigger value="advanced" disabled={!canUseAdvancedFeatures}>
+            Advanced Options
+          </TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="create">
           <form onSubmit={handleSubmit} className="mb-6">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
               <div>
@@ -256,9 +261,9 @@ export default function FacebookContentGenerator({
               {loading ? 'Generating...' : 'Generate Facebook Content'}
             </button>
           </form>
-        </TabPanel>
-        
-        <TabPanel value={activeTab === 'create' ? 0 : 1} index={1}>
+        </TabsContent>
+
+        <TabsContent value="advanced">
           {canUseAdvancedFeatures ? (
             <div className="space-y-4">
               <p className="text-sm text-gray-600 mb-4">
@@ -322,7 +327,7 @@ export default function FacebookContentGenerator({
               </button>
             </div>
           )}
-        </TabPanel>
+        </TabsContent>
       </Tabs>
       
       {generatedContent && (

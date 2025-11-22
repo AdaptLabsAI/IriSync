@@ -92,7 +92,7 @@ export const CreateFolderButton: React.FC<CreateFolderButtonProps> = ({
   return (
     <>
       <Button
-        variant="outlined"
+        variant="outline"
         size={mapSize(size)}
         className={`flex items-center gap-2 ${className}`}
         disabled={disabled || isLoading}
@@ -134,7 +134,7 @@ export const CreateFolderButton: React.FC<CreateFolderButtonProps> = ({
             <DialogActions className="mt-4">
               <Button
                 type="button"
-                variant="outlined"
+                variant="outline"
                 onClick={() => {
                   setFolderName('');
                   setError('');
@@ -145,7 +145,7 @@ export const CreateFolderButton: React.FC<CreateFolderButtonProps> = ({
               </Button>
               <Button
                 type="submit"
-                variant="contained"
+                variant="primary"
                 disabled={isSubmitting || !folderName.trim()}
                 onClick={handleSubmit}
               >

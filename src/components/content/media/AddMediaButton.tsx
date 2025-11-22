@@ -458,7 +458,7 @@ export const AddMediaButton: React.FC<AddMediaButtonProps> = ({
         {label}
       </Button>
       
-      <Button variant="outlined" onClick={() => setAssetPickerOpen(true)} sx={{ ml: 2 }}>
+      <Button variant="outline" onClick={() => setAssetPickerOpen(true)} sx={{ ml: 2 }}>
         Import Media
       </Button>
       
@@ -737,7 +737,7 @@ export const AddMediaButton: React.FC<AddMediaButtonProps> = ({
               <Button 
                 onClick={handleClose} 
                 variant="outline" 
-                size="small"
+                size="sm"
               >
                 Cancel
               </Button>
@@ -746,7 +746,7 @@ export const AddMediaButton: React.FC<AddMediaButtonProps> = ({
                 <Button
                   onClick={handleUpload}
                   variant="primary"
-                  size="small"
+                  size="sm"
                   disabled={isLoading || selectedFiles.length === 0}
                 >
                   {isLoading ? (
@@ -760,7 +760,7 @@ export const AddMediaButton: React.FC<AddMediaButtonProps> = ({
                 <Button
                   onClick={handleLibrarySelect}
                   variant="primary"
-                  size="small"
+                  size="sm"
                   disabled={selectedLibraryItems.length === 0}
                 >
                   Select ({selectedLibraryItems.length})
@@ -790,7 +790,7 @@ export const AddMediaButton: React.FC<AddMediaButtonProps> = ({
               {versionHistory.map((version, idx) => (
                 <li key={version.id} className="flex items-center justify-between border-b py-2">
                   <span>Version {version.version} - {version.createdAt}</span>
-                  <Button size="small" onClick={() => handleRevertVersion(version)}>Revert</Button>
+                  <Button size="sm" onClick={() => handleRevertVersion(version)}>Revert</Button>
                 </li>
               ))}
             </ul>

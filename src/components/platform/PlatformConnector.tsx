@@ -141,7 +141,7 @@ export const PlatformConnector: React.FC<PlatformConnectorProps> = ({
           Cancel
         </Button>
         <Button 
-          variant="contained" 
+          variant="primary" 
           color="primary" 
           onClick={connectPlatform} 
           disabled={!selectedPlatform || isConnecting}

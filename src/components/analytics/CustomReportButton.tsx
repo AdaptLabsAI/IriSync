@@ -3,7 +3,7 @@ import { Button } from '../ui/button';
 import { FileText, Plus, SaveAll, Loader, Lock } from 'lucide-react';
 import { Dialog, DialogContent, DialogTitle, DialogClose } from '../ui/dialog';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs';
-import { Label } from '../ui/form';
+import { Label } from '../ui/label';
 import { Input } from '../ui/input';
 import { Checkbox } from '../ui/checkbox';
 import { MetricGroup } from './MetricFilterToggle';
@@ -244,7 +244,7 @@ const CustomReportButton: React.FC<CustomReportButtonProps> = ({
                 {onCreateFromCurrent && (
                   <Button
                     variant="outline"
-                    size="small"
+                    size="sm"
                     className="w-full mb-4"
                     onClick={handleCreateFromCurrent}
                     disabled={isSubmitting}

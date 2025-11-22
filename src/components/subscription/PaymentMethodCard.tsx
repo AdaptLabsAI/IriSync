@@ -173,7 +173,7 @@ export const PaymentMethodCard: React.FC<PaymentMethodCardProps> = ({
                 onClick={handleSetDefault}
                 disabled={isDisabled || isLoading}
                 variant="outline"
-                size="small"
+                size="sm"
               >
                 Set Default
               </Button>
@@ -184,7 +184,7 @@ export const PaymentMethodCard: React.FC<PaymentMethodCardProps> = ({
                 onClick={() => onEdit(paymentMethod.id)}
                 disabled={isDisabled || isLoading}
                 variant="outline"
-                size="small"
+                size="sm"
               >
                 Edit
               </Button>
@@ -195,7 +195,7 @@ export const PaymentMethodCard: React.FC<PaymentMethodCardProps> = ({
                 onClick={() => setIsConfirmingDelete(true)}
                 disabled={isDisabled || isLoading || paymentMethod.isDefault}
                 variant="outline"
-                size="small"
+                size="sm"
               >
                 <svg 
                   xmlns="http://www.w3.org/2000/svg" 
@@ -224,7 +224,7 @@ export const PaymentMethodCard: React.FC<PaymentMethodCardProps> = ({
         isOpen={isConfirmingDelete}
         onClose={() => setIsConfirmingDelete(false)}
         title="Confirm Deletion"
-        size="small"
+        size="sm"
       >
         <div className="p-4">
           <p className="mb-4">
@@ -242,7 +242,7 @@ export const PaymentMethodCard: React.FC<PaymentMethodCardProps> = ({
             <Button
               onClick={() => setIsConfirmingDelete(false)}
               variant="outline"
-              size="small"
+              size="sm"
               disabled={isLoading}
             >
               Cancel
@@ -250,7 +250,7 @@ export const PaymentMethodCard: React.FC<PaymentMethodCardProps> = ({
             <Button
               onClick={handleDelete}
               variant="primary"
-              size="small"
+              size="sm"
               disabled={isLoading}
             >
               {isLoading ? (

@@ -234,7 +234,7 @@ const ApprovalWorkflowButton: React.FC<ApprovalWorkflowButtonProps> = ({
                   </p>
                   <Button
                     variant="primary"
-                    size="small"
+                    size="sm"
                     className="mt-4"
                     onClick={() => setActiveTab(1)}
                   >
@@ -266,7 +266,7 @@ const ApprovalWorkflowButton: React.FC<ApprovalWorkflowButtonProps> = ({
                         </div>
                         <Button
                           variant={workflow.isActive ? "destructive" : "outline"}
-                          size="small"
+                          size="sm"
                           onClick={() => handleStatusChange(workflow.id, !workflow.isActive)}
                           disabled={isLoading}
                         >
@@ -322,7 +322,7 @@ const ApprovalWorkflowButton: React.FC<ApprovalWorkflowButtonProps> = ({
 
               <div className="flex justify-end">
                 <Button
-                  variant="outline"
+                  variant="outlined"
                   onClick={() => router.push('/dashboard/settings/team/workflows')}
                 >
                   Manage All Workflows
@@ -361,8 +361,8 @@ const ApprovalWorkflowButton: React.FC<ApprovalWorkflowButtonProps> = ({
                 <div className="flex items-center justify-between mb-2">
                   <Label>Approval Steps</Label>
                   <Button
-                    variant="outline"
-                    size="small"
+                    variant="outlined"
+                    size="sm"
                     onClick={handleAddStep}
                     disabled={newWorkflow.steps ? newWorkflow.steps.length >= 5 : false}
                   >
@@ -399,8 +399,8 @@ const ApprovalWorkflowButton: React.FC<ApprovalWorkflowButtonProps> = ({
                     </div>
                     {newWorkflow.steps && newWorkflow.steps.length > 1 && (
                       <Button
-                        variant="outline"
-                        size="small"
+                        variant="outlined"
+                        size="sm"
                         className="h-8 w-8 p-0"
                         onClick={() => handleRemoveStep(step.id)}
                       >
@@ -435,7 +435,7 @@ const ApprovalWorkflowButton: React.FC<ApprovalWorkflowButtonProps> = ({
           )}
 
           <div className="flex justify-end gap-2 mt-6">
-            <Button variant="outline" onClick={() => setIsDialogOpen(false)}>
+            <Button variant="outlined" onClick={() => setIsDialogOpen(false)}>
               Cancel
             </Button>
             

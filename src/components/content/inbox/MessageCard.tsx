@@ -205,7 +205,7 @@ export const MessageCard: React.FC<MessageCardProps> = ({
     const priority = priorityMap[message.priority];
     
     return (
-      <Badge className={`${priority.bg} ${priority.text} ml-2`} variant="outlined">
+      <Badge className={`${priority.bg} ${priority.text} ml-2`} variant="outline">
         {priority.label}
       </Badge>
     );
@@ -348,7 +348,7 @@ export const MessageCard: React.FC<MessageCardProps> = ({
               )}
               
               {message.isPrivate && (
-                <Badge variant="outlined" className="ml-2 text-xs px-1.5 bg-gray-100">
+                <Badge variant="outline" className="ml-2 text-xs px-1.5 bg-gray-100">
                   Private
                 </Badge>
               )}
@@ -464,7 +464,7 @@ export const MessageCard: React.FC<MessageCardProps> = ({
             {/* Assignment badge */}
             {message.assignedTo && (
               <div className="mt-2 flex items-center">
-                <Badge variant="outlined" className="flex items-center space-x-1 bg-blue-50 text-blue-700 border-blue-200">
+                <Badge variant="outline" className="flex items-center space-x-1 bg-blue-50 text-blue-700 border-blue-200">
                   <span>Assigned to:</span>
                   <span className="font-medium">{message.assignedTo.name}</span>
                 </Badge>
@@ -510,7 +510,7 @@ export const MessageCard: React.FC<MessageCardProps> = ({
                     onMarkRead={ids => handleMarkReadUnread(ids)}
                     onMarkUnread={ids => handleMarkReadUnread(ids)}
                     iconOnly
-                    size="small"
+                    size="sm"
                   />
                 )}
                 
@@ -529,7 +529,7 @@ export const MessageCard: React.FC<MessageCardProps> = ({
                       return { success: true };
                     }}
                     iconOnly
-                    size="small"
+                    size="sm"
                   />
                 )}
                 
@@ -542,7 +542,7 @@ export const MessageCard: React.FC<MessageCardProps> = ({
                     onAssign={(ids, assigneeId) => onAssign(message.id, assigneeId)}
                     onUnassign={ids => onUnassign(message.id)}
                     iconOnly
-                    size="small"
+                    size="sm"
                   />
                 )}
                 
@@ -550,7 +550,7 @@ export const MessageCard: React.FC<MessageCardProps> = ({
                 {onToggleStar && (
                   <Button
                     onClick={handleToggleStar}
-                    size="small"
+                    size="sm"
                     className="p-0 h-8 w-8"
                     aria-label={message.starred ? "Unstar message" : "Star message"}
                   >
@@ -562,7 +562,7 @@ export const MessageCard: React.FC<MessageCardProps> = ({
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <Button
-                      size="small"
+                      size="sm"
                       className="p-0 h-8 w-8"
                       aria-label="More actions"
                     >

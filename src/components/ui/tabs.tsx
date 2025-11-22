@@ -1,4 +1,20 @@
 // Tabs component
+/**
+ * Tabs Component
+ *
+ * Canonical API (Radix UI):
+ * - Tabs (root container)
+ * - TabsList (tabs list wrapper)
+ * - TabsTrigger (individual tab button)
+ * - TabsContent (tab panel content)
+ *
+ * Props:
+ * - value: string (controlled)
+ * - onValueChange: (value: string) => void
+ * - defaultValue: string (uncontrolled)
+ *
+ * DO NOT use onChange with (event, value) signature - use onValueChange instead
+ */
 import * as React from 'react';
 import * as TabsPrimitive from '@radix-ui/react-tabs';
 

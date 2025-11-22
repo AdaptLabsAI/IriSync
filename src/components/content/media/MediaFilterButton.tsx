@@ -208,7 +208,7 @@ export const MediaFilterButton: React.FC<MediaFilterButtonProps> = ({
             <h3 className="font-medium">Filter Media</h3>
             <Button 
               variant="ghost" 
-              size="small" 
+              size="sm" 
               className="h-7 text-xs"
               onClick={resetFilters}
             >
@@ -342,13 +342,13 @@ export const MediaFilterButton: React.FC<MediaFilterButtonProps> = ({
           <div className="flex justify-end gap-2 pt-2">
             <Button
               variant="outline"
-              size="small"
+              size="sm"
               onClick={() => setOpen(false)}
             >
               Cancel
             </Button>
             <Button
-              size="small"
+              size="sm"
               onClick={applyFilters}
             >
               Apply Filters

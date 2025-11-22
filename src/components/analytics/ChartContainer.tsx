@@ -4,7 +4,7 @@ import { MoreHorizontal, ZoomIn, ZoomOut, RefreshCw, Maximize2, X } from 'lucide
 import { VisualizationTypeButton, VisualizationType } from './VisualizationTypeButton';
 import { ExportReportButton } from './ExportReportButton';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogClose } from '../ui/dialog';
-import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from '../ui/dropdown';
+import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from '../ui/dropdown';
 import { Button } from '../ui/button';
 
 export interface ChartContainerProps {
@@ -131,9 +131,9 @@ const ChartContainer: React.FC<ChartContainerProps> = ({
           <X className="h-8 w-8 text-red-500 mb-2" />
           <p className="text-sm text-gray-500">{errorMessage}</p>
           {onRefresh && (
-            <Button 
-              variant="outline" 
-              size="small" 
+            <Button
+              variant="outline"
+              size="sm"
               className="mt-3"
               onClick={onRefresh}
             >
@@ -170,7 +170,7 @@ const ChartContainer: React.FC<ChartContainerProps> = ({
                 availableTypes={availableTypes}
                 onTypeChange={onTypeChange}
                 userTier={userTier}
-                size="small"
+                size="sm"
                 iconOnly
               />
             )}
@@ -180,34 +180,34 @@ const ChartContainer: React.FC<ChartContainerProps> = ({
                 reportName={title}
                 onExport={onExport}
                 userTier={userTier}
-                size="small"
+                size="sm"
                 iconOnly
               />
             )}
             
-            <Dropdown>
-              <DropdownTrigger asChild>
-                <Button variant="ghost" size="small" className="px-2">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" size="sm" className="px-2">
                   <MoreHorizontal className="h-4 w-4" />
                 </Button>
-              </DropdownTrigger>
-              
-              <DropdownMenu>
+              </DropdownMenuTrigger>
+
+              <DropdownMenuContent>
                 {onRefresh && (
-                  <DropdownItem onClick={onRefresh}>
+                  <DropdownMenuItem onClick={onRefresh}>
                     <RefreshCw className="h-4 w-4 mr-2" />
                     Refresh
-                  </DropdownItem>
+                  </DropdownMenuItem>
                 )}
-                
+
                 {isMaximizable && (
-                  <DropdownItem onClick={() => setIsFullscreen(true)}>
+                  <DropdownMenuItem onClick={() => setIsFullscreen(true)}>
                     <Maximize2 className="h-4 w-4 mr-2" />
                     Expand
-                  </DropdownItem>
+                  </DropdownMenuItem>
                 )}
-              </DropdownMenu>
-            </Dropdown>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
         </CardHeader>
         
@@ -229,22 +229,22 @@ const ChartContainer: React.FC<ChartContainerProps> = ({
               <DialogTitle>{title}</DialogTitle>
               
               <div className="flex items-center gap-2">
-                <Button variant="outline" size="small" onClick={handleZoomOut}>
+                <Button variant="outline" size="sm" onClick={handleZoomOut}>
                   <ZoomOut className="h-4 w-4" />
                 </Button>
                 
                 <span className="text-sm px-2">{zoom}%</span>
                 
-                <Button variant="outline" size="small" onClick={handleZoomIn}>
+                <Button variant="outline" size="sm" onClick={handleZoomIn}>
                   <ZoomIn className="h-4 w-4" />
                 </Button>
                 
-                <Button variant="outline" size="small" onClick={handleResetZoom}>
+                <Button variant="outline" size="sm" onClick={handleResetZoom}>
                   Reset
                 </Button>
                 
                 <DialogClose asChild>
-                  <Button variant="ghost" size="small">
+                  <Button variant="ghost" size="sm">
                     <X className="h-4 w-4" />
                   </Button>
                 </DialogClose>

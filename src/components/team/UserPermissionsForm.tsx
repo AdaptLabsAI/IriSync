@@ -200,7 +200,7 @@ export default function UserPermissionsForm({ teamMember, onSave, readOnly = fal
             </Typography>
             {hasCustomizations && (
               <Chip 
-                size="small" 
+                size="sm" 
                 color="secondary" 
                 label={`${getCustomizationCount()} custom settings`} 
               />
@@ -217,7 +217,7 @@ export default function UserPermissionsForm({ teamMember, onSave, readOnly = fal
                 Compact View
               </Typography>
               <Switch 
-                size="small" 
+                size="sm" 
                 checked={compactView} 
                 onChange={(e: any) => setCompactView(e.target.checked)} 
               />
@@ -236,7 +236,7 @@ export default function UserPermissionsForm({ teamMember, onSave, readOnly = fal
                 Reset
               </Button>
               <Button 
-                variant="contained" 
+                variant="primary" 
                 startIcon={<SaveIcon />} 
                 onClick={handleSave}
                 disabled={saving}
@@ -273,7 +273,7 @@ export default function UserPermissionsForm({ teamMember, onSave, readOnly = fal
         
         {/* Role Access Summary Table */}
         <TableContainer component={Paper} variant="outlined" sx={{ mb: 2 }}>
-          <Table size="small">
+          <Table size="sm">
             <TableHead>
               <TableRow>
                 <TableCell>Category</TableCell>
@@ -296,7 +296,7 @@ export default function UserPermissionsForm({ teamMember, onSave, readOnly = fal
                   </TableCell>
                   <TableCell>
                     <Chip 
-                      size="small"
+                      size="sm"
                       label={summary}
                       color={
                         summary === 'Full access' ? 'success' :
@@ -341,7 +341,7 @@ export default function UserPermissionsForm({ teamMember, onSave, readOnly = fal
                   {restrictedPermissions.map(perm => (
                     <Chip 
                       key={perm}
-                      size="small"
+                      size="sm"
                       label={getPermissionLabel(perm)}
                       color="error"
                       variant="outlined"
@@ -362,7 +362,7 @@ export default function UserPermissionsForm({ teamMember, onSave, readOnly = fal
                   {additionalPermissions.map(perm => (
                     <Chip 
                       key={perm}
-                      size="small"
+                      size="sm"
                       label={getPermissionLabel(perm)}
                       color="success"
                       onDelete={!readOnly ? () => handleTogglePermission(perm) : undefined}
@@ -446,7 +446,7 @@ export default function UserPermissionsForm({ teamMember, onSave, readOnly = fal
                           {isDefault && (
                             <Chip 
                               label="Default" 
-                              size="small" 
+                              size="sm" 
                               color="default" 
                               variant="outlined"
                               sx={{ ml: 1 }}
@@ -456,7 +456,7 @@ export default function UserPermissionsForm({ teamMember, onSave, readOnly = fal
                           {isModified && (
                             <Chip 
                               label={isDefault ? "Restricted" : "Added"} 
-                              size="small" 
+                              size="sm" 
                               color={isDefault ? "error" : "success"} 
                               sx={{ ml: 1 }}
                             />
@@ -466,7 +466,7 @@ export default function UserPermissionsForm({ teamMember, onSave, readOnly = fal
                     />
                     
                     <Tooltip title={permission.description}>
-                      <IconButton size="small">
+                      <IconButton size="sm">
                         <InfoIcon fontSize="small" />
                       </IconButton>
                     </Tooltip>
@@ -478,8 +478,8 @@ export default function UserPermissionsForm({ teamMember, onSave, readOnly = fal
             {compactView && (
               <Box sx={{ mt: 2 }}>
                 <Button 
-                  variant="text" 
-                  size="small" 
+                  variant="ghost" 
+                  size="sm" 
                   onClick={() => setCompactView(false)}
                 >
                   Show all permissions

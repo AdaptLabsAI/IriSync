@@ -4,7 +4,7 @@ import { SocialPlatform } from '../../../lib/models/SocialAccount';
 import { AITaskType } from '../../../lib/ai/models';
 import AITokenAlert from '../toolkit/AITokenAlert';
 import { useSubscription } from '../../../hooks/useSubscription';
-import Tabs, { Tab, TabPanel } from '../../ui/tabs';
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '../../ui/tabs';
 import { useToast } from '../../ui/use-toast';
 
 interface CampaignContent {
@@ -288,14 +288,19 @@ export default function MultiPlatformCampaignGenerator({
         </div>
       )}
       
-      <Tabs 
-        value={activeTab === 'create' ? 0 : 1}
-        onChange={(_: any, value: any) => setActiveTab(value === 0 ? 'create' : 'preview')}
+      <Tabs
+        defaultValue="create"
+        value={activeTab}
+        onValueChange={(value) => setActiveTab(value as 'create' | 'preview')}
       >
-        <Tab label="Create Campaign" />
-        <Tab label="Preview Campaign" disabled={!generatedCampaign} />
-        
-        <TabPanel value={activeTab === 'create' ? 0 : 1} index={0}>
+        <TabsList className="mb-4">
+          <TabsTrigger value="create">Create Campaign</TabsTrigger>
+          <TabsTrigger value="preview" disabled={!generatedCampaign}>
+            Preview Campaign
+          </TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="create">
           <form onSubmit={handleSubmit} className="mb-6">
             <div className="mb-4">
               <label className="block text-gray-700 mb-2" htmlFor="topic">
@@ -443,9 +448,9 @@ export default function MultiPlatformCampaignGenerator({
               {loading ? 'Generating...' : 'Generate Campaign'}
             </button>
           </form>
-        </TabPanel>
-        
-        <TabPanel value={activeTab === 'create' ? 0 : 1} index={1}>
+        </TabsContent>
+
+        <TabsContent value="preview">
           {generatedCampaign && (
             <div className="space-y-6">
               <div className="bg-indigo-50 border border-indigo-100 rounded p-4">
@@ -550,7 +555,7 @@ export default function MultiPlatformCampaignGenerator({
               </div>
             </div>
           )}
-        </TabPanel>
+        </TabsContent>
       </Tabs>
       
       <div className="mt-6 text-sm text-gray-500">

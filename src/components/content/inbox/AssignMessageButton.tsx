@@ -379,7 +379,7 @@ export const AssignMessageButton: React.FC<AssignMessageButtonProps> = ({
                 <div className="p-2">
                   <Button
                     variant="tertiary"
-                    size="small"
+                    size="sm"
                     className="w-full justify-start text-red-600 hover:text-red-700 hover:bg-red-50"
                     onClick={handleUnassign}
                   >

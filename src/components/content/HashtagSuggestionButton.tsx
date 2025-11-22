@@ -241,7 +241,7 @@ export const HashtagSuggestionButton: React.FC<HashtagSuggestionButtonProps> = (
             <p className="text-sm text-gray-600 mb-3">
               Upgrade to Influencer or Enterprise tier to unlock AI-powered hashtag suggestions.
             </p>
-            <Button className="w-full" size="small">
+            <Button className="w-full" size="sm">
               Upgrade Plan
             </Button>
           </div>
@@ -287,7 +287,7 @@ export const HashtagSuggestionButton: React.FC<HashtagSuggestionButtonProps> = (
                       <p className="text-sm text-red-500 mb-2">{error}</p>
                       <Button
                         variant="outline" 
-                        size="small"
+                        size="sm"
                         onClick={handleGetSuggestions}
                         disabled={contentLength < minContentLength}
                       >
@@ -303,7 +303,7 @@ export const HashtagSuggestionButton: React.FC<HashtagSuggestionButtonProps> = (
                       </p>
                       <Button
                         variant="outline" 
-                        size="small"
+                        size="sm"
                         onClick={handleGetSuggestions}
                         disabled={contentLength < minContentLength}
                       >
@@ -359,7 +359,7 @@ export const HashtagSuggestionButton: React.FC<HashtagSuggestionButtonProps> = (
                       </p>
                       <Button
                         variant="outline" 
-                        size="small"
+                        size="sm"
                         onClick={handleGetSuggestions}
                         disabled={contentLength < minContentLength}
                       >
@@ -408,7 +408,7 @@ export const HashtagSuggestionButton: React.FC<HashtagSuggestionButtonProps> = (
               <div className="flex justify-between items-center">
                 <Button
                   variant="ghost" 
-                  size="small"
+                  size="sm"
                   onClick={handleGetSuggestions}
                   disabled={isLoading || contentLength < minContentLength}
                   className="text-xs h-8"
@@ -424,7 +424,7 @@ export const HashtagSuggestionButton: React.FC<HashtagSuggestionButtonProps> = (
                 <div className="flex gap-2">
                   <Button
                     variant="outline" 
-                    size="small"
+                    size="sm"
                     onClick={() => setOpen(false)}
                     className="text-xs h-8"
                   >
@@ -432,7 +432,7 @@ export const HashtagSuggestionButton: React.FC<HashtagSuggestionButtonProps> = (
                   </Button>
                   <Button
                     variant="primary" 
-                    size="small"
+                    size="sm"
                     onClick={handleApplySuggestions}
                     disabled={selectedSuggestions.length === 0}
                     className="text-xs h-8"
@@ -470,7 +470,7 @@ export const HashtagSuggestionButton: React.FC<HashtagSuggestionButtonProps> = (
                       id="trending-toggle"
                       pressed={includeTrending}
                       onPressedChange={setIncludeTrending}
-                      size="small"
+                      className="h-8 px-2 text-xs"
                     />
                   </div>
                 </div>

@@ -297,7 +297,7 @@ const StockPhotoBrowser: React.FC<StockPhotoBrowserProps> = ({
           >
             {showFavorites && (
               <IconButton
-                size="small"
+                size="sm"
                 onClick={(e) => {
                   e.stopPropagation();
                   toggleFavorite(photo.id);
@@ -317,7 +317,7 @@ const StockPhotoBrowser: React.FC<StockPhotoBrowserProps> = ({
             
             {showDownloadButton && (
               <IconButton
-                size="small"
+                size="sm"
                 onClick={(e) => {
                   e.stopPropagation();
                   setDownloadDialog({ open: true, photo });
@@ -356,7 +356,7 @@ const StockPhotoBrowser: React.FC<StockPhotoBrowserProps> = ({
           {/* Provider badge */}
           <Chip
             label={photo.provider}
-            size="small"
+            size="sm"
             sx={{
               position: 'absolute',
               bottom: 8,
@@ -383,12 +383,12 @@ const StockPhotoBrowser: React.FC<StockPhotoBrowserProps> = ({
           <Stack direction="row" spacing={1} sx={{ mt: 1 }}>
             <Chip
               label={`${photo.width}×${photo.height}`}
-              size="small"
+              size="sm"
               variant="outlined"
             />
             <Chip
               label={photo.metadata.orientation}
-              size="small"
+              size="sm"
               variant="outlined"
             />
           </Stack>
@@ -399,7 +399,7 @@ const StockPhotoBrowser: React.FC<StockPhotoBrowserProps> = ({
                 <Chip
                   key={index}
                   label={tag}
-                  size="small"
+                  size="sm"
                   variant="outlined"
                   sx={{ mr: 0.5, mb: 0.5, fontSize: '0.7rem' }}
                 />
@@ -419,8 +419,8 @@ const StockPhotoBrowser: React.FC<StockPhotoBrowserProps> = ({
           <Card>
             <Skeleton variant="rectangular" height={200} />
             <CardContent>
-              <Skeleton variant="text" />
-              <Skeleton variant="text" width="60%" />
+              <Skeleton variant="ghost" />
+              <Skeleton variant="ghost" width="60%" />
             </CardContent>
           </Card>
         </Grid>
@@ -446,7 +446,7 @@ const StockPhotoBrowser: React.FC<StockPhotoBrowserProps> = ({
               }}
             />
             <Button
-              variant="contained"
+              variant="primary"
               onClick={() => handleSearch(filters.query || '')}
               disabled={loading}
             >
@@ -460,7 +460,7 @@ const StockPhotoBrowser: React.FC<StockPhotoBrowserProps> = ({
           {/* Filters */}
           {showFilters && (
             <Stack direction="row" spacing={2} flexWrap="wrap">
-              <FormControl size="small" sx={{ minWidth: 120 }}>
+              <FormControl size="sm" sx={{ minWidth: 120 }}>
                 <InputLabel>Provider</InputLabel>
                 <Select
                   value={filters.provider || 'all'}
@@ -473,7 +473,7 @@ const StockPhotoBrowser: React.FC<StockPhotoBrowserProps> = ({
                 </Select>
               </FormControl>
 
-              <FormControl size="small" sx={{ minWidth: 120 }}>
+              <FormControl size="sm" sx={{ minWidth: 120 }}>
                 <InputLabel>Orientation</InputLabel>
                 <Select
                   value={filters.orientation || 'all'}
@@ -487,7 +487,7 @@ const StockPhotoBrowser: React.FC<StockPhotoBrowserProps> = ({
                 </Select>
               </FormControl>
 
-              <FormControl size="small" sx={{ minWidth: 120 }}>
+              <FormControl size="sm" sx={{ minWidth: 120 }}>
                 <InputLabel>Sort By</InputLabel>
                 <Select
                   value={filters.sortBy || 'relevance'}
@@ -589,7 +589,7 @@ const StockPhotoBrowser: React.FC<StockPhotoBrowserProps> = ({
 
       {/* Download Dialog */}
       <Dialog
-        isOpen={downloadDialog.open}
+        open={downloadDialog.open}
         onClose={() => setDownloadDialog({ open: false, photo: null })}
         maxWidth="sm"
         fullWidth
@@ -660,7 +660,7 @@ const StockPhotoBrowser: React.FC<StockPhotoBrowserProps> = ({
             Cancel
           </Button>
           <Button
-            variant="contained"
+            variant="primary"
             onClick={() => downloadDialog.photo && handleDownload(downloadDialog.photo)}
             disabled={!downloadDialog.photo}
           >

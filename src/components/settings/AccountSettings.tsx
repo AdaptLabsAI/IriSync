@@ -280,7 +280,7 @@ const AccountSettings = () => {
             onClick={handleResetPassword}
             disabled={loading || !currentPassword || !newPassword || !confirmPassword}
             color="primary"
-            variant="contained"
+            variant="primary"
           >
             {loading ? 'Updating...' : 'Update Password'}
           </Button>

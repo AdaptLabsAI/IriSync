@@ -245,7 +245,7 @@ export const InboxSearchBar: React.FC<InboxSearchBarProps> = ({
                   {onClearRecentSearches && (
                     <Button 
                       variant="ghost" 
-                      size="small" 
+                      size="sm" 
                       onClick={() => {
                         onClearRecentSearches();
                         setShowRecentSearches(false);
@@ -377,7 +377,7 @@ export const InboxSearchBar: React.FC<InboxSearchBarProps> = ({
           <div className="flex items-center space-x-1">
             <Button
               variant="ghost"
-              size="small"
+              size="sm"
               onClick={onPreviousResult}
               disabled={searchResult.currentIndex <= 1}
               className="h-7 w-7 p-0"
@@ -387,7 +387,7 @@ export const InboxSearchBar: React.FC<InboxSearchBarProps> = ({
             </Button>
             <Button
               variant="ghost"
-              size="small"
+              size="sm"
               onClick={onNextResult}
               disabled={searchResult.currentIndex >= searchResult.totalResults}
               className="h-7 w-7 p-0"

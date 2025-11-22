@@ -122,7 +122,7 @@ export default function AIToolkitStatus() {
     <Box>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
         <Typography variant="h5">AI Toolkit</Typography>
-        <Button variant="outlined" size="small" onClick={() => router.push('/dashboard/ai-toolkit')}>
+        <Button variant="outlined" size="sm" onClick={() => router.push('/dashboard/ai-toolkit')}>
           View All Tools
         </Button>
       </Box>
@@ -179,7 +179,7 @@ export default function AIToolkitStatus() {
             >
               <Box sx={{ position: 'absolute', top: 10, right: 10 }}>
                 <Chip
-                  size="small"
+                  size="sm"
                   label={StatusLabels[tool.status].label}
                   color={StatusLabels[tool.status].color as any}
                 />

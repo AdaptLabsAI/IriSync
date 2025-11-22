@@ -204,7 +204,7 @@ export const UnifiedAnalyticsDashboard: React.FC<UnifiedAnalyticsDashboardProps>
           </IconButton>
           <Menu
             anchorEl={exportMenuAnchor}
-            isOpen={Boolean(exportMenuAnchor)}
+            open={Boolean(exportMenuAnchor)}
             onClose={handleExportClose}
           >
             <MenuItem onClick={() => handleExport('pdf')}>Export as PDF</MenuItem>

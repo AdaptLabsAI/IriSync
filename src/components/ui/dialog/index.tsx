@@ -65,7 +65,7 @@ export const Dialog: React.FC<DialogProps> = ({
               right: 8,
               top: 8,
             }}
-            size="small"
+            size="sm"
           >
             <CloseIcon fontSize="small" />
           </IconButton>
@@ -182,7 +182,7 @@ export const ConfirmDialog: React.FC<{
       footer={
         <>
           <Button 
-            variant="text" 
+            variant="ghost" 
             onClick={onClose}
             disabled={isLoading}
             sx={{ mr: 1 }}
@@ -190,7 +190,7 @@ export const ConfirmDialog: React.FC<{
             {cancelLabel}
           </Button>
           <Button
-            variant="contained"
+            variant="primary"
             color={variantColor}
             onClick={onConfirm}
             disabled={isLoading}
@@ -199,7 +199,7 @@ export const ConfirmDialog: React.FC<{
           </Button>
         </>
       }
-      size="small"
+      size="sm"
     >
       <Box sx={{ py: 1 }}>
         {message}

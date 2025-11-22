@@ -214,7 +214,7 @@ export const MobileMessageCard: React.FC<MobileMessageCardProps> = ({
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                 <Chip
                   label={message.platformType}
-                  size="small"
+                  size="sm"
                   sx={{
                     backgroundColor: getPlatformColor(message.platformType),
                     color: 'white',
@@ -224,8 +224,8 @@ export const MobileMessageCard: React.FC<MobileMessageCardProps> = ({
                 />
                 <Chip
                   label={message.type}
-                  size="small"
-                  variant="outlined"
+                  size="sm"
+                  variant="outline"
                   sx={{ fontSize: '0.7rem', height: 20 }}
                 />
                 {message.status === 'unread' && (
@@ -243,7 +243,7 @@ export const MobileMessageCard: React.FC<MobileMessageCardProps> = ({
 
             <Box sx={{ display: 'flex', alignItems: 'center', ml: 1 }}>
               <IconButton
-                size="small"
+                size="sm"
                 onClick={(e) => {
                   e.stopPropagation();
                   onStar?.(message.id, !(message as any).starred);
@@ -281,7 +281,7 @@ export const MobileMessageCard: React.FC<MobileMessageCardProps> = ({
             
             <Box sx={{ display: 'flex', gap: 0.5 }}>
               <IconButton
-                size="small"
+                size="sm"
                 onClick={(e) => {
                   e.stopPropagation();
                   onReply?.(message.id);
@@ -290,7 +290,7 @@ export const MobileMessageCard: React.FC<MobileMessageCardProps> = ({
                 <ReplyIcon sx={{ fontSize: 18 }} />
               </IconButton>
               <IconButton
-                size="small"
+                size="sm"
                 onClick={(e) => {
                   e.stopPropagation();
                   onArchive?.(message.id);

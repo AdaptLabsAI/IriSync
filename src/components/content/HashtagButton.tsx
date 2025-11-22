@@ -435,7 +435,7 @@ export const HashtagButton: React.FC<HashtagButtonProps> = ({
                     
                     <div className="flex justify-end space-x-2">
                       <Button
-                        size="small"
+                        size="sm"
                         variant="outline"
                         onClick={() => {
                           setShowCreateForm(false);
@@ -446,7 +446,7 @@ export const HashtagButton: React.FC<HashtagButtonProps> = ({
                         Cancel
                       </Button>
                       <Button
-                        size="small"
+                        size="sm"
                         onClick={handleCreateHashtag}
                         disabled={!newHashtagText.trim() || isCreating}
                         className="h-8 text-xs"
@@ -542,7 +542,7 @@ export const HashtagButton: React.FC<HashtagButtonProps> = ({
                     <div className="p-2 border-t">
                       <Button
                         variant="ghost"
-                        size="small"
+                        size="sm"
                         className="w-full justify-start text-blue-500"
                         onClick={() => setShowCreateForm(true)}
                       >

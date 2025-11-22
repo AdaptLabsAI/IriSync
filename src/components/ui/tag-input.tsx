@@ -98,7 +98,7 @@ export const TagInput: React.FC<TagInputProps> = ({
                 edge="end" 
                 onClick={handleAddTag}
                 disabled={isDisabled || !inputValue.trim() || (maxTags && value.length >= maxTags)}
-                size="small"
+                size="sm"
               >
                 <AddIcon />
               </IconButton>
@@ -120,7 +120,7 @@ export const TagInput: React.FC<TagInputProps> = ({
             label={tag}
             onDelete={() => handleDeleteTag(tag)}
             disabled={isDisabled}
-            size="small"
+            size="sm"
           />
         ))}
       </Box>

@@ -184,7 +184,7 @@ const TeamActivityButton: React.FC<TeamActivityButtonProps> = ({
               src={item.userAvatar} 
               alt={item.userName} 
               fallback={item.userName.charAt(0)} 
-              size="small"
+              size="sm"
             />
             <span className="font-medium text-sm">{item.userName}</span>
             <span className="text-gray-500 text-xs">•</span>
@@ -216,7 +216,7 @@ const TeamActivityButton: React.FC<TeamActivityButtonProps> = ({
           {item.resourceId && (
             <Button
               variant="link"
-              size="small"
+              size="sm"
               className="h-6 px-0 mt-1 text-xs"
               onClick={() => window.open(`/dashboard/${item.actionType}/${item.resourceType}/${item.resourceId}`)}
               rightIcon={<ExternalLink className="h-3 w-3" />}
@@ -315,7 +315,7 @@ const TeamActivityButton: React.FC<TeamActivityButtonProps> = ({
                     <div className="flex justify-center pt-2">
                       <Button
                         variant="outline"
-                        size="small"
+                        size="sm"
                         onClick={handleLoadMore}
                         loading={isLoading}
                         leftIcon={<Clock className="h-4 w-4" />}

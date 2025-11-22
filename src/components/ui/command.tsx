@@ -72,8 +72,10 @@ CommandEmpty.displayName = 'CommandEmpty';
 
 const CommandGroup = React.forwardRef<
   HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
+  React.HTMLAttributes<HTMLDivElement> & {
+    heading?: React.ReactNode;
+  }
+>(({ className, heading, children, ...props }, ref) => (
   <div
     ref={ref}
     className={cn(
@@ -81,7 +83,14 @@ const CommandGroup = React.forwardRef<
       className
     )}
     {...props}
-  />
+  >
+    {heading && (
+      <div className="px-2 py-1.5 text-xs font-medium text-muted-foreground">
+        {heading}
+      </div>
+    )}
+    {children}
+  </div>
 ));
 
 CommandGroup.displayName = 'CommandGroup';
@@ -91,20 +100,25 @@ const CommandItem = React.forwardRef<
   React.HTMLAttributes<HTMLDivElement> & {
     value?: string;
     onSelect?: (value: string) => void;
+    disabled?: boolean;
   }
->(({ className, value, onSelect, onClick, ...props }, ref) => (
+>(({ className, value, onSelect, onClick, disabled, ...props }, ref) => (
   <div
     ref={ref}
     className={cn(
       'relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none hover:bg-accent hover:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
+      disabled && 'pointer-events-none opacity-50',
       className
     )}
     onClick={(e) => {
+      if (disabled) return;
       onClick?.(e);
       if (value && onSelect) {
         onSelect(value);
       }
     }}
+    aria-disabled={disabled}
+    data-disabled={disabled ? 'true' : undefined}
     {...props}
   />
 ));

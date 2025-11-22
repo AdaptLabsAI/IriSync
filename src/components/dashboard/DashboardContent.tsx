@@ -233,7 +233,7 @@ export default function DashboardContent() {
               </IconButton>
             </Tooltip>
             <Button
-              variant="contained"
+              variant="primary"
               startIcon={<AddIcon />}
               onClick={() => router.push('/dashboard/planner')}
               sx={{
@@ -342,7 +342,7 @@ export default function DashboardContent() {
                   Schedule your first post to see it here
                 </Typography>
                 <Button
-                  variant="contained"
+                  variant="primary"
                   startIcon={<AddIcon />}
                   onClick={() => router.push('/dashboard/planner')}
                   sx={{
@@ -365,7 +365,7 @@ export default function DashboardContent() {
                       secondaryAction={
                         <Chip
                           label={post.platform}
-                          size="small"
+                          size="sm"
                           sx={{ textTransform: 'capitalize' }}
                         />
                       }

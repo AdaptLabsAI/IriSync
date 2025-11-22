@@ -108,10 +108,7 @@ export const CaptionGenerationButton: React.FC<CaptionGenerationButtonProps> = (
   const { subscription } = useSubscription();
   
   const userTier = subscription?.tier || 'creator';
-  
-  // Check if AI caption generation is available based on subscription tier
-  const canGenerateCaptions = userTier !== 'free';
-  
+
   // Determine maximum number of captions based on tier
   const getMaxCaptions = () => {
     switch (userTier) {
@@ -125,8 +122,12 @@ export const CaptionGenerationButton: React.FC<CaptionGenerationButtonProps> = (
         return 0;
     }
   };
-  
+
   const maxCaptions = getMaxCaptions();
+
+  // Check if AI caption generation is available based on subscription tier
+  // All valid subscription tiers (creator, influencer, enterprise) have AI caption access
+  const canGenerateCaptions = maxCaptions > 0;
   
   // Custom prompt available only for enterprise users
   const canUseCustomPrompt = userTier === 'enterprise';
@@ -195,7 +196,7 @@ export const CaptionGenerationButton: React.FC<CaptionGenerationButtonProps> = (
       toast({
         title: 'Feedback Submitted',
         description: `Thank you for your feedback! This helps improve future captions.`,
-        variant: 'default',
+        variant: 'success',
       });
     } catch (error) {
       console.error('Error submitting caption feedback:', error);
@@ -472,7 +473,7 @@ export const CaptionGenerationButton: React.FC<CaptionGenerationButtonProps> = (
                   </div>
                 )}
                 
-                {!canUseCustomPrompt && userTier !== 'free' && (
+                {!canUseCustomPrompt && canGenerateCaptions && (
                   <div className="bg-blue-50 p-3 rounded-md flex items-start gap-2">
                     <Sparkles className="h-4 w-4 text-blue-500 mt-0.5" />
                     <p className="text-xs text-blue-700">
@@ -489,7 +490,7 @@ export const CaptionGenerationButton: React.FC<CaptionGenerationButtonProps> = (
               {generatedCaptions.length > 0 && (
                 <Button
                   variant="ghost" 
-                  size="small"
+                  size="sm"
                   onClick={handleGenerateCaptions}
                   disabled={isGenerating}
                 >

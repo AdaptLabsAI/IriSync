@@ -157,7 +157,7 @@ const FeedbackButton: React.FC<FeedbackButtonProps> = ({
                         src={item.userAvatar} 
                         alt={item.userName} 
                         fallback={item.userName.charAt(0)} 
-                        size="small"
+                        size="sm"
                       />
                       <div>
                         <div className="font-medium text-sm">{item.userName}</div>
@@ -170,7 +170,7 @@ const FeedbackButton: React.FC<FeedbackButtonProps> = ({
                     {!item.resolved && (
                       <Button
                         variant="ghost"
-                        size="small"
+                        size="sm"
                         onClick={() => handleResolveFeedback(item.id)}
                         aria-label="Resolve feedback"
                         className="h-6 w-6 p-0"
@@ -206,7 +206,7 @@ const FeedbackButton: React.FC<FeedbackButtonProps> = ({
             <div className="flex justify-end">
               <Button
                 variant="primary"
-                size="small"
+                size="sm"
                 onClick={handleSubmitFeedback}
                 disabled={!feedbackMessage.trim() || isLoading}
                 leftIcon={<Send className="h-4 w-4" />}

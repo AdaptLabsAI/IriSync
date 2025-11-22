@@ -583,7 +583,7 @@ const WebhookConfigButton: React.FC<WebhookConfigButtonProps> = ({
                         <div className="flex space-x-2">
                           <Button 
                             variant="outline" 
-                            size="small"
+                            size="sm"
                             onClick={() => handleTestWebhook(webhook.id)}
                             disabled={isTesting && selectedWebhookId === webhook.id}
                           >
@@ -596,14 +596,14 @@ const WebhookConfigButton: React.FC<WebhookConfigButtonProps> = ({
                           </Button>
                           <Button 
                             variant="outline" 
-                            size="small"
+                            size="sm"
                             onClick={() => handleStartEdit(webhook)}
                           >
                             Edit
                           </Button>
                           <Button 
                             variant="outline" 
-                            size="small"
+                            size="sm"
                             className="text-red-500 hover:text-red-600"
                             onClick={() => handleDeleteWebhook(webhook.id)}
                             disabled={isDeleting && selectedWebhookId === webhook.id}

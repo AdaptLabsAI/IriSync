@@ -209,7 +209,7 @@ export default function AnalyticsContent() {
               Get AI Summary
             </Button>
             <Button
-              variant="contained"
+              variant="primary"
               startIcon={<DownloadIcon />}
               sx={{
                 bgcolor: tokens.colors.primary.main,
@@ -364,7 +364,7 @@ export default function AnalyticsContent() {
                   key={range}
                   label={range}
                   onClick={() => setSelectedDateRange(range)}
-                  size="small"
+                  size="sm"
                   sx={{
                     bgcolor: selectedDateRange === range ? tokens.colors.primary.main : 'default',
                     color: selectedDateRange === range ? 'white' : 'default',

@@ -98,7 +98,7 @@ const PricingComponent = () => {
                 <Chip
                   label="20% OFF"
                   color="primary"
-                  size="small"
+                  size="sm"
                   className="bg-yellow-400 text-white"
                 />
                 </div>        

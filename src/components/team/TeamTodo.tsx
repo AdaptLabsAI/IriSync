@@ -416,7 +416,7 @@ const TeamTodoEditor: React.FC<{
           >
             {saving ? (
               <>
-                <Spinner size="small" className="mr-2" />
+                <Spinner size="sm" className="mr-2" />
                 {todo ? 'Updating...' : 'Adding...'}
               </>
             ) : (
@@ -584,7 +584,7 @@ const TeamTodoItem: React.FC<{
                     {canEdit && (
                       <Button
                         variant="outline"
-                        size="small"
+                        size="sm"
                         onClick={() => onEdit(todo)}
                       >
                         Edit
@@ -594,7 +594,7 @@ const TeamTodoItem: React.FC<{
                     {canDelete && (
                       <Button
                         variant="outline"
-                        size="small"
+                        size="sm"
                         onClick={handleDelete}
                         className="text-red-600 hover:text-red-700"
                       >

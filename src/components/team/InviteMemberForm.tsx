@@ -201,8 +201,8 @@ export default function InviteMemberForm({ roles, onInvite }: InviteMemberFormPr
   return (
     <>
       <Button 
-        variant="contained" 
-        size="small" 
+        variant="primary" 
+        size="sm" 
         startIcon={<UserPlus />}
         onClick={() => setIsOpen(true)}
       >
@@ -258,7 +258,7 @@ export default function InviteMemberForm({ roles, onInvite }: InviteMemberFormPr
                 Cancel
               </Button>
               <Button 
-                variant="contained" 
+                variant="primary" 
                 onClick={() => handleFormSubmit(control._formValues as InviteMemberFormValues)}
                 disabled={isSubmitting || stripeProcessing}
               >
@@ -371,7 +371,7 @@ export default function InviteMemberForm({ roles, onInvite }: InviteMemberFormPr
                 Cancel
               </Button>
               <Button 
-                variant="contained" 
+                variant="primary" 
                 onClick={handleSubmit(handleFormSubmit)}
                 disabled={isSubmitting || (!!billingDetails && billingDetails.currentSeats >= billingDetails.seatLimit)}
               >

@@ -7,7 +7,7 @@ import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
 import { Calendar as CalendarComponent } from '../ui/calendar';
 import { cn } from '../../lib/utils';
 
-interface DateRange {
+export interface DateRange {
   from: Date;
   to: Date;
 }
@@ -218,7 +218,7 @@ export const DateRangeSelector: React.FC<DateRangeSelectorProps> = ({
                 <Button
                   key={i}
                   variant="ghost"
-                  size="small"
+                  size="sm"
                   className="w-full justify-start font-normal"
                   onClick={() => applyPreset(preset)}
                 >
@@ -242,8 +242,6 @@ export const DateRangeSelector: React.FC<DateRangeSelectorProps> = ({
                   handleDateSelect(range.to);
                 }
               }}
-              numberOfMonths={2}
-              defaultMonth={date.from}
             />
           </div>
         </div>
@@ -276,7 +274,7 @@ export const DateRangeSelector: React.FC<DateRangeSelectorProps> = ({
               <Button
                 key={i}
                 variant="outline"
-                size="small"
+                size="sm"
                 onClick={() => applyPreset(preset)}
               >
                 {preset.label}
@@ -298,8 +296,6 @@ export const DateRangeSelector: React.FC<DateRangeSelectorProps> = ({
                 handleDateSelect(range.to);
               }
             }}
-            numberOfMonths={1}
-            defaultMonth={date.from}
           />
           
           <div className="flex justify-end">

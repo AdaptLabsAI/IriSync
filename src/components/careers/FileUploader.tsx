@@ -232,7 +232,7 @@ export default function FileUploader({
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <CheckCircleIcon color="success" sx={{ mr: 1 }} />
             <Tooltip title="Remove file">
-              <IconButton onClick={handleClear} size="small">
+              <IconButton onClick={handleClear} size="sm">
                 <DeleteIcon fontSize="small" />
               </IconButton>
             </Tooltip>

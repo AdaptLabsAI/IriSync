@@ -262,7 +262,7 @@ export default function PricingSection() {
                   <Button
                     component={Link}
                     href="/contact-sales"
-                    variant="outlined"
+                    variant="outline"
                     fullWidth
                     sx={{ py: 1.5, whiteSpace: "nowrap" }}
                   >
@@ -271,7 +271,7 @@ export default function PricingSection() {
                   <Button
                     component={Link}
                     href="/request-demo"
-                    variant="outlined"
+                    variant="outline"
                     fullWidth
                     sx={{
                       py: 1.5,
@@ -423,7 +423,7 @@ export default function PricingSection() {
               <TextField
                 value={numberOfUsers}
                 onChange={(e) => setNumberOfUsers(e.target.value)}
-                size="small"
+                size="sm"
                 sx={{ width: 80 }}
                 inputProps={{ style: { textAlign: "center" } }}
               />
@@ -476,11 +476,11 @@ export default function PricingSection() {
 
         {/* Action Buttons */}
         <Box sx={{ display: "flex", gap: 2, flexDirection: { xs: 'column', sm: 'row' } }}>
-          <Button variant="outlined" fullWidth sx={{ py: 1.5 }}>
+          <Button variant="outline" fullWidth sx={{ py: 1.5 }}>
             Know More
           </Button>
           <Button
-            variant="contained"
+            variant="primary"
             fullWidth
             sx={{
               py: 1.5,

@@ -176,7 +176,7 @@ const PlatformCard: React.FC<PlatformCardProps> = ({ platform, onConnect }) => {
     >
       <Box sx={{ position: 'absolute', top: 10, right: 10 }}>
         <Chip
-          size="small"
+          size="sm"
           label={statusInfo.label}
           color={statusInfo.color as any}
         />
@@ -274,7 +274,7 @@ export default function PlatformIntegrationPanel() {
                 {category.label}
                 {category.value === activeTab && (
                   <Chip 
-                    size="small" 
+                    size="sm" 
                     label={`${currentStats?.complete || 0}/${currentStats?.total || 0}`} 
                     sx={{ ml: 1, height: 20 }} 
                   />

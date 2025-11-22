@@ -233,7 +233,7 @@ export const MediaIntegrationButton: React.FC<MediaIntegrationButtonProps> = ({
               <h3 className="font-medium text-sm">{integration.name}</h3>
               
               {integration.requiredTier && !hasAccess && (
-                <Badge variant="outlined" className="text-xs bg-amber-50 text-amber-700 flex items-center gap-1">
+                <Badge variant="outline" className="text-xs bg-amber-50 text-amber-700 flex items-center gap-1">
                   <Lock className="h-3 w-3" />
                   {integration.requiredTier}+
                 </Badge>
@@ -263,8 +263,8 @@ export const MediaIntegrationButton: React.FC<MediaIntegrationButtonProps> = ({
           {isConnected ? (
             <div className="space-x-2 flex items-center">
               <Button
-                variant="text"
-                size="small"
+                variant="ghost"
+                size="sm"
                 onClick={() => handleDisconnect(integration.id)}
                 disabled={isLoading || !hasAccess}
                 className="h-8 text-xs"
@@ -276,8 +276,8 @@ export const MediaIntegrationButton: React.FC<MediaIntegrationButtonProps> = ({
               </Button>
               
               <Button
-                variant="contained"
-                size="small"
+                variant="primary"
+                size="sm"
                 onClick={() => onBrowseFiles(integration.id)}
                 disabled={isLoading || !hasAccess || integration.connectionStatus === 'error'}
                 className="h-8 text-xs"
@@ -288,8 +288,8 @@ export const MediaIntegrationButton: React.FC<MediaIntegrationButtonProps> = ({
             </div>
           ) : (
             <Button
-              variant="outlined"
-              size="small"
+              variant="outline"
+              size="sm"
               onClick={() => handleConnect(integration.id)}
               disabled={isLoading || !hasAccess}
               className="h-8 text-xs"
@@ -383,8 +383,8 @@ export const MediaIntegrationButton: React.FC<MediaIntegrationButtonProps> = ({
                       Connect external services to import media
                     </p>
                     <Button 
-                      variant="text" 
-                      size="small" 
+                      variant="ghost" 
+                      size="sm" 
                       onClick={() => setActiveTab('available')}
                       className="mt-3"
                     >

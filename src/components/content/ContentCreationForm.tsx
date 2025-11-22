@@ -470,8 +470,9 @@ export default function ContentCreationForm({
                   onChange={(e: any) => setLinkUrl(e.target.value)}
                   size="small"
                 />
-                <Button 
-                  variant="contained" 
+                <Button
+                  variant="contained"
+                  color="primary"
                   onClick={handleAddLink}
                   disabled={!linkUrl.trim()}
                 >

@@ -1,3 +1,16 @@
+/**
+ * Dropdown Menu Component
+ *
+ * Canonical API (ShadCN/Radix style):
+ * - DropdownMenu (root container)
+ * - DropdownMenuTrigger (trigger button)
+ * - DropdownMenuContent (popup content)
+ * - DropdownMenuItem (individual menu item)
+ * - DropdownMenuSeparator (separator)
+ * - DropdownMenuLabel (label)
+ *
+ * DO NOT use: Dropdown, DropdownTrigger, DropdownItem (these are old names)
+ */
 import React, { useState, useRef, useEffect } from 'react';
 
 export interface DropdownMenuProps {

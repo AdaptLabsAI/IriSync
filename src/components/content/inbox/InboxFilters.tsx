@@ -130,15 +130,15 @@ export const InboxFilters: React.FC<InboxFiltersProps> = ({
           placeholder="Search messages..."
           value={search}
           onChange={(e) => onSearchChange(e.target.value)}
-          variant="outlined"
-          size="small"
+          variant="outline"
+          size="sm"
         />
         {activeFilterCount > 0 && (
           <Box sx={{ mt: 1, display: 'flex', alignItems: 'center', gap: 1 }}>
             <Typography variant="caption" color="text.secondary">
               {activeFilterCount} filter{activeFilterCount !== 1 ? 's' : ''} active
             </Typography>
-            <Button size="small" onClick={onClearFilters} startIcon={<ClearIcon />}>
+            <Button size="sm" onClick={onClearFilters} startIcon={<ClearIcon />}>
               Clear
             </Button>
           </Box>
@@ -169,7 +169,7 @@ export const InboxFilters: React.FC<InboxFiltersProps> = ({
             </Typography>
             {activeFilterCount > 0 && (
               <Button
-                size="small"
+                size="sm"
                 onClick={onClearFilters}
                 startIcon={<ClearIcon />}
                 sx={{ ml: 'auto' }}
@@ -186,7 +186,7 @@ export const InboxFilters: React.FC<InboxFiltersProps> = ({
             <Box sx={{ flex: '1 1 calc(25% - 12px)', minWidth: '200px' }}>
               <TextField
                 fullWidth
-                size="small"
+                size="sm"
                 label="Search"
                 value={search}
                 onChange={(e) => onSearchChange(e.target.value)}
@@ -196,7 +196,7 @@ export const InboxFilters: React.FC<InboxFiltersProps> = ({
 
             {/* Platform Filter */}
             <Box sx={{ flex: '1 1 calc(16.67% - 12px)', minWidth: '150px' }}>
-              <FormControl size="small" fullWidth>
+              <FormControl size="sm" fullWidth>
                 <InputLabel>Platform</InputLabel>
                 <Select
                   value={filters.platform || ''}
@@ -214,7 +214,7 @@ export const InboxFilters: React.FC<InboxFiltersProps> = ({
 
             {/* Message Type Filter */}
             <Box sx={{ flex: '1 1 calc(16.67% - 12px)', minWidth: '150px' }}>
-              <FormControl size="small" fullWidth>
+              <FormControl size="sm" fullWidth>
                 <InputLabel>Type</InputLabel>
                 <Select
                   value={filters.messageType || ''}
@@ -232,7 +232,7 @@ export const InboxFilters: React.FC<InboxFiltersProps> = ({
 
             {/* Status Filter */}
             <Box sx={{ flex: '1 1 calc(16.67% - 12px)', minWidth: '150px' }}>
-              <FormControl size="small" fullWidth>
+              <FormControl size="sm" fullWidth>
                 <InputLabel>Status</InputLabel>
                 <Select
                   value={filters.status || ''}
@@ -250,7 +250,7 @@ export const InboxFilters: React.FC<InboxFiltersProps> = ({
 
             {/* Sentiment Filter */}
             <Box sx={{ flex: '1 1 calc(16.67% - 12px)', minWidth: '150px' }}>
-              <FormControl size="small" fullWidth>
+              <FormControl size="sm" fullWidth>
                 <InputLabel>Sentiment</InputLabel>
                 <Select
                   value={filters.sentiment || ''}
@@ -268,7 +268,7 @@ export const InboxFilters: React.FC<InboxFiltersProps> = ({
 
             {/* Assigned User Filter */}
             <Box sx={{ flex: '1 1 calc(25% - 12px)', minWidth: '200px' }}>
-              <FormControl size="small" fullWidth>
+              <FormControl size="sm" fullWidth>
                 <InputLabel>Assigned To</InputLabel>
                 <Select
                   value={filters.assignedTo || ''}
@@ -290,16 +290,16 @@ export const InboxFilters: React.FC<InboxFiltersProps> = ({
             <Box sx={{ flex: '1 1 calc(25% - 12px)', minWidth: '200px' }}>
               <Autocomplete
                 multiple
-                size="small"
+                size="sm"
                 options={labels}
                 value={selectedLabels}
                 onChange={(_, value) => onLabelsChange(value)}
                 renderTags={(value: string[], getTagProps) =>
                   value.map((option: string, index: number) => (
                     <Chip
-                      variant="outlined"
+                      variant="outline"
                       label={option}
-                      size="small"
+                      size="sm"
                       {...getTagProps({ index })}
                       key={option}
                     />
@@ -332,8 +332,8 @@ export const InboxFilters: React.FC<InboxFiltersProps> = ({
               <Box sx={{ flex: '1 1 calc(16.67% - 12px)', minWidth: '150px' }}>
                 <Button
                   fullWidth
-                  variant="outlined"
-                  size="small"
+                  variant="outline"
+                  size="sm"
                   onClick={onClearFilters}
                   startIcon={<ClearIcon />}
                 >

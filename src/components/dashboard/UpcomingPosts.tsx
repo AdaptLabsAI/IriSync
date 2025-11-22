@@ -43,7 +43,7 @@ export default function UpcomingPosts({ posts }: UpcomingPostsProps) {
               <Chip 
                 label={post.status === 'ready' ? 'Ready' : 'Draft'} 
                 color={post.status === 'ready' ? 'success' : 'default'}
-                size="small"
+                size="sm"
               />
             </Box>
           </Box>

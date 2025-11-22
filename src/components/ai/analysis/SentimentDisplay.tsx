@@ -108,7 +108,7 @@ const SentimentDisplay: React.FC<SentimentDisplayProps> = ({
         <div className="mb-4">
           <h4 className="font-medium mb-2">Aspect Sentiment</h4>
           <div className="grid grid-cols-1 gap-1">
-            {result.details.aspects.map((aspect: any, idx: any) => (
+            {result.details.aspects.map((aspect, idx) => (
               <div key={idx} className="flex items-center justify-between text-sm py-1 border-b last:border-b-0">
                 <div>{aspect.aspect}</div>
                 <div className={`font-medium capitalize ${getSentimentColorClass(aspect.sentiment)}`}>

@@ -298,7 +298,7 @@ export const MobileFilterDrawer: React.FC<MobileFilterDrawerProps> = ({
       >
         <Box sx={{ display: 'flex', gap: 1 }}>
           <Button
-            variant="outlined"
+            variant="outline"
             onClick={handleClear}
             startIcon={<ClearIcon />}
             sx={{ flex: 1 }}
@@ -306,7 +306,7 @@ export const MobileFilterDrawer: React.FC<MobileFilterDrawerProps> = ({
             Clear All
           </Button>
           <Button
-            variant="contained"
+            variant="primary"
             onClick={handleApply}
             sx={{ flex: 2 }}
           >

@@ -140,7 +140,7 @@ export const FormInput = <T extends FieldValues>({
         ) : undefined,
         inputRef: ref
       }}
-      variant="outlined"
+      variant="outline"
       fullWidth
       error={!!error}
       helperText={error || helperText}
@@ -190,7 +190,7 @@ export const FormTextarea = <T extends FieldValues>({
       }}
       multiline
       rows={rows}
-      variant="outlined"
+      variant="outline"
       fullWidth
       error={!!error}
       helperText={error || helperText}

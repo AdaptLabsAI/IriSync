@@ -246,7 +246,7 @@ export const TagManagementButton: React.FC<TagManagementButtonProps> = ({
               <Button
                 type="button"
                 variant="outline"
-                size="small"
+                size="sm"
                 onClick={() => setShowCreateForm(true)}
               >
                 <Plus className="h-4 w-4 mr-2" />
@@ -267,7 +267,7 @@ export const TagManagementButton: React.FC<TagManagementButtonProps> = ({
               />
               <Button
                 type="button"
-                size="small"
+                size="sm"
                 onClick={handleCreateTag}
                 disabled={!newTagName.trim() || isCreatingTag}
               >
@@ -281,7 +281,7 @@ export const TagManagementButton: React.FC<TagManagementButtonProps> = ({
               <Button
                 type="button"
                 variant="ghost"
-                size="small"
+                size="sm"
                 onClick={() => {
                   setShowCreateForm(false);
                   setNewTagName('');
@@ -336,7 +336,7 @@ export const TagManagementButton: React.FC<TagManagementButtonProps> = ({
                         <Button
                           type="button"
                           variant="ghost"
-                          size="small"
+                          size="sm"
                           className="h-8 w-8 p-0 text-red-500 hover:text-red-700 hover:bg-red-50"
                           onClick={() => setTagToDelete(tag.id)}
                           disabled={isDeletingTag}

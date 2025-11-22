@@ -136,7 +136,7 @@ const AdvancedRichTextEditor: React.FC<AdvancedRichTextEditorProps> = ({
   
   const quillRef = useRef<any>(null);
   const autoSaveTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const { error: showErrorToast, success: showSuccessToast } = useToast();
+  const { toast } = useToast();
 
   // Initialize client-side rendering
   useEffect(() => {
@@ -158,7 +158,7 @@ const AdvancedRichTextEditor: React.FC<AdvancedRichTextEditorProps> = ({
         setLastSaved(new Date());
       } catch (error) {
         console.error('Auto-save failed:', error);
-        showErrorToast({
+        toast({ variant: 'destructive',
           title: 'Auto-save failed',
           description: 'Your changes could not be saved automatically.',
         });
@@ -172,7 +172,7 @@ const AdvancedRichTextEditor: React.FC<AdvancedRichTextEditorProps> = ({
         clearTimeout(autoSaveTimeoutRef.current);
       }
     };
-  }, [value, enableAutoSave, onSave, autoSaveInterval, showErrorToast]);
+  }, [value, enableAutoSave, onSave, autoSaveInterval]);
 
   // Update statistics when content changes
   useEffect(() => {
@@ -216,19 +216,19 @@ const AdvancedRichTextEditor: React.FC<AdvancedRichTextEditorProps> = ({
           }
         }
 
-        showSuccessToast({
+        toast({ variant: 'success',
           title: 'Media uploaded',
           description: `${file.name} has been added to your content.`
         });
       } catch (error) {
         console.error('Error uploading file:', error);
-        showErrorToast({
+        toast({ variant: 'destructive',
           title: 'Upload failed',
           description: `Failed to upload ${file.name}`
         });
       }
     }
-  }, [showSuccessToast, showErrorToast]);
+  }, [toast]);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
@@ -283,13 +283,13 @@ const AdvancedRichTextEditor: React.FC<AdvancedRichTextEditorProps> = ({
       const improvedContent = await onAIAssist(prompt, value);
       onChange(improvedContent);
       
-      showSuccessToast({
+      toast({ variant: 'success',
         title: 'AI assistance applied',
         description: 'Your content has been improved using AI.'
       });
     } catch (error) {
       console.error('AI assistance failed:', error);
-      showErrorToast({
+      toast({ variant: 'destructive',
         title: 'AI assistance failed',
         description: 'Unable to process your request. Please try again.'
       });
@@ -332,7 +332,7 @@ const AdvancedRichTextEditor: React.FC<AdvancedRichTextEditorProps> = ({
       setShowSuccessMessage(true);
     } catch (error) {
       console.error('Save failed:', error);
-      showErrorToast({
+      toast({ variant: 'destructive',
         title: 'Save failed',
         description: 'Your changes could not be saved.'
       });
@@ -558,7 +558,7 @@ const AdvancedRichTextEditor: React.FC<AdvancedRichTextEditorProps> = ({
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setLinkDialogOpen(false)}>Cancel</Button>
-          <Button onClick={handleInsertLink} variant="contained">Insert</Button>
+          <Button onClick={handleInsertLink} variant="contained" color="primary">Insert</Button>
         </DialogActions>
       </Dialog>
 
@@ -596,9 +596,10 @@ const AdvancedRichTextEditor: React.FC<AdvancedRichTextEditorProps> = ({
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setShowAIPromptDialog(false)}>Cancel</Button>
-          <Button 
+          <Button
             onClick={() => currentAIRequest && handleAIAssist({ ...currentAIRequest, prompt: aiPrompt })}
             variant="contained"
+            color="primary"
             disabled={!aiPrompt.trim() || isAIProcessing}
           >
             {isAIProcessing ? <CircularProgress size={20} /> : 'Apply AI'}

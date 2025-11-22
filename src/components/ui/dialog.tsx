@@ -1,4 +1,21 @@
-import React, { useState } from 'react';
+/**
+ * Dialog Component
+ *
+ * Canonical API:
+ * - Dialog (root container, supports both open/onOpenChange AND isOpen/onClose)
+ * - DialogTrigger (trigger button with asChild support)
+ * - DialogContent (content wrapper)
+ * - DialogHeader (header wrapper, accepts className)
+ * - DialogTitle (title)
+ * - DialogDescription (description text)
+ * - DialogClose (close button with asChild support)
+ * - DialogFooter (footer actions)
+ *
+ * Props API supports both styles:
+ * - Radix: open + onOpenChange
+ * - MUI: isOpen + onClose
+ */
+import React, { createContext, useContext } from 'react';
 import {
   Dialog as MuiDialog,
   DialogTitle as MuiDialogTitle,
@@ -11,9 +28,14 @@ import {
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 
+// Context to provide close handler to DialogClose
+const DialogCloseContext = createContext<(() => void) | undefined>(undefined);
+
 export interface DialogProps extends Omit<MuiDialogProps, 'title' | 'open'> {
-  isOpen: boolean;
-  onClose: () => void;
+  isOpen?: boolean;
+  open?: boolean;
+  onClose?: () => void;
+  onOpenChange?: (open: boolean) => void;
   title?: React.ReactNode;
   children: React.ReactNode;
   footer?: React.ReactNode;
@@ -21,7 +43,6 @@ export interface DialogProps extends Omit<MuiDialogProps, 'title' | 'open'> {
   className?: string;
 }
 
-// Convert Chakra size to MUI maxWidth
 const sizeToMaxWidth = {
   'xs': 'xs',
   'sm': 'sm',
@@ -31,12 +52,11 @@ const sizeToMaxWidth = {
   'full': false
 } as const;
 
-/**
- * Dialog component for modal interactions
- */
 export const Dialog: React.FC<DialogProps> = ({
   isOpen,
+  open,
   onClose,
+  onOpenChange,
   title,
   children,
   footer,
@@ -44,174 +64,55 @@ export const Dialog: React.FC<DialogProps> = ({
   className,
   ...props
 }) => {
-  return (
-    <MuiDialog
-      open={isOpen}
-      onClose={onClose}
-      maxWidth={sizeToMaxWidth[size] || 'md'}
-      fullWidth={true}
-      fullScreen={size === 'full'}
-      className={className}
-      {...props}
-    >
-      {title && (
-        <MuiDialogTitle sx={{ px: 3, pt: 2, pb: 1 }}>
-          {title}
-          <IconButton
-            aria-label="close"
-            onClick={onClose}
-            sx={{
-              position: 'absolute',
-              right: 8,
-              top: 8,
-            }}
-            size="small"
-          >
-            <CloseIcon fontSize="small" />
-          </IconButton>
-        </MuiDialogTitle>
-      )}
-      <MuiDialogContent sx={{ px: 3, py: 2 }}>
-        {children}
-      </MuiDialogContent>
-      {footer && <MuiDialogActions sx={{ px: 3, py: 2 }}>{footer}</MuiDialogActions>}
-    </MuiDialog>
-  );
-};
-
-export interface DialogTriggerProps {
-  children: React.ReactNode;
-  trigger: React.ReactNode;
-  title?: React.ReactNode;
-  footer?: React.ReactNode;
-  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'full';
-  onOpen?: () => void;
-  onClose?: () => void;
-  isOpen?: boolean;
-  className?: string;
-}
-
-/**
- * DialogTrigger component that includes a trigger element
- */
-export const DialogTrigger: React.FC<DialogTriggerProps> = ({
-  children,
-  trigger,
-  title,
-  footer,
-  size,
-  onOpen: externalOnOpen,
-  onClose: externalOnClose,
-  isOpen: controlledIsOpen,
-  className,
-  ...props
-}) => {
-  const [internalIsOpen, setInternalIsOpen] = useState(false);
-  
-  const isOpen = controlledIsOpen !== undefined ? controlledIsOpen : internalIsOpen;
-  
-  const handleOpen = () => {
-    if (externalOnOpen) {
-      externalOnOpen();
-    } else {
-      setInternalIsOpen(true);
-    }
-  };
-  
+  const dialogOpen = open !== undefined ? open : (isOpen !== undefined ? isOpen : false);
   const handleClose = () => {
-    if (externalOnClose) {
-      externalOnClose();
-    } else {
-      setInternalIsOpen(false);
+    if (onOpenChange) {
+      onOpenChange(false);
+    } else if (onClose) {
+      onClose();
     }
   };
 
   return (
-    <>
-      {React.cloneElement(trigger as React.ReactElement, { onClick: handleOpen })}
-      <Dialog
-        isOpen={isOpen}
+    <DialogCloseContext.Provider value={handleClose}>
+      <MuiDialog
+        open={dialogOpen}
         onClose={handleClose}
-        title={title}
-        footer={footer}
-        size={size}
+        maxWidth={sizeToMaxWidth[size] || 'md'}
+        fullWidth={true}
+        fullScreen={size === 'full'}
         className={className}
         {...props}
       >
-        {children}
-      </Dialog>
-    </>
+        {title && (
+          <MuiDialogTitle sx={{ px: 3, pt: 2, pb: 1 }}>
+            {title}
+            <IconButton
+              aria-label="close"
+              onClick={handleClose}
+              sx={{
+                position: 'absolute',
+                right: 8,
+                top: 8,
+              }}
+              size="small"
+            >
+              <CloseIcon fontSize="small" />
+            </IconButton>
+          </MuiDialogTitle>
+        )}
+        <MuiDialogContent sx={{ px: 3, py: 2 }}>
+          {children}
+        </MuiDialogContent>
+        {footer && <MuiDialogActions sx={{ px: 3, py: 2 }}>{footer}</MuiDialogActions>}
+      </MuiDialog>
+    </DialogCloseContext.Provider>
   );
 };
 
-/**
- * Pre-configured dialog components
- */
-export const ConfirmDialog: React.FC<{
-  isOpen: boolean;
-  onClose: () => void;
-  onConfirm: () => void;
-  title: string;
-  message: string;
-  confirmLabel?: string;
-  cancelLabel?: string;
-  isLoading?: boolean;
-  variant?: 'danger' | 'warning' | 'info';
-}> = ({
-  isOpen,
-  onClose,
-  onConfirm,
-  title,
-  message,
-  confirmLabel = 'Confirm',
-  cancelLabel = 'Cancel',
-  isLoading = false,
-  variant = 'danger',
-}) => {
-  const variantColor = {
-    danger: 'error',
-    warning: 'warning',
-    info: 'primary'
-  }[variant] as 'error' | 'warning' | 'primary';
-
-  return (
-    <Dialog
-      isOpen={isOpen}
-      onClose={onClose}
-      title={title}
-      footer={
-        <>
-          <Button 
-            variant="text" 
-            onClick={onClose}
-            disabled={isLoading}
-            sx={{ mr: 1 }}
-          >
-            {cancelLabel}
-          </Button>
-          <Button
-            variant="contained"
-            color={variantColor}
-            onClick={onConfirm}
-            disabled={isLoading}
-          >
-            {confirmLabel}
-          </Button>
-        </>
-      }
-      size="small"
-    >
-      <Box sx={{ py: 1 }}>
-        {message}
-      </Box>
-    </Dialog>
-  );
-};
-
-// Export individual dialog components for compatibility
 export const DialogContent = MuiDialogContent;
-export const DialogHeader = ({ children, ...props }: { children: React.ReactNode }) => (
-  <MuiDialogTitle {...props}>{children}</MuiDialogTitle>
+export const DialogHeader = ({ children, className, ...props }: { children: React.ReactNode; className?: string }) => (
+  <MuiDialogTitle className={className} {...props}>{children}</MuiDialogTitle>
 );
 export const DialogTitle = MuiDialogTitle;
 export const DialogDescription = ({ children, className, ...props }: { children: React.ReactNode; className?: string }) => (
@@ -230,4 +131,57 @@ export const DialogDescription = ({ children, className, ...props }: { children:
 );
 export const DialogFooter = MuiDialogActions;
 
-export default Dialog; 
+export interface DialogTriggerProps {
+  asChild?: boolean;
+  children: React.ReactNode;
+  onClick?: () => void;
+  className?: string;
+}
+
+export const DialogTrigger: React.FC<DialogTriggerProps> = ({ asChild, children, onClick, className }) => {
+  if (asChild && React.isValidElement(children)) {
+    return React.cloneElement(children as React.ReactElement<any>, {
+      onClick,
+      className
+    });
+  }
+
+  return (
+    <button onClick={onClick} className={className}>
+      {children}
+    </button>
+  );
+};
+
+export const DialogClose: React.FC<{
+  onClick?: () => void;
+  className?: string;
+  children?: React.ReactNode;
+  asChild?: boolean;
+}> = ({ onClick, className, children, asChild = false }) => {
+  const dialogClose = useContext(DialogCloseContext);
+
+  const handleClick = () => {
+    if (onClick) {
+      onClick();
+    }
+    if (dialogClose) {
+      dialogClose();
+    }
+  };
+
+  if (asChild && React.isValidElement(children)) {
+    return React.cloneElement(children as React.ReactElement<any>, {
+      onClick: handleClick,
+      className
+    });
+  }
+
+  return (
+    <button onClick={handleClick} className={className}>
+      {children || 'Close'}
+    </button>
+  );
+};
+
+export default Dialog;

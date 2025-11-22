@@ -83,7 +83,7 @@ export default function ActivityWidget({
       <Box sx={{ p: 2, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <Typography variant="h6">Recent Activity</Typography>
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          <FormControl size="small" sx={{ minWidth: 120, mr: 1 }}>
+          <FormControl size="sm" sx={{ minWidth: 120, mr: 1 }}>
             <Select
               value={filter}
               onChange={handleFilterChange}
@@ -104,7 +104,7 @@ export default function ActivityWidget({
           </FormControl>
           <Tooltip title="Refresh activities">
             <IconButton 
-              size="small" 
+              size="sm" 
               onClick={onRefresh}
               disabled={isLoading}
             >
