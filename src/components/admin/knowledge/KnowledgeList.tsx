@@ -186,7 +186,7 @@ export default function KnowledgeList({ items, isLoading, onRefresh }: Knowledge
               <TableCell>
                 <Chip
                   label={item.accessLevel}
-                  size="sm"
+                  size="small"
                   color={getAccessLevelColor(item.accessLevel) as any}
                 />
               </TableCell>
@@ -195,14 +195,14 @@ export default function KnowledgeList({ items, isLoading, onRefresh }: Knowledge
                 <Stack direction="row" spacing={1} justifyContent="flex-end">
                   <Tooltip title="Edit">
                     <IconButton
-                      size="sm"
+                      size="small"
                       onClick={() => handleEdit(item.id)}
                     >
                       <EditIcon fontSize="small" />
                     </IconButton>
                   </Tooltip>
                   <IconButton
-                    size="sm"
+                    size="small"
                     aria-label="more"
                     onClick={(e) => handleOpenMenu(e, item)}
                   >
