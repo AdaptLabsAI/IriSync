@@ -458,8 +458,13 @@ const ContentGenerationButton: React.FC<ContentGenerationButtonProps> = ({
           
           {activeTab === 'twitter' && (
             <TwitterContentGenerator
-              onContentGenerated={(content, hashtags) => 
-                handleContentGenerated(content, { hashtags })}
+              onContentGenerated={(content, hashtags) => {
+                // Normalize content so it is always a string for handleContentGenerated
+                const normalizedContent =
+                  Array.isArray(content) ? content.join(' ') : content;
+
+                handleContentGenerated(normalizedContent, { hashtags });
+              }}
               initialPrompt={prompt}
             />
           )}
