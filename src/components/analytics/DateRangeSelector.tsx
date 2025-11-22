@@ -242,8 +242,6 @@ export const DateRangeSelector: React.FC<DateRangeSelectorProps> = ({
                   handleDateSelect(range.to);
                 }
               }}
-              numberOfMonths={2}
-              defaultMonth={date.from}
             />
           </div>
         </div>
