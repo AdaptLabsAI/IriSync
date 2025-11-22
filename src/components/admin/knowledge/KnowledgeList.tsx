@@ -160,7 +160,7 @@ export default function KnowledgeList({ items, isLoading, onRefresh }: Knowledge
                       <Chip
                         key={tag}
                         label={tag}
-                        size="sm"
+                        size="small"
                         sx={{ height: 20, fontSize: '0.7rem' }}
                       />
                     ))}
