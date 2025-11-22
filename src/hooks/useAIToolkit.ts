@@ -86,6 +86,19 @@ export function useAIToolkit() {
   }, [callToolkitApi]);
 
   /**
+   * Analyze sentiment and emotional tone of content
+   */
+  const analyzeSentiment = useCallback(async (
+    content: string,
+    detailed?: boolean
+  ) => {
+    return callToolkitApi('analyzeSentiment', {
+      content,
+      detailed
+    });
+  }, [callToolkitApi]);
+
+  /**
    * Generate content for a specific platform
    * Updated to accept a more flexible set of parameters
    */
@@ -335,6 +348,7 @@ export function useAIToolkit() {
     // Map operation to task type
     const taskTypeMap: Record<string, string> = {
       'analyzeContent': 'analyze_sentiment',
+      'analyzeSentiment': 'analyze_sentiment',
       'generateContent': 'generate_post',
       'suggestHashtags': 'generate_hashtags',
       'analyzeMedia': 'analyze_image',
@@ -364,6 +378,7 @@ export function useAIToolkit() {
     loading,
     error,
     analyzeContent,
+    analyzeSentiment,
     generateContent,
     suggestHashtags,
     analyzeMedia,
