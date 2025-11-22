@@ -589,7 +589,7 @@ const StockPhotoBrowser: React.FC<StockPhotoBrowserProps> = ({
 
       {/* Download Dialog */}
       <Dialog
-        isOpen={downloadDialog.open}
+        open={downloadDialog.open}
         onClose={() => setDownloadDialog({ open: false, photo: null })}
         maxWidth="sm"
         fullWidth

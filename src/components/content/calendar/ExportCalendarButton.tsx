@@ -212,7 +212,7 @@ const ExportCalendarButton: React.FC<ExportCalendarButtonProps> = ({
       </Button>
 
       <Dialog
-        isOpen={isOpen}
+        open={isOpen}
         onClose={handleCloseDialog}
       >
         <DialogTitle>Export Calendar</DialogTitle>

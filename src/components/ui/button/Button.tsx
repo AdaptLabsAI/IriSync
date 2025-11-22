@@ -1,3 +1,13 @@
+/**
+ * Button Component
+ *
+ * Canonical API:
+ * Variants: 'primary' | 'secondary' | 'tertiary' | 'outline' | 'ghost' | 'link' | 'danger' | 'success' | 'warning'
+ * Sizes: 'sm' | 'md' | 'lg' | 'xl' | 'icon'
+ *
+ * DO NOT use MUI variants: 'contained', 'text', 'outlined'
+ * Those are for MUI Button from @mui/material
+ */
 import React, { ButtonHTMLAttributes, forwardRef } from 'react';
 import cn from 'classnames';
 import { Spinner } from '../spinner/Spinner';

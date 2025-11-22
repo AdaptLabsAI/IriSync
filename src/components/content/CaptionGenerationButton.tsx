@@ -195,7 +195,7 @@ export const CaptionGenerationButton: React.FC<CaptionGenerationButtonProps> = (
       toast({
         title: 'Feedback Submitted',
         description: `Thank you for your feedback! This helps improve future captions.`,
-        variant: 'primary',
+        variant: 'success',
       });
     } catch (error) {
       console.error('Error submitting caption feedback:', error);

@@ -150,7 +150,7 @@ const ColorCodingSelector: React.FC<ColorCodingSelectorProps> = ({
       </Button>
 
       <Dialog
-        isOpen={isOpen}
+        open={isOpen}
         onClose={handleCloseDialog}
       >
         <DialogTitle>Calendar Color Coding</DialogTitle>

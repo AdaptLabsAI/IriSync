@@ -149,7 +149,7 @@ export default function PlanSelection({ selectedTier, onTierSelect, isSignUp = f
                           {plan.name}
                           {plan.isPopular && (
                             <Chip
-                              size="sm"
+                              size="small"
                               label="Popular"
                               color="secondary"
                               sx={{ ml: 1 }}

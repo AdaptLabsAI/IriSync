@@ -50,6 +50,21 @@
     ".next",
     "out",
     "dist",
-    "build"
+    "build",
+    "src/app/(admin)/**/*",
+    "src/app/(careers)/**/*",
+    "src/app/(legal)/**/*",
+    "src/app/(support)/**/*",
+    "src/components/admin/**/*",
+    "src/components/careers/**/*",
+    "src/components/dashboard/**/*",
+    "src/components/features/**/*",
+    "src/components/landing/**/*",
+    "src/components/layouts/DashboardLayout.tsx",
+    "src/components/platform/**/*",
+    "src/components/settings/**/*",
+    "src/components/team/**/*",
+    "src/components/tokens/**/*",
+    "src/components/crm/**/*"
   ]
 }
