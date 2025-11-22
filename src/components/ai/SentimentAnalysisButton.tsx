@@ -95,16 +95,19 @@ const SentimentAnalysisButton: React.FC<SentimentAnalysisButtonProps> = ({
   const userTier = subscription?.tier || 'creator';
 
   // Check feature availability based on subscription tier
-  // "Free" is represented by having no subscription at all
-  const canUseSentimentAnalysis = !!subscription;
-  const canUseDetailedAnalysis =
-    userTier === 'enterprise' || userTier === 'influencer';
+  // Treat 'creator' as the "free" tier.
+  // Sentiment analysis: available for Influencer + Enterprise
+  const canUseSentimentAnalysis =
+    userTier === 'influencer' || userTier === 'enterprise';
+
+  // Detailed analysis: Enterprise only
+  const canUseDetailedAnalysis = userTier === 'enterprise';
   
   const handleOpenDialog = () => {
     if (!canUseSentimentAnalysis) {
       toast({
         title: "Feature not available",
-        description: "Sentiment analysis requires a Creator subscription or higher",
+        description: "Sentiment analysis requires an Influencer subscription or higher",
         variant: "destructive"
       });
       return;
