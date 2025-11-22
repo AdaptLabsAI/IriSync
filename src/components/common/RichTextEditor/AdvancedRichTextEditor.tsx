@@ -409,7 +409,7 @@ const AdvancedRichTextEditor: React.FC<AdvancedRichTextEditorProps> = ({
             <>
               <Tooltip title="AI Assistance">
                 <IconButton
-                  size="sm"
+                  size="small"
                   onClick={(e) => setAiMenuAnchor(e.currentTarget)}
                   disabled={isAIProcessing}
                   color="primary"
@@ -447,7 +447,7 @@ const AdvancedRichTextEditor: React.FC<AdvancedRichTextEditorProps> = ({
           {onSave && (
             <Tooltip title="Save">
               <IconButton
-                size="sm"
+                size="small"
                 onClick={handleManualSave}
                 disabled={isSaving}
                 color="primary"
@@ -461,7 +461,7 @@ const AdvancedRichTextEditor: React.FC<AdvancedRichTextEditorProps> = ({
 
           {/* Quick Actions */}
           <Tooltip title="Insert Link">
-            <IconButton size="sm" onClick={() => setLinkDialogOpen(true)}>
+            <IconButton size="small" onClick={() => setLinkDialogOpen(true)}>
               <Link />
             </IconButton>
           </Tooltip>
