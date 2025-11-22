@@ -5,7 +5,7 @@ import { useToast } from '../ui/use-toast';
 import { useSubscription } from '../../hooks/useSubscription';
 import { useAIToolkit } from '../../hooks/useAIToolkit';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs';
-import { Textarea } from '../ui/textarea/Textarea';
+import { Textarea } from '../ui/textarea';
 import { Loader2, BarChart, Lock, ThumbsUp, ThumbsDown } from 'lucide-react';
 
 export interface SentimentResult {
@@ -93,16 +93,21 @@ const SentimentAnalysisButton: React.FC<SentimentAnalysisButtonProps> = ({
   const { analyzeSentiment, loading, error } = useAIToolkit();
   
   const userTier = subscription?.tier || 'creator';
-  
+
   // Check feature availability based on subscription tier
-  const canUseSentimentAnalysis = userTier !== 'free';
-  const canUseDetailedAnalysis = userTier === 'enterprise' || userTier === 'influencer';
+  // Treat 'creator' as the "free" tier.
+  // Sentiment analysis: available for Influencer + Enterprise
+  const canUseSentimentAnalysis =
+    userTier === 'influencer' || userTier === 'enterprise';
+
+  // Detailed analysis: Enterprise only
+  const canUseDetailedAnalysis = userTier === 'enterprise';
   
   const handleOpenDialog = () => {
     if (!canUseSentimentAnalysis) {
       toast({
         title: "Feature not available",
-        description: "Sentiment analysis requires a Creator subscription or higher",
+        description: "Sentiment analysis requires an Influencer subscription or higher",
         variant: "destructive"
       });
       return;
@@ -387,7 +392,7 @@ const SentimentAnalysisButton: React.FC<SentimentAnalysisButtonProps> = ({
                     <span className="text-xs text-gray-500">Was this analysis helpful?</span>
                     <Button
                       variant="ghost"
-                      size="small"
+                      size="sm"
                       className="h-8 w-8 p-0"
                       onClick={() => handleAnalysisFeedback(true)}
                     >
@@ -395,7 +400,7 @@ const SentimentAnalysisButton: React.FC<SentimentAnalysisButtonProps> = ({
                     </Button>
                     <Button
                       variant="ghost"
-                      size="small"
+                      size="sm"
                       className="h-8 w-8 p-0"
                       onClick={() => handleAnalysisFeedback(false)}
                     >

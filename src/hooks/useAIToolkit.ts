@@ -86,6 +86,19 @@ export function useAIToolkit() {
   }, [callToolkitApi]);
 
   /**
+   * Analyze sentiment and emotional tone of content
+   */
+  const analyzeSentiment = useCallback(async (
+    content: string,
+    detailed?: boolean
+  ) => {
+    return callToolkitApi('analyzeSentiment', {
+      content,
+      detailed
+    });
+  }, [callToolkitApi]);
+
+  /**
    * Generate content for a specific platform
    * Updated to accept a more flexible set of parameters
    */
@@ -308,6 +321,41 @@ export function useAIToolkit() {
   }, [callToolkitApi]);
 
   /**
+   * Generate images from a text prompt
+   */
+  const generateImage = useCallback(async (
+    prompt: string,
+    style?: string,
+    aspectRatio?: string,
+    size?: string,
+    options?: any
+  ) => {
+    return callToolkitApi('generateImage', {
+      prompt,
+      style,
+      aspectRatio,
+      size,
+      ...options,
+    });
+  }, [callToolkitApi]);
+
+  /**
+   * Analyze trends for topics, keywords, or platforms
+   */
+  const analyzeTrends = useCallback(
+    async (params: {
+      topic?: string;
+      keywords?: string[];
+      platforms?: SocialPlatform[];
+      timeframe?: string;
+      options?: any;
+    }) => {
+      return callToolkitApi('analyzeTrends', params);
+    },
+    [callToolkitApi]
+  );
+
+  /**
    * Check if the user can perform an AI operation (has enough tokens)
    */
   const canPerformOperation = useCallback(async (operation: string) => {
@@ -316,6 +364,7 @@ export function useAIToolkit() {
     // Map operation to task type
     const taskTypeMap: Record<string, string> = {
       'analyzeContent': 'analyze_sentiment',
+      'analyzeSentiment': 'analyze_sentiment',
       'generateContent': 'generate_post',
       'suggestHashtags': 'generate_hashtags',
       'analyzeMedia': 'analyze_image',
@@ -329,7 +378,9 @@ export function useAIToolkit() {
       'analyzeSEO': 'analyze_sentiment',
       'generateCampaign': 'generate_post',
       'chat': 'generate_post',
-      'generateAudienceInsights': 'analyze_sentiment'
+      'generateAudienceInsights': 'analyze_sentiment',
+      'generateImage': 'analyze_image',
+      'analyzeTrends': 'analyze_sentiment'
     };
 
     const taskType = taskTypeMap[operation];
@@ -344,6 +395,7 @@ export function useAIToolkit() {
     loading,
     error,
     analyzeContent,
+    analyzeSentiment,
     generateContent,
     suggestHashtags,
     analyzeMedia,
@@ -358,6 +410,8 @@ export function useAIToolkit() {
     generateCampaign,
     sendChatMessage,
     generateAudienceInsights,
+    generateImage,
+    analyzeTrends,
     canPerformOperation
   };
 } 
