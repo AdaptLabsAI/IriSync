@@ -6,7 +6,7 @@ import { useSubscription } from '../../hooks/useSubscription';
 import { useAIToolkit } from '../../hooks/useAIToolkit';
 import { Select, SelectTrigger, SelectContent, SelectItem, SelectValue } from '../ui/select';
 import { Slider } from '../ui/slider';
-import { Textarea } from '../ui/textarea/Textarea';
+import { Textarea } from '../ui/textarea';
 import { Input } from '../ui/input/Input';
 import { Loader2, Hash, Lock, X, Copy, Trash, Plus } from 'lucide-react';
 import { SocialPlatform } from '../../lib/models/SocialAccount';
