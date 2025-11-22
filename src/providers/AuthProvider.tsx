@@ -7,11 +7,13 @@ import { getFirebaseClientAuth } from "@/lib/core/firebase/client";
 type AuthContextValue = {
   user: User | null;
   loading: boolean;
+  error: string | null;
 };
 
 const AuthContext = React.createContext<AuthContextValue>({
   user: null,
   loading: true,
+  error: null,
 });
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
@@ -47,14 +49,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     // The FirebaseConfigWarning component will show the appropriate message
     console.warn("[AuthProvider] Firebase error, but continuing to render:", error);
     return (
-      <AuthContext.Provider value={{ user: null, loading: false }}>
+      <AuthContext.Provider value={{ user: null, loading: false, error }}>
         {children}
       </AuthContext.Provider>
     );
   }
 
   return (
-    <AuthContext.Provider value={{ user, loading }}>
+    <AuthContext.Provider value={{ user, loading, error }}>
       {children}
     </AuthContext.Provider>
   );

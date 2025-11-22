@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Button, ButtonProps } from '../ui/button/Button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '../ui/dialog';
 import { useToast } from '../ui/use-toast';
-import { useSubscription } from '../../hooks/useSubscription';
+import { useSubscription, type SubscriptionTier } from '../../hooks/useSubscription';
 import { useAIToolkit } from '../../hooks/useAIToolkit';
 import { TextArea } from '../ui/textarea/TextArea';
 import { Loader2, Bot, Lock, Send, ChevronDown, ChevronUp, X } from 'lucide-react';
@@ -86,12 +86,14 @@ const AIAssistantButton: React.FC<AIAssistantButtonProps> = ({
   const { toast } = useToast();
   const { subscription } = useSubscription();
   const { sendChatMessage, loading, error } = useAIToolkit();
-  
-  const userTier = subscription?.tier || 'creator';
-  
-  // Check feature availability based on subscription tier
-  const canUseAIAssistant = userTier !== 'free';
-  
+
+  // Explicitly type userTier to match the subscription tier union
+  const userTier: SubscriptionTier = subscription?.tier || 'creator';
+
+  // Check feature availability - all subscription tiers (creator, influencer, enterprise) can use AI Assistant
+  // Users with a subscription can access the AI Assistant
+  const canUseAIAssistant = !!subscription;
+
   // Different capabilities based on tier
   const hasAdvancedCapabilities = userTier === 'enterprise' || userTier === 'influencer';
   
@@ -271,7 +273,7 @@ const AIAssistantButton: React.FC<AIAssistantButtonProps> = ({
               src={isUserMessage ? '' : '/icons/assistant-avatar.png'}
               alt={isUserMessage ? 'You' : 'AI Assistant'}
               fallback={isUserMessage ? 'U' : 'AI'}
-              size="small"
+              size="sm"
             />
           </div>
           <div
@@ -329,42 +331,46 @@ const AIAssistantButton: React.FC<AIAssistantButtonProps> = ({
           onClose={() => setIsOpen(false)}
         >
           <DialogContent className="sm:max-w-[500px] max-h-[90vh] flex flex-col">
-            <DialogHeader className="flex-shrink-0 flex items-center justify-between">
-              <div className="flex items-center">
-                <Bot className="h-5 w-5 text-blue-500 mr-2" />
-                <DialogTitle>AI Assistant</DialogTitle>
-              </div>
-              <div className="flex items-center space-x-2">
-                <Button
-                  variant="ghost"
-                  size="small"
-                  className="h-8 w-8 p-0"
-                  onClick={handleToggleExpand}
-                >
-                  {isExpanded ? (
-                    <ChevronUp className="h-4 w-4" />
-                  ) : (
-                    <ChevronDown className="h-4 w-4" />
-                  )}
-                  <span className="sr-only">
-                    {isExpanded ? 'Collapse' : 'Expand'}
-                  </span>
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="small"
-                  className="h-8 w-8 p-0"
-                  onClick={handleMinimize}
-                >
-                  <X className="h-4 w-4" />
-                  <span className="sr-only">Minimize</span>
-                </Button>
+            <DialogHeader>
+              <div className="flex-shrink-0 flex items-center justify-between">
+                <div className="flex items-center">
+                  <Bot className="h-5 w-5 text-blue-500 mr-2" />
+                  <DialogTitle>AI Assistant</DialogTitle>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="h-8 w-8 p-0"
+                    onClick={handleToggleExpand}
+                  >
+                    {isExpanded ? (
+                      <ChevronUp className="h-4 w-4" />
+                    ) : (
+                      <ChevronDown className="h-4 w-4" />
+                    )}
+                    <span className="sr-only">
+                      {isExpanded ? 'Collapse' : 'Expand'}
+                    </span>
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="h-8 w-8 p-0"
+                    onClick={handleMinimize}
+                  >
+                    <X className="h-4 w-4" />
+                    <span className="sr-only">Minimize</span>
+                  </Button>
+                </div>
               </div>
             </DialogHeader>
-            
+
             {isExpanded && (
-              <DialogDescription className="flex-shrink-0">
-                Ask me anything about social media management, content creation, or how to use IriSync
+              <DialogDescription>
+                <div className="flex-shrink-0">
+                  Ask me anything about social media management, content creation, or how to use IriSync
+                </div>
               </DialogDescription>
             )}
             
@@ -380,7 +386,7 @@ const AIAssistantButton: React.FC<AIAssistantButtonProps> = ({
                 <div className="flex space-x-2">
                   <Button
                     variant="ghost"
-                    size="small"
+                    size="sm"
                     onClick={handleClearChat}
                     disabled={isProcessing || messages.length <= 1}
                   >
@@ -390,7 +396,7 @@ const AIAssistantButton: React.FC<AIAssistantButtonProps> = ({
                   {hasAdvancedCapabilities && (
                     <Button
                       variant="ghost"
-                      size="small"
+                      size="sm"
                       onClick={handleSaveChat}
                       disabled={isProcessing || messages.length <= 1}
                     >
@@ -402,7 +408,7 @@ const AIAssistantButton: React.FC<AIAssistantButtonProps> = ({
                 {!isExpanded && (
                   <Button
                     variant="ghost"
-                    size="small"
+                    size="sm"
                     onClick={handleToggleExpand}
                   >
                     Show Chat
@@ -423,7 +429,7 @@ const AIAssistantButton: React.FC<AIAssistantButtonProps> = ({
                 <Button
                   onClick={handleSendMessage}
                   disabled={!currentMessage.trim() || isProcessing}
-                  size="small"
+                  size="sm"
                   className="mb-1"
                 >
                   {isProcessing ? (

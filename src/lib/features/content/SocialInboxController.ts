@@ -214,6 +214,22 @@ export class SocialInboxController {
     createdTime?: string;
     pageId?: string;
     parentId?: string;
+    verb?: 'add' | 'edit' | 'remove';
+    attachments?: any;
+    payload?: any;
+    actionType?: string;
+    reactionType?: string;
+    commentUrn?: string;
+    shareUrn?: string;
+    mentionUrn?: string;
+    commentary?: string;
+    isUpdate?: boolean;
+    senderUsername?: string;
+    senderProfilePicture?: string;
+    senderVerified?: boolean;
+    senderFollowerCount?: number;
+    metrics?: any;
+    conversationId?: string;
   }): Promise<void> {
     try {
       logger.info('Processing webhook message', { platform: webhookData.platform, type: webhookData.type });

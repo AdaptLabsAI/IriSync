@@ -129,7 +129,7 @@ const AIToolkitButton: React.FC<AIToolkitButtonProps> = ({
       </Button>
 
       <Dialog
-        open={isDialogOpen}
+        isOpen={isDialogOpen}
         onClose={handleClose}
         title="IriSync AI Toolkit"
         className="max-w-4xl"
