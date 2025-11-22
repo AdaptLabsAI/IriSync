@@ -289,6 +289,25 @@ export function useAIToolkit() {
   }, [callToolkitApi]);
 
   /**
+   * Generate audience insights for a specific platform
+   * @param platformId - The ID of the social platform
+   * @param insightType - Type of insight to generate
+   * @param timeframe - Timeframe for the analysis
+   * @returns Array of audience insights
+   */
+  const generateAudienceInsights = useCallback(async (
+    platformId: string,
+    insightType: string,
+    timeframe: string
+  ) => {
+    return callToolkitApi('generateAudienceInsights', {
+      platformId,
+      insightType,
+      timeframe
+    });
+  }, [callToolkitApi]);
+
+  /**
    * Check if the user can perform an AI operation (has enough tokens)
    */
   const canPerformOperation = useCallback(async (operation: string) => {
@@ -309,7 +328,8 @@ export function useAIToolkit() {
       'generateMediaRecommendations': 'generate_post',
       'analyzeSEO': 'analyze_sentiment',
       'generateCampaign': 'generate_post',
-      'chat': 'generate_post'
+      'chat': 'generate_post',
+      'generateAudienceInsights': 'analyze_sentiment'
     };
 
     const taskType = taskTypeMap[operation];
@@ -337,6 +357,7 @@ export function useAIToolkit() {
     analyzeSEO,
     generateCampaign,
     sendChatMessage,
+    generateAudienceInsights,
     canPerformOperation
   };
 } 
