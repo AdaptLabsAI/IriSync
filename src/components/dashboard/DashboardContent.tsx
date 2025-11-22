@@ -365,7 +365,7 @@ export default function DashboardContent() {
                       secondaryAction={
                         <Chip
                           label={post.platform}
-                          size="small"
+                          size="sm"
                           sx={{ textTransform: 'capitalize' }}
                         />
                       }

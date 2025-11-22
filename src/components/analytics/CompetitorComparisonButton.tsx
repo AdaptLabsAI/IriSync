@@ -313,7 +313,7 @@ const CompetitorComparisonButton: React.FC<CompetitorComparisonButtonProps> = ({
                             {onRemoveCompetitor && (
                               <Button
                                 variant="ghost"
-                                size="small"
+                                size="sm"
                                 className="text-gray-500 hover:text-red-600"
                                 onClick={() => handleRemoveCompetitor(competitor)}
                               >
@@ -381,7 +381,7 @@ const CompetitorComparisonButton: React.FC<CompetitorComparisonButtonProps> = ({
                             {onSaveCompetitor && !competitor.isSaved && (
                               <Button
                                 variant="ghost"
-                                size="small"
+                                size="sm"
                                 className="text-gray-500 hover:text-[#00CC44]"
                                 onClick={() => handleSaveCompetitor(competitor)}
                               >
@@ -392,7 +392,7 @@ const CompetitorComparisonButton: React.FC<CompetitorComparisonButtonProps> = ({
                             {onRemoveCompetitor && competitor.isSaved && (
                               <Button
                                 variant="ghost"
-                                size="small"
+                                size="sm"
                                 className="text-gray-500 hover:text-red-600"
                                 onClick={() => handleRemoveCompetitor(competitor)}
                               >

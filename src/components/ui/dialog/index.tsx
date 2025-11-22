@@ -65,7 +65,7 @@ export const Dialog: React.FC<DialogProps> = ({
               right: 8,
               top: 8,
             }}
-            size="small"
+            size="sm"
           >
             <CloseIcon fontSize="small" />
           </IconButton>
@@ -199,7 +199,7 @@ export const ConfirmDialog: React.FC<{
           </Button>
         </>
       }
-      size="small"
+      size="sm"
     >
       <Box sx={{ py: 1 }}>
         {message}

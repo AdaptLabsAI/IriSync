@@ -234,7 +234,7 @@ const ApprovalWorkflowButton: React.FC<ApprovalWorkflowButtonProps> = ({
                   </p>
                   <Button
                     variant="primary"
-                    size="small"
+                    size="sm"
                     className="mt-4"
                     onClick={() => setActiveTab(1)}
                   >
@@ -266,7 +266,7 @@ const ApprovalWorkflowButton: React.FC<ApprovalWorkflowButtonProps> = ({
                         </div>
                         <Button
                           variant={workflow.isActive ? "destructive" : "outline"}
-                          size="small"
+                          size="sm"
                           onClick={() => handleStatusChange(workflow.id, !workflow.isActive)}
                           disabled={isLoading}
                         >
@@ -362,7 +362,7 @@ const ApprovalWorkflowButton: React.FC<ApprovalWorkflowButtonProps> = ({
                   <Label>Approval Steps</Label>
                   <Button
                     variant="outline"
-                    size="small"
+                    size="sm"
                     onClick={handleAddStep}
                     disabled={newWorkflow.steps ? newWorkflow.steps.length >= 5 : false}
                   >
@@ -400,7 +400,7 @@ const ApprovalWorkflowButton: React.FC<ApprovalWorkflowButtonProps> = ({
                     {newWorkflow.steps && newWorkflow.steps.length > 1 && (
                       <Button
                         variant="outline"
-                        size="small"
+                        size="sm"
                         className="h-8 w-8 p-0"
                         onClick={() => handleRemoveStep(step.id)}
                       >

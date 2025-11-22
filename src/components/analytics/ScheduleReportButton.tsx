@@ -398,7 +398,7 @@ const ScheduleReportButton: React.FC<ScheduleReportButtonProps> = ({
                     />
                     <Button 
                       variant="outline" 
-                      size="small"
+                      size="sm"
                       onClick={(e: any) => {
                         const input = e.currentTarget.previousSibling as HTMLInputElement;
                         const email = input.value.trim();

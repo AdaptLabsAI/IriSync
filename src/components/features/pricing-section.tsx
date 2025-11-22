@@ -423,7 +423,7 @@ export default function PricingSection() {
               <TextField
                 value={numberOfUsers}
                 onChange={(e) => setNumberOfUsers(e.target.value)}
-                size="small"
+                size="sm"
                 sx={{ width: 80 }}
                 inputProps={{ style: { textAlign: "center" } }}
               />

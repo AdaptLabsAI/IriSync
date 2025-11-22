@@ -251,7 +251,7 @@ export const ResponseTemplateButton: React.FC<ResponseTemplateButtonProps> = ({
                   
                   <div className="flex justify-end space-x-2">
                     <Button
-                      size="small"
+                      size="sm"
                       variant="outline"
                       onClick={() => {
                         setShowCreateForm(false);
@@ -262,7 +262,7 @@ export const ResponseTemplateButton: React.FC<ResponseTemplateButtonProps> = ({
                       Cancel
                     </Button>
                     <Button
-                      size="small"
+                      size="sm"
                       onClick={handleCreateTemplate}
                       disabled={!newTemplate.name.trim() || !newTemplate.content.trim() || isCreating}
                       className="h-8 text-xs"
@@ -377,7 +377,7 @@ export const ResponseTemplateButton: React.FC<ResponseTemplateButtonProps> = ({
                   <div className="p-2 border-t">
                     <Button
                       variant="ghost"
-                      size="small"
+                      size="sm"
                       className="w-full justify-start text-[#00CC44]"
                       onClick={() => setShowCreateForm(true)}
                     >

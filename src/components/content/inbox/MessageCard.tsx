@@ -510,7 +510,7 @@ export const MessageCard: React.FC<MessageCardProps> = ({
                     onMarkRead={ids => handleMarkReadUnread(ids)}
                     onMarkUnread={ids => handleMarkReadUnread(ids)}
                     iconOnly
-                    size="small"
+                    size="sm"
                   />
                 )}
                 
@@ -529,7 +529,7 @@ export const MessageCard: React.FC<MessageCardProps> = ({
                       return { success: true };
                     }}
                     iconOnly
-                    size="small"
+                    size="sm"
                   />
                 )}
                 
@@ -542,7 +542,7 @@ export const MessageCard: React.FC<MessageCardProps> = ({
                     onAssign={(ids, assigneeId) => onAssign(message.id, assigneeId)}
                     onUnassign={ids => onUnassign(message.id)}
                     iconOnly
-                    size="small"
+                    size="sm"
                   />
                 )}
                 
@@ -550,7 +550,7 @@ export const MessageCard: React.FC<MessageCardProps> = ({
                 {onToggleStar && (
                   <Button
                     onClick={handleToggleStar}
-                    size="small"
+                    size="sm"
                     className="p-0 h-8 w-8"
                     aria-label={message.starred ? "Unstar message" : "Star message"}
                   >
@@ -562,7 +562,7 @@ export const MessageCard: React.FC<MessageCardProps> = ({
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <Button
-                      size="small"
+                      size="sm"
                       className="p-0 h-8 w-8"
                       aria-label="More actions"
                     >

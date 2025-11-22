@@ -179,7 +179,7 @@ export const PostPreviewButton: React.FC<PostPreviewButtonProps> = ({
               </div>
 
               <div className="border-t p-4 flex justify-end">
-                <Button onClick={handleClose} variant="outline" size="small">
+                <Button onClick={handleClose} variant="outline" size="sm">
                   Close
                 </Button>
               </div>

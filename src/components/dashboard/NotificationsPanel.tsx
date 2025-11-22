@@ -106,7 +106,7 @@ export default function NotificationsPanel({
         <Box>
           <Tooltip title="Clear all notifications">
             <IconButton 
-              size="small" 
+              size="sm" 
               onClick={onClearAll}
               disabled={notifications.length === 0}
             >
@@ -136,7 +136,7 @@ export default function NotificationsPanel({
                   <Chip 
                     label={unreadCount} 
                     color="error" 
-                    size="small"
+                    size="sm"
                     sx={{ 
                       ml: 1, 
                       height: 18, 
@@ -183,7 +183,7 @@ export default function NotificationsPanel({
                       <Tooltip title="Delete notification">
                         <IconButton 
                           edge="end" 
-                          size="small"
+                          size="sm"
                           onClick={() => onDelete?.(notification.id)}
                         >
                           <CloseIcon fontSize="small" />
@@ -272,7 +272,7 @@ export default function NotificationsPanel({
         >
           <Button 
             variant="text" 
-            size="small"
+            size="sm"
             onClick={onMarkAllAsRead}
             disabled={!filteredNotifications.some(n => !n.read)}
           >
@@ -280,7 +280,7 @@ export default function NotificationsPanel({
           </Button>
           <Button 
             variant="text" 
-            size="small"
+            size="sm"
             endIcon={<MoreHorizIcon />}
             href="/dashboard/notifications"
           >

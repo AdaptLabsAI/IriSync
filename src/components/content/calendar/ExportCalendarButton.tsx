@@ -309,14 +309,14 @@ const ExportCalendarButton: React.FC<ExportCalendarButtonProps> = ({
         <DialogActions>
           <Button
             variant="outline"
-            size="small"
+            size="sm"
             onClick={handleCloseDialog}
           >
             Cancel
           </Button>
           <Button
             variant="primary"
-            size="small"
+            size="sm"
             onClick={handleExport}
             loading={loading}
             disabled={loading || !startDate || !endDate}

@@ -295,7 +295,7 @@ const TaskAssignmentButton: React.FC<TaskAssignmentButtonProps> = ({
             <div className="flex justify-between">
               <Button
                 variant="ghost"
-                size="small"
+                size="sm"
                 onClick={() => setSelectedTask(null)}
                 leftIcon={<X className="h-4 w-4" />}
                 className="text-gray-500"
@@ -306,7 +306,7 @@ const TaskAssignmentButton: React.FC<TaskAssignmentButtonProps> = ({
               <div className="flex gap-2">
                 <Button
                   variant="outline"
-                  size="small"
+                  size="sm"
                   onClick={() => setIsEditMode(true)}
                   leftIcon={<Edit className="h-4 w-4" />}
                   requiredPermission="team:manage_tasks"
@@ -316,7 +316,7 @@ const TaskAssignmentButton: React.FC<TaskAssignmentButtonProps> = ({
                 
                 <Button
                   variant="outline"
-                  size="small"
+                  size="sm"
                   onClick={() => handleDeleteTask(selectedTask.id)}
                   leftIcon={<Trash2 className="h-4 w-4" />}
                   className="text-red-500 hover:bg-red-50"
@@ -362,7 +362,7 @@ const TaskAssignmentButton: React.FC<TaskAssignmentButtonProps> = ({
                           src={teamMembers.find(m => m.id === selectedTask.assigneeId)?.avatar}
                           alt={getAssigneeName(selectedTask.assigneeId)}
                           fallback={getAssigneeName(selectedTask.assigneeId).charAt(0)}
-                          size="small"
+                          size="sm"
                         />
                       ) : (
                         <Users className="h-5 w-5 text-gray-400" />
@@ -411,7 +411,7 @@ const TaskAssignmentButton: React.FC<TaskAssignmentButtonProps> = ({
             <div className="flex justify-between">
               <Button
                 variant="ghost"
-                size="small"
+                size="sm"
                 onClick={() => {
                   setIsEditMode(false);
                   setNewTask({
@@ -591,7 +591,7 @@ const TaskAssignmentButton: React.FC<TaskAssignmentButtonProps> = ({
                                 src={teamMembers.find(m => m.id === task.assigneeId)?.avatar}
                                 alt={getAssigneeName(task.assigneeId)}
                                 fallback={getAssigneeName(task.assigneeId).charAt(0)}
-                                size="small"
+                                size="sm"
                                 tooltip={getAssigneeName(task.assigneeId)}
                               />
                             ) : (
@@ -609,7 +609,7 @@ const TaskAssignmentButton: React.FC<TaskAssignmentButtonProps> = ({
                     {onCreateTask && (
                       <Button
                         variant="outline"
-                        size="small"
+                        size="sm"
                         className="mt-3"
                         onClick={() => setActiveTab('create')}
                         leftIcon={<Plus className="h-4 w-4" />}

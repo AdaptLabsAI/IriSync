@@ -218,7 +218,7 @@ export const DateRangeSelector: React.FC<DateRangeSelectorProps> = ({
                 <Button
                   key={i}
                   variant="ghost"
-                  size="small"
+                  size="sm"
                   className="w-full justify-start font-normal"
                   onClick={() => applyPreset(preset)}
                 >
@@ -276,7 +276,7 @@ export const DateRangeSelector: React.FC<DateRangeSelectorProps> = ({
               <Button
                 key={i}
                 variant="outline"
-                size="small"
+                size="sm"
                 onClick={() => applyPreset(preset)}
               >
                 {preset.label}

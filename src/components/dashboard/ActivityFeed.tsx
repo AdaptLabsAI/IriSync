@@ -175,7 +175,7 @@ export default function ActivityFeed({ activities, showViewAll = true }: Activit
                     {activity.isNew && (
                       <Chip
                         label="New"
-                        size="small"
+                        size="sm"
                         sx={{
                           ml: 1,
                           height: 18,
@@ -231,7 +231,7 @@ export default function ActivityFeed({ activities, showViewAll = true }: Activit
         <Box sx={{ mt: 2, textAlign: 'center' }}>
           <Button 
             variant="text" 
-            size="small" 
+            size="sm" 
             color="primary"
             href="/dashboard/activities"
           >

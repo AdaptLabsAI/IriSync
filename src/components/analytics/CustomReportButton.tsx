@@ -244,7 +244,7 @@ const CustomReportButton: React.FC<CustomReportButtonProps> = ({
                 {onCreateFromCurrent && (
                   <Button
                     variant="outline"
-                    size="small"
+                    size="sm"
                     className="w-full mb-4"
                     onClick={handleCreateFromCurrent}
                     disabled={isSubmitting}

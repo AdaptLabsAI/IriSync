@@ -70,7 +70,7 @@ export const AlertDialog: React.FC<AlertDialogProps> = ({
           </Button>
         </>
       }
-      size="small"
+      size="sm"
       {...props}
     >
       {children}

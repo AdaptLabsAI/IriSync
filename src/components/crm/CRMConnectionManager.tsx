@@ -301,7 +301,7 @@ export const CRMConnectionManager: React.FC<CRMConnectionManagerProps> = ({
                           {getStatusIcon(isSyncing ? 'syncing' : connection.status)}
                           <Chip
                             label={isSyncing ? 'Syncing' : connection.status}
-                            size="small"
+                            size="sm"
                             color={getStatusColor(isSyncing ? 'syncing' : connection.status) as any}
                             variant="outlined"
                           />
@@ -310,7 +310,7 @@ export const CRMConnectionManager: React.FC<CRMConnectionManagerProps> = ({
                       <Box sx={{ display: 'flex', gap: 1 }}>
                         <Tooltip title="Sync Now">
                           <IconButton
-                            size="small"
+                            size="sm"
                             onClick={() => handleSync(connection.id)}
                             disabled={isSyncing || connection.status !== 'connected'}
                           >
@@ -319,7 +319,7 @@ export const CRMConnectionManager: React.FC<CRMConnectionManagerProps> = ({
                         </Tooltip>
                         <Tooltip title="Settings">
                           <IconButton
-                            size="small"
+                            size="sm"
                             onClick={() => openConfigDialog(connection)}
                           >
                             <SettingsIcon />
@@ -368,14 +368,14 @@ export const CRMConnectionManager: React.FC<CRMConnectionManagerProps> = ({
                       <Button
                         variant="outlined"
                         color="error"
-                        size="small"
+                        size="sm"
                         onClick={() => onDisconnect(connection.id)}
                       >
                         Disconnect
                       </Button>
                       <Button
                         variant="outlined"
-                        size="small"
+                        size="sm"
                         onClick={() => handleSync(connection.id)}
                         disabled={isSyncing || connection.status !== 'connected'}
                         startIcon={isSyncing ? <CircularProgress size={16} /> : <RefreshIcon />}

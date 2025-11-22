@@ -400,7 +400,7 @@ export function ContentSchedulingForm({
           <Button
             type="button"
             variant="outline"
-            size="small"
+            size="sm"
             onClick={() => setShowAdvanced(!showAdvanced)}
             disabled={loading}
           >

@@ -270,7 +270,7 @@ export default function TokenPurchasePanel({
                     <TableCell align="right">{formatCurrency(purchase.price, purchase.currency)}</TableCell>
                     <TableCell>
                       <Chip 
-                        size="small" 
+                        size="sm" 
                         label={purchase.isProcessed ? "Completed" : "Processing"} 
                         color={purchase.isProcessed ? "success" : "warning"}
                       />

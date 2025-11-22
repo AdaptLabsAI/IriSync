@@ -339,14 +339,14 @@ export const ReplyButton: React.FC<ReplyButtonProps> = ({
         <div className="flex justify-end gap-2">
           <Button
             variant="outline"
-            size="small"
+            size="sm"
             disabled={isSending}
           >
             Cancel
           </Button>
           <Button
             variant="primary"
-            size="small"
+            size="sm"
             disabled={isSending || isOverLimit || !replyContent.trim()}
           >
             {isSending ? (
