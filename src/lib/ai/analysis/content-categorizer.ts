@@ -2,7 +2,14 @@
 export interface ContentCategory {
   category: string;
   confidence: number;
-  subcategories: string[];
+  subcategories?: string[];
+}
+
+export interface CategoryResult {
+  primaryCategory: string;
+  confidence: number;
+  categories: ContentCategory[];
+  taxonomy?: string;
 }
 
 export async function categorizeContent(text: string): Promise<ContentCategory> {
