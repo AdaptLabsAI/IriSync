@@ -470,8 +470,9 @@ export default function ContentCreationForm({
                   onChange={(e: any) => setLinkUrl(e.target.value)}
                   size="small"
                 />
-                <Button 
-                  variant="primary" 
+                <Button
+                  variant="contained"
+                  color="primary"
                   onClick={handleAddLink}
                   disabled={!linkUrl.trim()}
                 >
@@ -604,7 +605,7 @@ export default function ContentCreationForm({
           </Button>
           
           <Button
-            variant="primary"
+            variant="contained"
             color="primary"
             disabled={isSubmitting || (selectedAccounts.length === 0)}
             onClick={handleCreatePost}
@@ -631,7 +632,7 @@ export default function ContentCreationForm({
           
           <Box sx={{ mt: 2 }}>
             <Button
-              variant="primary"
+              variant="contained"
               color="secondary"
               fullWidth
               startIcon={isAiGenerating ? <CircularProgress size={20} color="inherit" /> : <BsLightning />}
