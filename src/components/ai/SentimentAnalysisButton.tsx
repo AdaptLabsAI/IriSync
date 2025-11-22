@@ -392,7 +392,7 @@ const SentimentAnalysisButton: React.FC<SentimentAnalysisButtonProps> = ({
                     <span className="text-xs text-gray-500">Was this analysis helpful?</span>
                     <Button
                       variant="ghost"
-                      size="small"
+                      size="sm"
                       className="h-8 w-8 p-0"
                       onClick={() => handleAnalysisFeedback(true)}
                     >
@@ -400,7 +400,7 @@ const SentimentAnalysisButton: React.FC<SentimentAnalysisButtonProps> = ({
                     </Button>
                     <Button
                       variant="ghost"
-                      size="small"
+                      size="sm"
                       className="h-8 w-8 p-0"
                       onClick={() => handleAnalysisFeedback(false)}
                     >
