@@ -4,7 +4,7 @@ import { SocialPlatform } from '../../../lib/models/SocialAccount';
 import { AITaskType } from '../../../lib/ai/models';
 import AITokenAlert from '../toolkit/AITokenAlert';
 import { useSubscription } from '../../../hooks/useSubscription';
-import Tabs, { Tab, TabPanel } from '../../ui/tabs';
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '../../ui/tabs';
 import { useToast } from '../../ui/use-toast';
 
 interface VideoDescriptionGeneratorProps {
@@ -207,17 +207,19 @@ export default function VideoDescriptionGenerator({
         </div>
       )}
       
-      <Tabs 
-        value={activeTab === 'create' ? 0 : 1} 
-        onChange={(_: any, value: any) => setActiveTab(value === 0 ? 'create' : 'advanced')}
+      <Tabs
+        defaultValue="create"
+        value={activeTab}
+        onValueChange={(value) => setActiveTab(value as 'create' | 'advanced')}
       >
-        <Tab label="Create Description" />
-        <Tab 
-          label="Advanced Options" 
-          disabled={!canUseAdvancedFeatures}
-        />
-        
-        <TabPanel value={activeTab === 'create' ? 0 : 1} index={0}>
+        <TabsList className="mb-4">
+          <TabsTrigger value="create">Create Description</TabsTrigger>
+          <TabsTrigger value="advanced" disabled={!canUseAdvancedFeatures}>
+            Advanced Options
+          </TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="create">
           <form onSubmit={handleSubmit} className="mb-6">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
               <div className="md:col-span-2">
@@ -365,9 +367,9 @@ export default function VideoDescriptionGenerator({
               {loading ? 'Generating...' : 'Generate Video Description'}
             </button>
           </form>
-        </TabPanel>
-        
-        <TabPanel value={activeTab === 'create' ? 0 : 1} index={1}>
+        </TabsContent>
+
+        <TabsContent value="advanced">
           {canUseAdvancedFeatures ? (
             <div className="space-y-4">
               <p className="text-sm text-gray-600 mb-4">
@@ -417,7 +419,7 @@ export default function VideoDescriptionGenerator({
               </button>
             </div>
           )}
-        </TabPanel>
+        </TabsContent>
       </Tabs>
       
       {generatedDescription && (
