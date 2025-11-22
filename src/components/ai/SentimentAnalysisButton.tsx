@@ -93,10 +93,12 @@ const SentimentAnalysisButton: React.FC<SentimentAnalysisButtonProps> = ({
   const { analyzeSentiment, loading, error } = useAIToolkit();
   
   const userTier = subscription?.tier || 'creator';
-  
+
   // Check feature availability based on subscription tier
-  const canUseSentimentAnalysis = userTier !== 'free';
-  const canUseDetailedAnalysis = userTier === 'enterprise' || userTier === 'influencer';
+  // "Free" is represented by having no subscription at all
+  const canUseSentimentAnalysis = !!subscription;
+  const canUseDetailedAnalysis =
+    userTier === 'enterprise' || userTier === 'influencer';
   
   const handleOpenDialog = () => {
     if (!canUseSentimentAnalysis) {
