@@ -32,6 +32,13 @@ export interface TrendAnalysisResult {
   recommendations?: string[];
 }
 
+export interface TrendAnalysisRequest {
+  platformId: string;
+  category: TrendCategory;
+  timeframe: TrendTimeframe;
+  industry?: string;
+}
+
 export interface TrendAnalysisButtonProps extends Omit<ButtonProps, 'onClick'> {
   /**
    * Connected social platforms to analyze trends for
@@ -44,7 +51,7 @@ export interface TrendAnalysisButtonProps extends Omit<ButtonProps, 'onClick'> {
   /**
    * Callback for when trends are analyzed
    */
-  onAnalyzeTrends?: (platformId: string, category: TrendCategory, timeframe: TrendTimeframe, industry?: string) => Promise<TrendAnalysisResult>;
+  onAnalyzeTrends?: (request: TrendAnalysisRequest) => Promise<TrendAnalysisResult>;
   /**
    * Callback for feedback on trend quality
    */
@@ -135,18 +142,33 @@ const TrendAnalysisButton: React.FC<TrendAnalysisButtonProps> = ({
   
   const handleAnalyzeTrends = async () => {
     if (!selectedPlatform || isAnalyzing) return;
-    
+
     setIsAnalyzing(true);
     setTrendResult(null);
-    
+
     try {
+      // Create the request object
+      const request: TrendAnalysisRequest = {
+        platformId: selectedPlatform,
+        category: trendCategory,
+        timeframe,
+        industry: industryInput || undefined
+      };
+
       // Use provided function or hook function
-      const result = onAnalyzeTrends 
-        ? await onAnalyzeTrends(selectedPlatform, trendCategory, timeframe, industryInput)
-        : await analyzeTrends(selectedPlatform, trendCategory, timeframe, industryInput);
-      
+      const result = onAnalyzeTrends
+        ? await onAnalyzeTrends(request)
+        : await analyzeTrends({
+            timeframe,
+            options: {
+              platformId: selectedPlatform,
+              category: trendCategory,
+              industry: industryInput
+            }
+          });
+
       setTrendResult(result);
-      
+
       toast({
         title: "Trends analyzed",
         description: `Found ${result.trends.length} trending ${trendCategory.replace('-', ' ')}`,
@@ -355,7 +377,7 @@ const TrendAnalysisButton: React.FC<TrendAnalysisButtonProps> = ({
                     <div className="flex gap-2">
                       <Button
                         variant="outline"
-                        size="small"
+                        size="sm"
                         onClick={() => handleExportTrends('pdf')}
                         className="h-8"
                       >
@@ -364,7 +386,7 @@ const TrendAnalysisButton: React.FC<TrendAnalysisButtonProps> = ({
                       </Button>
                       <Button
                         variant="outline"
-                        size="small"
+                        size="sm"
                         onClick={() => handleExportTrends('csv')}
                         className="h-8"
                       >
@@ -418,7 +440,7 @@ const TrendAnalysisButton: React.FC<TrendAnalysisButtonProps> = ({
                     <div className="flex gap-2">
                       <Button
                         variant="ghost"
-                        size="small"
+                        size="sm"
                         className="h-8"
                         onClick={() => handleTrendFeedback(true)}
                       >
@@ -426,7 +448,7 @@ const TrendAnalysisButton: React.FC<TrendAnalysisButtonProps> = ({
                       </Button>
                       <Button
                         variant="ghost"
-                        size="small"
+                        size="sm"
                         className="h-8"
                         onClick={() => handleTrendFeedback(false)}
                       >
@@ -448,7 +470,7 @@ const TrendAnalysisButton: React.FC<TrendAnalysisButtonProps> = ({
                     <div className="flex gap-2">
                       <Button
                         variant="outline"
-                        size="small"
+                        size="sm"
                         onClick={() => handleExportTrends('pdf')}
                         className="h-8"
                       >
