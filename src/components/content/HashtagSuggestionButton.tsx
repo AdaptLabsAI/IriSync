@@ -470,7 +470,7 @@ export const HashtagSuggestionButton: React.FC<HashtagSuggestionButtonProps> = (
                       id="trending-toggle"
                       pressed={includeTrending}
                       onPressedChange={setIncludeTrending}
-                      size="sm"
+                      className="h-8 px-2 text-xs"
                     />
                   </div>
                 </div>
