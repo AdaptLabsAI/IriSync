@@ -10,7 +10,32 @@ import { Textarea } from '../ui/textarea';
 import { Input } from '../ui/input/Input';
 import { Loader2, Hash, Lock, X, Copy, Trash, Plus } from 'lucide-react';
 import { SocialPlatform } from '../../lib/models/SocialAccount';
-import { Badge } from '../ui/badge';
+
+// Lightweight local Badge component
+interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
+  variant?: 'default' | 'outline';
+}
+
+const Badge: React.FC<BadgeProps> = ({
+  className = '',
+  variant = 'default',
+  children,
+  ...props
+}) => {
+  const baseStyles = "inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors";
+  const variantStyles = variant === 'outline'
+    ? "border-gray-300 bg-transparent text-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-800"
+    : "border-blue-200 bg-blue-100 text-blue-800 dark:border-blue-800 dark:bg-blue-900 dark:text-blue-100";
+
+  return (
+    <span
+      className={`${baseStyles} ${variantStyles} ${className}`}
+      {...props}
+    >
+      {children}
+    </span>
+  );
+};
 
 export interface HashtagGeneratorButtonProps extends Omit<ButtonProps, 'onClick'> {
   /**
