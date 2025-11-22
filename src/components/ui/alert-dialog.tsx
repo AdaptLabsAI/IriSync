@@ -53,7 +53,7 @@ export const AlertDialog: React.FC<AlertDialogProps> = ({
       footer={
         <>
           <Button 
-            variant="text" 
+            variant="ghost" 
             onClick={handleCancel}
             disabled={isLoading}
             sx={{ mr: 1 }}
@@ -61,7 +61,7 @@ export const AlertDialog: React.FC<AlertDialogProps> = ({
             {cancelText}
           </Button>
           <Button
-            variant="contained"
+            variant="primary"
             color={variantColor}
             onClick={handleConfirm}
             disabled={isLoading}

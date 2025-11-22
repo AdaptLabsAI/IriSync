@@ -271,7 +271,7 @@ export default function NotificationsPanel({
           }}
         >
           <Button 
-            variant="text" 
+            variant="ghost" 
             size="sm"
             onClick={onMarkAllAsRead}
             disabled={!filteredNotifications.some(n => !n.read)}
@@ -279,7 +279,7 @@ export default function NotificationsPanel({
             Mark all as read
           </Button>
           <Button 
-            variant="text" 
+            variant="ghost" 
             size="sm"
             endIcon={<MoreHorizIcon />}
             href="/dashboard/notifications"

@@ -205,7 +205,7 @@ export const MessageCard: React.FC<MessageCardProps> = ({
     const priority = priorityMap[message.priority];
     
     return (
-      <Badge className={`${priority.bg} ${priority.text} ml-2`} variant="outlined">
+      <Badge className={`${priority.bg} ${priority.text} ml-2`} variant="outline">
         {priority.label}
       </Badge>
     );
@@ -348,7 +348,7 @@ export const MessageCard: React.FC<MessageCardProps> = ({
               )}
               
               {message.isPrivate && (
-                <Badge variant="outlined" className="ml-2 text-xs px-1.5 bg-gray-100">
+                <Badge variant="outline" className="ml-2 text-xs px-1.5 bg-gray-100">
                   Private
                 </Badge>
               )}
@@ -464,7 +464,7 @@ export const MessageCard: React.FC<MessageCardProps> = ({
             {/* Assignment badge */}
             {message.assignedTo && (
               <div className="mt-2 flex items-center">
-                <Badge variant="outlined" className="flex items-center space-x-1 bg-blue-50 text-blue-700 border-blue-200">
+                <Badge variant="outline" className="flex items-center space-x-1 bg-blue-50 text-blue-700 border-blue-200">
                   <span>Assigned to:</span>
                   <span className="font-medium">{message.assignedTo.name}</span>
                 </Badge>

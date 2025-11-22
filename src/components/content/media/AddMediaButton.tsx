@@ -458,7 +458,7 @@ export const AddMediaButton: React.FC<AddMediaButtonProps> = ({
         {label}
       </Button>
       
-      <Button variant="outlined" onClick={() => setAssetPickerOpen(true)} sx={{ ml: 2 }}>
+      <Button variant="outline" onClick={() => setAssetPickerOpen(true)} sx={{ ml: 2 }}>
         Import Media
       </Button>
       

@@ -62,7 +62,7 @@ export const TeamSwitcher = () => {
   }
 
   return (
-    <FormControl variant="outlined" size="sm" sx={{ minWidth: 200 }}>
+    <FormControl variant="outline" size="sm" sx={{ minWidth: 200 }}>
       <InputLabel id="team-select-label">Team</InputLabel>
       <Select
         labelId="team-select-label"

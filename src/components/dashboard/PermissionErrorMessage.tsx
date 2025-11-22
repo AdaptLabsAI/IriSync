@@ -16,7 +16,7 @@ export default function PermissionErrorMessage({ message }: PermissionErrorMessa
         {message}
       </Typography>
       <Button 
-        variant="contained" 
+        variant="primary" 
         color="primary" 
         sx={{ mt: 2 }}
         onClick={() => window.location.href = '/logout'}

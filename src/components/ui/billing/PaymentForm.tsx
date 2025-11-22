@@ -85,14 +85,14 @@ export default function PaymentForm({ onSuccess, onCancel }: PaymentFormProps) {
         <Box sx={{ display: 'flex', gap: 2 }}>
           <Button 
             type="submit" 
-            variant="contained" 
+            variant="primary" 
             disabled={!stripe || processing}
           >
             {processing ? <CircularProgress size={24} /> : 'Add Card'}
           </Button>
           <Button 
             type="button" 
-            variant="outlined" 
+            variant="outline" 
             onClick={onCancel}
             disabled={processing}
           >

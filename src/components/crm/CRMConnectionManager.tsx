@@ -243,7 +243,7 @@ export const CRMConnectionManager: React.FC<CRMConnectionManagerProps> = ({
           CRM Connections
         </Typography>
         <Button
-          variant="contained"
+          variant="primary"
           onClick={() => setConnectDialogOpen(true)}
           disabled={loading}
         >
@@ -261,7 +261,7 @@ export const CRMConnectionManager: React.FC<CRMConnectionManagerProps> = ({
               Connect your CRM to automatically sync contacts and track social media engagement
             </Typography>
             <Button
-              variant="contained"
+              variant="primary"
               onClick={() => setConnectDialogOpen(true)}
             >
               Connect Your First CRM
@@ -303,7 +303,7 @@ export const CRMConnectionManager: React.FC<CRMConnectionManagerProps> = ({
                             label={isSyncing ? 'Syncing' : connection.status}
                             size="sm"
                             color={getStatusColor(isSyncing ? 'syncing' : connection.status) as any}
-                            variant="outlined"
+                            variant="outline"
                           />
                         </Box>
                       </Box>
@@ -366,7 +366,7 @@ export const CRMConnectionManager: React.FC<CRMConnectionManagerProps> = ({
 
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                       <Button
-                        variant="outlined"
+                        variant="outline"
                         color="error"
                         size="sm"
                         onClick={() => onDisconnect(connection.id)}
@@ -374,7 +374,7 @@ export const CRMConnectionManager: React.FC<CRMConnectionManagerProps> = ({
                         Disconnect
                       </Button>
                       <Button
-                        variant="outlined"
+                        variant="outline"
                         size="sm"
                         onClick={() => handleSync(connection.id)}
                         disabled={isSyncing || connection.status !== 'connected'}
@@ -452,7 +452,7 @@ export const CRMConnectionManager: React.FC<CRMConnectionManagerProps> = ({
           <Button onClick={() => setConnectDialogOpen(false)}>Cancel</Button>
           <Button
             onClick={handleConnect}
-            variant="contained"
+            variant="primary"
             disabled={!selectedProvider || loading}
           >
             Connect
@@ -488,7 +488,7 @@ export const CRMConnectionManager: React.FC<CRMConnectionManagerProps> = ({
           <Button onClick={() => setConfigDialogOpen(false)}>Cancel</Button>
           <Button
             onClick={handleConfigUpdate}
-            variant="contained"
+            variant="primary"
             disabled={loading}
           >
             Update

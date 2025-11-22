@@ -225,7 +225,7 @@ export default function TeamManagement({ teamId }: TeamManagementProps) {
         {canAddMoreMembers() ? (
           <InviteMemberForm roles={roles} onInvite={handleInvite} />
         ) : (
-          <Button disabled variant="outlined" size="sm">
+          <Button disabled variant="outline" size="sm">
             <UserPlus className="mr-2 h-4 w-4" />
             Seat Limit Reached
           </Button>
@@ -245,7 +245,7 @@ export default function TeamManagement({ teamId }: TeamManagementProps) {
                   }
                 </p>
               </div>
-              <Badge variant="outlined" color={subscription.usedSeats >= subscription.seatLimit ? "error" : "primary"}>
+              <Badge variant="outline" color={subscription.usedSeats >= subscription.seatLimit ? "error" : "primary"}>
                 {subscription.tier.charAt(0).toUpperCase() + subscription.tier.slice(1)} Plan
               </Badge>
             </div>
@@ -300,7 +300,7 @@ export default function TeamManagement({ teamId }: TeamManagementProps) {
                     </div>
                   </TableCell>
                   <TableCell>
-                    <Badge variant="outlined">{member.role}</Badge>
+                    <Badge variant="outline">{member.role}</Badge>
                   </TableCell>
                   <TableCell>
                     <Badge 
@@ -312,7 +312,7 @@ export default function TeamManagement({ teamId }: TeamManagementProps) {
                     </Badge>
                   </TableCell>
                   <TableCell className="text-right">
-                    <Button variant="text" size="sm">Manage</Button>
+                    <Button variant="ghost" size="sm">Manage</Button>
                   </TableCell>
                 </TableRow>
               ))

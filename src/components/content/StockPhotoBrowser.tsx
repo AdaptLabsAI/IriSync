@@ -384,12 +384,12 @@ const StockPhotoBrowser: React.FC<StockPhotoBrowserProps> = ({
             <Chip
               label={`${photo.width}×${photo.height}`}
               size="sm"
-              variant="outlined"
+              variant="outline"
             />
             <Chip
               label={photo.metadata.orientation}
               size="sm"
-              variant="outlined"
+              variant="outline"
             />
           </Stack>
 
@@ -400,7 +400,7 @@ const StockPhotoBrowser: React.FC<StockPhotoBrowserProps> = ({
                   key={index}
                   label={tag}
                   size="sm"
-                  variant="outlined"
+                  variant="outline"
                   sx={{ mr: 0.5, mb: 0.5, fontSize: '0.7rem' }}
                 />
               ))}
@@ -419,8 +419,8 @@ const StockPhotoBrowser: React.FC<StockPhotoBrowserProps> = ({
           <Card>
             <Skeleton variant="rectangular" height={200} />
             <CardContent>
-              <Skeleton variant="text" />
-              <Skeleton variant="text" width="60%" />
+              <Skeleton variant="ghost" />
+              <Skeleton variant="ghost" width="60%" />
             </CardContent>
           </Card>
         </Grid>
@@ -446,7 +446,7 @@ const StockPhotoBrowser: React.FC<StockPhotoBrowserProps> = ({
               }}
             />
             <Button
-              variant="contained"
+              variant="primary"
               onClick={() => handleSearch(filters.query || '')}
               disabled={loading}
             >
@@ -660,7 +660,7 @@ const StockPhotoBrowser: React.FC<StockPhotoBrowserProps> = ({
             Cancel
           </Button>
           <Button
-            variant="contained"
+            variant="primary"
             onClick={() => downloadDialog.photo && handleDownload(downloadDialog.photo)}
             disabled={!downloadDialog.photo}
           >

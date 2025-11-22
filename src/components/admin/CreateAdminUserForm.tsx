@@ -270,7 +270,7 @@ const CreateAdminUserForm: React.FC<CreateAdminUserFormProps> = ({
         
         <Button
           type="submit"
-          variant="contained"
+          variant="primary"
           color="primary"
           disabled={loading}
           startIcon={loading ? <CircularProgress size={20} /> : null}

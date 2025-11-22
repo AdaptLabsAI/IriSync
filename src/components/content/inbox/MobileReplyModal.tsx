@@ -158,7 +158,7 @@ export const MobileReplyModal: React.FC<MobileReplyModalProps> = ({
           <Button
             onClick={handleSend}
             disabled={!replyText.trim() || loading}
-            variant="contained"
+            variant="primary"
             size="sm"
             startIcon={loading ? <CircularProgress size={16} /> : <SendIcon />}
           >
@@ -201,7 +201,7 @@ export const MobileReplyModal: React.FC<MobileReplyModalProps> = ({
                   <Chip
                     label={message.type}
                     size="sm"
-                    variant="outlined"
+                    variant="outline"
                     sx={{ fontSize: '0.7rem', height: 18 }}
                   />
                 </Box>
@@ -230,7 +230,7 @@ export const MobileReplyModal: React.FC<MobileReplyModalProps> = ({
             placeholder="Type your reply..."
             value={replyText}
             onChange={(e) => setReplyText(e.target.value)}
-            variant="outlined"
+            variant="outline"
             sx={{
               flex: 1,
               '& .MuiOutlinedInput-root': {

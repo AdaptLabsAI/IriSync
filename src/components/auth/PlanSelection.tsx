@@ -136,7 +136,7 @@ export default function PlanSelection({ selectedTier, onTierSelect, isSignUp = f
             {plans.map((plan) => (
               <Box key={plan.tier} sx={{ width: '100%', px: 1, mb: 2 }}>
                 <Card 
-                  variant="outlined" 
+                  variant="outline" 
                   sx={{ 
                     borderColor: selectedTier === plan.tier ? theme.palette.primary.main : 'default',
                     backgroundColor: selectedTier === plan.tier ? alpha(theme.palette.primary.main, 0.05) : 'inherit'
@@ -247,7 +247,7 @@ export default function PlanSelection({ selectedTier, onTierSelect, isSignUp = f
                       icon={<StarIcon />}
                       label={`${plan.tokensPerMonth.toLocaleString()} AI tokens per month`}
                       color="primary"
-                      variant="outlined"
+                      variant="outline"
                       sx={{ width: '100%', justifyContent: 'flex-start' }}
                     />
                   </Box>

@@ -296,8 +296,6 @@ export const DateRangeSelector: React.FC<DateRangeSelectorProps> = ({
                 handleDateSelect(range.to);
               }
             }}
-            numberOfMonths={1}
-            defaultMonth={date.from}
           />
           
           <div className="flex justify-end">

@@ -501,7 +501,7 @@ const SmartContentCreator: React.FC<SmartContentCreatorProps> = ({
             sx={{ mb: 2 }}
           />
           <Button
-            variant="contained"
+            variant="primary"
             onClick={generateSuggestions}
             disabled={isGenerating || intent.trim().length < 10}
             startIcon={isGenerating ? <CircularProgress size={20} /> : <AIIcon />}
@@ -542,9 +542,9 @@ const SmartContentCreator: React.FC<SmartContentCreatorProps> = ({
                   
                   <Stack direction="row" spacing={1} sx={{ mb: 2 }}>
                     <Chip label={`${suggestion.confidence}% Confidence`} color="primary" size="small" />
-                    <Chip label={suggestion.tone} variant="outlined" size="small" />
-                    <Chip label={suggestion.audience} variant="outlined" size="small" />
-                    <Chip label={suggestion.contentType} variant="outlined" size="small" />
+                    <Chip label={suggestion.tone} variant="outline" size="small" />
+                    <Chip label={suggestion.audience} variant="outline" size="small" />
+                    <Chip label={suggestion.contentType} variant="outline" size="small" />
                   </Stack>
                   
                   <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
@@ -599,7 +599,7 @@ const SmartContentCreator: React.FC<SmartContentCreatorProps> = ({
 
                   <Stack direction="row" spacing={2}>
                     <Button
-                      variant="contained"
+                      variant="primary"
                       onClick={createContent}
                       disabled={isGenerating || !content.trim()}
                       startIcon={isGenerating ? <CircularProgress size={20} /> : <SendIcon />}
@@ -615,7 +615,7 @@ const SmartContentCreator: React.FC<SmartContentCreatorProps> = ({
                     </Button>
                     
                     <Button
-                      variant="outlined"
+                      variant="outline"
                       onClick={() => {
                         setContent('');
                         setHashtags([]);
@@ -669,17 +669,17 @@ const SmartContentCreator: React.FC<SmartContentCreatorProps> = ({
                         <Chip 
                           label={`👍 ${performancePrediction.predictedLikes} likes`} 
                           size="sm" 
-                          variant="outlined" 
+                          variant="outline" 
                         />
                         <Chip 
                           label={`💬 ${performancePrediction.predictedComments} comments`} 
                           size="sm" 
-                          variant="outlined" 
+                          variant="outline" 
                         />
                         <Chip 
                           label={`🔄 ${performancePrediction.predictedShares} shares`} 
                           size="sm" 
-                          variant="outlined" 
+                          variant="outline" 
                         />
                       </Stack>
                       
@@ -758,7 +758,7 @@ const SmartContentCreator: React.FC<SmartContentCreatorProps> = ({
                       
                       <Stack direction="row" spacing={1} sx={{ mb: 1 }}>
                         {variation.hashtags.map((tag, tagIndex) => (
-                          <Chip key={tagIndex} label={`#${tag}`} size="small" variant="outlined" />
+                          <Chip key={tagIndex} label={`#${tag}`} size="small" variant="outline" />
                         ))}
                       </Stack>
                       
@@ -801,7 +801,7 @@ const SmartContentCreator: React.FC<SmartContentCreatorProps> = ({
                       {item.hashtags && (
                         <Stack direction="row" spacing={1} sx={{ mb: 2 }}>
                           {item.hashtags.map((tag: string, tagIndex: number) => (
-                            <Chip key={tagIndex} label={`#${tag}`} size="small" variant="outlined" />
+                            <Chip key={tagIndex} label={`#${tag}`} size="small" variant="outline" />
                           ))}
                         </Stack>
                       )}
@@ -843,7 +843,7 @@ const SmartContentCreator: React.FC<SmartContentCreatorProps> = ({
         </Typography>
         <Stack direction="row" spacing={1}>
           {connectedPlatforms.map((platform) => (
-            <Chip key={platform} label={platform} size="small" variant="outlined" />
+            <Chip key={platform} label={platform} size="small" variant="outline" />
           ))}
         </Stack>
       </Paper>

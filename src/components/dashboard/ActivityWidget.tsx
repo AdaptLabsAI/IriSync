@@ -87,7 +87,7 @@ export default function ActivityWidget({
             <Select
               value={filter}
               onChange={handleFilterChange}
-              variant="outlined"
+              variant="outline"
               displayEmpty
               sx={{ 
                 fontSize: '0.875rem',

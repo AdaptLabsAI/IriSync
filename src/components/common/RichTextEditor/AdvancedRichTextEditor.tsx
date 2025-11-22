@@ -542,7 +542,7 @@ const AdvancedRichTextEditor: React.FC<AdvancedRichTextEditorProps> = ({
             label="URL"
             type="url"
             fullWidth
-            variant="outlined"
+            variant="outline"
             value={linkUrl}
             onChange={(e) => setLinkUrl(e.target.value)}
             sx={{ mb: 2 }}
@@ -551,14 +551,14 @@ const AdvancedRichTextEditor: React.FC<AdvancedRichTextEditorProps> = ({
             margin="dense"
             label="Link Text (optional)"
             fullWidth
-            variant="outlined"
+            variant="outline"
             value={linkText}
             onChange={(e) => setLinkText(e.target.value)}
           />
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setLinkDialogOpen(false)}>Cancel</Button>
-          <Button onClick={handleInsertLink} variant="contained">Insert</Button>
+          <Button onClick={handleInsertLink} variant="primary">Insert</Button>
         </DialogActions>
       </Dialog>
 
@@ -573,7 +573,7 @@ const AdvancedRichTextEditor: React.FC<AdvancedRichTextEditorProps> = ({
             multiline
             rows={4}
             fullWidth
-            variant="outlined"
+            variant="outline"
             value={aiPrompt}
             onChange={(e) => setAiPrompt(e.target.value)}
             placeholder="e.g., Make this more professional, add examples, change tone to casual..."
@@ -588,7 +588,7 @@ const AdvancedRichTextEditor: React.FC<AdvancedRichTextEditorProps> = ({
                 {brandGuidelines.tone && <Chip label={`Tone: ${brandGuidelines.tone}`} size="small" />}
                 {brandGuidelines.style && <Chip label={`Style: ${brandGuidelines.style}`} size="small" />}
                 {brandGuidelines.keywords?.map((keyword, index) => (
-                  <Chip key={index} label={keyword} size="small" variant="outlined" />
+                  <Chip key={index} label={keyword} size="small" variant="outline" />
                 ))}
               </Stack>
             </Box>
@@ -598,7 +598,7 @@ const AdvancedRichTextEditor: React.FC<AdvancedRichTextEditorProps> = ({
           <Button onClick={() => setShowAIPromptDialog(false)}>Cancel</Button>
           <Button 
             onClick={() => currentAIRequest && handleAIAssist({ ...currentAIRequest, prompt: aiPrompt })}
-            variant="contained"
+            variant="primary"
             disabled={!aiPrompt.trim() || isAIProcessing}
           >
             {isAIProcessing ? <CircularProgress size={20} /> : 'Apply AI'}

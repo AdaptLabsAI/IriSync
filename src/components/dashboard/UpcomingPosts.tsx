@@ -52,7 +52,7 @@ export default function UpcomingPosts({ posts }: UpcomingPostsProps) {
       
       <Box sx={{ mt: 2, display: 'flex', justifyContent: 'center' }}>
         <Button 
-          variant="outlined" 
+          variant="outline" 
           fullWidth
           onClick={() => router.push('/dashboard/content/calendar')}
         >

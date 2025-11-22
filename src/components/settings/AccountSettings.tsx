@@ -224,7 +224,7 @@ const AccountSettings = () => {
         <Box>
           <Typography variant="subtitle2" color="text.secondary">Password</Typography>
           <Button
-            variant="outlined"
+            variant="outline"
             color="primary"
             startIcon={<LockOutlined />}
             onClick={() => setPasswordDialogOpen(true)}
@@ -280,7 +280,7 @@ const AccountSettings = () => {
             onClick={handleResetPassword}
             disabled={loading || !currentPassword || !newPassword || !confirmPassword}
             color="primary"
-            variant="contained"
+            variant="primary"
           >
             {loading ? 'Updating...' : 'Update Password'}
           </Button>

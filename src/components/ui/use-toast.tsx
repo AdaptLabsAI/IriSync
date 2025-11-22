@@ -117,7 +117,7 @@ export const toast = {
   },
 
   default: (props: Omit<ToastProps, 'variant'>) => {
-    toast.custom({ ...props, variant: 'default' });
+    toast.custom({ ...props, variant: 'primary' });
   },
 
   error: (props: Omit<ToastProps, 'variant'>) => {

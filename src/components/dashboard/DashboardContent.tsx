@@ -233,7 +233,7 @@ export default function DashboardContent() {
               </IconButton>
             </Tooltip>
             <Button
-              variant="contained"
+              variant="primary"
               startIcon={<AddIcon />}
               onClick={() => router.push('/dashboard/planner')}
               sx={{
@@ -342,7 +342,7 @@ export default function DashboardContent() {
                   Schedule your first post to see it here
                 </Typography>
                 <Button
-                  variant="contained"
+                  variant="primary"
                   startIcon={<AddIcon />}
                   onClick={() => router.push('/dashboard/planner')}
                   sx={{
@@ -455,7 +455,7 @@ export default function DashboardContent() {
 
             <Button
               fullWidth
-              variant="outlined"
+              variant="outline"
               onClick={() => router.push('/dashboard/inbox')}
               sx={{ mt: 2, textTransform: 'none' }}
             >
@@ -479,7 +479,7 @@ export default function DashboardContent() {
           <Grid item xs={12} sm={6} md={3}>
             <Button
               fullWidth
-              variant="outlined"
+              variant="outline"
               startIcon={<CalendarIcon />}
               onClick={() => router.push('/dashboard/planner')}
               sx={{ py: 1.5, textTransform: 'none' }}
@@ -490,7 +490,7 @@ export default function DashboardContent() {
           <Grid item xs={12} sm={6} md={3}>
             <Button
               fullWidth
-              variant="outlined"
+              variant="outline"
               startIcon={<MessageIcon />}
               onClick={() => router.push('/dashboard/inbox')}
               sx={{ py: 1.5, textTransform: 'none' }}
@@ -501,7 +501,7 @@ export default function DashboardContent() {
           <Grid item xs={12} sm={6} md={3}>
             <Button
               fullWidth
-              variant="outlined"
+              variant="outline"
               startIcon={<AnalyticsIcon />}
               onClick={() => router.push('/dashboard/analytics')}
               sx={{ py: 1.5, textTransform: 'none' }}
@@ -512,7 +512,7 @@ export default function DashboardContent() {
           <Grid item xs={12} sm={6} md={3}>
             <Button
               fullWidth
-              variant="outlined"
+              variant="outline"
               startIcon={<AddIcon />}
               onClick={() => router.push('/dashboard/platforms')}
               sx={{ py: 1.5, textTransform: 'none' }}

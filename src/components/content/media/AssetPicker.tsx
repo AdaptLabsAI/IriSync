@@ -502,7 +502,7 @@ export default function AssetPicker({ onSelect, onClose }: AssetPickerProps) {
       {tab === 0 && (
         <Box mt={2}>
           <Button
-            variant="contained"
+            variant="primary"
             component="label"
             startIcon={<CloudUploadIcon />}
             fullWidth
@@ -517,7 +517,7 @@ export default function AssetPicker({ onSelect, onClose }: AssetPickerProps) {
         <Box mt={2}>
           {!gdTokens ? (
             gdAuthLoading ? <CircularProgress /> : gdAuthUrl ? (
-              <Button variant="contained" color="primary" href={gdAuthUrl} fullWidth>
+              <Button variant="primary" color="primary" href={gdAuthUrl} fullWidth>
                 Connect Google Drive
               </Button>
             ) : gdError ? <Alert severity="error">{gdError}</Alert> : null
@@ -554,7 +554,7 @@ export default function AssetPicker({ onSelect, onClose }: AssetPickerProps) {
         <Box mt={2}>
           {!dbxTokens ? (
             dbxAuthLoading ? <CircularProgress /> : dbxAuthUrl ? (
-              <Button variant="contained" color="primary" href={dbxAuthUrl} fullWidth>
+              <Button variant="primary" color="primary" href={dbxAuthUrl} fullWidth>
                 Connect Dropbox
               </Button>
             ) : dbxError ? <Alert severity="error">{dbxError}</Alert> : null
@@ -591,7 +591,7 @@ export default function AssetPicker({ onSelect, onClose }: AssetPickerProps) {
         <Box mt={2}>
           {!onedriveTokens ? (
             onedriveAuthLoading ? <CircularProgress /> : onedriveAuthUrl ? (
-              <Button variant="contained" color="primary" href={onedriveAuthUrl} fullWidth>
+              <Button variant="primary" color="primary" href={onedriveAuthUrl} fullWidth>
                 Connect OneDrive
               </Button>
             ) : onedriveError ? <Alert severity="error">{onedriveError}</Alert> : null
@@ -616,7 +616,7 @@ export default function AssetPicker({ onSelect, onClose }: AssetPickerProps) {
         <Box mt={2}>
           {!canvaTokens ? (
             canvaAuthLoading ? <CircularProgress /> : canvaAuthUrl ? (
-              <Button variant="contained" color="primary" href={canvaAuthUrl} fullWidth>
+              <Button variant="primary" color="primary" href={canvaAuthUrl} fullWidth>
                 Connect Canva
               </Button>
             ) : canvaError ? <Alert severity="error">{canvaError}</Alert> : null
@@ -641,7 +641,7 @@ export default function AssetPicker({ onSelect, onClose }: AssetPickerProps) {
         <Box mt={2}>
           {!airtableTokens ? (
             airtableAuthLoading ? <CircularProgress /> : airtableAuthUrl ? (
-              <Button variant="contained" color="primary" href={airtableAuthUrl} fullWidth>
+              <Button variant="primary" color="primary" href={airtableAuthUrl} fullWidth>
                 Connect Airtable
               </Button>
             ) : airtableError ? <Alert severity="error">{airtableError}</Alert> : null
@@ -668,7 +668,7 @@ export default function AssetPicker({ onSelect, onClose }: AssetPickerProps) {
         <Box mt={2}>
           {!notionTokens ? (
             notionAuthLoading ? <CircularProgress /> : notionAuthUrl ? (
-              <Button variant="contained" color="primary" href={notionAuthUrl} fullWidth>
+              <Button variant="primary" color="primary" href={notionAuthUrl} fullWidth>
                 Connect Notion
               </Button>
             ) : notionError ? <Alert severity="error">{notionError}</Alert> : null
@@ -693,7 +693,7 @@ export default function AssetPicker({ onSelect, onClose }: AssetPickerProps) {
         <Box mt={2}>
           {!adobeTokens ? (
             adobeAuthLoading ? <CircularProgress /> : adobeAuthUrl ? (
-              <Button variant="contained" color="primary" href={adobeAuthUrl} fullWidth>
+              <Button variant="primary" color="primary" href={adobeAuthUrl} fullWidth>
                 Connect Adobe Express
               </Button>
             ) : adobeError ? <Alert severity="error">{adobeError}</Alert> : null
@@ -703,7 +703,7 @@ export default function AssetPicker({ onSelect, onClose }: AssetPickerProps) {
         </Box>
       )}
       <Box mt={2} display="flex" gap={2}>
-        <Button onClick={onClose} variant="outlined" color="secondary" fullWidth>Cancel</Button>
+        <Button onClick={onClose} variant="outline" color="secondary" fullWidth>Cancel</Button>
       </Box>
       <Snackbar open={snackbar.open} autoHideDuration={4000} onClose={() => setSnackbar(s => ({ ...s, open: false }))}>
         <Alert elevation={6} variant="filled" severity={snackbar.severity} onClose={() => setSnackbar(s => ({ ...s, open: false }))}>

@@ -228,7 +228,7 @@ export default function UserPermissionsForm({ teamMember, onSave, readOnly = fal
           !readOnly && (
             <Box sx={{ display: 'flex', gap: 1 }}>
               <Button 
-                variant="outlined" 
+                variant="outline" 
                 startIcon={<ResetIcon />} 
                 onClick={handleReset}
                 disabled={saving}
@@ -236,7 +236,7 @@ export default function UserPermissionsForm({ teamMember, onSave, readOnly = fal
                 Reset
               </Button>
               <Button 
-                variant="contained" 
+                variant="primary" 
                 startIcon={<SaveIcon />} 
                 onClick={handleSave}
                 disabled={saving}
@@ -272,7 +272,7 @@ export default function UserPermissionsForm({ teamMember, onSave, readOnly = fal
         </Typography>
         
         {/* Role Access Summary Table */}
-        <TableContainer component={Paper} variant="outlined" sx={{ mb: 2 }}>
+        <TableContainer component={Paper} variant="outline" sx={{ mb: 2 }}>
           <Table size="sm">
             <TableHead>
               <TableRow>
@@ -327,7 +327,7 @@ export default function UserPermissionsForm({ teamMember, onSave, readOnly = fal
         
         {/* Customization Summary */}
         {hasCustomizations && teamMember.organizationRole !== OrganizationRole.ORG_ADMIN && (
-          <Paper variant="outlined" sx={{ p: 2, mb: 2 }}>
+          <Paper variant="outline" sx={{ p: 2, mb: 2 }}>
             <Typography variant="subtitle2" gutterBottom>
               Custom Permission Adjustments
             </Typography>
@@ -344,7 +344,7 @@ export default function UserPermissionsForm({ teamMember, onSave, readOnly = fal
                       size="sm"
                       label={getPermissionLabel(perm)}
                       color="error"
-                      variant="outlined"
+                      variant="outline"
                       onDelete={!readOnly ? () => handleTogglePermission(perm) : undefined}
                       deleteIcon={<CancelIcon />}
                     />
@@ -448,7 +448,7 @@ export default function UserPermissionsForm({ teamMember, onSave, readOnly = fal
                               label="Default" 
                               size="sm" 
                               color="default" 
-                              variant="outlined"
+                              variant="outline"
                               sx={{ ml: 1 }}
                             />
                           )}
@@ -478,7 +478,7 @@ export default function UserPermissionsForm({ teamMember, onSave, readOnly = fal
             {compactView && (
               <Box sx={{ mt: 2 }}>
                 <Button 
-                  variant="text" 
+                  variant="ghost" 
                   size="sm" 
                   onClick={() => setCompactView(false)}
                 >

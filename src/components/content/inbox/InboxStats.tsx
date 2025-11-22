@@ -285,7 +285,7 @@ export const InboxStats: React.FC<InboxStatsProps> = ({
                   <Chip
                     key={platform}
                     label={`${platform}: ${count}`}
-                    variant="outlined"
+                    variant="outline"
                     size="sm"
                   />
                 ))}

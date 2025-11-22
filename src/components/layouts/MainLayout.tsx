@@ -122,7 +122,7 @@ export default function MainLayout({ children }: { children: ReactNode }) {
                 </Button>
               ))}
               <Button 
-                variant="contained" 
+                variant="primary" 
                 color="primary"
                 component={Link}
                 href="/auth/login"

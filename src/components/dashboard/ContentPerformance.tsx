@@ -29,7 +29,7 @@ export default function ContentPerformance({ posts }: ContentPerformanceProps) {
     <Grid container spacing={2}>
       {posts.map(post => (
         <Grid item xs={12} sm={6} md={4} key={post.id}>
-          <Card variant="outlined" sx={{ height: '100%' }}>
+          <Card variant="outline" sx={{ height: '100%' }}>
             <Box 
               sx={{ 
                 position: 'relative',

@@ -443,7 +443,7 @@ export default function ContentCreationForm({
           <Box sx={{ display: 'flex', gap: 1, mb: 2 }}>
             <Button 
               startIcon={<BsImage />} 
-              variant="outlined" 
+              variant="outline" 
               onClick={handleAddMedia}
             >
               Add Media
@@ -451,7 +451,7 @@ export default function ContentCreationForm({
             
             <Button 
               startIcon={<BsLink />} 
-              variant="outlined" 
+              variant="outline" 
               onClick={() => setIsLinkCardOpen(!isLinkCardOpen)}
             >
               Add Link
@@ -471,7 +471,7 @@ export default function ContentCreationForm({
                   size="sm"
                 />
                 <Button 
-                  variant="contained" 
+                  variant="primary" 
                   onClick={handleAddLink}
                   disabled={!linkUrl.trim()}
                 >
@@ -595,7 +595,7 @@ export default function ContentCreationForm({
         {/* Action Buttons */}
         <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 4 }}>
           <Button 
-            variant="outlined" 
+            variant="outline" 
             color="primary"
             sx={{ mr: 2 }}
             onClick={() => router.push('/dashboard/content/calendar')}
@@ -604,7 +604,7 @@ export default function ContentCreationForm({
           </Button>
           
           <Button
-            variant="contained"
+            variant="primary"
             color="primary"
             disabled={isSubmitting || (selectedAccounts.length === 0)}
             onClick={handleCreatePost}
@@ -631,7 +631,7 @@ export default function ContentCreationForm({
           
           <Box sx={{ mt: 2 }}>
             <Button
-              variant="contained"
+              variant="primary"
               color="secondary"
               fullWidth
               startIcon={isAiGenerating ? <CircularProgress size={20} color="inherit" /> : <BsLightning />}

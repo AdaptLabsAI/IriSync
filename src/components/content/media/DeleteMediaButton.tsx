@@ -216,7 +216,7 @@ export const DeleteMediaButton: React.FC<DeleteMediaButtonProps> = ({
           {!result ? (
             <>
               <Button
-                variant="outlined"
+                variant="outline"
                 onClick={() => setOpen(false)}
                 className="mr-2"
                 disabled={isDeleting}
@@ -224,7 +224,7 @@ export const DeleteMediaButton: React.FC<DeleteMediaButtonProps> = ({
                 Cancel
               </Button>
               <Button
-                variant="contained"
+                variant="primary"
                 color="error"
                 onClick={handleDelete}
                 disabled={isDeleting || mediaIds.length === 0}

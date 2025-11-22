@@ -189,14 +189,14 @@ export default function ContentEditorForm({ post, onSave, isSaving }: ContentEdi
         
         <Stack direction="row" justifyContent="flex-end" spacing={2}>
           <Button 
-            variant="outlined" 
+            variant="outline" 
             disabled={isSaving}
             onClick={() => window.history.back()}
           >
             Cancel
           </Button>
           <Button
-            variant="contained"
+            variant="primary"
             color="primary"
             onClick={handleSave}
             disabled={isSaving}

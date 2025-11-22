@@ -137,11 +137,11 @@ export const PlatformConnector: React.FC<PlatformConnectorProps> = ({
         </Typography>
       </DialogContent>
       <DialogActions>
-        <Button variant="outlined" onClick={onClose} disabled={isConnecting}>
+        <Button variant="outline" onClick={onClose} disabled={isConnecting}>
           Cancel
         </Button>
         <Button 
-          variant="contained" 
+          variant="primary" 
           color="primary" 
           onClick={connectPlatform} 
           disabled={!selectedPlatform || isConnecting}

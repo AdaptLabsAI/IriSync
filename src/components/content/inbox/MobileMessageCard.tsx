@@ -225,7 +225,7 @@ export const MobileMessageCard: React.FC<MobileMessageCardProps> = ({
                 <Chip
                   label={message.type}
                   size="sm"
-                  variant="outlined"
+                  variant="outline"
                   sx={{ fontSize: '0.7rem', height: 20 }}
                 />
                 {message.status === 'unread' && (

@@ -168,7 +168,7 @@ export default function KnowledgeList({ items, isLoading, onRefresh }: Knowledge
                       <Chip
                         label={`+${item.tags.length - 3}`}
                         size="small"
-                        variant="outlined"
+                        variant="outline"
                         sx={{ height: 20, fontSize: '0.7rem' }}
                       />
                     )}

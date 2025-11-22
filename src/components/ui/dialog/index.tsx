@@ -182,7 +182,7 @@ export const ConfirmDialog: React.FC<{
       footer={
         <>
           <Button 
-            variant="text" 
+            variant="ghost" 
             onClick={onClose}
             disabled={isLoading}
             sx={{ mr: 1 }}
@@ -190,7 +190,7 @@ export const ConfirmDialog: React.FC<{
             {cancelLabel}
           </Button>
           <Button
-            variant="contained"
+            variant="primary"
             color={variantColor}
             onClick={onConfirm}
             disabled={isLoading}

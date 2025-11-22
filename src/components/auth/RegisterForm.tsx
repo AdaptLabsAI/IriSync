@@ -288,7 +288,7 @@ export default function RegisterForm() {
                 <TextField
                   {...field}
                   label="Full Name"
-                  variant="outlined"
+                  variant="outline"
                   fullWidth
                   error={!!errors[field.name]}
                   helperText={errors[field.name]?.message}
@@ -305,7 +305,7 @@ export default function RegisterForm() {
                 <TextField
                   {...field}
                   label="Email Address"
-                  variant="outlined"
+                  variant="outline"
                   fullWidth
                   error={!!errors[field.name]}
                   helperText={errors[field.name]?.message}
@@ -322,7 +322,7 @@ export default function RegisterForm() {
                 <TextField
                   {...field}
                   label="Password"
-                  variant="outlined"
+                  variant="outline"
                   fullWidth
                   type={showPassword ? 'text' : 'password'}
                   error={!!errors[field.name]}
@@ -349,7 +349,7 @@ export default function RegisterForm() {
                 <TextField
                   {...field}
                   label="Confirm Password"
-                  variant="outlined"
+                  variant="outline"
                   fullWidth
                   type={showConfirmPassword ? 'text' : 'password'}
                   error={!!errors[field.name]}
@@ -376,7 +376,7 @@ export default function RegisterForm() {
                 <TextField
                   {...field}
                   label="Company/Organization Name"
-                  variant="outlined"
+                  variant="outline"
                   fullWidth
                   error={!!errors[field.name]}
                   helperText={errors[field.name]?.message}
@@ -387,7 +387,7 @@ export default function RegisterForm() {
 
           <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2 }}>
             <Button
-              variant="contained"
+              variant="primary"
               color="primary"
               type="submit"
               disabled={!isValid}
@@ -422,7 +422,7 @@ export default function RegisterForm() {
           <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 3 }}>
             <Button onClick={handleBack}>Back</Button>
             <Button
-              variant="contained"
+              variant="primary"
               color="primary"
               onClick={handleSubmit(onSubmit)}
               disabled={isSubmitting}
@@ -447,7 +447,7 @@ export default function RegisterForm() {
             {selectedTier === SubscriptionTier.ENTERPRISE && 
               ` Our sales team will contact you shortly to discuss your custom requirements.`}
           </Typography>
-          <Button variant="contained" color="primary" onClick={handleFinish}>
+          <Button variant="primary" color="primary" onClick={handleFinish}>
             Proceed to Login
           </Button>
         </Box>
@@ -465,7 +465,7 @@ export default function RegisterForm() {
             placeholder="e.g. IRIS1234"
             value={referralCode}
             onChange={handleReferralCodeChange}
-            variant="outlined"
+            variant="outline"
             size="sm"
             sx={{ minWidth: 150 }}
             InputProps={{

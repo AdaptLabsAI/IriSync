@@ -231,7 +231,7 @@ export default function Navbar() {
                 <Button 
                   component={Link}
                   href="/auth/register"
-                  variant="contained" 
+                  variant="primary" 
                   sx={{ ml: 1 }}
                 >
                   Sign up

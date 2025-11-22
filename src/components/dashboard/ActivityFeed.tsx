@@ -230,7 +230,7 @@ export default function ActivityFeed({ activities, showViewAll = true }: Activit
       {showViewAll && (
         <Box sx={{ mt: 2, textAlign: 'center' }}>
           <Button 
-            variant="text" 
+            variant="ghost" 
             size="sm" 
             color="primary"
             href="/dashboard/activities"

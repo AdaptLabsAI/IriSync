@@ -5,7 +5,7 @@ import { Dialog, DialogTrigger, DialogContent, DialogTitle, DialogClose } from '
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '../ui/select';
 import { Checkbox } from '../ui/checkbox';
 import { Input } from '../ui/input';
-import { RadioGroup, RadioGroupItem } from '../ui/radio';
+import { RadioGroup, RadioGroupItem } from '../ui/radio-group';
 import { Label } from '../ui/label';
 
 export type ReportFrequency = 'daily' | 'weekly' | 'monthly' | 'quarterly';

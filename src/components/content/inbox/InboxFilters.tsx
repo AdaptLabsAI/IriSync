@@ -130,7 +130,7 @@ export const InboxFilters: React.FC<InboxFiltersProps> = ({
           placeholder="Search messages..."
           value={search}
           onChange={(e) => onSearchChange(e.target.value)}
-          variant="outlined"
+          variant="outline"
           size="sm"
         />
         {activeFilterCount > 0 && (
@@ -297,7 +297,7 @@ export const InboxFilters: React.FC<InboxFiltersProps> = ({
                 renderTags={(value: string[], getTagProps) =>
                   value.map((option: string, index: number) => (
                     <Chip
-                      variant="outlined"
+                      variant="outline"
                       label={option}
                       size="sm"
                       {...getTagProps({ index })}
@@ -332,7 +332,7 @@ export const InboxFilters: React.FC<InboxFiltersProps> = ({
               <Box sx={{ flex: '1 1 calc(16.67% - 12px)', minWidth: '150px' }}>
                 <Button
                   fullWidth
-                  variant="outlined"
+                  variant="outline"
                   size="sm"
                   onClick={onClearFilters}
                   startIcon={<ClearIcon />}

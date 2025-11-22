@@ -194,7 +194,7 @@ export default function AnalyticsContent() {
           </Box>
           <Stack direction="row" spacing={2}>
             <Button
-              variant="outlined"
+              variant="outline"
               startIcon={<AIIcon />}
               sx={{
                 textTransform: 'none',
@@ -209,7 +209,7 @@ export default function AnalyticsContent() {
               Get AI Summary
             </Button>
             <Button
-              variant="contained"
+              variant="primary"
               startIcon={<DownloadIcon />}
               sx={{
                 bgcolor: tokens.colors.primary.main,

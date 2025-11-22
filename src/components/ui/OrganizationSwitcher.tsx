@@ -133,7 +133,7 @@ export const OrganizationSwitcher = () => {
   }
 
   return (
-    <FormControl variant="outlined" size="sm" sx={{ minWidth: 200 }}>
+    <FormControl variant="outline" size="sm" sx={{ minWidth: 200 }}>
       <InputLabel id="org-select-label">Organization</InputLabel>
       <Select
         labelId="org-select-label"

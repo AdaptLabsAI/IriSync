@@ -1,3 +1,18 @@
+/**
+ * Dialog Component
+ *
+ * Canonical API:
+ * - Dialog (root container, supports both open/onOpenChange AND isOpen/onClose)
+ * - DialogTrigger (trigger button with asChild support)
+ * - DialogContent (content wrapper)
+ * - DialogHeader (header wrapper, accepts className)
+ * - DialogTitle (title)
+ * - DialogClose (close button with asChild support)
+ *
+ * Props API supports both styles:
+ * - Radix: open + onOpenChange
+ * - MUI: isOpen + onClose
+ */
 import React, { useState, createContext, useContext } from 'react';
 import {
   Dialog as MuiDialog,
@@ -202,7 +217,7 @@ export const ConfirmDialog: React.FC<{
       footer={
         <>
           <Button 
-            variant="text" 
+            variant="ghost" 
             onClick={onClose}
             disabled={isLoading}
             sx={{ mr: 1 }}
@@ -210,7 +225,7 @@ export const ConfirmDialog: React.FC<{
             {cancelLabel}
           </Button>
           <Button
-            variant="contained"
+            variant="primary"
             color={variantColor}
             onClick={onConfirm}
             disabled={isLoading}
@@ -234,6 +249,28 @@ export const DialogHeader = ({ children, className, ...props }: { children: Reac
   <MuiDialogTitle className={className} {...props}>{children}</MuiDialogTitle>
 );
 export const DialogTitle = MuiDialogTitle;
+
+export interface DialogTriggerProps {
+  asChild?: boolean;
+  children: React.ReactNode;
+  onClick?: () => void;
+  className?: string;
+}
+
+export const DialogTrigger: React.FC<DialogTriggerProps> = ({ asChild, children, onClick, className }) => {
+  if (asChild && React.isValidElement(children)) {
+    return React.cloneElement(children as React.ReactElement<any>, {
+      onClick,
+      className
+    });
+  }
+
+  return (
+    <button onClick={onClick} className={className}>
+      {children}
+    </button>
+  );
+};
 export const DialogDescription = ({ children, className, ...props }: { children: React.ReactNode; className?: string }) => (
   <Box
     sx={{

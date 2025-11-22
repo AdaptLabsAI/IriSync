@@ -205,7 +205,7 @@ const PlatformCard: React.FC<PlatformCardProps> = ({ platform, onConnect }) => {
       </Typography>
       
       <Button 
-        variant="outlined" 
+        variant="outline" 
         fullWidth
         disabled={status === 'planned'}
         onClick={() => onConnect(platform.id)}
