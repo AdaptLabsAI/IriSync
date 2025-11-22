@@ -59,7 +59,7 @@ export interface ExportReportButtonProps {
 /**
  * ExportReportButton - Component to export analytics reports in different formats
  */
-const ExportReportButton: React.FC<ExportReportButtonProps> = ({
+export const ExportReportButton: React.FC<ExportReportButtonProps> = ({
   reportId,
   reportName = 'Report',
   availableFormats = ['pdf', 'csv', 'excel', 'image'],
