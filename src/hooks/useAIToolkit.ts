@@ -308,6 +308,25 @@ export function useAIToolkit() {
   }, [callToolkitApi]);
 
   /**
+   * Generate images from a text prompt
+   */
+  const generateImage = useCallback(async (
+    prompt: string,
+    style?: string,
+    aspectRatio?: string,
+    size?: string,
+    options?: any
+  ) => {
+    return callToolkitApi('generateImage', {
+      prompt,
+      style,
+      aspectRatio,
+      size,
+      ...options,
+    });
+  }, [callToolkitApi]);
+
+  /**
    * Check if the user can perform an AI operation (has enough tokens)
    */
   const canPerformOperation = useCallback(async (operation: string) => {
@@ -329,7 +348,8 @@ export function useAIToolkit() {
       'analyzeSEO': 'analyze_sentiment',
       'generateCampaign': 'generate_post',
       'chat': 'generate_post',
-      'generateAudienceInsights': 'analyze_sentiment'
+      'generateAudienceInsights': 'analyze_sentiment',
+      'generateImage': 'analyze_image'
     };
 
     const taskType = taskTypeMap[operation];
@@ -358,6 +378,7 @@ export function useAIToolkit() {
     generateCampaign,
     sendChatMessage,
     generateAudienceInsights,
+    generateImage,
     canPerformOperation
   };
 } 
