@@ -7,7 +7,7 @@ import { useAIToolkit } from '../../hooks/useAIToolkit';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs';
 import { Select, SelectTrigger, SelectContent, SelectItem, SelectValue } from '../ui/select';
 import { Slider } from '../ui/slider';
-import { Textarea } from '../ui/textarea/Textarea';
+import { Textarea } from '../ui/textarea';
 import { Input } from '../ui/input/Input';
 import { Loader2, Image, Lock, Copy, Download, RefreshCw, ThumbsUp, ThumbsDown } from 'lucide-react';
 
