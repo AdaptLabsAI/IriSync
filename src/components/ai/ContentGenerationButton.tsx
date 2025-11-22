@@ -202,10 +202,9 @@ const ContentGenerationButton: React.FC<ContentGenerationButtonProps> = ({
       setGeneratedContent(content);
     } catch (error) {
       console.error('Error generating content:', error);
-      toast({
+      toast.error({
         title: "Generation failed",
-        description: "Failed to generate content. Please try again.",
-        variant: "destructive"
+        description: "Failed to generate content. Please try again."
       });
     } finally {
       setIsGenerating(false);
@@ -217,16 +216,15 @@ const ContentGenerationButton: React.FC<ContentGenerationButtonProps> = ({
     
     try {
       await onSaveContent(generatedContent, selectedPlatform, prompt);
-      toast({
+      toast.success({
         title: "Content saved",
-        description: "Your content has been saved successfully",
+        description: "Your content has been saved successfully"
       });
     } catch (error) {
       console.error('Error saving content:', error);
-      toast({
+      toast.error({
         title: "Save failed",
-        description: "Failed to save content. Please try again.",
-        variant: "destructive"
+        description: "Failed to save content. Please try again."
       });
     }
   };
@@ -236,14 +234,14 @@ const ContentGenerationButton: React.FC<ContentGenerationButtonProps> = ({
     
     navigator.clipboard.writeText(generatedContent);
     setIsCopied(true);
-    
+
     setTimeout(() => {
       setIsCopied(false);
     }, 2000);
-    
-    toast({
+
+    toast.success({
       title: "Copied to clipboard",
-      description: "Content has been copied to your clipboard",
+      description: "Content has been copied to your clipboard"
     });
   };
 
