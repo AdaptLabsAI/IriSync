@@ -5,7 +5,7 @@ import { SocialPlatform } from '../../../lib/models/SocialAccount';
 import AITokenAlert from '../toolkit/AITokenAlert';
 import { useSubscription } from '../../../hooks/useSubscription';
 import { Tabs } from '../../ui/tabs';
-import { useToast } from '../../ui/use-toast';
+import { toast } from '../../ui/use-toast';
 
 interface BrandVoiceAnalysisResult {
   score: number;
@@ -17,11 +17,15 @@ interface BrandVoiceAnalysisResult {
 }
 
 interface BrandVoiceConsistencyToolProps {
-  onContentAnalyzed: (
-    originalContent: string, 
-    suggestedContent: string, 
+  onContentAnalyzed?: (
+    originalContent: string,
+    suggestedContent: string,
     analysis: BrandVoiceAnalysisResult
   ) => void;
+  /**
+   * Optional callback fired when the tool produces finalized content
+   */
+  onContentGenerated?: (content: string, metadata?: any) => void;
   initialContent?: string;
 }
 
@@ -29,13 +33,13 @@ interface BrandVoiceConsistencyToolProps {
  * Enterprise-tier brand voice consistency tool
  * Analyzes and helps maintain consistent brand voice across all content
  */
-export default function BrandVoiceConsistencyTool({ 
+export default function BrandVoiceConsistencyTool({
   onContentAnalyzed,
+  onContentGenerated,
   initialContent = ''
 }: BrandVoiceConsistencyToolProps) {
   const { analyzeContent, improveContent, loading, error } = useAIToolkit();
   const { subscription } = useSubscription();
-  const { toast } = useToast();
   
   const [content, setContent] = useState(initialContent);
   const [brandVoiceDescription, setBrandVoiceDescription] = useState('');
@@ -107,14 +111,14 @@ export default function BrandVoiceConsistencyTool({
         setAnalysisResult(analysisResult);
         setActiveTab(2);
         
-        toast({
+        toast.success({
           title: "Analysis complete",
           description: "Your content has been analyzed for brand voice consistency"
         });
       }
     } catch (err) {
       console.error('Error analyzing brand voice:', err);
-      toast({
+      toast.error({
         title: "Analysis failed",
         description: error ? error.message : "Failed to analyze content. Please try again."
       });
@@ -224,14 +228,14 @@ export default function BrandVoiceConsistencyTool({
         const optimizedText = result.content || result.toString();
         setOptimizedContent(optimizedText);
         
-        toast({
+        toast.success({
           title: "Content optimized",
           description: "Your content has been optimized for brand voice consistency"
         });
       }
     } catch (err) {
       console.error('Error optimizing content:', err);
-      toast({
+      toast.error({
         title: "Optimization failed",
         description: error ? error.message : "Failed to optimize content. Please try again."
       });
@@ -247,7 +251,26 @@ export default function BrandVoiceConsistencyTool({
   // Handle content selection
   const handleUseContent = () => {
     if (analysisResult) {
-      onContentAnalyzed(content, optimizedContent || content, analysisResult);
+      const finalContent = optimizedContent || content;
+      const metadata = {
+        type: 'brand-voice',
+        analysis: analysisResult,
+        originalContent: content,
+        optimizedContent: optimizedContent,
+        brandTone,
+        brandTerminology,
+        brandValues
+      };
+
+      // Call the legacy callback if provided
+      if (onContentAnalyzed) {
+        onContentAnalyzed(content, finalContent, analysisResult);
+      }
+
+      // Call the new callback if provided (for ContentGenerationButton)
+      if (onContentGenerated) {
+        onContentGenerated(finalContent, metadata);
+      }
     }
   };
   
