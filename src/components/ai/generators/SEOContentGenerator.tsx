@@ -284,12 +284,17 @@ export default function SEOContentGenerator({
       )}
       
       <Tabs
+        defaultValue="create"
         value={activeTab}
-        onChange={(_: any, value: string) => setActiveTab(value as 'create' | 'analyze')}
+        onValueChange={(value) => setActiveTab(value as 'create' | 'analyze')}
         className="mb-6"
       >
-        <TabsTrigger label="Create Content" value="create" />
-        <TabsTrigger label="Analyze Content" value="analyze" disabled={!canUseEnterpriseFeatures} />
+        <TabsList className="mb-4">
+          <TabsTrigger value="create">Create Content</TabsTrigger>
+          <TabsTrigger value="analyze" disabled={!canUseEnterpriseFeatures}>
+            Analyze Content
+          </TabsTrigger>
+        </TabsList>
 
         <TabsContent value="create">
           <form onSubmit={handleSubmit} className="mb-6">
