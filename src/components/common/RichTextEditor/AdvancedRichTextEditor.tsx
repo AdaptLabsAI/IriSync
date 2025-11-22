@@ -558,7 +558,7 @@ const AdvancedRichTextEditor: React.FC<AdvancedRichTextEditorProps> = ({
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setLinkDialogOpen(false)}>Cancel</Button>
-          <Button onClick={handleInsertLink} variant="primary">Insert</Button>
+          <Button onClick={handleInsertLink} variant="contained" color="primary">Insert</Button>
         </DialogActions>
       </Dialog>
 
@@ -596,9 +596,10 @@ const AdvancedRichTextEditor: React.FC<AdvancedRichTextEditorProps> = ({
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setShowAIPromptDialog(false)}>Cancel</Button>
-          <Button 
+          <Button
             onClick={() => currentAIRequest && handleAIAssist({ ...currentAIRequest, prompt: aiPrompt })}
-            variant="primary"
+            variant="contained"
+            color="primary"
             disabled={!aiPrompt.trim() || isAIProcessing}
           >
             {isAIProcessing ? <CircularProgress size={20} /> : 'Apply AI'}
