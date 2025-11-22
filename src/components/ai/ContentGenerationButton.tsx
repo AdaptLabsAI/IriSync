@@ -616,9 +616,9 @@ const ContentGenerationButton: React.FC<ContentGenerationButtonProps> = ({
               
               {activeTab === 'calendar' && (
                 <ContentCalendarGenerator
-                  onCalendarGenerated={(calendar) => 
+                  onCalendarGenerated={(calendar) =>
                     handleContentGenerated('Content Calendar Generated', { type: 'calendar', calendar })}
-                  initialTopic={prompt}
+                  initialTopics={prompt ? [prompt] : []}
                 />
               )}
               
