@@ -12,7 +12,7 @@ export interface Metric {
 export interface MetricGroup {
   id: string;
   name: string;
-  metrics: string[];
+  metrics: Metric[];
 }
 
 interface MetricFilterToggleProps {
