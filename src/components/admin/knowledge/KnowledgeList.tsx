@@ -167,7 +167,7 @@ export default function KnowledgeList({ items, isLoading, onRefresh }: Knowledge
                     {item.tags.length > 3 && (
                       <Chip
                         label={`+${item.tags.length - 3}`}
-                        size="sm"
+                        size="small"
                         variant="outlined"
                         sx={{ height: 20, fontSize: '0.7rem' }}
                       />
