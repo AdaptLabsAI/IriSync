@@ -147,9 +147,9 @@ export default function AIToolkitStatus() {
         </Box>
         
         <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap', mt: 2 }}>
-          <Chip color="success" size="sm" label={`Available: ${completeCount}`} />
-          <Chip color="warning" size="sm" label={`Beta: ${partialCount}`} />
-          <Chip color="info" size="sm" label={`Coming Soon: ${plannedCount}`} />
+          <Chip color="success" size="small" label={`Available: ${completeCount}`} />
+          <Chip color="warning" size="small" label={`Beta: ${partialCount}`} />
+          <Chip color="info" size="small" label={`Coming Soon: ${plannedCount}`} />
         </Box>
       </Paper>
       
@@ -198,7 +198,7 @@ export default function AIToolkitStatus() {
                   </Typography>
                   
                   {tool.tier !== 'all' && tool.tier !== userTier && (
-                    <Chip size="sm" label={`${tool.tier} tier`} color="secondary" />
+                    <Chip size="small" label={`${tool.tier} tier`} color="secondary" />
                   )}
                 </Box>
               )}

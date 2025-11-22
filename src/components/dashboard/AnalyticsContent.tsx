@@ -512,7 +512,7 @@ export default function AnalyticsContent() {
                     <Typography variant="body2" fontWeight={competitor.isYou ? 'bold' : 'regular'}>
                       {competitor.name}
                       {competitor.isYou && (
-                        <Chip label="You" size="sm" color="success" sx={{ ml: 1, height: 20 }} />
+                        <Chip label="You" size="small" color="success" sx={{ ml: 1, height: 20 }} />
                       )}
                     </Typography>
                   </TableCell>

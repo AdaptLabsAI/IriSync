@@ -77,7 +77,7 @@ export const TeamSwitcher = () => {
           <MenuItem key={team.id} value={team.id}>
             <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '100%', alignItems: 'center' }}>
               <span className="truncate">{team.name}</span>
-              <Chip label={`${team.memberIds.length} members`} size="sm" />
+              <Chip label={`${team.memberIds.length} members`} size="small" />
             </Box>
           </MenuItem>
         ))}

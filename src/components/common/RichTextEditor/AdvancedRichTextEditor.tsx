@@ -585,10 +585,10 @@ const AdvancedRichTextEditor: React.FC<AdvancedRichTextEditorProps> = ({
                 Brand Guidelines (will be applied automatically):
               </Typography>
               <Stack direction="row" spacing={1} flexWrap="wrap">
-                {brandGuidelines.tone && <Chip label={`Tone: ${brandGuidelines.tone}`} size="sm" />}
-                {brandGuidelines.style && <Chip label={`Style: ${brandGuidelines.style}`} size="sm" />}
+                {brandGuidelines.tone && <Chip label={`Tone: ${brandGuidelines.tone}`} size="small" />}
+                {brandGuidelines.style && <Chip label={`Style: ${brandGuidelines.style}`} size="small" />}
                 {brandGuidelines.keywords?.map((keyword, index) => (
-                  <Chip key={index} label={keyword} size="sm" variant="outlined" />
+                  <Chip key={index} label={keyword} size="small" variant="outlined" />
                 ))}
               </Stack>
             </Box>

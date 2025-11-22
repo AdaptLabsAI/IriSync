@@ -541,10 +541,10 @@ const SmartContentCreator: React.FC<SmartContentCreatorProps> = ({
                   </Typography>
                   
                   <Stack direction="row" spacing={1} sx={{ mb: 2 }}>
-                    <Chip label={`${suggestion.confidence}% Confidence`} color="primary" size="sm" />
-                    <Chip label={suggestion.tone} variant="outlined" size="sm" />
-                    <Chip label={suggestion.audience} variant="outlined" size="sm" />
-                    <Chip label={suggestion.contentType} variant="outlined" size="sm" />
+                    <Chip label={`${suggestion.confidence}% Confidence`} color="primary" size="small" />
+                    <Chip label={suggestion.tone} variant="outlined" size="small" />
+                    <Chip label={suggestion.audience} variant="outlined" size="small" />
+                    <Chip label={suggestion.contentType} variant="outlined" size="small" />
                   </Stack>
                   
                   <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
@@ -556,7 +556,7 @@ const SmartContentCreator: React.FC<SmartContentCreatorProps> = ({
                   </Typography>
                   <Stack direction="row" spacing={1} sx={{ mb: 2 }}>
                     {suggestion.platforms.map((platform) => (
-                      <Chip key={platform} label={platform} color="secondary" size="sm" />
+                      <Chip key={platform} label={platform} color="secondary" size="small" />
                     ))}
                   </Stack>
                 </Box>
@@ -742,7 +742,7 @@ const SmartContentCreator: React.FC<SmartContentCreatorProps> = ({
                         <Typography variant="subtitle1">
                           Variation {index + 1}: {variation.testFocus.replace('_', ' ')}
                         </Typography>
-                        <Chip label={variation.expectedImpact} size="sm" color="primary" />
+                        <Chip label={variation.expectedImpact} size="small" color="primary" />
                       </Box>
                     </AccordionSummary>
                     <AccordionDetails>
@@ -758,7 +758,7 @@ const SmartContentCreator: React.FC<SmartContentCreatorProps> = ({
                       
                       <Stack direction="row" spacing={1} sx={{ mb: 1 }}>
                         {variation.hashtags.map((tag, tagIndex) => (
-                          <Chip key={tagIndex} label={`#${tag}`} size="sm" variant="outlined" />
+                          <Chip key={tagIndex} label={`#${tag}`} size="small" variant="outlined" />
                         ))}
                       </Stack>
                       
@@ -788,7 +788,7 @@ const SmartContentCreator: React.FC<SmartContentCreatorProps> = ({
                         <Typography variant="subtitle1" sx={{ textTransform: 'capitalize' }}>
                           {item.platform} - {item.format?.replace('_', ' ') || 'Post'}
                         </Typography>
-                        <Chip label={item.estimatedReach || 'High reach'} size="sm" color="secondary" />
+                        <Chip label={item.estimatedReach || 'High reach'} size="small" color="secondary" />
                       </Box>
                     </AccordionSummary>
                     <AccordionDetails>
@@ -801,7 +801,7 @@ const SmartContentCreator: React.FC<SmartContentCreatorProps> = ({
                       {item.hashtags && (
                         <Stack direction="row" spacing={1} sx={{ mb: 2 }}>
                           {item.hashtags.map((tag: string, tagIndex: number) => (
-                            <Chip key={tagIndex} label={`#${tag}`} size="sm" variant="outlined" />
+                            <Chip key={tagIndex} label={`#${tag}`} size="small" variant="outlined" />
                           ))}
                         </Stack>
                       )}
@@ -843,7 +843,7 @@ const SmartContentCreator: React.FC<SmartContentCreatorProps> = ({
         </Typography>
         <Stack direction="row" spacing={1}>
           {connectedPlatforms.map((platform) => (
-            <Chip key={platform} label={platform} size="sm" variant="outlined" />
+            <Chip key={platform} label={platform} size="small" variant="outlined" />
           ))}
         </Stack>
       </Paper>
