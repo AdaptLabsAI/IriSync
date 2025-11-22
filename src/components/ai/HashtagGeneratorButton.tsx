@@ -116,9 +116,10 @@ const HashtagGeneratorButton: React.FC<HashtagGeneratorButtonProps> = ({
   const { suggestHashtags, loading, error } = useAIToolkit();
   
   const userTier = subscription?.tier || 'creator';
-  
+
   // Check feature availability based on subscription tier
-  const canUseHashtagGenerator = userTier !== 'free';
+  // All valid subscription tiers ('creator', 'influencer', 'enterprise') can use hashtag generator
+  const canUseHashtagGenerator = true;
   
   // Determine maximum hashtags based on tier
   const getMaxHashtags = () => {
@@ -373,18 +374,18 @@ const HashtagGeneratorButton: React.FC<HashtagGeneratorButtonProps> = ({
                 <div className="flex justify-between items-center mb-2">
                   <h3 className="text-sm font-medium">Generated Hashtags</h3>
                   <div className="flex gap-2">
-                    <Button 
-                      variant="ghost" 
-                      size="small"
+                    <Button
+                      variant="ghost"
+                      size="sm"
                       onClick={() => handleHashtagFeedback(true)}
                       className="h-8 px-2"
                     >
                       <span className="sr-only">Helpful</span>
                       👍
                     </Button>
-                    <Button 
-                      variant="ghost" 
-                      size="small"
+                    <Button
+                      variant="ghost"
+                      size="sm"
                       onClick={() => handleHashtagFeedback(false)}
                       className="h-8 px-2"
                     >
@@ -413,9 +414,9 @@ const HashtagGeneratorButton: React.FC<HashtagGeneratorButtonProps> = ({
               <div className="flex justify-between items-center mb-2">
                 <h3 className="text-sm font-medium">Selected Hashtags ({selectedHashtags.length}/{maxHashtags})</h3>
                 <div className="flex gap-2">
-                  <Button 
-                    variant="ghost" 
-                    size="small"
+                  <Button
+                    variant="ghost"
+                    size="sm"
                     onClick={handleClearHashtags}
                     disabled={selectedHashtags.length === 0}
                     className="h-8 w-8 p-0"
@@ -423,9 +424,9 @@ const HashtagGeneratorButton: React.FC<HashtagGeneratorButtonProps> = ({
                     <Trash className="h-4 w-4" />
                     <span className="sr-only">Clear all</span>
                   </Button>
-                  <Button 
-                    variant="ghost" 
-                    size="small"
+                  <Button
+                    variant="ghost"
+                    size="sm"
                     onClick={handleCopyHashtags}
                     disabled={selectedHashtags.length === 0}
                     className="h-8 w-8 p-0"
@@ -439,14 +440,14 @@ const HashtagGeneratorButton: React.FC<HashtagGeneratorButtonProps> = ({
               <div className="flex flex-wrap gap-2 p-2 min-h-[60px] border rounded-md bg-white">
                 {selectedHashtags.length > 0 ? (
                   selectedHashtags.map((hashtag, index) => (
-                    <Badge 
+                    <Badge
                       key={index}
                       className="pr-1 flex items-center gap-1"
                     >
                       {hashtag}
-                      <Button 
-                        variant="ghost" 
-                        size="small" 
+                      <Button
+                        variant="ghost"
+                        size="sm"
                         onClick={() => handleRemoveHashtag(hashtag)}
                         className="h-4 w-4 p-0 hover:bg-transparent"
                       >
