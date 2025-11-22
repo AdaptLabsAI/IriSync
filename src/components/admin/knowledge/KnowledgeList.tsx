@@ -179,7 +179,7 @@ export default function KnowledgeList({ items, isLoading, onRefresh }: Knowledge
               <TableCell>
                 <Chip
                   label={item.status}
-                  size="sm"
+                  size="small"
                   color={getStatusColor(item.status) as any}
                 />
               </TableCell>
