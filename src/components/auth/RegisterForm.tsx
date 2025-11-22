@@ -387,7 +387,7 @@ export default function RegisterForm() {
 
           <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2 }}>
             <Button
-              variant="primary"
+              variant="contained"
               color="primary"
               type="submit"
               disabled={!isValid}
@@ -422,7 +422,7 @@ export default function RegisterForm() {
           <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 3 }}>
             <Button onClick={handleBack}>Back</Button>
             <Button
-              variant="primary"
+              variant="contained"
               color="primary"
               onClick={handleSubmit(onSubmit)}
               disabled={isSubmitting}
@@ -447,7 +447,7 @@ export default function RegisterForm() {
             {selectedTier === SubscriptionTier.ENTERPRISE && 
               ` Our sales team will contact you shortly to discuss your custom requirements.`}
           </Typography>
-          <Button variant="primary" color="primary" onClick={handleFinish}>
+          <Button variant="contained" color="primary" onClick={handleFinish}>
             Proceed to Login
           </Button>
         </Box>
