@@ -94,10 +94,12 @@ const ImageGenerationButton: React.FC<ImageGenerationButtonProps> = ({
   const { generateImage, loading, error } = useAIToolkit();
   
   const userTier = subscription?.tier || 'creator';
-  
+
   // Check feature availability based on subscription tier
-  const canUseImageGenerator = userTier !== 'free';
-  const canUseAdvancedStyles = userTier === 'enterprise' || userTier === 'influencer';
+  // "Free" is represented by having no subscription at all
+  const canUseImageGenerator = !!subscription;
+  const canUseAdvancedStyles =
+    userTier === 'enterprise' || userTier === 'influencer';
   const canUseLargeSize = userTier === 'enterprise';
   
   // Determine maximum regeneration count based on tier
