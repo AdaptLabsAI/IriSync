@@ -228,7 +228,7 @@ export default function UserPermissionsForm({ teamMember, onSave, readOnly = fal
           !readOnly && (
             <Box sx={{ display: 'flex', gap: 1 }}>
               <Button 
-                variant="outline" 
+                variant="outlined" 
                 startIcon={<ResetIcon />} 
                 onClick={handleReset}
                 disabled={saving}
@@ -272,7 +272,7 @@ export default function UserPermissionsForm({ teamMember, onSave, readOnly = fal
         </Typography>
         
         {/* Role Access Summary Table */}
-        <TableContainer component={Paper} variant="outline" sx={{ mb: 2 }}>
+        <TableContainer component={Paper} variant="outlined" sx={{ mb: 2 }}>
           <Table size="sm">
             <TableHead>
               <TableRow>
@@ -327,7 +327,7 @@ export default function UserPermissionsForm({ teamMember, onSave, readOnly = fal
         
         {/* Customization Summary */}
         {hasCustomizations && teamMember.organizationRole !== OrganizationRole.ORG_ADMIN && (
-          <Paper variant="outline" sx={{ p: 2, mb: 2 }}>
+          <Paper variant="outlined" sx={{ p: 2, mb: 2 }}>
             <Typography variant="subtitle2" gutterBottom>
               Custom Permission Adjustments
             </Typography>
@@ -344,7 +344,7 @@ export default function UserPermissionsForm({ teamMember, onSave, readOnly = fal
                       size="sm"
                       label={getPermissionLabel(perm)}
                       color="error"
-                      variant="outline"
+                      variant="outlined"
                       onDelete={!readOnly ? () => handleTogglePermission(perm) : undefined}
                       deleteIcon={<CancelIcon />}
                     />
@@ -448,7 +448,7 @@ export default function UserPermissionsForm({ teamMember, onSave, readOnly = fal
                               label="Default" 
                               size="sm" 
                               color="default" 
-                              variant="outline"
+                              variant="outlined"
                               sx={{ ml: 1 }}
                             />
                           )}

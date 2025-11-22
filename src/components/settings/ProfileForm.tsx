@@ -248,7 +248,7 @@ export default function ProfileForm() {
         <Grid item xs={12}>
           <Button
             type="submit"
-            variant="primary"
+            variant="contained"
             color="primary"
             disabled={loading}
             sx={{ mt: 1 }}

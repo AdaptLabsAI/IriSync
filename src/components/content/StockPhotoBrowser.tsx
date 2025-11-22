@@ -384,12 +384,12 @@ const StockPhotoBrowser: React.FC<StockPhotoBrowserProps> = ({
             <Chip
               label={`${photo.width}×${photo.height}`}
               size="sm"
-              variant="outline"
+              variant="outlined"
             />
             <Chip
               label={photo.metadata.orientation}
               size="sm"
-              variant="outline"
+              variant="outlined"
             />
           </Stack>
 
@@ -400,7 +400,7 @@ const StockPhotoBrowser: React.FC<StockPhotoBrowserProps> = ({
                   key={index}
                   label={tag}
                   size="sm"
-                  variant="outline"
+                  variant="outlined"
                   sx={{ mr: 0.5, mb: 0.5, fontSize: '0.7rem' }}
                 />
               ))}

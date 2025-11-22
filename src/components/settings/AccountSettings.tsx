@@ -224,7 +224,7 @@ const AccountSettings = () => {
         <Box>
           <Typography variant="subtitle2" color="text.secondary">Password</Typography>
           <Button
-            variant="outline"
+            variant="outlined"
             color="primary"
             startIcon={<LockOutlined />}
             onClick={() => setPasswordDialogOpen(true)}

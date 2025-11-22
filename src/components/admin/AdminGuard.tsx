@@ -180,14 +180,14 @@ export default function AdminGuard({ children }: AdminGuardProps) {
           </Typography>
           <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center' }}>
             <Button 
-              variant="primary" 
+              variant="contained" 
               color="primary" 
               onClick={() => router.push('/dashboard')}
             >
               Return to Dashboard
             </Button>
             <Button 
-              variant="outline" 
+              variant="outlined" 
               onClick={() => window.location.reload()}
             >
               Retry

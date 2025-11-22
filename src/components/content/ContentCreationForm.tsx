@@ -443,7 +443,7 @@ export default function ContentCreationForm({
           <Box sx={{ display: 'flex', gap: 1, mb: 2 }}>
             <Button 
               startIcon={<BsImage />} 
-              variant="outline" 
+              variant="outlined" 
               onClick={handleAddMedia}
             >
               Add Media
@@ -451,7 +451,7 @@ export default function ContentCreationForm({
             
             <Button 
               startIcon={<BsLink />} 
-              variant="outline" 
+              variant="outlined" 
               onClick={() => setIsLinkCardOpen(!isLinkCardOpen)}
             >
               Add Link
@@ -595,7 +595,7 @@ export default function ContentCreationForm({
         {/* Action Buttons */}
         <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 4 }}>
           <Button 
-            variant="outline" 
+            variant="outlined" 
             color="primary"
             sx={{ mr: 2 }}
             onClick={() => router.push('/dashboard/content/calendar')}

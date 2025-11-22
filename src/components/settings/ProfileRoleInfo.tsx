@@ -125,7 +125,7 @@ const ProfileRoleInfo = () => {
         {isAdmin && (
           <Box mt={2}>
             <Button
-              variant="outline"
+              variant="outlined"
               color="primary"
               startIcon={<AdminPanelSettings />}
               onClick={handleAdminDashboard}

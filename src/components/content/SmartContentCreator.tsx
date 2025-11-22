@@ -542,9 +542,9 @@ const SmartContentCreator: React.FC<SmartContentCreatorProps> = ({
                   
                   <Stack direction="row" spacing={1} sx={{ mb: 2 }}>
                     <Chip label={`${suggestion.confidence}% Confidence`} color="primary" size="small" />
-                    <Chip label={suggestion.tone} variant="outline" size="small" />
-                    <Chip label={suggestion.audience} variant="outline" size="small" />
-                    <Chip label={suggestion.contentType} variant="outline" size="small" />
+                    <Chip label={suggestion.tone} variant="outlined" size="small" />
+                    <Chip label={suggestion.audience} variant="outlined" size="small" />
+                    <Chip label={suggestion.contentType} variant="outlined" size="small" />
                   </Stack>
                   
                   <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
@@ -615,7 +615,7 @@ const SmartContentCreator: React.FC<SmartContentCreatorProps> = ({
                     </Button>
                     
                     <Button
-                      variant="outline"
+                      variant="outlined"
                       onClick={() => {
                         setContent('');
                         setHashtags([]);
@@ -669,17 +669,17 @@ const SmartContentCreator: React.FC<SmartContentCreatorProps> = ({
                         <Chip 
                           label={`👍 ${performancePrediction.predictedLikes} likes`} 
                           size="sm" 
-                          variant="outline" 
+                          variant="outlined" 
                         />
                         <Chip 
                           label={`💬 ${performancePrediction.predictedComments} comments`} 
                           size="sm" 
-                          variant="outline" 
+                          variant="outlined" 
                         />
                         <Chip 
                           label={`🔄 ${performancePrediction.predictedShares} shares`} 
                           size="sm" 
-                          variant="outline" 
+                          variant="outlined" 
                         />
                       </Stack>
                       
@@ -758,7 +758,7 @@ const SmartContentCreator: React.FC<SmartContentCreatorProps> = ({
                       
                       <Stack direction="row" spacing={1} sx={{ mb: 1 }}>
                         {variation.hashtags.map((tag, tagIndex) => (
-                          <Chip key={tagIndex} label={`#${tag}`} size="small" variant="outline" />
+                          <Chip key={tagIndex} label={`#${tag}`} size="small" variant="outlined" />
                         ))}
                       </Stack>
                       
@@ -801,7 +801,7 @@ const SmartContentCreator: React.FC<SmartContentCreatorProps> = ({
                       {item.hashtags && (
                         <Stack direction="row" spacing={1} sx={{ mb: 2 }}>
                           {item.hashtags.map((tag: string, tagIndex: number) => (
-                            <Chip key={tagIndex} label={`#${tag}`} size="small" variant="outline" />
+                            <Chip key={tagIndex} label={`#${tag}`} size="small" variant="outlined" />
                           ))}
                         </Stack>
                       )}
@@ -843,7 +843,7 @@ const SmartContentCreator: React.FC<SmartContentCreatorProps> = ({
         </Typography>
         <Stack direction="row" spacing={1}>
           {connectedPlatforms.map((platform) => (
-            <Chip key={platform} label={platform} size="small" variant="outline" />
+            <Chip key={platform} label={platform} size="small" variant="outlined" />
           ))}
         </Stack>
       </Paper>

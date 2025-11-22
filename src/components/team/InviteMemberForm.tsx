@@ -248,7 +248,7 @@ export default function InviteMemberForm({ roles, onInvite }: InviteMemberFormPr
             </DialogContent>
             <DialogActions sx={{ px: 3, pb: 2 }}>
               <Button 
-                variant="outline" 
+                variant="outlined" 
                 onClick={() => {
                   setShowBillingConfirmation(false);
                   setStripeError('');
@@ -365,7 +365,7 @@ export default function InviteMemberForm({ roles, onInvite }: InviteMemberFormPr
             </DialogContent>
             <DialogActions sx={{ px: 3, pb: 2 }}>
               <Button 
-                variant="outline"
+                variant="outlined"
                 onClick={() => setIsOpen(false)}
               >
                 Cancel

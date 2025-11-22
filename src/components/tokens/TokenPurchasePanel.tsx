@@ -146,7 +146,7 @@ export default function TokenPurchasePanel({
       )}
       
       {/* Token Balance Card */}
-      <Card variant="outline" sx={{ mb: 4 }}>
+      <Card variant="outlined" sx={{ mb: 4 }}>
         <CardContent>
           <Typography variant="h5" gutterBottom>
             Your Token Balance
@@ -231,7 +231,7 @@ export default function TokenPurchasePanel({
       
       <Box display="flex" justifyContent="center" mb={4}>
         <Button 
-          variant="primary" 
+          variant="contained" 
           size="large"
           disabled={!selectedPackage || isPurchasing}
           onClick={handlePurchase}
@@ -250,7 +250,7 @@ export default function TokenPurchasePanel({
             Purchase History
           </Typography>
           
-          <TableContainer component={Paper} variant="outline">
+          <TableContainer component={Paper} variant="outlined">
             <Table>
               <TableHead>
                 <TableRow>

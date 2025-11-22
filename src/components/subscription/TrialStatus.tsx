@@ -105,7 +105,7 @@ export const TrialStatus: React.FC<TrialStatusProps> = ({
           <Chip 
             label={`${trialInfo.daysRemaining} days left`}
             color={isTrialEndingSoon ? 'warning' : 'success'}
-            variant="outline"
+            variant="outlined"
           />
         </Box>
 
@@ -135,7 +135,7 @@ export const TrialStatus: React.FC<TrialStatusProps> = ({
         <Box display="flex" gap={2} mt={2}>
           {needsPaymentMethod && (
             <Button 
-              variant="primary" 
+              variant="contained" 
               color="primary"
               startIcon={<CreditCard />}
               onClick={onSetupPayment}
@@ -145,7 +145,7 @@ export const TrialStatus: React.FC<TrialStatusProps> = ({
           )}
           
           <Button 
-            variant="outline" 
+            variant="outlined" 
             onClick={onUpgrade}
           >
             Upgrade Now

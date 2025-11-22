@@ -194,7 +194,7 @@ export default function AnalyticsContent() {
           </Box>
           <Stack direction="row" spacing={2}>
             <Button
-              variant="outline"
+              variant="outlined"
               startIcon={<AIIcon />}
               sx={{
                 textTransform: 'none',

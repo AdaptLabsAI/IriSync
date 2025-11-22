@@ -288,7 +288,7 @@ export default function RegisterForm() {
                 <TextField
                   {...field}
                   label="Full Name"
-                  variant="outline"
+                  variant="outlined"
                   fullWidth
                   error={!!errors[field.name]}
                   helperText={errors[field.name]?.message}
@@ -305,7 +305,7 @@ export default function RegisterForm() {
                 <TextField
                   {...field}
                   label="Email Address"
-                  variant="outline"
+                  variant="outlined"
                   fullWidth
                   error={!!errors[field.name]}
                   helperText={errors[field.name]?.message}
@@ -322,7 +322,7 @@ export default function RegisterForm() {
                 <TextField
                   {...field}
                   label="Password"
-                  variant="outline"
+                  variant="outlined"
                   fullWidth
                   type={showPassword ? 'text' : 'password'}
                   error={!!errors[field.name]}
@@ -349,7 +349,7 @@ export default function RegisterForm() {
                 <TextField
                   {...field}
                   label="Confirm Password"
-                  variant="outline"
+                  variant="outlined"
                   fullWidth
                   type={showConfirmPassword ? 'text' : 'password'}
                   error={!!errors[field.name]}
@@ -376,7 +376,7 @@ export default function RegisterForm() {
                 <TextField
                   {...field}
                   label="Company/Organization Name"
-                  variant="outline"
+                  variant="outlined"
                   fullWidth
                   error={!!errors[field.name]}
                   helperText={errors[field.name]?.message}
@@ -465,7 +465,7 @@ export default function RegisterForm() {
             placeholder="e.g. IRIS1234"
             value={referralCode}
             onChange={handleReferralCodeChange}
-            variant="outline"
+            variant="outlined"
             size="sm"
             sx={{ minWidth: 150 }}
             InputProps={{

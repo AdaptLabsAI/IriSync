@@ -203,7 +203,7 @@ export const PostScheduleButton: React.FC<PostScheduleButtonProps> = ({
         </DialogContent>
         <DialogActions>
           <Button
-            variant="outline"
+            variant="outlined"
             size="md"
             onClick={handleCloseDialog}
           >

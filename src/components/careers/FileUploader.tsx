@@ -142,7 +142,7 @@ export default function FileUploader({
       {!value ? (
         // Upload state
         <Paper
-          variant="outline"
+          variant="outlined"
           sx={{
             p: 2,
             border: '1px dashed',
@@ -208,7 +208,7 @@ export default function FileUploader({
       ) : (
         // File uploaded state
         <Paper
-          variant="outline"
+          variant="outlined"
           sx={{ 
             p: 2, 
             bgcolor: 'background.default',

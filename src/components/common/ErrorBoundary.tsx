@@ -68,7 +68,7 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundarySta
               )}
             </Box>
             <Button 
-              variant="outline" 
+              variant="outlined" 
               color="primary"
               onClick={() => this.setState({ hasError: false, error: null })}
             >

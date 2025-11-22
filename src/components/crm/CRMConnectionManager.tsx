@@ -303,7 +303,7 @@ export const CRMConnectionManager: React.FC<CRMConnectionManagerProps> = ({
                             label={isSyncing ? 'Syncing' : connection.status}
                             size="sm"
                             color={getStatusColor(isSyncing ? 'syncing' : connection.status) as any}
-                            variant="outline"
+                            variant="outlined"
                           />
                         </Box>
                       </Box>
@@ -366,7 +366,7 @@ export const CRMConnectionManager: React.FC<CRMConnectionManagerProps> = ({
 
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                       <Button
-                        variant="outline"
+                        variant="outlined"
                         color="error"
                         size="sm"
                         onClick={() => onDisconnect(connection.id)}
@@ -374,7 +374,7 @@ export const CRMConnectionManager: React.FC<CRMConnectionManagerProps> = ({
                         Disconnect
                       </Button>
                       <Button
-                        variant="outline"
+                        variant="outlined"
                         size="sm"
                         onClick={() => handleSync(connection.id)}
                         disabled={isSyncing || connection.status !== 'connected'}

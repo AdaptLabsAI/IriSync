@@ -455,7 +455,7 @@ export default function DashboardContent() {
 
             <Button
               fullWidth
-              variant="outline"
+              variant="outlined"
               onClick={() => router.push('/dashboard/inbox')}
               sx={{ mt: 2, textTransform: 'none' }}
             >
@@ -479,7 +479,7 @@ export default function DashboardContent() {
           <Grid item xs={12} sm={6} md={3}>
             <Button
               fullWidth
-              variant="outline"
+              variant="outlined"
               startIcon={<CalendarIcon />}
               onClick={() => router.push('/dashboard/planner')}
               sx={{ py: 1.5, textTransform: 'none' }}
@@ -490,7 +490,7 @@ export default function DashboardContent() {
           <Grid item xs={12} sm={6} md={3}>
             <Button
               fullWidth
-              variant="outline"
+              variant="outlined"
               startIcon={<MessageIcon />}
               onClick={() => router.push('/dashboard/inbox')}
               sx={{ py: 1.5, textTransform: 'none' }}
@@ -501,7 +501,7 @@ export default function DashboardContent() {
           <Grid item xs={12} sm={6} md={3}>
             <Button
               fullWidth
-              variant="outline"
+              variant="outlined"
               startIcon={<AnalyticsIcon />}
               onClick={() => router.push('/dashboard/analytics')}
               sx={{ py: 1.5, textTransform: 'none' }}
@@ -512,7 +512,7 @@ export default function DashboardContent() {
           <Grid item xs={12} sm={6} md={3}>
             <Button
               fullWidth
-              variant="outline"
+              variant="outlined"
               startIcon={<AddIcon />}
               onClick={() => router.push('/dashboard/platforms')}
               sx={{ py: 1.5, textTransform: 'none' }}
